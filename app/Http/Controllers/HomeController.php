@@ -29,14 +29,25 @@ class HomeController extends Controller
         $checked_settings = [];
         $checked_culturals = [];
 
-    	return view('frontEnd.home', compact('home', 'taxonomies', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals'));
+        return view('frontEnd.home', compact('home', 'taxonomies', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals'));
     }
 
     public function about($value='')
     {
+        $parent_taxonomy = [];
+        $child_taxonomy = [];
+        $checked_organizations = [];
+        $checked_insurances = [];
+        $checked_ages = [];
+        $checked_languages = [];
+        $checked_settings = [];
+        $checked_culturals = [];
+
         $about = Page::where('name', 'About')->first();
         $home = Page::where('name', 'Home')->first();
-        return view('frontEnd.about', compact('about', 'home'));
+        $map = Map::find(1);
+
+        return view('frontEnd.about', compact('about', 'home', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals'));
     }
 
     public function feedback($value='')
@@ -47,13 +58,13 @@ class HomeController extends Controller
 
     public function YourhomePage($value='')
     {
-    	return view('home');
+        return view('home');
     }
 
     public function dashboard($value='')
     {
         $layout = Layout::first();
-    	return view('backEnd.dashboard', compact('layout'));
+        return view('backEnd.dashboard', compact('layout'));
     }
 
     public function logviewerdashboard($value='')
