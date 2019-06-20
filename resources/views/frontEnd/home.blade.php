@@ -54,16 +54,7 @@ Home
                     <h3 class="panel-title" style="font-size: 25px;">Browse by Category</h3>
                 </div>
                 <div class="panel-body">
-                    <ul id="tree1">
-                        @foreach($taxonomies as $taxonomy)
-                            <li>
-                                <a at="{{$taxonomy->taxonomy_recordid}}" class="home-category">{{$taxonomy->taxonomy_name}}</a>
-                                @if(count($taxonomy->childs))
-                                    @include('layouts.manageChild',['childs' => $taxonomy->childs])
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
+                    
                 </div>
                 </div>
             </div>
