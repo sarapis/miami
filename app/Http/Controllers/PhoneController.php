@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Phone;
+use App\Servicephone;
+use App\Locationphone;
 use App\Airtables;
+use App\CSV_Source;
 use App\Services\Stringtoint;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PhoneController extends Controller
 {
@@ -106,6 +110,93 @@ class PhoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='phones.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='service_id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='service_at_location_id' || $csv_header_fields[3]!='id' || $csv_header_fields[4]!='number' || $csv_header_fields[5]!='organization_id' || $csv_header_fields[6]!='contact_id' || $csv_header_fields[7]!='extension' || $csv_header_fields[8]!='type'|| $csv_header_fields[9]!='language'|| $csv_header_fields[10]!='description') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Phone::truncate();
+        Servicephone::truncate();
+        Locationphone::truncate();
+
+        $size = '';
+        foreach ($csv_data as $row) {
+
+            $phone = new Phone();
+
+            $phone->phone_services = $row[$csv_header_fields[0]];
+            $phone->phone_recordid = $row[$csv_header_fields[3]];
+
+            if($row[$csv_header_fields[0]] && $row[$csv_header_fields[3]]){
+                $service_phone = new Servicephone();
+                $service_phone->service_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $service_phone->phone_recordid = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $service_phone->save();
+
+            }
+
+            $phone->phone_locations = $row[$csv_header_fields[1]];
+
+            if($row[$csv_header_fields[1]] && $row[$csv_header_fields[3]]){
+                $location_phone = new Locationphone();
+                $location_phone->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $location_phone->phone_recordid = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $location_phone->save();
+
+            }
+
+            $phone->phone_number = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+            $phone->phone_organizations = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $phone->phone_contacts = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+            $phone->phone_extension = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
+            $phone->phone_type = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+            $phone->phone_language = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
+            $phone->phone_description = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;                                              
+            $phone ->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Phones')->first();
+        $csv_source->records = Phone::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
+
     public function index()
     {
         $phones = Phone::orderBy('phone_number')->get();

@@ -91,6 +91,19 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::get('/sync_taxonomy', ['uses' => 'TaxonomyController@airtable']);
         Route::get('/sync_details', ['uses' => 'DetailController@airtable']);
 
+
+        Route::post('/csv_services', ['uses' => 'ServiceController@csv']);  
+        Route::post('/csv_locations', ['uses' => 'LocationController@csv']);
+        Route::post('/csv_organizations', ['uses' => 'OrganizationController@csv']);
+        Route::post('/csv_contacts', ['uses' => 'ContactController@csv']);
+        Route::post('/csv_phones', ['uses' => 'PhoneController@csv']);
+        Route::post('/csv_address', ['uses' => 'AddressController@csv']);
+        Route::post('/csv_languages', ['uses' => 'LanguageController@csv']);
+        Route::post('/csv_taxonomy', ['uses' => 'TaxonomyController@csv']);
+        Route::post('/csv_services_taxonomy', ['uses' => 'TaxonomyController@csv_services_taxonomy']);
+        Route::post('/csv_services_location', ['uses' => 'ServiceController@csv_services_location']);
+        Route::post('/csv_accessibility_for_disabilites', ['uses' => 'LocationController@csv_accessibility']);
+
         //Route::get('/tb_projects', ['uses' => 'ProjectController@index']);
         Route::resource('tb_services', 'ServiceController');
         Route::resource('tb_locations', 'LocationController');

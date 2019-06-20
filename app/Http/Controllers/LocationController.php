@@ -9,8 +9,11 @@ use App\Location;
 use App\Locationaddress;
 use App\Locationphone;
 use App\Locationschedule;
+use App\Accessibility;
 use App\Airtables;
+use App\CSV_Source;
 use App\Services\Stringtoint;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LocationController extends Controller
 {
@@ -138,6 +141,141 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='locations.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='organization_id' || $csv_header_fields[1]!='id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='hours' || $csv_header_fields[6]!='latitude' || $csv_header_fields[7]!='longitude'|| $csv_header_fields[8]!='transportation') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Location::truncate();
+
+        $size = '';
+        foreach ($csv_data as $row) {
+            
+       
+
+
+                $location = new Location();
+
+                $location->location_recordid= $row[$csv_header_fields[1]];
+                $location->location_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+
+                $location->location_organization = $row[$csv_header_fields[0]];
+
+                $location->location_alternate_name = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $location->location_description = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+                $location->location_hours = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+                $location->location_latitude = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+                $location->location_longitude = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
+                $location->location_transportation = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+               
+                                         
+                $location ->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Locations')->first();
+        $csv_source->records = Location::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
+
+    public function csv_accessibility(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='accessibility_for_disabilities.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='accessibility' || $csv_header_fields[3]!='details') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Accessibility::truncate();
+
+        $size = '';
+        foreach ($csv_data as $key => $row) {
+
+            $accessibility = new Accessibility();
+
+            $accessibility->accessibility_recordid =$row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+            $accessibility->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $accessibility->accessibility =$row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            ;   
+            $accessibility->details =$row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            ;       
+            $accessibility->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Accessibility_for_disabilites')->first();
+        $csv_source->records = Accessibility::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
+
     public function index()
     {
         $locations = Location::orderBy('location_name')->paginate(15);

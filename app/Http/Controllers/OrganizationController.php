@@ -11,7 +11,9 @@ use App\Location;
 use App\Layout;
 use App\Map;
 use App\Airtables;
+use App\CSV_Source;
 use App\Services\Stringtoint;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class OrganizationController extends Controller
@@ -84,7 +86,7 @@ class OrganizationController extends Controller
                 $organization->organization_legal_status = isset($record['fields']['legal_status'])?$record['fields']['legal_status']:null;
                 $organization->organization_tax_status = isset($record['fields']['tax_status'])?$record['fields']['tax_status']:null;
                 $organization->organization_tax_id = isset($record['fields']['tax_id'])?$record['fields']['tax_id']:null;
-                $organization->organization_year_incorporated = isset($record['fields']['year_incorporated'])?$record['fields']['year_incoporated']:null;
+                $organization->organization_year_incorporated = isset($record['fields']['year_incorporated'])?$record['fields']['year_incorporated']:null;
 
                 if(isset($record['fields']['services'])){
                     $i = 0;
@@ -161,6 +163,77 @@ class OrganizationController extends Controller
         $airtable->records = Organization::count();
         $airtable->syncdate = $date;
         $airtable->save();
+    }
+
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='organizations.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='name' || $csv_header_fields[2]!='alternate_name' || $csv_header_fields[3]!='description' || $csv_header_fields[4]!='url' || $csv_header_fields[5]!='email' || $csv_header_fields[6]!='tax_status' || $csv_header_fields[7]!='tax_id' || $csv_header_fields[8]!='year_incorporated' || $csv_header_fields[9]!='legal_status') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Organization::truncate();
+        Organizationdetail::truncate();
+
+        $size = '';
+        foreach ($csv_data as $row) {
+            
+            $organization = new Organization();
+
+            $organization->organization_recordid = $row[$csv_header_fields[0]];
+            $organization->organization_name = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+
+            $organization->organization_alternate_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+
+            $organization->organization_description = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $organization->organization_url = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+            $organization->organization_email = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $organization->organization_tax_status = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+            $organization->organization_tax_id = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
+            $organization->organization_year_incorporated = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+            $organization->organization_legal_status = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
+           
+                                     
+            $organization->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Organizations')->first();
+        $csv_source->records = Organization::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
     }
     /**
      * Display a listing of the resource.

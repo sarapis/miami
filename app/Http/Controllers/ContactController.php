@@ -7,7 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Contact;
 use App\Airtables;
+use App\CSV_Source;
 use App\Services\Stringtoint;
+use App\Servicelocation;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactController extends Controller
 {
@@ -71,6 +74,78 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='contacts.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' || $csv_header_fields[2]!='service_at_location_id' || $csv_header_fields[3]!='email' || $csv_header_fields[4]!='name' || $csv_header_fields[5]!='phone_number' || $csv_header_fields[6]!='phone_areacode' || $csv_header_fields[7]!='phone_extension' || $csv_header_fields[8]!='title'|| $csv_header_fields[9]!='organization_id'|| $csv_header_fields[10]!='department') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Contact::truncate();
+
+
+        $size = '';
+        foreach ($csv_data as $row) {
+
+            $contact = new Contact();
+
+            $contact->contact_recordid= $row[$csv_header_fields[0]];
+            $contact->contact_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+
+
+            $contact->contact_email = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $contact->contact_name = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+            $contact->contact_phones = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $contact->contact_phone_areacode = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+            $contact->contact_phone_extension = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
+            $contact->contact_title = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+            $contact->contact_organizations = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
+            $contact->contact_department = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;          
+                                     
+            $contact ->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Contacts')->first();
+        $csv_source->records = Contact::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
+
+
     public function index()
     {
         $contacts = Contact::orderBy('contact_name')->get();
@@ -78,6 +153,7 @@ class ContactController extends Controller
         return view('backEnd.tables.tb_contacts', compact('contacts'));
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *

@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Address;
+use App\Locationaddress;
 use App\Airtables;
+use App\CSV_Source;
 use App\Services\Stringtoint;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AddressController extends Controller
 {
@@ -86,6 +89,85 @@ class AddressController extends Controller
         $airtable->records = Address::count();
         $airtable->syncdate = $date;
         $airtable->save();
+    }
+
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='physical_addresses.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='location_id' || $csv_header_fields[1]!='address_1' || $csv_header_fields[2]!='address_2' || $csv_header_fields[3]!='city' || $csv_header_fields[4]!='postal_code' || $csv_header_fields[5]!='state_province' || $csv_header_fields[6]!='country' || $csv_header_fields[7]!='id' || $csv_header_fields[8]!='organization_id'|| $csv_header_fields[9]!='attention'|| $csv_header_fields[10]!='region') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Address::truncate();
+        Locationaddress::truncate();
+
+        $size = '';
+        foreach ($csv_data as $key => $row) {
+
+            $address = new Address();
+
+            $address->address_recordid = $key+1;
+            $address->address_locations = $row[$csv_header_fields[0]];
+            
+            if($row[$csv_header_fields[0]]){
+                $location_address = new Locationaddress();
+                $location_address->location_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $location_address->address_recordid = $address->address_recordid;
+                $location_address->save();
+
+            }
+
+            $address->address_1 = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $address->address_2 = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $address->address_city= $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $address->address_postal_code = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+            $address->address_state_province = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $address->address_country = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+           
+            $address->address_organization = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+            $address->address_attention = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
+            $address->address_region = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;
+
+            $address ->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Address')->first();
+        $csv_source->records = Address::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
     }
     /**
      * Display a listing of the resource.

@@ -16,10 +16,12 @@ use App\Servicetaxonomy;
 use App\Serviceschedule;
 use App\Location;
 use App\Airtables;
+use App\CSV_Source;
 use App\Taxonomy;
 use App\Map;
 use App\Layout;
 use App\Services\Stringtoint;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class ServiceController extends Controller
@@ -233,6 +235,153 @@ class ServiceController extends Controller
         $airtable->save();
     }
 
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='services.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='organization_id' || $csv_header_fields[1]!='id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='application_process' || $csv_header_fields[6]!='url' || $csv_header_fields[7]!='program_id' || $csv_header_fields[8]!='email' || $csv_header_fields[9]!='status' || $csv_header_fields[10]!='interpretation_services' || $csv_header_fields[11]!='wait_time' && $csv_header_fields[12]!='fees' || $csv_header_fields[13]!='accreditations' || $csv_header_fields[14]!='licenses') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Service::truncate();
+        Serviceorganization::truncate();
+
+        $size = '';
+        foreach ($csv_data as $row) {
+            
+       
+
+
+                $service = new Service();
+
+                $service->service_recordid= $row[$csv_header_fields[1]];
+                $service->service_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+
+                if($row[$csv_header_fields[0]]){
+
+                        $service_organization = new Serviceorganization();
+                        $service_organization->service_recordid=$service->service_recordid;
+                        $service_organization->organization_recordid=$row[$csv_header_fields[0]];
+                        $service_organization->save();
+
+                        $service->service_organization = $row[$csv_header_fields[0]];
+
+                }
+
+                $service->service_alternate_name = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $service->service_description = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+                $service->service_application_process = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+                $service->service_url = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+                $service->service_program = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
+
+                $service->service_email = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+                $service->service_status = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
+
+                $service->service_wait_time = $row[$csv_header_fields[11]]!='NULL'?$row[$csv_header_fields[11]]:null;
+                $service->service_fees = $row[$csv_header_fields[12]]!='NULL'?$row[$csv_header_fields[12]]:null;
+                $service->service_accreditations = $row[$csv_header_fields[13]]!='NULL'?$row[$csv_header_fields[13]]:null;
+                $service->service_licenses = $row[$csv_header_fields[14]]!='NULL'?$row[$csv_header_fields[14]]:null;
+            
+                
+                $service ->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Services')->first();
+        $csv_source->records = Service::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
+
+    public function csv_services_location(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='services_at_location.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='service_id' || $csv_header_fields[3]!='description') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Servicelocation::truncate();
+
+        $size = '';
+        foreach ($csv_data as $key => $row) {
+
+            $service_location = new Servicelocation();
+
+            $service_location->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $service_location->service_recordid =$row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+                      
+            $service_location->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Services_location')->first();
+        $csv_source->records = Servicelocation::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
 
     public function index()
     {

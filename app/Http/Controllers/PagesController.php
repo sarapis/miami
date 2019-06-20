@@ -6,7 +6,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Page;
+use App\Source_data;
 use App\Airtables;
+use App\CSV_Source;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -143,8 +145,10 @@ class PagesController extends Controller
     public function datasync()
     {
         $airtables = Airtables::all();
+        $csvs = CSV_Source::all();
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.datasync', compact('airtables'));
+        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data'));
     }
 
 }
