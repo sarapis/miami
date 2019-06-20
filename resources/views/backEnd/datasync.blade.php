@@ -96,6 +96,7 @@ Datasync
                         <button class="badge" style="background: #f39c12;"><a href="tb_{!! strtolower($csv->name) !!}" style="color: white;">View Table</a></button>
                       </td>
                     </tr>
+                    
                   @endforeach             
                 </tbody>
             </table>
