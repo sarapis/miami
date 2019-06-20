@@ -172,7 +172,7 @@ $(document).ready(function() {
           el: '#map',
           lat: locations.lat,
           lng: locations.long,
-          zoom:10
+          zoom: locations.zoom
         });
         map.addMarker({
           lat: locations.lat,
