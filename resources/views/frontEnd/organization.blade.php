@@ -212,13 +212,15 @@ ul#ui-id-1 {
       else
       {
           if(maplocation.active == 1){
-          avglat = maplocation.lat;
-          avglng = maplocation.long;
+            avglat = maplocation.lat;
+            avglng = maplocation.long;
+            zoom = maplocation.zoom;
           }
           else
           {
               avglat = 40.730981;
               avglng = -73.998107;
+              zoom = 12;
           }
       }
     
@@ -226,7 +228,7 @@ ul#ui-id-1 {
         el: '#map',
         lat: avglat,
         lng: avglng,
-        zoom:12
+        zoom: zoom
       });
 
 

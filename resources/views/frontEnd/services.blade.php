@@ -183,18 +183,20 @@ ul#ui-id-1 {
             if(maplocation.active == 1){
                 avglat = maplocation.lat;
                 avglng = maplocation.long;
+                zoom = maplocation.zoom;
             }
             else
             {
                 avglat = 40.730981;
                 avglng = -73.998107;
+                zoom = 14;
             }
             console.log(maplocation.active);
             var mymap = new GMaps({
               el: '#map',
               lat: avglat,
               lng: avglng,
-              zoom:3
+              zoom: zoom
             });
 
         

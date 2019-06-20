@@ -209,18 +209,20 @@ $(document).ready(function(){
         if(maplocation.active == 1){
             avglat = maplocation.lat;
             avglng = maplocation.long;
+            zoom = maplocation.zoom;
         }
         else
         {
             avglat = 40.730981;
             avglng = -73.998107;
+            zoom = 10
         }
 
         var mymap = new GMaps({
           el: '#map',
           lat: avglat,
           lng: avglng,
-          zoom:10
+          zoom: zoom
         });
 
 
