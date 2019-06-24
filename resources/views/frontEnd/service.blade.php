@@ -55,7 +55,7 @@ ul#ui-id-1 {
                         <h4 class="panel-text"><span class="badge bg-red">Alternate Name:</span> {{$service->service_alternate_name}}</h4>
 
                          <h4 class="panel-text"><span class="badge bg-red">Category:</span> 
-                            @if($service->service_taxonomy!=0)
+                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                 @foreach($service->taxonomy as $key => $taxonomy)
                                     @if($loop->last)
                                     <a class="panel-link" href="/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
@@ -101,7 +101,7 @@ ul#ui-id-1 {
                         @if($service->service_email!=NULL) 
                         <h4 class="panel-text"><span class="badge bg-blue">Email:</span> {{$service->service_email}}</h4>
                         @endif  
-                        <hr>
+                        
                         
                             @if($service->service_details!=NULL)
                                 @php
@@ -126,10 +126,6 @@ ul#ui-id-1 {
                               @endforeach
                             @endif
 
-                        @if($service->service_application_process || $service->service_wait_time || $service->service_fees || $service->service_accreditations || $service->service_licenses)
-                        <hr>
-                        <h3>Additional Info</h3>
-                        @endif
 
                         @if($service->service_application_process)
                         <h4 class="panel-text"><span class="badge bg-blue">Application Process:</span> {!! $service->service_application_process !!}</h4>
@@ -150,6 +146,19 @@ ul#ui-id-1 {
                         @if($service->service_licenses)
                         <h4 class="panel-text"><span class="badge bg-blue">Licenses:</span> {{$service->service_licenses}}</h4>
                         @endif
+
+                        <h4 class="panel-text"><span class="badge bg-red">Languages:</span>
+                            @if(isset($service->languages))                        
+                                @foreach($service->languages as $language)
+                                    @if($loop->last)
+                                    {{$language->language}}
+                                    @else
+                                    {{$language->language}},
+                                    @endif
+                                @endforeach                       
+                            @endif
+                        </h4>
+
                     </div>
                 </div>
             </div>
@@ -165,24 +174,28 @@ ul#ui-id-1 {
                         <hr>
        
                         <div class="p-20">
-                            @if($service->service_locations!='')
+                            <h3>Location</h3>
+                            @if(isset($service->locations))
                               @foreach($service->locations as $location)
-                              
-                                  <h4><span class="badge bg-red">Address:</span> @if($location->location_address!='')
-                                    @foreach($location->address as $address)
-                                      {{ $address->address_1 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-                                    @endforeach
-                                  @endif
-                                  </h4>
-                                  <h4><span class="badge bg-red">Phone:</span>
-                                     @foreach($location->phones as $phone)
-                                      @php 
-                                        $phones ='';
-                                        $phones = $phones.$phone->phone_number.','; @endphp
-                                     @endforeach
-                                     {{ rtrim($phones, ',') }}
-                                  </h4>
-                                  
+                                    <h4><span class="badge bg-red">Name:</span> {{$location->location_name}}
+                                    <h4><span class="badge bg-red">Address:</span> @if(isset($location->address))
+                                        @foreach($location->address as $address)
+                                          {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                        @endforeach
+                                      @endif
+                                    </h4>
+                                    <h4><span class="badge bg-red">Description:</span> {{$location->location_description}}</h4>
+                                    <h4><span class="badge bg-red">Hours:</span> {{$location->location_hours}}</h4>
+                                    <h4><span class="badge bg-red">Transportation:</span> {{$location->location_transportation}}</h4>
+                                    <h4><span class="badge bg-red">Phone:</span>
+                                         @foreach($location->phones as $phone)
+                                          @php 
+                                            $phones ='';
+                                            $phones = $phones.$phone->phone_number.','; @endphp
+                                         @endforeach
+                                         {{ rtrim($phones, ',') }}
+                                    </h4>  
+                                    <h4><span class="badge bg-red">Accessibility for disabilities:</span> {{$location->accessibilities()->first()->accessibility}}</h4>
                               @endforeach
                             @endif
 

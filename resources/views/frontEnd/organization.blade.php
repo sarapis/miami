@@ -50,7 +50,7 @@ ul#ui-id-1 {
     
                 <div class="panel ml-15 mr-15 mb-15">
                     <div class="panel-body p-20">
-                        <h2><img src="{{$organization->organization_logo_x}}" height="80"> {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif</h2>
+                        <h2>@if($organization->organization_logo_x)<img src="{{$organization->organization_logo_x}}" height="80">@endif {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif</h2>
 
                         <h4 class="panel-text"><span class="badge bg-red">Status:</span> {{$organization->organization_status_x}}</h4>
 
@@ -67,12 +67,14 @@ ul#ui-id-1 {
                         </h4>
                         @endif
 
+                        @if(isset($organization->organization_forms_x_filename))
                         <h4 class="panel-text"><span class="badge bg-red">Referral Forms:</span> <a href="{{$organization->organization_forms_x_url}}" class="panel-link"> {{$organization->organization_forms_x_filename}}</a></h4>
-
+                        @endif
+                        
                     </div>
                   </div>
 
-                  @if($organization->organization_services!=null)
+                  @if(isset($organization->services))
                     @foreach($organization->services as $service)
                     <div class="panel content-panel">
                         <div class="panel-body p-20">
@@ -190,39 +192,21 @@ ul#ui-id-1 {
     setTimeout(function(){
       var locations = <?php print_r(json_encode($locations)) ?>;
       var organization = <?php print_r(json_encode($organization->organization_name)) ?>;
+      var maplocation = <?php print_r(json_encode($map)) ?>;
       // console.log(locations);
 
-      var sumlat = 0.0;
-      var sumlng = 0.0;
-      var length = 0;
-      console.log(locations.length);
-      for(var i = 0; i < locations.length; i ++)
-      {
-          if(locations[i].location_latitude)
-          {
-              sumlat += parseFloat(locations[i].location_latitude);
-              sumlng += parseFloat(locations[i].location_longitude);
-              length ++;
-          }
-      }
-      if(length != 0){
-          var avglat = sumlat/length;
-          var avglng = sumlng/length;
+      if(maplocation.active == 1){
+        avglat = maplocation.lat;
+        avglng = maplocation.long;
+        zoom = maplocation.zoom;
       }
       else
       {
-          if(maplocation.active == 1){
-            avglat = maplocation.lat;
-            avglng = maplocation.long;
-            zoom = maplocation.zoom;
-          }
-          else
-          {
-              avglat = 40.730981;
-              avglng = -73.998107;
-              zoom = 12;
-          }
+          avglat = 40.730981;
+          avglng = -73.998107;
+          zoom = 12;
       }
+
     
       var mymap = new GMaps({
         el: '#map',

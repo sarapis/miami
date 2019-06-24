@@ -111,7 +111,7 @@ ul#ui-id-1 {
                                 
                                 <a class="panel-link" href="/service_{{$service->service_recordid}}">{{$service->service_name}}</a>
                                 <h4><span class="badge bg-red">Category:</span> 
-                                    @if($service->service_taxonomy!=0)
+                                    @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                         @foreach($service->taxonomy as $key => $taxonomy)
                                             @if($loop->last)
                                             <a class="panel-link" href="/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
@@ -133,9 +133,9 @@ ul#ui-id-1 {
                                 </h4>
                                 <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
                                 <h4><span class="badge bg-blue">Address:</span>
-                                    @if($service->service_address!=NULL)
+                                    @if(isset($service->address))
                                         @foreach($service->address as $address)
-                                          {{ $address->address_1 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                          {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
                                         @endforeach
                                     @endif
                                 </h4>
