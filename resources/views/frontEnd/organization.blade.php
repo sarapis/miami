@@ -70,7 +70,7 @@ ul#ui-id-1 {
                         @if(isset($organization->organization_forms_x_filename))
                         <h4 class="panel-text"><span class="badge bg-red">Referral Forms:</span> <a href="{{$organization->organization_forms_x_url}}" class="panel-link"> {{$organization->organization_forms_x_filename}}</a></h4>
                         @endif
-                        
+
                     </div>
                   </div>
 
@@ -142,14 +142,14 @@ ul#ui-id-1 {
                   <hr>
                   <div class="panel m-0 mt-5">
                       <div class="panel-body p-20">
-                       @if($organization->organization_locations!='')
+                       @if(isset($organization->location))
                           @foreach($organization->location as $location)
                           
 
                                   <h4><span class="badge bg-red">Location:</span> {{$location->location_name}}</h4>
-                                  <h4><span class="badge bg-red">Address:</span> @if($location->location_address!='')
+                                  <h4><span class="badge bg-red">Address:</span> @if(isset($location->address))
                                     @foreach($location->address as $address)
-                                      {{ $address->address_1 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                      {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
                                     @endforeach
                                   @endif
                                   </h4>
