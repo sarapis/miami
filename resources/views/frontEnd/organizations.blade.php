@@ -42,8 +42,8 @@ ul#ui-id-1 {
                 <div class="panel content-panel">
                     <div class="panel-body p-20">
                         <a class="panel-link" href="/organization_{{$organization->organization_recordid}}">{{$organization->organization_name}}</a>
-                        <h4>Number of Services: @if($organization->organization_services!=null)
-                          {{sizeof(explode(",", $organization->organization_services))}}
+                        <h4>Number of Services: @if(isset($organization->services))
+                          {{$organization->services->count()}}
                             @else 0 @endif</h4>
                         <h4><span class="badge bg-blue">Description:</span> {!! str_limit($organization->organization_description, 200) !!}</h4>
                     </div>
