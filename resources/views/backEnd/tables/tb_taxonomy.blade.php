@@ -28,11 +28,16 @@ Taxonomy
             <thead>
                 <tr>
                     <th class="text-center">No</th>
+                    @if($source_data->active == 0 )
+                    <th class="text-center">ID</th> 
+                    @endif
                     <th class="text-center">Name</th>                   
                     <th class="text-center">Parent name</th>                   
                     <th class="text-center">Vocabulary</th>
+                    @if($source_data->active == 1 )
                     <th class="text-center">X-description</th>
                     <th class="text-center">X-note</th>
+                    @endif
                     <th class="text-center">Services</th>             
                     <th class="text-center">Actions</th>
                 </tr>
@@ -40,7 +45,12 @@ Taxonomy
             <tbody>
               @foreach($taxonomies as $key => $taxonomy)
                 <tr id="taxonomy{{$taxonomy->id}}" class="{{$taxonomy->flag}}">
-                  <td class="text-center">{{$key+1}}</td>
+                  @if($source_data->active == 1 )
+                  <td class="text-center">{{$key}}+1</td>
+                  @elseif($source_data->active == 0)
+                  <td class="text-center">{{$taxonomy->taxonomy_recordid}}</td>
+                  <td class="text-center">{{$taxonomy->taxonomy_id}}</td>
+                  @endif
                   <td>{{$taxonomy->taxonomy_name}}</td>
 
                   <td>@if($taxonomy->taxonomy_parent_name!='')
@@ -49,9 +59,11 @@ Taxonomy
                   </td>
                   
                   <td class="text-center">{{$taxonomy->taxonomy_vocabulary}}</td>
+                  @if($source_data->active == 1 )
                   <td class="text-center">{{$taxonomy->taxonomy_x_description}}</td>
                   <td class="text-center">{{$taxonomy->taxonomy_x_notes}}</td>
-                  <td class="text-center">@if($taxonomy->taxonomy_services!='')@foreach($taxonomy->service as $service)
+                  @endif
+                  <td class="text-center">@if(isset($taxonomy->service))@foreach($taxonomy->service as $service)
                     <span class="badge bg-green">{{$service->service_name}}</span>
                   @endforeach
                   @endif
@@ -64,6 +76,7 @@ Taxonomy
               @endforeach             
             </tbody>
         </table>
+        {!! $taxonomies->links() !!}
       </div>
     </div>
   </div>
@@ -152,7 +165,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "paging": true,
+        "paging": false,
         "pageLength": 20,
         "lengthChange": false,
         "searching": false,

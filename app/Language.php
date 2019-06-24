@@ -15,4 +15,14 @@ class Language extends Model
     
 	public $timestamps = false;
 
+	public function service()
+    {
+        return $this->belongsTo('App\Service', 'language_service', 'service_recordid');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo('App\Location', 'language_location', 'location_recordid');
+    }
+
 }

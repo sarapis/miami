@@ -17,6 +17,7 @@ use App\Serviceschedule;
 use App\Location;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Taxonomy;
 use App\Map;
 use App\Layout;
@@ -385,9 +386,10 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $services = Service::orderBy('service_name')->paginate(10);      
+        $services = Service::with('locations', 'organizations', 'locations', 'taxonomy', 'phone', 'schedules', 'contact', 'details', 'address')->orderBy('service_recordid', 'asc')->paginate(20);
+        $source_data = Source_data::find(1);      
 
-        return view('backEnd.tables.tb_services', compact('services'));
+        return view('backEnd.tables.tb_services', compact('services', 'source_data'));
     }
 
 

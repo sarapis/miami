@@ -8,87 +8,13 @@ use App\Functions\Airtable;
 use App\Language;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LanguageController extends Controller
 {
 
-    public function airtable()
-    {
-
-        Address::truncate();
-        $airtable = new Airtable(array(
-            'api_key'   => env('AIRTABLE_API_KEY'),
-            'base'      => env('AIRTABLE_BASE_URL'),
-        ));
-
-        $request = $airtable->getContent( 'address' );
-
-        do {
-
-
-            $response = $request->getResponse();
-
-            $airtable_response = json_decode( $response, TRUE );
-
-            foreach ( $airtable_response['records'] as $record ) {
-
-                $address = new Address();
-                $strtointclass = new Stringtoint();
-
-                $address->address_recordid = $strtointclass->string_to_int($record[ 'id' ]);
-
-                $address->address_1 = isset($record['fields']['address_1'])?$record['fields']['address_1']:null;
-                $address->address_2 = isset($record['fields']['address_2'])?$record['fields']['address_2']:null;
-                $address->address_city = isset($record['fields']['city'])?$record['fields']['city']:null;
-                $address->address_state_province = isset($record['fields']['State'])?$record['fields']['State']:null;
-                $address->address_postal_code = isset($record['fields']['Zip Code'])?$record['fields']['Zip Code']:null;
-                $address->address_region = isset($record['fields']['region'])?$record['fields']['region']:null;
-                $address->address_country = isset($record['fields']['Country'])?$record['fields']['Country']:null;
-                $address->address_attention = isset($record['fields']['y-Attention'])?$record['fields']['y-Attention']:null;
-                $address->address_type = isset($record['fields']['y-address_type'])? implode(",", $record['fields']['y-address_type']):null;
-
-                if(isset($record['fields']['locations'])){
-                    $i = 0;
-                    foreach ($record['fields']['locations']  as  $value) {
-
-                        $addresslocation=$strtointclass->string_to_int($value);
-
-                        if($i != 0)
-                            $address->address_locations = $address->address_locations. ','. $addresslocation;
-                        else
-                            $address->address_locations = $addresslocation;
-                        $i ++;
-                    }
-                }
-
-                if(isset($record['fields']['services'])){
-                    $i = 0;
-                    foreach ($record['fields']['services']  as  $value) {
-
-                        $addressservice=$strtointclass->string_to_int($value);
-
-                        if($i != 0)
-                            $address->address_services = $address->address_services. ','. $addressservice;
-                        else
-                            $address->address_services = $addressservice;
-                        $i ++;
-                    }
-                }
-                $address ->save();
-
-            }
-            
-        }
-        while( $request = $response->next() );
-
-        $date = date("Y/m/d H:i:s");
-        $airtable = Airtables::where('name', '=', 'Address')->first();
-        $airtable->records = Address::count();
-        $airtable->syncdate = $date;
-        $airtable->save();
-    }
 
     public function csv(Request $request)
     {
@@ -136,8 +62,8 @@ class LanguageController extends Controller
 
             $language->language_recordid =$row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
             
-            $language->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $language->service_recordid = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $language->language_location = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $language->language_service = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
             $language->language= $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
             
             $language->save();
@@ -158,9 +84,10 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $address = Address::orderBy('address_1')->get();
+        $languages = Language::orderBy('language_recordid')->paginate(20);
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_address', compact('address'));
+        return view('backEnd.tables.tb_language', compact('languages', 'source_data'));
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Taxonomy;
 use App\Servicetaxonomy;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -211,9 +212,10 @@ class TaxonomyController extends Controller
      */
     public function index()
     {
-        $taxonomies = Taxonomy::orderBy('taxonomy_name')->get();
+        $taxonomies = Taxonomy::orderBy('taxonomy_recordid')->paginate(20);
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_taxonomy', compact('taxonomies'));
+        return view('backEnd.tables.tb_taxonomy', compact('taxonomies', 'source_data'));
     }
 
     /**

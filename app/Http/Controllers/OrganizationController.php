@@ -12,6 +12,7 @@ use App\Layout;
 use App\Map;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -242,9 +243,10 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        $organizations = Organization::orderBy('organization_name')->paginate(20);
+        $organizations = Organization::orderBy('organization_recordid')->paginate(20);
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_organization', compact('organizations'));
+        return view('backEnd.tables.tb_organization', compact('organizations', 'source_data'));
     }
 
     public function organizations()

@@ -101,6 +101,12 @@ class AppServiceProvider extends ServiceProvider
         {
             $view->with('layout', \App\Layout::first());
         });
+
+        view()->composer('backLayout.sidebarMenu', function($view)
+        {
+            $source_data = \App\Source_data::find(1);
+            $view->with('source_data', $source_data);
+        });
     }
 
     /**

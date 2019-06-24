@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Address;
 use App\Locationaddress;
+use App\Serviceaddress;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -130,6 +132,7 @@ class AddressController extends Controller
 
         Address::truncate();
         Locationaddress::truncate();
+        Serviceaddress::truncate();
 
         $size = '';
         foreach ($csv_data as $key => $row) {
@@ -144,6 +147,14 @@ class AddressController extends Controller
                 $location_address->location_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
                 $location_address->address_recordid = $address->address_recordid;
                 $location_address->save();
+
+            }
+
+            if($row[$csv_header_fields[0]]){
+                $service_address = new Serviceaddress();
+                $service_address->service_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $service_address->address_recordid = $address->address_recordid;
+                $service_address->save();
 
             }
 
@@ -176,9 +187,10 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $address = Address::orderBy('address_1')->get();
+        $addresses = Address::orderBy('address_recordid')->paginate(20);
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_address', compact('address'));
+        return view('backEnd.tables.tb_address', compact('addresses', 'source_data'));
     }
 
     /**

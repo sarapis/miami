@@ -39,7 +39,8 @@ class Service extends Model
 
     public function taxonomy()
     {
-
+        $this->primaryKey='service_recordid';
+        
         return $this->belongsToMany('App\Taxonomy', 'service_taxonomy', 'service_recordid', 'taxonomy_recordid');
 
     }
@@ -68,7 +69,10 @@ class Service extends Model
     }
 
 
-   
+    public function languages()
+    {
+        return $this->hasMany('App\Language', 'language_service', 'service_recordid');
+    }
 
     public function address()
     {

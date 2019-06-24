@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Contact;
+use App\Servicecontact;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
 use App\Servicelocation;
 use Maatwebsite\Excel\Facades\Excel;
@@ -113,6 +115,7 @@ class ContactController extends Controller
         }
 
         Contact::truncate();
+        Servicecontact::truncate();
 
 
         $size = '';
@@ -122,6 +125,15 @@ class ContactController extends Controller
 
             $contact->contact_recordid= $row[$csv_header_fields[0]];
             $contact->contact_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+
+            if($row[$csv_header_fields[0]]){
+
+                $service_contact = new Servicecontact();
+                $service_contact->service_recordid=$row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $service_contact->contact_recordid=$row[$csv_header_fields[0]];
+                $service_contact->save();
+
+            }
 
 
             $contact->contact_email = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
@@ -148,9 +160,10 @@ class ContactController extends Controller
 
     public function index()
     {
-        $contacts = Contact::orderBy('contact_name')->get();
+        $contacts = Contact::orderBy('contact_recordid')->paginate(20);
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_contacts', compact('contacts'));
+        return view('backEnd.tables.tb_contacts', compact('contacts', 'source_data'));
     }
 
     

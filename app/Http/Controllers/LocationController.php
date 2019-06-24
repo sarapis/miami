@@ -12,6 +12,7 @@ use App\Locationschedule;
 use App\Accessibility;
 use App\Airtables;
 use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -278,9 +279,10 @@ class LocationController extends Controller
 
     public function index()
     {
-        $locations = Location::orderBy('location_name')->paginate(15);
+        $locations = Location::with('organization')->orderBy('location_recordid')->paginate(20);
+        $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_location', compact('locations'));
+        return view('backEnd.tables.tb_location', compact('locations', 'source_data'));
     }
 
     /**
