@@ -1,6 +1,6 @@
 @extends('backLayout.app')
 @section('title')
-Languages
+Accessibility for disabilities
 @stop
 <style>
     tr.modified{
@@ -18,7 +18,7 @@ Languages
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Languages</h2>
+        <h2>Accessibility for disabilities</h2>
         <div class="clearfix"></div>  
       </div>
       <div class="x_content" style="overflow: scroll;">
