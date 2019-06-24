@@ -128,7 +128,9 @@ Locations
 
                   @if($source_data->active == 0 )
                   <td class="text-center">
+                  @if(isset($location->accessibilities()->first()->accessibility))
                     <span class="badge bg-green">{{$location->accessibilities()->first()->accessibility}}</span>
+                    @endif
                   </td>
                   @endif
                   
