@@ -439,8 +439,10 @@ class ServiceController extends Controller
     {
         $chip_name = Taxonomy::where('taxonomy_recordid', '=', $id)->first()->taxonomy_name;
         $chip_title = 'Category:';
-        $services = Service::where('service_taxonomy', 'like', '%'.$id.'%')->orderBy('service_name')->paginate(10);
-        $serviceids = Service::where('service_taxonomy', 'like', '%'.$id.'%')->orderBy('service_name')->pluck('service_recordid')->toArray();
+
+        $serviceids = Servicetaxonomy::where('taxonomy_recordid', '=', $id)->pluck('service_recordid')->toArray();
+        $services = Service::whereIn('service_recordid', $serviceids)->orderBy('service_name')->paginate(10);
+
         $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
 
         $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization')->get();
@@ -458,7 +460,7 @@ class ServiceController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
-        return view('frontEnd.chip', compact('services', 'locations', 'chip_title', 'chip_name', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
+        return view('frontEnd.services', compact('services', 'locations', 'chip_title', 'chip_name', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
     }
 
     /**
