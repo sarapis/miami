@@ -58,16 +58,16 @@ Schedule
                   </td>
 
                   <td>
-                  @if($schedule->schedule_locations!='')
+                  @if(isset($schedule->locations()->first()->location_name))
                     <span class="badge bg-green">{{$schedule->locations()->first()->location_name}}</span>
                   @endif
                   </td>
-
+                  @if($source_data->active == 1 )
                   <td>@if($schedule->schedule_phone!='')
                     <span class="badge bg-red">{{$schedule->phone()->first()->phone_number}}</span>
                   @endif
                   </td>
-
+                  @endif
                   <td class="text-center">{{$schedule->schedule_days_of_week}}</td>
 
                   <td class="text-center">{{$schedule->schedule_opens_at}}</td>

@@ -44,9 +44,7 @@ Services
                     <th class="text-center">Accreditations</th>
                     <th class="text-center">Licenses</th>
                     <th class="text-center">Phones</th>
-                    @if($source_data->active == 1 )
                     <th class="text-center">Schedule</th>
-                    @endif
                     <th class="text-center">Contacts</th>
                     @if($source_data->active == 1 )
                     <th class="text-center">Details</th>
