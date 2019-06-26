@@ -179,7 +179,6 @@ Datasync
                 }
             });
         });
-
         $('.inputfile').change(function(e){
 
             e.preventDefault(); 
@@ -195,14 +194,14 @@ Datasync
 
             $(this).after($img);
             $here = $(this);
-            name = name.toLowerCase();
+            name1 = name.toLowerCase();
             
                 
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 type: "post",
                 async: true,
-                url: '/csv_'+name,
+                url: '/csv_'+name1,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -211,7 +210,7 @@ Datasync
                     if(result.status == 'error'){
                         $img.remove();
                         $here.next().remove();
-                        $here.after('<button class="badge bg-red"><label for="file" class="choose-csv">Try Again</label></button>');
+                        $here.after('<button class="badge bg-red"><label for="file_'+name+'" class="choose-csv">Try Again</label></button>');
                         $here.parent().prev().html('<?php echo date("Y/m/d H:i:s"); ?>');
                         var add_alert = '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><strong>'+result.result+'</strong></div>';
                         $('.x_panel').before(add_alert);

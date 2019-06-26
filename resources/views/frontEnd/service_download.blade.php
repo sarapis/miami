@@ -50,7 +50,7 @@ ul#ui-id-1 {
                         <h4 class="panel-text"><span class="badge bg-red">Alternate Name:</span> {{$service->service_alternate_name}}</h4>
 
                          <h4 class="panel-text"><span class="badge bg-red">Category:</span> 
-                            @if($service->service_taxonomy!=0)
+                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                 @foreach($service->taxonomy as $key => $taxonomy)
                                     @if($loop->last)
                                     <a class="panel-link" href="{{ config('app.url')}}/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
@@ -60,7 +60,7 @@ ul#ui-id-1 {
                             @endif    
                         </h4>
                         <h4 class="panel-text"><span class="badge bg-red">Organization:</span>
-                            @if($service->service_organization!=0)                        
+                            @if(isset($service->organizations))                           
                                 @foreach($service->organizations as $organization)
                                     @if($loop->last)
                                     <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
@@ -73,22 +73,18 @@ ul#ui-id-1 {
 
                         <h4 class="panel-text"><span class="badge bg-blue">Description:</span> {!! $service->service_description !!}</h4>
 
-                        <h4 class="panel-text"><span class="badge bg-red">Phone:</span>
-                            @if($service->service_phones!=0)                        
-                                @foreach($service->phone as $phone)
-                                    @if($loop->last)
-                                    {{$phone->phone_number}}
-                                    @else
-                                    {{$phone->phone_number}},
-                                    @endif
-                                @endforeach                       
-                            @endif
+                        <h4 class="panel-text"><span class="badge bg-red">Phone:</span>                      
+                            @foreach($service->phone as $phone)
+                                @if($loop->last)
+                                {{$phone->phone_number}}
+                                @else
+                                {{$phone->phone_number}},
+                                @endif
+                            @endforeach                       
                         </h4>
 
                         <h4 class="panel-text"><span class="badge bg-red">Extension:</span>
-                            @if($service->service_phones!=0)
-                                @foreach($service->phone as $phone) {!! $phone->phone_extension !!} @endforeach
-                            @endif  
+                            @foreach($service->phone as $phone) {!! $phone->phone_extension !!} @endforeach
                         </h4>
 
                         <h4 class="panel-text" style="word-wrap: break-word;"><span class="badge bg-blue" >Url:</span> @if($service->service_url!=NULL)<a href="{!! $service->service_url !!}">{!! $service->service_url !!}</a> @endif</h4>
@@ -113,7 +109,7 @@ ul#ui-id-1 {
 
                         <hr>
 
-                        @if($service->service_address!=NULL)
+                        
                         <h4><span class="badge bg-blue">Address:</span>
                             
                                 @foreach($service->address as $address)
@@ -121,14 +117,14 @@ ul#ui-id-1 {
                                 @endforeach
                             
                         </h4>
-                        @endif
-                        @if($service->service_contacts!=0)
+                  
+                      
                         <h4><span class="badge bg-red">Contact:</span>
                           
                             {{$service->contact()->first()->contact_name}}
                         
                         </h4>
-                        @endif
+                
 
                         <h3>Details</h3>
                         @if($service->service_details!=NULL)

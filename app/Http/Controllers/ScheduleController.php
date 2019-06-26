@@ -7,7 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Schedule;
 use App\Airtables;
+use App\CSV_Source;
+use App\Source_data;
 use App\Services\Stringtoint;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ScheduleController extends Controller
 {
@@ -98,6 +101,75 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function csv(Request $request)
+    {
+
+
+        $path = $request->file('csv_file')->getRealPath();
+
+        $data = Excel::load($path)->get();
+
+        $filename =  $request->file('csv_file')->getClientOriginalName();
+        $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+        if ($filename!='regular_schedules.csv') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV is not correct.',
+            );
+            return $response;
+        }
+
+        if (count($data) > 0) {
+            $csv_header_fields = [];
+            foreach ($data[0] as $key => $value) {
+                $csv_header_fields[] = $key;
+            }
+            $csv_data = $data;
+        }
+
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' || $csv_header_fields[2]!='weekday' || $csv_header_fields[3]!='opens_at' || $csv_header_fields[4]!='closes_at' || $csv_header_fields[5]!='original_text' || $csv_header_fields[6]!='location_id' || $csv_header_fields[7]!='service_at_location_id') 
+        {
+            $response = array(
+                'status' => 'error',
+                'result' => 'This CSV field is not matched.',
+            );
+            return $response;
+        }
+
+        Schedule::truncate();
+
+        $size = '';
+        foreach ($csv_data as $row) {
+            
+       
+
+
+                $schedule = new Schedule();
+
+                $schedule->schedule_recordid= $row[$csv_header_fields[0]];
+                $schedule->schedule_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+
+                $schedule->schedule_days_of_week = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+                $schedule->schedule_opens_at = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $schedule->schedule_closes_at = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+                $schedule->schedule_description = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+                $schedule->schedule_locations = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+               
+                                         
+                $schedule ->save();
+
+           
+        }
+
+        $date = date("Y/m/d H:i:s");
+        $csv_source = CSV_Source::where('name', '=', 'Regular_schedules')->first();
+        $csv_source->records = Schedule::count();
+        $csv_source->syncdate = $date;
+        $csv_source->save();
+    }
+
     public function index()
     {
         $schedules = Schedule::orderBy('id')->get();

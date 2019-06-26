@@ -32,6 +32,15 @@ ul#ui-id-1 {
 /*#map{
     position: fixed !important;
 }*/
+@media (max-width: 768px) {
+    .property{
+        padding-left: 30px !important;
+    }
+    #map{
+        display: block !important;
+        width: 100% !important;
+    }
+}
 </style>
 
 @section('content')
@@ -42,8 +51,8 @@ ul#ui-id-1 {
     <!-- Page Content Holder -->
     <div id="content" class="container">
         <!-- Example Striped Rows -->
-        <div class="container-fluid pl-15 pt-15">
-            <div class="col-md-8">
+        <div class="row" style="margin-right: 0">
+            <div class="col-md-8 pt-15 pr-0 pl-30">
                 <div class="col-md-3 p-0 btn-feature">
                     <div class="btn-group">
                         <button type="button" class="btn btn-info dropdown-toggle btn-sort btn-button" id="exampleSizingDropdown2"
@@ -91,7 +100,7 @@ ul#ui-id-1 {
                 </div>
             </div>
         </div>
-        <div class="container-fluid p-0" style="margin-right: 0">
+        <div class="row" style="margin-right: 0">
             
             <div class="col-md-8 pt-15 pr-0">
                 @if (session('address'))
@@ -121,7 +130,7 @@ ul#ui-id-1 {
                                     @endif    
                                 </h4>
                                 <h4><span class="badge bg-red">Organization:</span>
-                                    @if($service->service_organization!=0)                        
+                                    @if(isset($service->organizations))                        
                                         @foreach($service->organizations as $organization)
                                             @if($loop->last)
                                             <a class="panel-link" href="/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
@@ -152,15 +161,18 @@ ul#ui-id-1 {
                       </p>
                     </div>
                 @endif
-                <div class="pagination p-20">
+                <div class="pagination pl-15 pr-15 m-0">
                     {{ $services->appends(\Request::except('page'))->render() }}
                 </div>
             </div>
             
-            <div class="col-md-4 pt-0">
-
-                <div id="map" style="width: 100%; height: 50vh;">
-                    
+            <div class="col-md-4 pt-15 property">
+                <div class="panel">
+                    <div class="panel-body p-0">
+                        <div id="map" style="width: 100%; height: 50vh;">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

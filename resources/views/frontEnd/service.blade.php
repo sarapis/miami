@@ -168,17 +168,16 @@ ul#ui-id-1 {
                 
                 <div class="panel">
                     <div class="panel-body p-0">
-                        <div class="p-10">
+                        <div class="p-10 btn-download">
                             <a href="/download_service/{{$service->service_recordid}}"><button type="button" class="btn btn-info btn-sort btn-button">Download PDF</button></a>
                         </div>
                         <div id="map" style="width:initial;margin: 0;height: 50vh;"></div>
                         <hr>
        
                         <div class="p-20">
-                            <h3>Location</h3>
                             @if(isset($service->locations))
                               @foreach($service->locations as $location)
-                                    <h4><span class="badge bg-red">Name:</span> {{$location->location_name}}
+                                    <h4><span class="badge bg-red">Location:</span> {{$location->location_name}}
                                     <h4><span class="badge bg-red">Address:</span> @if(isset($location->address))
                                         @foreach($location->address as $address)
                                           {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}

@@ -41,7 +41,7 @@
         </ul>
         
     </div>
-    <div class="navbar-header" style="background: #A2E9FF;">
+    <div class="navbar-header">
         
     </div>
   </nav>
@@ -74,6 +74,6 @@
   .btn-button:hover {
     border-color: {{$layout->button_hover_color}};
     background-color: {{$layout->button_hover_color}};
-    color: white;
+    color: {{$layout->button_color}};
   }
 </style>

@@ -98,18 +98,15 @@
 <nav id="sidebar">
     <ul class="list-unstyled components pt-0 mb-0 sidebar-menu"> 
         <li class="option-side">
-            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/services" style="display: block;padding-left: 10px;">Services</a></button>
+            <button class="btn btn-block waves-effect waves-classic btn-button" style="padding: 0;"><a href="/services" style="display: block;padding-left: 10px; color: white;">Services</a></button>
         </li>
         <li class="option-side">
-            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/organizations" style="display: block;padding-left: 10px;">Organizations</a></button>
+            <button class="btn btn-block waves-effect waves-classic btn-button" style="padding: 0;"><a href="/organizations" style="display: block;padding-left: 10px; color: white;">Organizations</a></button>
         </li>
         <li class="option-side">
-            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/about" style="display: block;padding-left: 10px;">About</a></button>
+            <button class="btn btn-block waves-effect waves-classic btn-button" style="padding: 0;"><a href="/about" style="display: block;padding-left: 10px; color: white;">About</a></button>
         </li>
     </ul>
-
-      
-
 </nav>
 
 <script src="{{asset('js/treeview2.js')}}"></script>

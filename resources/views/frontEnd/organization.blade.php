@@ -26,7 +26,15 @@ ul#ui-id-1 {
 #map{
     position: relative !important;
     z-index: 0 !important;
-    height: 30vh !important;
+}
+@media (max-width: 768px) {
+    .property{
+        padding-left: 30px !important;
+    }
+    #map{
+        display: block !important;
+        width: 100% !important;
+    }
 }
 .morecontent span {
   display: none;
@@ -82,7 +90,7 @@ ul#ui-id-1 {
                             <h4><span class="badge bg-red">Service:</span><a class="panel-link" href="/service_{{$service->service_recordid}}"> {{$service->service_name}}</a></h4>
 
                             <h4><span class="badge bg-red">Category:</span> 
-                                @if($service->service_taxonomy!=0)
+                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                     @foreach($service->taxonomy as $key => $taxonomy)
                                         @if($loop->last)
                                         <a class="panel-link" href="/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
@@ -94,9 +102,9 @@ ul#ui-id-1 {
 
                             <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
                             <h4><span class="badge bg-blue">Address:</span>
-                                @if($service->service_address!=NULL)
+                                @if(isset($service->address))
                                     @foreach($service->address as $address)
-                                      {{ $address->address_1 }}
+                                      {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
                                     @endforeach
                                 @endif
                             </h4>
@@ -132,41 +140,44 @@ ul#ui-id-1 {
               
             </div>
             
-            <div class="col-md-4 p-0 pr-15">
-                <div class="pb-10 pt-20">
-                    <a href="/download_organization/{{$organization->organization_recordid}}"><button type="button" class="btn btn-info btn-sort btn-button">Download PDF</button></a>
-                </div>
-                <div id="map" style="width: 100%; margin-top: 0;"></div>
+            <div class="col-md-4 pt-15 property">
+              <div class="panel">
+                <div class="panel-body p-0">
+
+                  <div class="p-10 btn-download">
+                      <a href="/download_organization/{{$organization->organization_recordid}}"><button type="button" class="btn btn-info btn-sort btn-button">Download PDF</button></a>
+                  </div>
+                  <div id="map" style="width:initial;margin-top: 0;height: 50vh;"></div>
                 
                
                   <hr>
-                  <div class="panel m-0 mt-5">
-                      <div class="panel-body p-20">
-                       @if(isset($organization->location))
-                          @foreach($organization->location as $location)
-                          
+                  <div class="p-20">
+                   @if(isset($organization->location))
+                      @foreach($organization->location as $location)
+                      
 
-                                  <h4><span class="badge bg-red">Location:</span> {{$location->location_name}}</h4>
-                                  <h4><span class="badge bg-red">Address:</span> @if(isset($location->address))
-                                    @foreach($location->address as $address)
-                                      {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-                                    @endforeach
-                                  @endif
-                                  </h4>
-                                  <h4><span class="badge bg-red">Phone:</span>
-                                     @foreach($location->phones as $phone)
-                                      @php 
-                                        $phones ='';
-                                        $phones = $phones.$phone->phone_number.','; @endphp
-                                     @endforeach
-                                     {{ rtrim($phones, ',') }}
-                                  </h4>
-                              
-                          @endforeach
-                        @endif
+                              <h4><span class="badge bg-red">Location:</span> {{$location->location_name}}</h4>
+                              <h4><span class="badge bg-red">Address:</span> @if(isset($location->address))
+                                @foreach($location->address as $address)
+                                  {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                @endforeach
+                              @endif
+                              </h4>
+                              <h4><span class="badge bg-red">Phone:</span>
+                                 @foreach($location->phones as $phone)
+                                  @php 
+                                    $phones ='';
+                                    $phones = $phones.$phone->phone_number.','; @endphp
+                                 @endforeach
+                                 {{ rtrim($phones, ',') }}
+                              </h4>
+                          
+                      @endforeach
+                    @endif
                     
                   </div>
                 </div>
+              </div>
             </div>
         </div>
     </div>
