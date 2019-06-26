@@ -186,7 +186,7 @@ Datasync
             if($(this).val() == "")
                 return;
             $(this).next().hide();
-            var formData = new FormData($(this)[0]);
+            var formData = new FormData();
             formData.append('csv_file', $(this)[0].files[0]);
             // console.log($(this)[0].files[0]);
             // formData.append('file', $(this)[0]);
