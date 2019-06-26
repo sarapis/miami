@@ -90,6 +90,7 @@ Schedule
               @endforeach             
             </tbody>
         </table>
+        {!! $schedules->links() !!}
       </div>
     </div>
   </div>
@@ -186,13 +187,13 @@ $(document).ready(function() {
                 }
             }
         },
-        "paging": true,
+        "paging": false,
         "pageLength": 20,
         "lengthChange": false,
         "searching": false,
         "ordering": true,
         "info": false,
-        "autoWidth": false
+        "autoWidth": true
     } );
 } );
 </script>

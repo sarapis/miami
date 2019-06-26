@@ -187,7 +187,7 @@ class ScheduleController extends Controller
 
     public function index()
     {
-        $schedules = Schedule::orderBy('id')->get();
+        $schedules = Schedule::orderBy('id')->paginate(20);
         $source_data = Source_data::find(1); 
 
         return view('backEnd.tables.tb_schedule', compact('schedules', 'source_data'));
