@@ -118,7 +118,7 @@ Services
                   
                       @foreach($service->schedules as $schedule)
                         
-                      <span class="badge bg-purple">{{$schedule->schedule_id}}</span>
+                      <span class="badge bg-purple">{{$schedule->schedule_description}}</span>
                       
                       @endforeach
                            
