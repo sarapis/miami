@@ -113,7 +113,6 @@ Services
                     <span class="badge bg-red">{!! $phone->phone_number !!}</span>
                   @endforeach</td>
 
-                  @if($source_data->active == 1 )
                   <td class="text-center">
                   
                   
@@ -125,7 +124,6 @@ Services
                            
                  
                   </td>
-                  @endif
 
                   <td class="text-center"><span class="badge bg-blue">@if(isset($service->contact()->first()->contact_name))
                   {{$service->contact()->first()->contact_name}}</span>
