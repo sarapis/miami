@@ -118,7 +118,6 @@ Route::post('/range', 'ExploreController@filterValues1');
             return redirect('/tb_schedule');
         });
 
-        Route::resource('tb_regular_schedules', 'ScheduleController');
         Route::resource('tb_taxonomy', 'TaxonomyController');
         Route::resource('tb_details', 'DetailController');
         Route::resource('tb_languages', 'LanguageController');
