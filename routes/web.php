@@ -113,12 +113,28 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::resource('tb_phones', 'PhoneController');
         Route::resource('tb_address', 'AddressController');
         Route::resource('tb_schedule', 'ScheduleController');
+
+        Route::get('/tb_regular_schedules', function () {
+            return redirect('/tb_schedule');
+        });
+
         Route::resource('tb_regular_schedules', 'ScheduleController');
         Route::resource('tb_taxonomy', 'TaxonomyController');
         Route::resource('tb_details', 'DetailController');
         Route::resource('tb_languages', 'LanguageController');
         Route::resource('tb_accessibility', 'AccessibilityController');
-        Route::resource('tb_accessibility_for_disabilites', 'AccessibilityController');
+
+        Route::get('/tb_accessibility_for_disabilites', function () {
+            return redirect('/tb_accessibility');
+        });
+
+        Route::get('/tb_services_taxonomy', function () {
+            return redirect('/tb_services');
+        });
+
+        Route::get('/tb_services_location', function () {
+            return redirect('/tb_locations');
+        });
 
         Route::resource('layout_edit', 'EditlayoutController');
         Route::resource('home_edit', 'EdithomeController');
