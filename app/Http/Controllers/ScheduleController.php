@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Schedule;
+use App\Serviceschedule;
+use App\Locationschedule;
 use App\Airtables;
 use App\CSV_Source;
 use App\Source_data;
@@ -139,28 +141,41 @@ class ScheduleController extends Controller
         }
 
         Schedule::truncate();
+        Serviceschedule::truncate();
+        Locationschedule::truncate();
 
         $size = '';
-        foreach ($csv_data as $row) {
-            
-       
+        foreach ($csv_data as $key => $row) {
 
+            $schedule = new Schedule();
 
-                $schedule = new Schedule();
+            $schedule->schedule_recordid= $key+1;
+            $schedule->schedule_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
 
-                $schedule->schedule_recordid= $row[$csv_header_fields[0]];
-                $schedule->schedule_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            if($row[$csv_header_fields[1]]){
+                $service_schedule = new Serviceschedule();
+                $service_schedule->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $service_schedule->schedule_recordid = $schedule->schedule_recordid;
+                $service_schedule->save();
 
-                $schedule->schedule_days_of_week = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-                $schedule->schedule_opens_at = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-                $schedule->schedule_closes_at = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-                $schedule->schedule_description = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-                $schedule->schedule_locations = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-               
-                                         
-                $schedule ->save();
+            }
 
-           
+            $schedule->schedule_days_of_week = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $schedule->schedule_opens_at = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $schedule->schedule_closes_at = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+            $schedule->schedule_description = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $schedule->schedule_locations = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+
+            if($row[$csv_header_fields[6]]){
+                $location_schedule = new Locationschedule();
+                $location_schedule->location_recordid = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+                $location_schedule->schedule_recordid = $schedule->schedule_recordid;
+                $location_schedule->save();
+
+            }
+                                     
+            $schedule ->save();
+          
         }
 
         $date = date("Y/m/d H:i:s");
@@ -173,8 +188,9 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = Schedule::orderBy('id')->get();
+        $source_data = Source_data::find(1); 
 
-        return view('backEnd.tables.tb_schedule', compact('schedules'));
+        return view('backEnd.tables.tb_schedule', compact('schedules', 'source_data'));
     }
 
     /**

@@ -52,9 +52,7 @@
             <li><a href="/tb_contact">Contact</a></li>
             <li><a href="/tb_phones">Phones</a></li>
             <li><a href="/tb_address">Address</a></li>
-            @if($source_data->active ==1 )
             <li><a href="/tb_schedule">Schedule</a></li>
-            @endif
             <li><a href="/tb_taxonomy">Taxonomy</a></li>
             @if($source_data->active ==1 )
             <li><a href="/tb_details">Details</a></li>
