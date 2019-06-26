@@ -118,7 +118,7 @@ Services
                   
                       @foreach($service->schedules as $schedule)
                         
-                      <span class="badge bg-purple">{{$schedule->schedule_description}}</span>
+                      <span class="badge bg-purple">{{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}</span>
                       
                       @endforeach
                            
