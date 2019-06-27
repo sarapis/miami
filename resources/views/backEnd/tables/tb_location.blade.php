@@ -39,8 +39,9 @@ Locations
                     <th class="text-center">Phones</th>
                     @if($source_data->active == 1 )
                     <th class="text-center">Details</th>
-                    <th class="text-center">Schedule</th>
                     @endif
+                    <th class="text-center">Schedule</th>
+                    
                     <th class="text-center">Address</th>
                     @if($source_data->active == 0 )
                     <th class="text-center">Languages</th>
@@ -100,7 +101,7 @@ Locations
                   <td class="text-center">
                   @if($location->location_schedule!='')
                     @foreach($location->schedules as $schedule)
-                      <span class="badge bg-red">{{ $schedule->id }}</span>
+                      <span class="badge bg-red">{{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}</span>
                     @endforeach
                   @endif
                   </td>

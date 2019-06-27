@@ -160,6 +160,19 @@ ul#ui-id-1 {
                             @endif
                         </h4>
 
+                        @if(isset($service->schedules()->first()->schedule_days_of_week)) 
+                        <h4 class="panel-text"><span class="badge bg-red">Schedules:</span>
+                                                   
+                                @foreach($service->schedules as $schedule)
+                                    @if($loop->last)
+                                    {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}
+                                    @else
+                                    {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}},
+                                    @endif
+                                @endforeach                       
+                            
+                        </h4>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -196,6 +209,20 @@ ul#ui-id-1 {
                                          {{ rtrim($phones, ',') }}
                                     </h4>  
                                     <h4><span class="badge bg-red">Accessibility for disabilities:</span> {{$location->accessibilities()->first()->accessibility}}</h4>
+
+                                    @if(isset($location->schedules()->first()->schedule_days_of_week)) 
+                                    <h4 class="panel-text"><span class="badge bg-red">Schedules:</span>
+                                                               
+                                            @foreach($location->schedules as $schedule)
+                                                @if($loop->last)
+                                                {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}
+                                                @else
+                                                {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}},
+                                                @endif
+                                            @endforeach                       
+                                        
+                                    </h4>
+                                    @endif
                               @endforeach
                             @endif
 
