@@ -171,7 +171,7 @@ class LocationController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='organization_id' || $csv_header_fields[1]!='id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='hours' || $csv_header_fields[6]!='latitude' || $csv_header_fields[7]!='longitude'|| $csv_header_fields[8]!='transportation') 
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='organization_id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='latitude' || $csv_header_fields[6]!='longitude'|| $csv_header_fields[7]!='transportation') 
         {
             $response = array(
                 'status' => 'error',
@@ -190,17 +190,16 @@ class LocationController extends Controller
 
                 $location = new Location();
 
-                $location->location_recordid= $row[$csv_header_fields[1]];
+                $location->location_recordid= $row[$csv_header_fields[0]];
                 $location->location_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
 
-                $location->location_organization = $row[$csv_header_fields[0]];
+                $location->location_organization = $row[$csv_header_fields[1]];
 
                 $location->location_alternate_name = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
                 $location->location_description = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-                $location->location_hours = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-                $location->location_latitude = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-                $location->location_longitude = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-                $location->location_transportation = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
+                $location->location_latitude = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+                $location->location_longitude = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+                $location->location_transportation = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
                
                                          
                 $location ->save();

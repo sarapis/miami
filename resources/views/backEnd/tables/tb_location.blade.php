@@ -32,9 +32,6 @@ Locations
                     <th class="text-center">Organizations</th>                   
                     <th class="text-center">Alternate name</th>
                     <th class="text-center">Description</th>
-                    @if($source_data->active == 0 )
-                    <th class="text-center">Hours</th>
-                    @endif
                     <th class="text-center">Latitude</th>
                     <th class="text-center">Longitude</th>             
                     <th class="text-center">Transportation</th>
@@ -70,9 +67,6 @@ Locations
                   
                   <td class="text-center">{{$location->location_alternate_name}}</td>
                   <td class="text-center"><span style="white-space:normal;">{!! $location->location_description !!}</span></td>
-                  @if($source_data->active == 0)
-                  <td class="text-center">{{$location->location_hours}}</td>
-                  @endif
                   <td class="text-center">{{$location->location_latitude}}</td>
                   <td class="text-center">{{$location->location_longitude}}</td>
                   <td class="text-center">{{$location->location_transportation}}</td>

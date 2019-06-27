@@ -140,7 +140,7 @@ class PhoneController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='service_id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='service_at_location_id' || $csv_header_fields[3]!='id' || $csv_header_fields[4]!='number' || $csv_header_fields[5]!='organization_id' || $csv_header_fields[6]!='contact_id' || $csv_header_fields[7]!='extension' || $csv_header_fields[8]!='type'|| $csv_header_fields[9]!='language'|| $csv_header_fields[10]!='description') 
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' ||$csv_header_fields[2]!='location_id' || $csv_header_fields[3]!='service_at_location_id' || $csv_header_fields[4]!='number' || $csv_header_fields[5]!='organization_id' || $csv_header_fields[6]!='contact_id' || $csv_header_fields[7]!='extension' || $csv_header_fields[8]!='type'|| $csv_header_fields[9]!='language'|| $csv_header_fields[10]!='description') 
         {
             $response = array(
                 'status' => 'error',
@@ -158,23 +158,23 @@ class PhoneController extends Controller
 
             $phone = new Phone();
 
-            $phone->phone_services = $row[$csv_header_fields[0]];
-            $phone->phone_recordid = $row[$csv_header_fields[3]];
+            $phone->phone_recordid = $row[$csv_header_fields[0]];
+            $phone->phone_services = $row[$csv_header_fields[1]];
 
-            if($row[$csv_header_fields[0]] && $row[$csv_header_fields[3]]){
+            if($row[$csv_header_fields[0]] && $row[$csv_header_fields[1]]){
                 $service_phone = new Servicephone();
-                $service_phone->service_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
-                $service_phone->phone_recordid = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $service_phone->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $service_phone->phone_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
                 $service_phone->save();
 
             }
 
-            $phone->phone_locations = $row[$csv_header_fields[1]];
+            $phone->phone_locations = $row[$csv_header_fields[2]];
 
-            if($row[$csv_header_fields[1]] && $row[$csv_header_fields[3]]){
+            if($row[$csv_header_fields[0]] && $row[$csv_header_fields[2]]){
                 $location_phone = new Locationphone();
-                $location_phone->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-                $location_phone->phone_recordid = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+                $location_phone->location_recordid = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+                $location_phone->phone_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
                 $location_phone->save();
 
             }

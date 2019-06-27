@@ -267,7 +267,7 @@ class ServiceController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='organization_id' || $csv_header_fields[1]!='id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='application_process' || $csv_header_fields[6]!='url' || $csv_header_fields[7]!='program_id' || $csv_header_fields[8]!='email' || $csv_header_fields[9]!='status' || $csv_header_fields[10]!='interpretation_services' || $csv_header_fields[11]!='wait_time' && $csv_header_fields[12]!='fees' || $csv_header_fields[13]!='accreditations' || $csv_header_fields[14]!='licenses') 
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='organization_id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='application_process' || $csv_header_fields[6]!='url' || $csv_header_fields[7]!='program_id' || $csv_header_fields[8]!='email' || $csv_header_fields[9]!='status' || $csv_header_fields[10]!='interpretation_services' || $csv_header_fields[11]!='wait_time' && $csv_header_fields[12]!='fees' || $csv_header_fields[13]!='accreditations' || $csv_header_fields[14]!='licenses') 
         {
             $response = array(
                 'status' => 'error',

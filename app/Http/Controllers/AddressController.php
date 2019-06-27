@@ -121,7 +121,7 @@ class AddressController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='location_id' || $csv_header_fields[1]!='address_1' || $csv_header_fields[2]!='address_2' || $csv_header_fields[3]!='city' || $csv_header_fields[4]!='postal_code' || $csv_header_fields[5]!='state_province' || $csv_header_fields[6]!='country' || $csv_header_fields[7]!='id' || $csv_header_fields[8]!='organization_id'|| $csv_header_fields[9]!='attention'|| $csv_header_fields[10]!='region') 
+        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='address_1' || $csv_header_fields[3]!='address_2' || $csv_header_fields[4]!='city' || $csv_header_fields[5]!='postal_code' || $csv_header_fields[6]!='state_province' || $csv_header_fields[7]!='country' || $csv_header_fields[8]!='organization_id' || $csv_header_fields[9]!='attention'|| $csv_header_fields[10]!='region') 
         {
             $response = array(
                 'status' => 'error',
@@ -139,32 +139,31 @@ class AddressController extends Controller
 
             $address = new Address();
 
-            $address->address_recordid = $key+1;
-            $address->address_locations = $row[$csv_header_fields[0]];
+            $address->address_recordid = $row[$csv_header_fields[0]];
+            $address->address_locations = $row[$csv_header_fields[1]];
             
-            if($row[$csv_header_fields[0]]){
+            if($row[$csv_header_fields[1]]){
                 $location_address = new Locationaddress();
-                $location_address->location_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $location_address->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
                 $location_address->address_recordid = $address->address_recordid;
                 $location_address->save();
 
             }
 
-            if($row[$csv_header_fields[0]]){
+            if($row[$csv_header_fields[1]]){
                 $service_address = new Serviceaddress();
-                $service_address->service_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $service_address->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
                 $service_address->address_recordid = $address->address_recordid;
                 $service_address->save();
 
             }
 
-            $address->address_1 = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $address->address_2 = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-            $address->address_city= $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-            $address->address_postal_code = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $address->address_state_province = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-            $address->address_country = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-           
+            $address->address_1 = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $address->address_2 = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $address->address_city= $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
+            $address->address_postal_code = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $address->address_state_province = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+            $address->address_country = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
             $address->address_organization = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
             $address->address_attention = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
             $address->address_region = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;
