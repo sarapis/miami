@@ -23,6 +23,7 @@ use App\Map;
 use PDF;
 use App\Layout;
 use App\CSV;
+use App\Analytic;
 
 class ExploreController extends Controller
 {
@@ -78,49 +79,67 @@ class ExploreController extends Controller
 
     public function geocode(Request $request)
     {
-        $ip= \Request::ip();
-
-        $chip_title = "Search Address:";
+        $chip_service = $request->input('find');
         $chip_address = $request->input('search_address');
 
-        if($chip_address == null){
+        $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
+                    $q->where('organization_name', 'like', '%'.$chip_service.'%');
+                })->orwhereHas('taxonomy', function ($q)  use($chip_service){
+                    $q->where('taxonomy_name', 'like', '%'.$chip_service.'%');
+                })->orwhereHas('details', function ($q)  use($chip_service){
+                    $q->where('detail_value', 'like', '%'.$chip_service.'%');
+                })->select('services.*');
 
-            return redirect('services')->with('address', 'Please enter an address to search by location');
+
+
+        $serviceids = $services->pluck('service_recordid')->toArray();
+        $services = Service::whereIn('service_recordid', $serviceids);
+        $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
+        $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization');
+
+
+        if($chip_address != null){
+
+
+            $response = Geocode::make()->address($chip_address);
+
+
+            $lat =$response->latitude();
+            $lng =$response->longitude();
+
+            $locations = $locations->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
+            ->having('distance', '<', 2)
+            ->orderBy('distance');
+
+            $locationids = $locations->pluck('location_recordid')->toArray();
+
+            $serviceids = Servicelocation::whereIn('location_recordid', $locationids)->pluck('service_recordid')->toArray();
+
+            $services = $services->whereIn('service_recordid', $serviceids);       
+
+        }   
+
+        $search_results = $services->count();
+
+        $services = $services->orderBy('service_name')->paginate(10);
+
+        $locations = $locations->get();
+
+        $analytic = Analytic::where('search_term', '=', $chip_service)->orWhere('search_term', '=', $chip_address)->first();
+        if(isset($analytic)){
+            $analytic->search_term = $chip_service;
+            $analytic->search_results = $search_results;
+            $analytic->times_searched = $analytic->times_searched + 1;
+            $analytic->save();
+        }
+        else{
+            $new_analytic = new Analytic();
+            $new_analytic->search_term = $chip_service;
+            $new_analytic->search_results = $search_results;
+            $new_analytic->times_searched = 1;
+            $new_analytic->save();
         }
 
-        $response = Geocode::make()->address($chip_address);
-    //     $response = Geocode::make()->address('1 Infinite Loop');
-    //     if ($response) {
-    //         echo $response->latitude();
-    //         echo $response->longitude();
-    //         echo $response->formattedAddress();
-    //         echo $response->locationType();
-    // //         echo $response->raw()->address_components[8]['types'][0];
-    // // echo $response->raw()->address_components[8]['long_name'];
-    //        dd($response);
-    //     }
-
-        $lat =$response->latitude();
-        $lng =$response->longitude();
-
-
-
-        // $lat =37.3422;
-        // $lng = -121.905;
-
-        $locations = Location::with('services', 'organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
-        ->having('distance', '<', 2)
-        ->orderBy('distance')
-        ->get();
-
-        $services = [];
-        foreach ($locations as $key => $location) {
-            
-            $values = Service::where('service_locations', 'like', '%'.$location->location_recordid.'%')->get();
-            foreach ($values as $key => $value) {
-                $services[] = $value;
-            }
-        }
         $map = Map::find(1);
 
         $parent_taxonomy = [];
@@ -136,7 +155,7 @@ class ExploreController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
-        return view('frontEnd.near', compact('services','locations', 'chip_title', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
+        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results'));
 
     }
 

@@ -94,7 +94,7 @@ ul#ui-id-1 {
                 <div class="col-md-3 p-0 btn-feature">
                     <div class="btn-group" style="padding: 6px;">
                         @if(isset($search_results))
-                          <p><b>Results: {{$search_results}}</b></p>
+                          <p class="m-0"><b>Results: {{$search_results}}</b></p>
                         @endif
                     </div>
                 </div>
@@ -104,7 +104,7 @@ ul#ui-id-1 {
             
             <div class="col-md-8 pt-15 pr-0">
                 @if (session('address'))
-                    <div class="alert dark alert-danger alert-dismissible" role="alert" style="margin: 0 15px 15px 15px; width: 400px;">
+                    <div class="alert dark alert-danger alert-dismissible ml-15" role="alert">
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                       </button>
@@ -155,7 +155,7 @@ ul#ui-id-1 {
                     @endforeach
 
                 @else
-                    <div class="alert dark alert-warning" role="alert">
+                    <div class="alert dark alert-warning ml-15" role="alert">
                       <p style="color: #ffffff;">
                         <b>There are no results.</b>
                       </p>

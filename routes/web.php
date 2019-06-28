@@ -21,11 +21,11 @@ Route::get('/admin', function () {
     return redirect('/login');
 });
 
-Route::match(['get', 'post'], '/find', [
-    'uses'          => 'HomeController@search'
-]);
+// Route::match(['get', 'post'], '/search', [
+//     'uses'          => 'HomeController@search'
+// ]);
 
-Route::match(['get', 'post'], '/search_address', [
+Route::match(['get', 'post'], '/search', [
     'uses'          => 'ExploreController@geocode'
 ]);
 
