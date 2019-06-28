@@ -55,49 +55,39 @@ $('#widget').draggable();
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,fr,zh-CN,ru,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
     }
-
-  </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    setInterval(function(){
+    var iframe = $('.goog-te-menu-frame');
+    $('table a .text', iframe.contents()).eq(1).text('中文');
+    $('table a .text', iframe.contents()).eq(2).text('Français');
+    $('table a .text', iframe.contents()).eq(3).text('Pусский');
+    $('table a .text', iframe.contents()).eq(4).text('Español');
+    $('.st-btn[data-network="blogger"]').hide();
+    $('.st-btn[data-network="delicious"]').hide();
+    $('.st-btn[data-network="digg"]').hide();
+    $('.st-btn[data-network="flipboard"]').hide();
+    $('.st-btn[data-network="googleplus"]').hide();
+    $('.st-btn[data-network="livejournal"]').hide();
+    $('.st-btn[data-network="mailru"]').hide();
+    $('.st-btn[data-network="meneame"]').hide();
+    $('.st-btn[data-network="messenger"]').hide();
+    $('.st-btn[data-network="odnoklassniki"]').hide();
+    $('.st-btn[data-network="pinterest"]').hide();
+    $('.st-btn[data-network="reddit"]').hide();
+    $('.st-btn[data-network="tumblr"]').hide();
+    $('.st-btn[data-network="vk"]').hide();
+    $('.st-btn[data-network="wechat"]').hide();
+    $('.st-btn[data-network="weibo"]').hide();
+    $('.st-btn[data-network="print"]').hide();
+    $('.st-btn[data-network="xing"]').hide();
+  }, 500);
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
   <script src="{{asset('js/gmaps.js')}}"></script>
-<!-- <script>
 
-    $("#content").swipe({
-        swipeStatus:function(event, phase, direction, distance, duration, fingers)
-            {
-                if (phase=="move" && direction =="right") {
-
-                // console.log('aaaaa');
-                     $("#sidebar").addClass("active");
-                     return false;
-                }
-                if (phase=="move" && direction =="left") {
-
-                       $("#sidebar").removeClass("active");
-                       return false;
-                }
-            }
-    });
-    // $("#sidebar").swipe({
-    //     swipeStatus:function(event, phase, direction, distance, duration, fingers)
-    //         {
-    //             // if (phase=="move" && direction =="right") {
-
-    //             // // console.log('aaaaa');
-    //             //      $("#sidebar").addClass("active");
-    //             //      return false;
-    //             // }
-    //             if (phase=="move" && direction =="left") {
-
-    //                    $("#sidebar").removeClass("active");
-    //                    return false;
-    //             }
-    //         }
-    // }); 
-
-</script> -->
   <script type="text/javascript">
 
 
