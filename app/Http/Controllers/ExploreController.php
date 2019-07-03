@@ -93,14 +93,14 @@ class ExploreController extends Controller
 
 
         $serviceids = $services->pluck('service_recordid')->toArray();
-        $services = Service::whereIn('service_recordid', $serviceids);
+        
         $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
         $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization');
 
 
         if($chip_address != null){
 
-
+            $services = Service::whereIn('service_recordid', $serviceids);
             $response = Geocode::make()->address($chip_address);
 
 
