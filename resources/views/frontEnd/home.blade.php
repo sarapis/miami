@@ -64,7 +64,7 @@ Home
                     <div class="panel-body bg-primary-color">
                         <div class="form-group">
                             <h4 class="text-white">Find Services Near an Address?</h4>
-                            <form method="post" action="/search_address" id="search_location">
+                            <form method="post" action="/search" id="search_location">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <div class="form-group">
                                   
