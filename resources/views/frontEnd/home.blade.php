@@ -35,7 +35,7 @@ Home
                     <h1 class="panel-title" style="font-size: 25px;">I'm looking for ...</h1>
                 </div>
                 <div class="panel-body text-center">
-                    <form action="/find" method="POST" class="hidden-sm hidden-xs col-md-6 col-md-offset-3" style="display: block !important; padding-bottom: 30px;padding: 5px; ">
+                    <form action="/search" method="POST" class="hidden-sm hidden-xs col-md-6 col-md-offset-3" style="display: block !important; padding-bottom: 30px;padding: 5px; ">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="input-group pull-right text-white pr-25">
 
