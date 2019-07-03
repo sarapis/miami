@@ -32,7 +32,7 @@ Import
             <div class="col-md-8">
                 {{ Form::open(array('url' => ['data', 1], 'class' => 'form-horizontal form-label-left', 'method' => 'put', 'enctype'=> 'multipart/form-data')) }}
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Data Source (Select One)
+                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="email">Data Source (Select One)
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" name="source_data">
@@ -41,7 +41,7 @@ Import
                           <option value="0" @if($source_data->active == 0) selected @endif>CSV</option>
                         </select>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
                         <button id="send" type="submit" class="btn btn-success">Save</button>
                     </div>
                 </div>
