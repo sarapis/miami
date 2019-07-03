@@ -37,12 +37,17 @@
             <li><a href="/layout_edit">Appearance</a></li>
             <!-- <li><a href="/home_edit">Home</a></li> -->
             <li><a href="/about_edit">About Page</a></li>
-            <li><a href="/data">Data</a></li>
             <li><a href="/map">Map</a></li>
           </ul>
         </li>
         <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>      
-        <li><a href="/datasync"><i class="fa fa-database"></i> Datasync</a>
+        <li><a><i class="fa fa-database"></i> Datasync <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="/import">Import</a></li>
+            <!-- <li><a href="/home_edit">Home</a></li> -->
+            <li><a href="/expert">Export</a></li>
+          </ul>
+        </li>
         </li>
         <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">

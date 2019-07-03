@@ -41,7 +41,7 @@ ul#ui-id-1 {
                 @foreach($organizations as $organization)
                 <div class="panel content-panel">
                     <div class="panel-body p-20">
-                        <a class="panel-link" href="/organization_{{$organization->organization_recordid}}">{{$organization->organization_name}}</a>
+                        <a class="panel-link" href="/organization_{{$organization->organization_recordid}}" class="notranslate">{{$organization->organization_name}}</a>
                         <h4>Number of Services: @if(isset($organization->services))
                           {{$organization->services->count()}}
                             @else 0 @endif</h4>

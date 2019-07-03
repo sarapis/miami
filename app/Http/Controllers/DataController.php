@@ -120,7 +120,7 @@ class DataController extends Controller
         $source_data->save();
 
 
-        return redirect('data');
+        return redirect('import');
     }
 
     /**

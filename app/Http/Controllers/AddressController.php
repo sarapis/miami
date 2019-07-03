@@ -121,52 +121,43 @@ class AddressController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='address_1' || $csv_header_fields[3]!='address_2' || $csv_header_fields[4]!='city' || $csv_header_fields[5]!='postal_code' || $csv_header_fields[6]!='state_province' || $csv_header_fields[7]!='country' || $csv_header_fields[8]!='organization_id' || $csv_header_fields[9]!='attention'|| $csv_header_fields[10]!='region') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
 
         Address::truncate();
         Locationaddress::truncate();
         Serviceaddress::truncate();
 
-        $size = '';
         foreach ($csv_data as $key => $row) {
 
             $address = new Address();
 
-            $address->address_recordid = $row[$csv_header_fields[0]];
-            $address->address_locations = $row[$csv_header_fields[1]];
+            $address->address_recordid = $row['id'];
+            $address->address_locations = $row['location_id'];
             
-            if($row[$csv_header_fields[1]]){
+            if($row['location_id']){
                 $location_address = new Locationaddress();
-                $location_address->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $location_address->location_recordid = $row['location_id']!='NULL'?$row['location_id']:null;
                 $location_address->address_recordid = $address->address_recordid;
                 $location_address->save();
 
             }
 
-            if($row[$csv_header_fields[1]]){
+            if($row['location_id']){
                 $service_address = new Serviceaddress();
-                $service_address->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $service_address->service_recordid = $row['location_id']!='NULL'?$row['location_id']:null;
                 $service_address->address_recordid = $address->address_recordid;
                 $service_address->save();
 
             }
 
-            $address->address_1 = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-            $address->address_2 = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-            $address->address_city= $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $address->address_postal_code = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-            $address->address_state_province = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-            $address->address_country = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-            $address->address_organization = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
-            $address->address_attention = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
-            $address->address_region = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;
+            $address->address_1 = $row['address_1']!='NULL'?$row['address_1']:null;
+            $address->address_2 = $row['address_2']!='NULL'?$row['address_2']:null;
+            $address->address_city= $row['city']!='NULL'?$row['city']:null;
+            $address->address_postal_code = $row['postal_code']!='NULL'?$row['postal_code']:null;
+            $address->address_state_province = $row['state_province']!='NULL'?$row['state_province']:null;
+            $address->address_country = $row['country']!='NULL'?$row['country']:null;
+            $address->address_organization = $row['organization_id']!='NULL'?$row['organization_id']:null;
+            $address->address_attention = $row['attention']!='NULL'?$row['attention']:null;
+            $address->address_region = $row['region']!='NULL'?$row['region']:null;
 
             $address ->save();
 

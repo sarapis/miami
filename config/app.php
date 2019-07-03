@@ -196,6 +196,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        Chumper\Zipper\ZipperServiceProvider::class,
     ],
 
     /*
@@ -254,6 +256,7 @@ return [
         'Geocode' => Jcf\Geocode\Facades\Geocode::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Zipper' => Chumper\Zipper\Zipper::class,
     ],
 
 ];

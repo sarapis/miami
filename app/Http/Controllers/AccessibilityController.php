@@ -44,27 +44,17 @@ class AccessibilityController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='accessibility' || $csv_header_fields[3]!='details') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
-
         Accessibility::truncate();
 
-        $size = '';
         foreach ($csv_data as $key => $row) {
 
             $accessibility = new Accessibility();
 
-            $accessibility->accessibility_recordid =$row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
-            $accessibility->accessibility_location = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $accessibility->accessibility =$row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $accessibility->accessibility_recordid =$row['id']!='NULL'?$row['id']:null;
+            $accessibility->accessibility_location = $row['location_id']!='NULL'?$row['location_id']:null;
+            $accessibility->accessibility =$row['accessibility']!='NULL'?$row['accessibility']:null;
             ;   
-            $accessibility->accessibility_details =$row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $accessibility->accessibility_details =$row['details']!='NULL'?$row['details']:null;
             ;       
             $accessibility->save();
 

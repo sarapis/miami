@@ -206,35 +206,25 @@ class OrganizationController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='name' || $csv_header_fields[2]!='alternate_name' || $csv_header_fields[3]!='description' || $csv_header_fields[4]!='url' || $csv_header_fields[5]!='email' || $csv_header_fields[6]!='tax_status' || $csv_header_fields[7]!='tax_id' || $csv_header_fields[8]!='year_incorporated' || $csv_header_fields[9]!='legal_status') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
-
         Organization::truncate();
         Organizationdetail::truncate();
 
-        $size = '';
         foreach ($csv_data as $row) {
             
             $organization = new Organization();
 
-            $organization->organization_recordid = $row[$csv_header_fields[0]];
-            $organization->organization_name = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $organization->organization_recordid = $row['id'];
+            $organization->organization_name = $row['name']!='NULL'?$row['name']:null;
 
-            $organization->organization_alternate_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $organization->organization_alternate_name = $row['alternate_name']!='NULL'?$row['alternate_name']:null;
 
-            $organization->organization_description = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-            $organization->organization_url = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $organization->organization_email = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-            $organization->organization_tax_status = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-            $organization->organization_tax_id = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-            $organization->organization_year_incorporated = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
-            $organization->organization_legal_status = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
+            $organization->organization_description = $row['description']!='NULL'?$row['description']:null;
+            $organization->organization_url = $row['url']!='NULL'?$row['url']:null;
+            $organization->organization_email = $row['email']!='NULL'?$row['email']:null;
+            $organization->organization_tax_status = $row['tax_status']!='NULL'?$row['tax_status']:null;
+            $organization->organization_tax_id = $row['tax_id']!='NULL'?$row['tax_id']:null;
+            $organization->organization_year_incorporated = $row['year_incorporated']!='NULL'?$row['year_incorporated']:null;
+            $organization->organization_legal_status = $row['legal_status']!='NULL'?$row['legal_status']:null;
            
                                      
             $organization->save();

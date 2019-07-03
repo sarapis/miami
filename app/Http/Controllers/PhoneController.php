@@ -140,52 +140,42 @@ class PhoneController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' ||$csv_header_fields[2]!='location_id' || $csv_header_fields[3]!='service_at_location_id' || $csv_header_fields[4]!='number' || $csv_header_fields[5]!='organization_id' || $csv_header_fields[6]!='contact_id' || $csv_header_fields[7]!='extension' || $csv_header_fields[8]!='type'|| $csv_header_fields[9]!='language'|| $csv_header_fields[10]!='description') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
-
         Phone::truncate();
         Servicephone::truncate();
         Locationphone::truncate();
 
-        $size = '';
         foreach ($csv_data as $row) {
 
             $phone = new Phone();
 
-            $phone->phone_recordid = $row[$csv_header_fields[0]];
-            $phone->phone_services = $row[$csv_header_fields[1]];
+            $phone->phone_recordid = $row['id'];
+            $phone->phone_services = $row['service_id'];
 
-            if($row[$csv_header_fields[0]] && $row[$csv_header_fields[1]]){
+            if($row['id'] && $row['service_id']){
                 $service_phone = new Servicephone();
-                $service_phone->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-                $service_phone->phone_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $service_phone->service_recordid = $row['service_id']!='NULL'?$row['service_id']:null;
+                $service_phone->phone_recordid = $row['id']!='NULL'?$row['id']:null;
                 $service_phone->save();
 
             }
 
-            $phone->phone_locations = $row[$csv_header_fields[2]];
+            $phone->phone_locations = $row['location_id'];
 
-            if($row[$csv_header_fields[0]] && $row[$csv_header_fields[2]]){
+            if($row['id'] && $row['location_id']){
                 $location_phone = new Locationphone();
-                $location_phone->location_recordid = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-                $location_phone->phone_recordid = $row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+                $location_phone->location_recordid = $row['location_id']!='NULL'?$row['location_id']:null;
+                $location_phone->phone_recordid = $row['id']!='NULL'?$row['id']:null;
                 $location_phone->save();
 
             }
 
-            $phone->phone_number = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $phone->phone_organizations = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-            $phone->phone_contacts = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-            $phone->phone_extension = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-            $phone->phone_type = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
-            $phone->phone_language = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
-            $phone->phone_description = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;                                              
+            $phone->phone_number = $row['number']!='NULL'?$row['number']:null;
+            $phone->phone_organizations = $row['organization_id']!='NULL'?$row['organization_id']:null;
+            $phone->phone_contacts = $row['contact_id']!='NULL'?$row['contact_id']:null;
+            $phone->phone_extension = $row['extension']!='NULL'?$row['extension']:null;
+            $phone->phone_type = $row['type']!='NULL'?$row['type']:null;
+            $phone->phone_language = $row['language']!='NULL'?$row['language']:null;
+            $phone->phone_description = $row['description']!='NULL'?$row['description']:null;                                              
             $phone ->save();
 
            

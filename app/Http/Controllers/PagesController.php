@@ -151,4 +151,9 @@ class PagesController extends Controller
         return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data'));
     }
 
+    public function export()
+    {
+        return view('backEnd.pages.export');
+    }
+
 }

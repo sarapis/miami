@@ -53,14 +53,14 @@ $('#widget').draggable();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,fr,zh-CN,ru,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es,ht', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
     }
     setInterval(function(){
     var iframe = $('.goog-te-menu-frame');
-    $('table a .text', iframe.contents()).eq(1).text('中文');
-    $('table a .text', iframe.contents()).eq(2).text('Français');
-    $('table a .text', iframe.contents()).eq(3).text('Pусский');
-    $('table a .text', iframe.contents()).eq(4).text('Español');
+    // $('table a .text', iframe.contents()).eq(1).text('中文');
+    $('table a .text', iframe.contents()).eq(1).text('Creole');
+    // $('table a .text', iframe.contents()).eq(3).text('Pусский');
+    // $('table a .text', iframe.contents()).eq(4).text('Español');
     $('.st-btn[data-network="blogger"]').hide();
     $('.st-btn[data-network="delicious"]').hide();
     $('.st-btn[data-network="digg"]').hide();

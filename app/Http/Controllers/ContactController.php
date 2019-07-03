@@ -105,45 +105,35 @@ class ContactController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' || $csv_header_fields[2]!='service_at_location_id' || $csv_header_fields[3]!='email' || $csv_header_fields[4]!='name' || $csv_header_fields[5]!='phone_number' || $csv_header_fields[6]!='phone_areacode' || $csv_header_fields[7]!='phone_extension' || $csv_header_fields[8]!='title'|| $csv_header_fields[9]!='organization_id'|| $csv_header_fields[10]!='department') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
-
         Contact::truncate();
         Servicecontact::truncate();
 
 
-        $size = '';
         foreach ($csv_data as $row) {
 
             $contact = new Contact();
 
-            $contact->contact_recordid= $row[$csv_header_fields[0]];
-            $contact->contact_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $contact->contact_recordid= $row['id'];
+            $contact->contact_services = $row['service_id']!='NULL'?$row['service_id']:null;
 
-            if($row[$csv_header_fields[0]]){
+            if($row['service_id']){
 
                 $service_contact = new Servicecontact();
-                $service_contact->service_recordid=$row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-                $service_contact->contact_recordid=$row[$csv_header_fields[0]];
+                $service_contact->service_recordid=$row['service_id']!='NULL'?$row['service_id']:null;
+                $service_contact->contact_recordid=$row['id'];
                 $service_contact->save();
 
             }
 
 
-            $contact->contact_email = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-            $contact->contact_name = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $contact->contact_phones = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-            $contact->contact_phone_areacode = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-            $contact->contact_phone_extension = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-            $contact->contact_title = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
-            $contact->contact_organizations = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
-            $contact->contact_department = $row[$csv_header_fields[10]]!='NULL'?$row[$csv_header_fields[10]]:null;          
+            $contact->contact_email = $row['email']!='NULL'?$row['email']:null;
+            $contact->contact_name = $row['name']!='NULL'?$row['name']:null;
+            $contact->contact_phones = $row['phone_number']!='NULL'?$row['phone_number']:null;
+            $contact->contact_phone_areacode = $row['phone_areacode']!='NULL'?$row['phone_areacode']:null;
+            $contact->contact_phone_extension = $row['phone_extension']!='NULL'?$row['phone_extension']:null;
+            $contact->contact_title = $row['title']!='NULL'?$row['title']:null;
+            $contact->contact_organizations = $row['organization_id']!='NULL'?$row['organization_id']:null;
+            $contact->contact_department = $row['department']!='NULL'?$row['department']:null;          
                                      
             $contact ->save();
 

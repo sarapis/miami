@@ -105,6 +105,8 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::post('/csv_accessibility_for_disabilites', ['uses' => 'AccessibilityController@csv']);
         Route::post('/csv_regular_schedules', ['uses' => 'ScheduleController@csv']);
 
+        Route::post('/csv_zip', ['uses' => 'UploadController@zip']);
+
         //Route::get('/tb_projects', ['uses' => 'ProjectController@index']);
         Route::resource('tb_services', 'ServiceController');
         Route::resource('tb_locations', 'LocationController');
@@ -141,7 +143,8 @@ Route::post('/range', 'ExploreController@filterValues1');
 
         Route::resource('map', 'MapController');
         
-        Route::get('/datasync', ['uses' => 'PagesController@datasync']);
+        Route::get('/import', ['uses' => 'PagesController@datasync']);
+        Route::get('/export', ['uses' => 'PagesController@export']);
 
         Route::resource('data', 'DataController');
 

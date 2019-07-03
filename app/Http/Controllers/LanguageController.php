@@ -44,27 +44,17 @@ class LanguageController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='service_id' || $csv_header_fields[3]!='language') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
-
         Language::truncate();
 
-        $size = '';
         foreach ($csv_data as $row) {
 
             $language = new Language();
 
-            $language->language_recordid =$row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+            $language->language_recordid =$row['id']!='NULL'?$row['id']:null;
             
-            $language->language_location = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $language->language_service = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-            $language->language= $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $language->language_location = $row['location_id']!='NULL'?$row['location_id']:null;
+            $language->language_service = $row['service_id']!='NULL'?$row['service_id']:null;
+            $language->language= $row['language']!='NULL'?$row['language']:null;
             
             $language->save();
 

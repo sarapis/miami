@@ -1,11 +1,11 @@
 @extends('backLayout.app')
 @section('title')
-Datasync
+Import
 @stop
 
 @section('content')
 <style>
-    .inputfile {
+    .inputfile,  .inputfile-zip{
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
@@ -17,20 +17,50 @@ Datasync
         margin-bottom: 0;
         cursor: pointer;
     }
+    .badge{
+        width: 100px;
+    }
 </style>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
 
     <div class="x_panel">
-        
-        @if($source_data->active == 1)
         <div class="col-md-12">
-            <div class="col-md-6">
-              <h2>Datasync (Airtable)</h2>
+            <div class="col-md-2">
+              <h2>Import</h2>
             </div>
-            <div class="clearfix text-right"><button class="btn btn-primary btn-sm sync_all" id="sync_1">SYNC ALL</button>  </div>
-        
+            <div class="col-md-8">
+                {{ Form::open(array('url' => ['data', 1], 'class' => 'form-horizontal form-label-left', 'method' => 'put', 'enctype'=> 'multipart/form-data')) }}
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Data Source (Select One)
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" name="source_data">
+                          <option>Choose option</option>
+                          <option value="1" @if($source_data->active == 1) selected @endif>Open Referral AirTable</option>
+                          <option value="0" @if($source_data->active == 0) selected @endif>CSV</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <button id="send" type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            </div>
+             @if($source_data->active == 1)
+            <div class="col-md-2">
+                <div class="clearfix text-right"><button class="btn btn-primary btn-sm sync_all" id="sync_1">SYNC ALL</button>  </div>
+            </div>  
+            @else     
+            <div class="col-md-2">
+                <div class="clearfix text-right">
+                    <input type="file" name="file_zip" id="file_zip" class="inputfile-zip" />
+                        <button class="btn btn-primary"><label for="file_zip" class="choose-csv">Upload HSDS ZIP File</label></button>
+                </div>
+            </div>  
+            @endif
         </div>
+        @if($source_data->active == 1)
         <div class="x_content">
 
             <table class="table table-striped jambo_table bulk_action" id="tblUsers">
@@ -63,12 +93,6 @@ Datasync
         </div>
 
         @else
-        <div class="col-md-12">
-            <div class="col-md-6">
-              <h2>Datasync (CSV)</h2>
-            </div>
-           
-        </div>
         <div class="x_content">
 
             <table class="table table-striped jambo_table bulk_action" id="tbcsv">
@@ -76,7 +100,7 @@ Datasync
                     <tr>
                         <th class="text-center">No</th>
                         <th class="text-center">Table Name</th>
-                        <th class="text-center">Source csv</th>
+                        <th class="text-center">Source CSV</th>
                         <th class="text-center">Total Records</th>
                         <th class="text-center">Last Synced</th>
                         <th class="text-center">Actions</th>
@@ -92,8 +116,9 @@ Datasync
                       <td class="text-center">{{$csv->syncdate}}</td> 
                       <td class="text-center">
                         <input type="file" name="file_{{$csv->name}}" id="file_{{$csv->name}}" class="inputfile" />
-                        <button class="badge" style="background: #00a65a;"><label for="file_{{$csv->name}}" class="choose-csv">Choose csv</label></button>
+                        <button class="badge" style="background: #00a65a;"><label for="file_{{$csv->name}}" class="choose-csv">Choose CSV</label></button>
                         <button class="badge" style="background: #f39c12;"><a href="tb_{!! strtolower($csv->name) !!}" style="color: white;">View Table</a></button>
+                        <button class="badge" style="background: #9B59B6;"><a href="/csv/{{$csv->source}}" style="color: white;" download>Download CSV</a></button>
                       </td>
                     </tr>
                     
@@ -109,11 +134,7 @@ Datasync
 @endsection
 
 @section('scripts')
-<style type="text/css">
-    button{
-        width: 85px !important;
-    }
-</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -220,6 +241,52 @@ Datasync
                         $img.remove();
                         $here.next().remove();
                         $here.after('<button class="badge bg-purple" style="background: #00a65a;"><label for="file" class="choose-csv">Updated</label></button>');
+                        $here.parent().prev().html('<?php echo date("Y/m/d H:i:s"); ?>');
+                        // $('.x_panel').before(add_alert);
+                    }
+                },
+                error: function (result) {
+                    
+                }
+            });
+        });
+
+        $('.inputfile-zip').change(function(e){
+
+            e.preventDefault(); 
+            if($(this).val() == "")
+                return;
+            $(this).next().hide();
+            var formData = new FormData();
+            formData.append('file_zip', $(this)[0].files[0]);
+            // console.log($(this)[0].files[0]);
+            // formData.append('file', $(this)[0]);
+            $(this).after($img);
+            $here = $(this);
+                 
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                type: "post",
+                async: true,
+                url: '/csv_zip',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(result) {
+
+                    if(result.status == 'error'){
+                        $img.remove();
+                        $here.next().remove();
+                        $here.after('<button class="btn btn-danger"><label for="file_zip" class="choose-csv">Try Again</label></button>');
+                        $here.parent().prev().html('<?php echo date("Y/m/d H:i:s"); ?>');
+                        var add_alert = '<div class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><strong>'+result.result+'</strong></div>';
+                        $('.x_panel').before(add_alert);
+                        
+                    }
+                    else{
+                        $img.remove();
+                        $here.next().remove();
+                        $here.after('<button class="btn btn-success"><label for="file_zip" class="choose-csv">Updated</label></button>');
                         $here.parent().prev().html('<?php echo date("Y/m/d H:i:s"); ?>');
                         // $('.x_panel').before(add_alert);
                     }

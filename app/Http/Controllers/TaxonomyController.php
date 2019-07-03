@@ -106,31 +106,22 @@ class TaxonomyController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='name' || $csv_header_fields[2]!='taxonomy_facet' || $csv_header_fields[3]!='parent_id' || $csv_header_fields[4]!='parent_name' || $csv_header_fields[5]!='vocabulary' ) 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
 
         Taxonomy::truncate();
 
-        $size = '';
         foreach ($csv_data as $key => $row) {
 
             $taxonomy = new Taxonomy();
 
             $taxonomy->taxonomy_recordid = $key+1;
 
-            $taxonomy->taxonomy_id =$row[$csv_header_fields[0]]!='NULL'?$row[$csv_header_fields[0]]:null;
+            $taxonomy->taxonomy_id =$row['id']!='NULL'?$row['id']:null;
             
-            $taxonomy->taxonomy_name = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $taxonomy->taxonomy_facet = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-            $taxonomy->taxonomy_parent_recordid= $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-            $taxonomy->taxonomy_parent_name= $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $taxonomy->taxonomy_vocabulary= $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
+            $taxonomy->taxonomy_name = $row['name']!='NULL'?$row['name']:null;
+            $taxonomy->taxonomy_facet = $row['taxonomy_facet']!='NULL'?$row['taxonomy_facet']:null;
+            $taxonomy->taxonomy_parent_recordid= $row['parent_id']!='NULL'?$row['parent_id']:null;
+            $taxonomy->taxonomy_parent_name= $row['parent_name']!='NULL'?$row['parent_name']:null;
+            $taxonomy->taxonomy_vocabulary= $row['vocabulary']!='NULL'?$row['vocabulary']:null;
 
             $taxonomy->save();
 
@@ -172,27 +163,17 @@ class TaxonomyController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' || $csv_header_fields[2]!='taxonomy_id' || $csv_header_fields[3]!='taxonomy_detail') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
-
         Servicetaxonomy::truncate();
 
-        $size = '';
         foreach ($csv_data as $key => $row) {
 
             $service_taxonomy = new Servicetaxonomy();
 
             $service_taxonomy->taxonomy_recordid = $key+1;
-            $service_taxonomy->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $service_taxonomy->taxonomy_id =$row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $service_taxonomy->service_recordid = $row['service_id']!='NULL'?$row['service_id']:null;
+            $service_taxonomy->taxonomy_id =$row['taxonomy_id']!='NULL'?$row['taxonomy_id']:null;
             
-            $service_taxonomy->taxonomy_detail = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
+            $service_taxonomy->taxonomy_detail = $row['taxonomy_detail']!='NULL'?$row['taxonomy_detail']:null;
            
             $service_taxonomy->save();
 

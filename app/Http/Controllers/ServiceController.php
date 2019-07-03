@@ -267,14 +267,6 @@ class ServiceController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='organization_id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='application_process' || $csv_header_fields[6]!='url' || $csv_header_fields[7]!='program_id' || $csv_header_fields[8]!='email' || $csv_header_fields[9]!='status' || $csv_header_fields[10]!='interpretation_services' || $csv_header_fields[11]!='wait_time' && $csv_header_fields[12]!='fees' || $csv_header_fields[13]!='accreditations' || $csv_header_fields[14]!='licenses') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
 
         Service::truncate();
         Serviceorganization::truncate();
@@ -283,40 +275,38 @@ class ServiceController extends Controller
         foreach ($csv_data as $row) {
             
        
+            $service = new Service();
 
+            $service->service_recordid= $row['id'];
+            $service->service_name = $row['name']!='NULL'?$row['name']:null;
 
-                $service = new Service();
+            if($row['organization_id']){
 
-                $service->service_recordid= $row[$csv_header_fields[1]];
-                $service->service_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+                    $service_organization = new Serviceorganization();
+                    $service_organization->service_recordid=$service->service_recordid;
+                    $service_organization->organization_recordid=$row['organization_id'];
+                    $service_organization->save();
 
-                if($row[$csv_header_fields[0]]){
+                    $service->service_organization = $row['organization_id'];
 
-                        $service_organization = new Serviceorganization();
-                        $service_organization->service_recordid=$service->service_recordid;
-                        $service_organization->organization_recordid=$row[$csv_header_fields[0]];
-                        $service_organization->save();
+            }
 
-                        $service->service_organization = $row[$csv_header_fields[0]];
+            $service->service_alternate_name = $row['alternate_name']!='NULL'?$row['alternate_name']:null;
+            $service->service_description = $row['description']!='NULL'?$row['description']:null;
+            $service->service_application_process = $row['application_process']!='NULL'?$row['application_process']:null;
+            $service->service_url = $row['url']!='NULL'?$row['url']:null;
+            $service->service_program = $row['program_id']!='NULL'?$row['program_id']:null;
 
-                }
+            $service->service_email = $row['email']!='NULL'?$row['email']:null;
+            $service->service_status = $row['status']!='NULL'?$row['status']:null;
 
-                $service->service_alternate_name = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-                $service->service_description = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-                $service->service_application_process = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-                $service->service_url = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-                $service->service_program = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-
-                $service->service_email = $row[$csv_header_fields[8]]!='NULL'?$row[$csv_header_fields[8]]:null;
-                $service->service_status = $row[$csv_header_fields[9]]!='NULL'?$row[$csv_header_fields[9]]:null;
-
-                $service->service_wait_time = $row[$csv_header_fields[11]]!='NULL'?$row[$csv_header_fields[11]]:null;
-                $service->service_fees = $row[$csv_header_fields[12]]!='NULL'?$row[$csv_header_fields[12]]:null;
-                $service->service_accreditations = $row[$csv_header_fields[13]]!='NULL'?$row[$csv_header_fields[13]]:null;
-                $service->service_licenses = $row[$csv_header_fields[14]]!='NULL'?$row[$csv_header_fields[14]]:null;
+            $service->service_wait_time = $row['wait_time']!='NULL'?$row['wait_time']:null;
+            $service->service_fees = $row['fees']!='NULL'?$row['fees']:null;
+            $service->service_accreditations = $row['accreditations']!='NULL'?$row['accreditations']:null;
+            $service->service_licenses = $row['licenses']!='NULL'?$row['licenses']:null;
+        
             
-                
-                $service ->save();
+            $service ->save();
 
            
         }
@@ -356,24 +346,15 @@ class ServiceController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='location_id' || $csv_header_fields[2]!='service_id' || $csv_header_fields[3]!='description') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
 
         Servicelocation::truncate();
 
-        $size = '';
         foreach ($csv_data as $key => $row) {
 
             $service_location = new Servicelocation();
 
-            $service_location->location_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
-            $service_location->service_recordid =$row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
+            $service_location->location_recordid = $row['location_id']!='NULL'?$row['location_id']:null;
+            $service_location->service_recordid =$row['service_id']!='NULL'?$row['service_id']:null;
                       
             $service_location->save();
 

@@ -171,38 +171,26 @@ class LocationController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='organization_id' || $csv_header_fields[2]!='name' || $csv_header_fields[3]!='alternate_name' || $csv_header_fields[4]!='description' || $csv_header_fields[5]!='latitude' || $csv_header_fields[6]!='longitude'|| $csv_header_fields[7]!='transportation') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
 
         Location::truncate();
 
-        $size = '';
         foreach ($csv_data as $row) {
             
-       
+            $location = new Location();
 
+            $location->location_recordid= $row['id'];
+            $location->location_name = $row['name']!='NULL'?$row['name']:null;
 
-                $location = new Location();
+            $location->location_organization = $row['organization_id'];
 
-                $location->location_recordid= $row[$csv_header_fields[0]];
-                $location->location_name = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-
-                $location->location_organization = $row[$csv_header_fields[1]];
-
-                $location->location_alternate_name = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-                $location->location_description = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-                $location->location_latitude = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-                $location->location_longitude = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
-                $location->location_transportation = $row[$csv_header_fields[7]]!='NULL'?$row[$csv_header_fields[7]]:null;
-               
-                                         
-                $location ->save();
+            $location->location_alternate_name = $row['alternate_name']!='NULL'?$row['alternate_name']:null;
+            $location->location_description = $row['description']!='NULL'?$row['description']:null;
+            $location->location_latitude = $row['latitude']!='NULL'?$row['latitude']:null;
+            $location->location_longitude = $row['longitude']!='NULL'?$row['longitude']:null;
+            $location->location_transportation = $row['transportation']!='NULL'?$row['transportation']:null;
+           
+                                     
+            $location ->save();
 
            
         }

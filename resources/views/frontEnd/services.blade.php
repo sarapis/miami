@@ -133,9 +133,9 @@ ul#ui-id-1 {
                                     @if(isset($service->organizations))                        
                                         @foreach($service->organizations as $organization)
                                             @if($loop->last)
-                                            <a class="panel-link" href="/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                            <a class="panel-link" href="/organization_{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>
                                             @else
-                                            <a class="panel-link" href="/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>,
+                                            <a class="panel-link" href="/organization_{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>,
                                             @endif
                                         @endforeach                       
                                     @endif

@@ -131,44 +131,36 @@ class ScheduleController extends Controller
             $csv_data = $data;
         }
 
-        if ($csv_header_fields[0]!='id' || $csv_header_fields[1]!='service_id' || $csv_header_fields[2]!='weekday' || $csv_header_fields[3]!='opens_at' || $csv_header_fields[4]!='closes_at' || $csv_header_fields[5]!='original_text' || $csv_header_fields[6]!='location_id' || $csv_header_fields[7]!='service_at_location_id') 
-        {
-            $response = array(
-                'status' => 'error',
-                'result' => 'This CSV field is not matched.',
-            );
-            return $response;
-        }
 
         Schedule::truncate();
         Serviceschedule::truncate();
         Locationschedule::truncate();
 
-        $size = '';
+
         foreach ($csv_data as $key => $row) {
 
             $schedule = new Schedule();
 
             $schedule->schedule_recordid= $key+1;
-            $schedule->schedule_services = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+            $schedule->schedule_services = $row['service_id']!='NULL'?$row['service_id']:null;
 
-            if($row[$csv_header_fields[1]]){
+            if($row['service_id']){
                 $service_schedule = new Serviceschedule();
-                $service_schedule->service_recordid = $row[$csv_header_fields[1]]!='NULL'?$row[$csv_header_fields[1]]:null;
+                $service_schedule->service_recordid = $row['service_id']!='NULL'?$row['service_id']:null;
                 $service_schedule->schedule_recordid = $schedule->schedule_recordid;
                 $service_schedule->save();
 
             }
 
-            $schedule->schedule_days_of_week = $row[$csv_header_fields[2]]!='NULL'?$row[$csv_header_fields[2]]:null;
-            $schedule->schedule_opens_at = $row[$csv_header_fields[3]]!='NULL'?$row[$csv_header_fields[3]]:null;
-            $schedule->schedule_closes_at = $row[$csv_header_fields[4]]!='NULL'?$row[$csv_header_fields[4]]:null;
-            $schedule->schedule_description = $row[$csv_header_fields[5]]!='NULL'?$row[$csv_header_fields[5]]:null;
-            $schedule->schedule_locations = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+            $schedule->schedule_days_of_week = $row['weekday']!='NULL'?$row['weekday']:null;
+            $schedule->schedule_opens_at = $row['opens_at']!='NULL'?$row['opens_at']:null;
+            $schedule->schedule_closes_at = $row['closes_at']!='NULL'?$row['closes_at']:null;
+            $schedule->schedule_description = $row['original_text']!='NULL'?$row['original_text']:null;
+            $schedule->schedule_locations = $row['location_id']!='NULL'?$row['location_id']:null;
 
-            if($row[$csv_header_fields[6]]){
+            if($row['location_id']){
                 $location_schedule = new Locationschedule();
-                $location_schedule->location_recordid = $row[$csv_header_fields[6]]!='NULL'?$row[$csv_header_fields[6]]:null;
+                $location_schedule->location_recordid = $row['location_id']!='NULL'?$row['location_id']:null;
                 $location_schedule->schedule_recordid = $schedule->schedule_recordid;
                 $location_schedule->save();
 
