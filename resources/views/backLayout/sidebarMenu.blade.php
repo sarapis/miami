@@ -45,7 +45,7 @@
           <ul class="nav child_menu">
             <li><a href="/import">Import</a></li>
             <!-- <li><a href="/home_edit">Home</a></li> -->
-            <li><a href="/expert">Export</a></li>
+            <li><a href="/export">Export</a></li>
           </ul>
         </li>
         </li>
