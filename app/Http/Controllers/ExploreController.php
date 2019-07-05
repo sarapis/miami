@@ -24,6 +24,7 @@ use PDF;
 use App\Layout;
 use App\CSV;
 use App\Analytic;
+use App\Source_data;
 
 class ExploreController extends Controller
 {
@@ -82,13 +83,23 @@ class ExploreController extends Controller
         $chip_service = $request->input('find');
         $chip_address = $request->input('search_address');
 
-        $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
+        $source_data = Source_data::find(1);
+
+        if($source_data->active == 1)
+
+            $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
                     $q->where('organization_name', 'like', '%'.$chip_service.'%');
                 })->orwhereHas('taxonomy', function ($q)  use($chip_service){
                     $q->where('taxonomy_name', 'like', '%'.$chip_service.'%');
                 })->orwhereHas('details', function ($q)  use($chip_service){
                     $q->where('detail_value', 'like', '%'.$chip_service.'%');
-                })->select('services.*');
+                })->select('services.service_recordid');
+        else
+            $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
+                    $q->where('organization_name', 'like', '%'.$chip_service.'%');
+                })->orwhereHas('taxonomy', function ($q)  use($chip_service){
+                    $q->where('taxonomy_name', 'like', '%'.$chip_service.'%');
+                })->select('services.service_recordid');
 
 
 
