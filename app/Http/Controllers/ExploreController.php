@@ -112,6 +112,7 @@ class ExploreController extends Controller
         if($chip_address != null){
 
             $services = Service::whereIn('service_recordid', $serviceids);
+            
             $response = Geocode::make()->address($chip_address);
 
 
