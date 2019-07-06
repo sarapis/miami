@@ -131,7 +131,7 @@ class ExploreController extends Controller
 
         }   
 
-        $search_results = $services->count();
+        $search_results = 0;
 
         $services = $services->orderBy('service_name')->paginate(10);
 
