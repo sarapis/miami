@@ -83,6 +83,9 @@ class ExploreController extends Controller
         $chip_service = $request->input('find');
         $chip_address = $request->input('search_address');
 
+        var_dump($chip_service, $chip_address);
+        exit();
+
         $source_data = Source_data::find(1);
 
         if($source_data->active == 1)
@@ -105,8 +108,7 @@ class ExploreController extends Controller
 
         $serviceids = $services->pluck('service_recordid')->toArray();
 
-        var_dump($serviceids);
-        exit();
+
         
         $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
         $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization');
