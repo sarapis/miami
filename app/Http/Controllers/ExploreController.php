@@ -105,9 +105,6 @@ class ExploreController extends Controller
 
         $serviceids = $services->pluck('service_recordid')->toArray();
 
-        var_dump($serviceids);
-        exit();
-        
         $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
         $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization');
 
