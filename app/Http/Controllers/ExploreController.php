@@ -104,6 +104,9 @@ class ExploreController extends Controller
 
 
         $serviceids = $services->pluck('service_recordid')->toArray();
+
+        var_dump($serviceids);
+        exit();
         
         $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
         $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization');
@@ -131,7 +134,7 @@ class ExploreController extends Controller
 
         }   
 
-        $search_results = 0;
+        $search_results = $services->count();
 
         $services = $services->orderBy('service_name')->paginate(10);
 

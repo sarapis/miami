@@ -21,9 +21,6 @@ Route::get('/admin', function () {
     return redirect('/login');
 });
 
-// Route::match(['get', 'post'], '/search', [
-//     'uses'          => 'HomeController@search'
-// ]);
 
 Route::match(['get', 'post'], '/search', [
     'uses'          => 'ExploreController@geocode'
@@ -51,8 +48,7 @@ Route::get('/explore/status_{id}', 'ExploreController@status');
 Route::get('/explore/district_{id}', 'ExploreController@district');
 Route::get('/explore/category_{id}', 'ExploreController@category');
 Route::get('/explore/cityagency_{id}', 'ExploreController@cityagency');
-// Route::post('/search', 'ExploreController@search');
-// Route::get('/filter', 'ExploreController@filterValues');
+
 
 //download pdf
 Route::get('/download_service/{id}', 'ServiceController@download');
