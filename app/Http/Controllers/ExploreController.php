@@ -95,7 +95,11 @@ class ExploreController extends Controller
                     $q->where('detail_value', 'like', '%'.$chip_service.'%');
                 })->select('services.*');
         else
-            $services= Service::with(['organizations', 'taxonomy'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%');
+            $services= Service::with(['organizations', 'taxonomy'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
+                    $q->where('organization_name', 'like', '%'.$chip_service.'%');
+                })->orwhereHas('taxonomy', function ($q)  use($chip_service){
+                    $q->where('taxonomy_name', 'like', '%'.$chip_service.'%');
+                })->select('services.*');
 
 
 
