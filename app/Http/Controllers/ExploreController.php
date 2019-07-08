@@ -134,10 +134,10 @@ class ExploreController extends Controller
         else
             $services = Service::WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
 
-        if($chip_service == null && $chip_address == null)
+        if($chip_service == null && $chip_address == null){
             $services = Service::orderBy('service_name');
             $locations = Location::with('services','organization');
-
+        }
 
         $search_results = $services->count();
 
