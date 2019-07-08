@@ -107,8 +107,7 @@ class ExploreController extends Controller
             $taxonomy_serviceids = Servicetaxonomy::whereIn('taxonomy_recordid', $taxonomy_recordids)->pluck('service_recordid')->toArray();
 
 
-            $locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
-            $locations = Location::whereIn('location_recordid', $locationids)->with('services','organization');
+            $service_locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
 
 
         if($chip_address != null){
@@ -119,21 +118,25 @@ class ExploreController extends Controller
             $lat =$response->latitude();
             $lng =$response->longitude();
 
-            $locations = $locations->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
+            $locations = Location::with('services','organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
             ->having('distance', '<', 2)
             ->orderBy('distance');
 
-            $locationids = $locations->pluck('location_recordid')->toArray();
+            $location_locationids = $locations->pluck('location_recordid')->toArray();
 
             $location_serviceids = Servicelocation::whereIn('location_recordid', $locationids)->pluck('service_recordid')->toArray();
         }   
 
         if($chip_service != null)
+        {
+            $services = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
 
-            $services = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->orWhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
-        else
+            $locations = Location::whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
+        }
+        else{
             $services = Service::WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
-
+            $locations = Location::whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
+        }
         if($chip_service == null && $chip_address == null){
             $services = Service::orderBy('service_name');
             $locations = Location::with('services','organization');
