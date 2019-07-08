@@ -125,7 +125,7 @@ class ExploreController extends Controller
 
             $location_locationids = $locations->pluck('location_recordid')->toArray();
 
-            $location_serviceids = Servicelocation::whereIn('location_recordid', $locationids)->pluck('service_recordid')->toArray();
+            $location_serviceids = Servicelocation::whereIn('location_recordid', $location_locationids)->pluck('service_recordid')->toArray();
         }   
 
         if($chip_service != null)
