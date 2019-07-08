@@ -132,11 +132,11 @@ class ExploreController extends Controller
         {
             $services = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
 
-            $locations = Location::whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
+            $locations = Location::with('services','organization')->whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
         }
         else{
             $services = Service::WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
-            $locations = Location::whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
+            $locations = Location::with('services','organization')->whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
         }
         if($chip_service == null && $chip_address == null){
             $services = Service::orderBy('service_name');
