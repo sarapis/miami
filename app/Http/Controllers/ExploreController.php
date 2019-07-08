@@ -87,8 +87,8 @@ class ExploreController extends Controller
 
         $source_data = Source_data::find(1);
 
-        $location_serviceids = [];
-        $location_locationids = [];
+        $location_serviceids = Service::pluck('service_recordid')->toArray();
+        $location_locationids = Location::with('services','organization')->pluck('location_recordid')->toArray();
 
         if($source_data->active == 1)
 
