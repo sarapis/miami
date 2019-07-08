@@ -130,7 +130,10 @@ class ExploreController extends Controller
 
         if($chip_service != null)
         {
-            $services = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
+
+            $service_ids = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->pluck('service_recordid')->toArray();
+
+            $services = Service::whereIn('service_recordid', $serviceids)->whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
 
             $locations = Location::with('services','organization')->whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
         }
