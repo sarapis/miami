@@ -345,7 +345,10 @@ p{
     pointer-events: none;
     color: #000000;
 }
-
+.input-search .input-search-btn{
+  font-size: 16px;
+  color: #000000;
+}
 .option-side{
     margin: 7px;
     background-color: #ffffff;

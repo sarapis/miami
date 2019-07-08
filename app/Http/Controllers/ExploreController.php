@@ -50,17 +50,19 @@ class ExploreController extends Controller
 
         $locations = Location::with('services', 'organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
         ->having('distance', '<', 2)
-        ->orderBy('distance')
-        ->get();
+        ->orderBy('distance');
 
-        $services = [];
-        foreach ($locations as $key => $location) {
-            
-            $values = Service::where('service_locations', 'like', '%'.$location->location_recordid.'%')->get();
-            foreach ($values as $key => $value) {
-                $services[] = $value;
-            }
-        }
+        $locationids = $locations->pluck('location_recordid')->toArray();
+
+        $location_serviceids = Servicelocation::whereIn('location_recordid', $locationids)->pluck('service_recordid')->toArray();
+
+        $services = Service::whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
+
+        $search_results = $services->count();
+
+        $services = $services->paginate(10);
+
+        $locations = $locations->get();
 
         $map = Map::find(1);
 
@@ -75,7 +77,7 @@ class ExploreController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
         
-        return view('frontEnd.near', compact('services','locations', 'chip_title', 'chip_name', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
+        return view('frontEnd.services', compact('services','locations', 'chip_title', 'chip_name', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results'));
     }
 
     public function geocode(Request $request)

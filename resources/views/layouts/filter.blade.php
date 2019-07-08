@@ -9,16 +9,17 @@
           </div>    
         </div>
         <div class="col-md-5">
-          <div class="input-search">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              
-                  <i class="input-search-icon md-pin" aria-hidden="true"></i>
-                  <input id="location2" type="text" class="form-control search-form" name="search_address" placeholder="Search Address" @if(isset($chip_address)) value="{{$chip_address}}" @endif>
-          </div> 
+
+            <div class="input-search">
+              <i class="input-search-icon md-pin" aria-hidden="true"></i>
+              <input id="location2" type="text" class="form-control search-form" name="search_address" placeholder="Search Address" @if(isset($chip_address)) value="{{$chip_address}}" @endif>
+              <button type="button" class="input-search-btn" title="Services Near Me"><a href="/services_near_me"><i class="icon md-gps-dot"></i></a></button>
+            </div>
+ 
         </div>
         
         <div class="col-md-2">
-           <button class="btn btn-block waves-effect waves-classic btn_findout" style="padding: 0;margin-bottom: 14px;" title="Services Near Me"><a href="/services_near_me" class="search-near" style="display: block;font-size: 22px;padding: 5px;"><i class="input-search-icon md-pin-drop" aria-hidden="true"></i></a></button>
+           <button class="btn btn-block waves-effect waves-classic btn_findout" style="padding: 0;margin-bottom: 14px;font-size: 22px;" title="Search"><a class="search-near" style="display: block;font-size: 18px;padding: 8px;color: #000;">Search</a></button>
         </div>
         </form>
     </div>  
