@@ -87,6 +87,8 @@ class ExploreController extends Controller
 
         $source_data = Source_data::find(1);
 
+        $location_serviceids = [];
+
         if($source_data->active == 1)
 
             $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
@@ -131,6 +133,9 @@ class ExploreController extends Controller
             $services = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->orWhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
         else
             $services = Service::WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
+
+        if($chip_service == null && $chip_address == null)
+            $services = Service::orderBy('service_name');
 
         $search_results = $services->count();
 
