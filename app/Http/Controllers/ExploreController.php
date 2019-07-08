@@ -88,6 +88,7 @@ class ExploreController extends Controller
         $source_data = Source_data::find(1);
 
         $location_serviceids = [];
+        $location_locationids = [];
 
         if($source_data->active == 1)
 
