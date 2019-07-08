@@ -136,6 +136,8 @@ class ExploreController extends Controller
 
         if($chip_service == null && $chip_address == null)
             $services = Service::orderBy('service_name');
+            $locations = Location::with('services','organization');
+
 
         $search_results = $services->count();
 
