@@ -30,12 +30,12 @@ Route::get('/about', ['uses' => 'HomeController@about']);
 Route::get('/feedback', ['uses' => 'HomeController@feedback']);
 
 Route::get('/services', 'ServiceController@services');
-Route::get('/service_{id}', 'ServiceController@service');
+Route::get('/service/{id}', 'ServiceController@service');
 
 Route::get('/organizations', 'OrganizationController@organizations');
-Route::get('/organization_{id}', 'OrganizationController@organization');
+Route::get('/organization/{id}', 'OrganizationController@organization');
 
-Route::get('/category_{id}', 'ServiceController@taxonomy');
+Route::get('/category/{id}', 'ServiceController@taxonomy');
 
 Route::get('/services_near_me', 'ExploreController@geolocation');
 

@@ -13,13 +13,13 @@
                 <div class="panel content-panel">
                     <div class="panel-body p-20">
                         
-                        <h3><span class="badge bg-red">Service:</span> <a class="panel-link" href="{{ config('app.url')}}/service_{{$service->service_recordid}}"> {{$service->service_name}}</a></h3>
+                        <h3><span class="badge bg-red">Service:</span> <a class="panel-link" href="{{ config('app.url')}}/service/{{$service->service_recordid}}"> {{$service->service_name}}</a></h3>
                         <h4><span class="badge bg-red">Category:</span> 
                             @if($service->service_taxonomy!=0)
                                 @foreach($service->taxonomy as $key => $taxonomy)
                                     @if($loop->last)
-                                    <a class="panel-link" href="{{ config('app.url')}}/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
-                                    <a class="panel-link" href="{{ config('app.url')}}/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>,
+                                    <a class="panel-link" href="{{ config('app.url')}}/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
+                                    <a class="panel-link" href="{{ config('app.url')}}/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>,
                                     @endif
                                 @endforeach
                             @endif    
@@ -28,9 +28,9 @@
                             @if($service->service_organization!=0)                        
                                 @foreach($service->organizations as $organization)
                                     @if($loop->last)
-                                    <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                    <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
                                     @else
-                                    <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>,
+                                    <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>,
                                     @endif
                                 @endforeach                       
                             @endif

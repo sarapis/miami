@@ -60,8 +60,8 @@ ul#ui-id-1 {
                             @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                 @foreach($service->taxonomy as $key => $taxonomy)
                                     @if($loop->last)
-                                    <a class="panel-link" href="/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
-                                    <a class="panel-link" href="/category_{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>,
+                                    <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
+                                    <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>,
                                     @endif
                                 @endforeach
                             @endif    
@@ -70,9 +70,9 @@ ul#ui-id-1 {
                             @if($service->service_organization!=0)                        
                                 @foreach($service->organizations as $organization)
                                     @if($loop->last)
-                                    <a class="panel-link" href="/organization_{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>
+                                    <a class="panel-link" href="/organization/{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>
                                     @else
-                                    <a class="panel-link" href="/organization_{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>,
+                                    <a class="panel-link" href="/organization/{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>,
                                     @endif
                                 @endforeach                       
                             @endif
