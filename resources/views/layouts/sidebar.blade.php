@@ -98,15 +98,33 @@
 <nav id="sidebar">
     <ul class="list-unstyled components pt-0 mb-0 sidebar-menu"> 
         <li class="option-side">
-            <button class="btn btn-block waves-effect waves-classic btn-button" style="padding: 0;"><a href="/services" style="display: block;padding-left: 10px; color: white;">Services</a></button>
+            <a href="/services" class="btn btn-block btn-primary waves-effect waves-classic" >Services</a>
         </li>
         <li class="option-side">
-            <button class="btn btn-block waves-effect waves-classic btn-button" style="padding: 0;"><a href="/organizations" style="display: block;padding-left: 10px; color: white;">Organizations</a></button>
+            <a href="/organizations" class="btn btn-block btn-primary waves-effect waves-classic" >Organizations</a>
         </li>
         <li class="option-side">
-            <button class="btn btn-block waves-effect waves-classic btn-button" style="padding: 0;"><a href="/about" style="display: block;padding-left: 10px; color: white;">About</a></button>
+            <a href="/about" class="btn btn-block btn-primary waves-effect waves-classic" >About</a>
+        </li>
+        <li class="option-side">
+            <div class="input-search">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <i class="input-search-icon md-search" aria-hidden="true"></i>
+                <input type="text" class="form-control search-form" name="find" placeholder="Search for Services" id="search_address" @if(isset($chip_service)) value="{{$chip_service}}" @endif>
+            </div> 
+        </li>
+        <li class="option-side">
+            <div class="input-search">
+                <i class="input-search-icon md-pin" aria-hidden="true"></i>
+                <input id="location2" type="text" class="form-control search-form" name="search_address" placeholder="Search Address" @if(isset($chip_address)) value="{{$chip_address}}" @endif>
+                <button type="button" class="input-search-btn" title="Services Near Me"><a href="/services_near_me"><i class="icon md-gps-dot"></i></a></button>
+            </div>
+        </li>
+        <li class="option-side">
+            <button class="btn btn-primary btn-block waves-effect waves-classic " title="Search" style="line-height: 31px;">Search</button>
         </li>
     </ul>
+
 </nav>
 
 <script src="{{asset('js/treeview2.js')}}"></script>

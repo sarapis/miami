@@ -11,25 +11,25 @@
   <link rel="apple-touch-icon" href="../../frontend/assets/images/apple-touch-icon.png">
   <link rel="shortcut icon" href="../../frontend/assets/images/favicon.ico">
   <!-- Stylesheets -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css" />
-   <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-  <link rel="stylesheet" href="../../../frontend/global/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../../../frontend/global/css/bootstrap-extend.min.css">
+   <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/
+    jquery-ui.css"> -->
+    
+  <link rel="stylesheet" href="../../frontend/global/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../frontend/global/css/bootstrap-extend.min.css">
 
   <link rel="stylesheet" href="../../frontend/assets/css/site.min.css">
   <!-- Plugins -->
-  <link rel="stylesheet" href="../../../frontend/global/vend/animsition/animsition.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/asscrollable/asScrollable.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/switchery/switchery.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/intro-js/introjs.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/slidepanel/slidePanel.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/flag-icon-css/flag-icon.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/waves/waves.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/animsition/animsition.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/asscrollable/asScrollable.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/switchery/switchery.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/intro-js/introjs.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/slidepanel/slidePanel.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/flag-icon-css/flag-icon.css">
+  <link rel="stylesheet" href="../../frontend/global/vend/waves/waves.css">
+  <link rel="stylesheet" href="../../frontend/assets/examples/css/uikit/dropdowns.css">
   <!-- Fonts -->
-<!--   <link rel="stylesheet" href="../../../frontend/global/vend/footable/footable.bootstrap.css">
-  <link rel="stylesheet" href="../../../frontend/global/vend/footable/footable.core.css">
-  <link rel="stylesheet" href="../../assets/examples/css/tables/footable.css"> -->
   <link rel="stylesheet" href="../../../../frontend/global/fonts/web-icons/web-icons.css">
    <link rel="stylesheet" href="../../../../frontend/global/fonts/font-awesome/font-awesome.css">
   <link rel="stylesheet" href="../../../frontend/global/fonts/material-design/material-design.min.css">
@@ -39,6 +39,8 @@
   <link rel="stylesheet" href="../../../css/explorestyle.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
   <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+
+  <link rel="stylesheet" href="../../frontend/assets/examples/css/pages/register.css">
 
 
 <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
@@ -52,9 +54,11 @@
     <![endif]-->
   <!-- Scripts -->
   
-<!--   <script src="../../../frontend/global/vend/jquery/jquery.js"></script> -->
- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+{{-- <script src="../../../frontend/global/vend/jquery/jquery.js"></script> --> --}}
+ {{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> --}}
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
+{{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> --}}
 <script type="text/javascript" src="../../js/jquery.jticker.js"></script>
 <script type="text/javascript">
       jQuery(function($) {
@@ -357,7 +361,7 @@ $(function () {
     visibility: visible;
   }
   .goog-te-menu-value {
-    max-width: 80px;
+    max-width: 22px;
     display: inline-block;
   }
  </style>
