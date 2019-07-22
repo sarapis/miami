@@ -129,7 +129,7 @@ ul#ui-id-1 {
                                         @endif
                                         </span>
                                     </h4>
-                                    <h4><span class="pl-0 category_badge"><b>Category:</b><b>
+                                    <h4><span class="pl-0 category_badge"><b>Category:</b>
                                         @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                             @foreach($service->taxonomy as $key => $taxonomy)
                                                 @if($loop->last)
