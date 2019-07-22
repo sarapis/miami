@@ -79,7 +79,7 @@ ul#ui-id-1 {
 
                         @if($organization->organization_phones!='')
 						<h4 style="line-height: inherit;">
-                        	<span><i class="icon md-account font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                        	<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
 								@foreach($organization->phones as $phone)
 								{!! $phone->phone_number !!}, 
 								@endforeach
@@ -97,9 +97,10 @@ ul#ui-id-1 {
                 </div>
 
                 @if(isset($organization->services))
+                <h4 class="p-15 m-0 text-left" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($organization->services)){{$organization->services->count()}}@else 0 @endif)</h4>
                 @foreach($organization->services as $service)
                     <div class="card">
-						<h4 class="p-15 m-0 text-left" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($organization->services)){{$organization->services->count()}}@else 0 @endif)</h4>
+					
 						<div class="card-block">
 							<h4 class="card-title">
 								<a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
@@ -107,7 +108,7 @@ ul#ui-id-1 {
 							<h4 style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
                            
                             <h4 style="line-height: inherit;">
-								<span><i class="icon md-account font-size-24 vertical-align-top  mr-5 pr-10"></i>
+								<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
 								@foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span>
 							</h4>
 							<h4>
@@ -189,7 +190,7 @@ ul#ui-id-1 {
 								</span> 
 							</h4>
 							<h4>
-								<span><i class="icon md-account font-size-24 vertical-align-top  "></i>
+								<span><i class="icon md-phone font-size-24 vertical-align-top  "></i>
 									@foreach($location->phones as $phone)
 									@php 
 										$phones ='';

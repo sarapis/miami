@@ -146,7 +146,7 @@ ul#ui-id-1 {
                         @endif
                                 
                         @if($service->service_application_process)
-                        <h4 class="py-10" style="line-height: inherit;"><span class="mb-10"><b>Application:</b></span><br/>  {!! $service->service_application_process !!}
+                        <h4 class="py-10" style="line-height: inherit;"><span class="mb-10"><b>Application</b></span><br/>  {!! $service->service_application_process !!}
                         </h4>
                         @endif
 

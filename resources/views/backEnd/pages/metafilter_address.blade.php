@@ -15,7 +15,7 @@
       @if($address->address_postal_code != null)
       <tr>
         <td class="a-center ">
-          <input type="checkbox" class="flat" name="table_records[]" value="{{$address->address_recordid}}">
+          <input type="checkbox" class="flat" name="table_records[]" value="{{$address->address_recordid}}" @if(in_array($address->address_recordid, $checked_addresses)) checked @endif>
         </td>
         <td class="text-center">{{$address->address_postal_code}}</td>
         <td>{{$address->address_1}}</td>

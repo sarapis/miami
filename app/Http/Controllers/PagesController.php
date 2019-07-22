@@ -210,7 +210,7 @@ class PagesController extends Controller
         else{
 
             $addresses = Address::orderBy('id')->get();
-            $checked_taxonomies = explode(",",$metafilter->values);
+            $checked_addresses = explode(",",$metafilter->values);
 
             return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
         }
