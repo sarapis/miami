@@ -5,13 +5,15 @@
 			<form action="/search" method="POST">
 				<div class="row">
           <div class="col-md-2">
-            <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
+              @if($layout->meta_filter_activate == 1)
+                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
                     Metafilter
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleBulletDropdown1" role="menu">
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle1">Taxonomy</a>
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle2">Postal_code</a>
+                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle1">{{$layout->meta_filter_on_label}}</a>
+                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle2">{{$layout->meta_filter_off_label}}</a>
                 </div>
+              @endif
           </div>
 					<div class="col-md-4">
 						<div class="input-search">

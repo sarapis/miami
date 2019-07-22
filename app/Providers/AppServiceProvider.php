@@ -107,6 +107,11 @@ class AppServiceProvider extends ServiceProvider
             $source_data = \App\Source_data::find(1);
             $view->with('source_data', $source_data);
         });
+
+        view()->composer('layouts.filter', function($view)
+        {
+            $view->with('layout', \App\Layout::first());
+        });
     }
 
     /**
