@@ -34,17 +34,18 @@ Home
                     <h2 class="brand-text"></h2>
                 </div>
                 <h3 class="text-white">How can we help you?</h3>
-                <form method="post" role="form" autocomplete="off" class="home_serach_form">
+                <form method="post" role="form" autocomplete="off" class="home_serach_form" action="/search">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group text-left form-material" data-plugin="formMaterial">
                         <label for="inputName"><h4 class="text-white">I'm looking for </h4></label>
-                        <input type="text" class="form-control" id="inputName" name="name">
+                        <input type="text" class="form-control" id="inputName" name="find">
                     </div>
                     <div class="form-group text-left form-material" data-plugin="formMaterial">
                         <label for="inputName"><h4 class="text-white">Near an Address?</h4></label>
                         <div class="form-group">
                             <div class="input-group">
                                 <button type="submit" class="input-search-btn"><img src="frontend/assets/examples/images/location.png"></button>
-                                <input type="email" class="form-control pr-50" id="inputEmail" name="email" >
+                                <input type="text" class="form-control pr-50" id="location1" name="search_address" >
                             </div>
                         </div>
                     </div>
