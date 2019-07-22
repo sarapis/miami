@@ -137,10 +137,23 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::resource('home_edit', 'EdithomeController');
         Route::resource('about_edit', 'EditaboutController');
 
+        // Route::resource('meta_filter', 'MetafilterController');
+
         Route::resource('map', 'MapController');
         
         Route::get('/import', ['uses' => 'PagesController@datasync']);
         Route::get('/export', ['uses' => 'PagesController@export']);
+        Route::get('/meta_filter', ['uses' => 'PagesController@metafilter']);
+        Route::post('/meta/{id}', 'PagesController@metafilter_save');
+
+        Route::post('/taxonomy_filter', 'PagesController@taxonomy_filter');
+        Route::post('/postal_code_filter', 'PagesController@postal_filter');
+
+        Route::post('/meta_filter', 'PagesController@operation');
+
+        Route::post('/meta_delete_filter', 'PagesController@delete_operation');
+
+        Route::post('/meta_filter/{id}', 'PagesController@metafilter_edit');
 
         Route::resource('data', 'DataController');
 

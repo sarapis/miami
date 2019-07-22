@@ -38,6 +38,7 @@
             <!-- <li><a href="/home_edit">Home</a></li> -->
             <li><a href="/about_edit">About Page</a></li>
             <li><a href="/map">Map</a></li>
+            <li><a href="/meta_filter">Meta Filter</a></li>
           </ul>
         </li>
         <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>      

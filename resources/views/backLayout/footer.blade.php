@@ -23,6 +23,8 @@
     <script src="{{ URL::asset('/backend/vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->
     <script src="{{ URL::asset('/backend/vendors/nprogress/nprogress.js') }}"></script>
+
+    <script src="{{ URL::asset('/backend/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') }}"></script>
     <!-- iCheck -->
     <script src="{{ URL::asset('/backend/vendors/iCheck/icheck.min.js') }}"></script>
     

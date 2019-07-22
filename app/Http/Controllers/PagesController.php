@@ -9,6 +9,10 @@ use App\Page;
 use App\Source_data;
 use App\Airtables;
 use App\CSV_Source;
+use App\Layout;
+use App\Taxonomy;
+use App\Address;
+use App\Metafilter;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -154,6 +158,109 @@ class PagesController extends Controller
     public function export()
     {
         return view('backEnd.pages.export');
+    }
+
+    public function metafilter()
+    {
+        $meta = Layout::find(1);
+        $source_data = Source_data::find(1);
+        $metafilters = Metafilter::all();
+
+        return view('backEnd.pages.metafilter', compact('meta', 'source_data', 'metafilters'));
+    }
+
+    public function metafilter_save($id, Request $request)
+    {
+        $meta = Layout::find($id);
+
+        if ($request->input('meta_filter_activate') == 'checked')
+        {
+            $meta->meta_filter_activate = 1;
+        }
+        else
+            $meta->meta_filter_activate = 0;
+
+        $meta->meta_filter_on_label = $request->meta_filter_on_label;
+        $meta->meta_filter_off_label = $request->meta_filter_off_label;
+        $meta->save();
+
+        return redirect('meta_filter');
+    }
+
+    public function taxonomy_filter()
+    {
+        $taxonomies = Taxonomy::all();
+        $source_data = Source_data::find(1);
+        $checked_taxonomies = [];
+
+        return view('backEnd.pages.metafilter_taxonomy', compact('taxonomies', 'source_data', 'checked_taxonomies'))->render();
+    }
+
+    public function metafilter_edit($id, Request $request)
+    {   
+        $source_data = Source_data::find(1);
+        $metafilter = Metafilter::find($id);
+        if($metafilter->facet = 'Taxonomy'){
+
+            $taxonomies = Taxonomy::all();
+            $checked_taxonomies = explode(",",$metafilter->values);
+
+            return view('backEnd.pages.metafilter_taxonomy', compact('taxonomies', 'source_data', 'checked_taxonomies'))->render();
+        }
+        else{
+
+            $addresses = Address::orderBy('id')->get();
+            $checked_taxonomies = explode(",",$metafilter->values);
+
+            return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
+        }
+    }
+
+    public function postal_filter()
+    {
+        $addresses = Address::orderBy('id')->get();
+        $source_data = Source_data::find(1);
+
+        return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data'))->render();
+    }
+
+    public function operation(Request $request){
+
+        
+
+        $id = $request->input('status');
+        if($id == 0)
+        {
+            $metafilter = new Metafilter;
+            $metafilter->operations = $request->input('operation');
+            $metafilter->facet = $request->input('facet');
+            $metafilter->method = $request->input('method');
+            if($request->input('table_records') != null)
+                $metafilter->values = implode(",", $request->input('table_records'));
+            $metafilter->save();
+        }
+        else{
+            $metafilter = Metafilter::where('id', '=', $id)->first();
+            $metafilter->operations = $request->input('operation');
+            $metafilter->facet = $request->input('facet');
+            $metafilter->method = $request->input('method');
+            if($request->input('table_records') != null)
+                $metafilter->values = implode(",", $request->input('table_records'));
+            $metafilter->save();
+        }
+
+
+        return redirect('meta_filter');
+
+    }
+
+    public function delete_operation(Request $request){
+        $id = $request->input('id');
+
+        $metafilter = Metafilter::find($id);
+        $metafilter->delete();
+
+        return redirect('meta_filter');
     }
 
 }
