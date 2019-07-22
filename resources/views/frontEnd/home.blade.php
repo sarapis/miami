@@ -44,7 +44,7 @@ Home
                         <label for="inputName"><h4 class="text-white">Near an Address?</h4></label>
                         <div class="form-group">
                             <div class="input-group">
-                                <button type="submit" class="input-search-btn"><img src="frontend/assets/examples/images/location.png"></button>
+                                <a href="/services_near_me" class="input-search-btn" style="z-index: 100;"><img src="frontend/assets/examples/images/location.png"></a>
                                 <input type="text" class="form-control pr-50" id="location1" name="search_address" >
                             </div>
                         </div>
