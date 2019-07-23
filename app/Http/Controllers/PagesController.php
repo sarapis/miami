@@ -19,6 +19,7 @@ use Session;
 use Validator;
 use Sentinel;
 use Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PagesController extends Controller
 {
@@ -235,6 +236,18 @@ class PagesController extends Controller
             $metafilter->operations = $request->input('operation');
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
+
+            $path = $request->file('csv_import')->getRealPath();
+
+            $data = Excel::load($path)->get();
+
+            $filename =  $request->file('csv_import')->getClientOriginalName();
+            $request->file('csv_file')->move(public_path('/csv/'), $filename);
+
+            if($filename != null){
+                var_dump('aaaa');
+                exit();
+            }
             if($request->input('table_records') != null)
                 $metafilter->values = implode(",", $request->input('table_records'));
             $metafilter->save();

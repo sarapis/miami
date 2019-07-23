@@ -72,7 +72,7 @@ Meta Filter
                         </div>
                         <div class="modal-body">
                         <!-- Smart Wizard -->
-                          <form class="form-horizontal form-label-left" action="/meta_filter" method="POST" id="meta_filter">
+                          <form class="form-horizontal form-label-left" action="/meta_filter" method="POST" id="meta_filter" enctype="multipart/form-data">
                             {!! Form::token() !!}
                             <div id="wizard" class="form_wizard wizard_horizontal">
                               <ul class="wizard_steps">
@@ -135,7 +135,13 @@ Meta Filter
                                 <div class="form-group">
                                   <h2 class="StepTitle">Step 2 Content</h2>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="csv_form">
+                                  <label class="control-label col-md-2 col-sm-2 col-xs-12">Import CSV</label>
+                                  <div class="col-md-6 col-sm-9 col-xs-12">
+                                  <input type="file" class="form-control" name="csv_import">
+                                  </div>
+                                </div>
+                                <div class="form-group" id="checklist_form">
                                   <div class="table-responsive" id="list_tb" style="overflow-y: scroll;height: 50%;">
 
                                   </div>

@@ -4,17 +4,18 @@ $(document).ready(function(){
 
   var method =$( "#method option:selected" ).text();
   var facet =$( "#facet option:selected" ).text();
-  var id = document.getElementById('status').value
+  var id = document.getElementById('status').value;
 
     if(method == 'Checklist'){
+      $("div#csv_form").hide();
+      $("div#checklist_form").show();
       if(facet == 'Taxonomy'){
         $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         })
-        console.log(original_facet);
-        console.log(facet);
+
         if(original_facet == facet){
           var url = 'meta_filter/'+id;
         }
@@ -53,6 +54,10 @@ $(document).ready(function(){
           }
         });
       }
+    }
+    else{
+      $("div#checklist_form").hide();
+      $("div#csv_form").show();
     }
 
   });
