@@ -40,6 +40,11 @@ About
 		<!-- end aboutus content -->
 
 		<!-- start below after serching div -->
+        <div class="after_serach">
+			<div class="container">
+				
+			</div>
+		</div>
 		<!-- end below after serching div -->
 
 
