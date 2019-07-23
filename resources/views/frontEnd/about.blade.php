@@ -40,16 +40,7 @@ About
 		<!-- end aboutus content -->
 
 		<!-- start below after serching div -->
-        <div class="after_serach">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-1 col-sm-12 col-md-1"></div>
-					<div class="col-lg-10 col-sm-12 col-md-10">
 
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- end below after serching div -->
 
 
