@@ -45,29 +45,7 @@ About
 				<div class="row">
 					<div class="col-lg-1 col-sm-12 col-md-1"></div>
 					<div class="col-lg-10 col-sm-12 col-md-10">
-						<div class="inner_search">
-							<div class="row">
-								<div class="col-sm-12 col-md-4 col-lg-4 col-12">
-									<img src="../frontend/assets/examples/images/searchresult.jpg" alt="" title="">
-								</div>
-								<div class="col-sm-12 col-12 col-md-8 col-lg-8">
-									<ul>
-										<li><b>Georgia Access and Crisis Line ( GCAL ): </b><br/>  1-800-715-4225</li>
-										<li><b>Crisis Text Line for Youth: </b><br/>
-										Text “HOME” to 74174 ( 24/7 crisi Support)</li>
-										<li><b>National Suicide Prevention Lifeline: </b><br/>
-										1-800-273-8255</li>
-										<li><b>Trevor Project: </b><br/>
-										1-866-488-7386 ( Crisis and Suicide Prevention Support line for LGBTG )</li>
-										<li><b>LGBT Youth Talkline: </b><br/>
-										1-800-246-7743</li>
-										<li><b>Poison Control Hotline: </b><br/>
-										1-800-222-1222</li>
-										<li><b>For all Emergencies, please call 9-1-1.</b></li>
-									</ul>
-								</div>
-							</div>
-						</div>
+
 					</div>
 				</div>
 			</div>
