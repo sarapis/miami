@@ -277,8 +277,8 @@ $(document).ready(function(){
 
         var mymap = new GMaps({
           el: '#map',
-          lat: avglat,
-          lng: avglng,
+          lat: locations[0].location_latitude,
+          lng: locations[0].location_longitude,
           zoom: zoom
         });
 

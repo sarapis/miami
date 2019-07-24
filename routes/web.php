@@ -141,7 +141,7 @@ Route::post('/range', 'ExploreController@filterValues1');
 
         Route::resource('map', 'MapController');
         
-        Route::get('/import', ['uses' => 'PagesController@datasync']);
+        Route::get('/import', ['uses' => 'PagesController@import']);
         Route::get('/export', ['uses' => 'PagesController@export']);
         Route::get('/meta_filter', ['uses' => 'PagesController@metafilter']);
         Route::post('/meta/{id}', 'PagesController@metafilter_save');

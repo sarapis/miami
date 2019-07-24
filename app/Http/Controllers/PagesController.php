@@ -147,7 +147,7 @@ class PagesController extends Controller
         return redirect('pages');
     }
 
-    public function datasync()
+    public function import()
     {
         $airtables = Airtables::all();
         $csvs = CSV_Source::all();
