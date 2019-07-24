@@ -196,17 +196,19 @@ ul#ui-id-1 {
 										$phones ='';
 										$phones = $phones.$phone->phone_number.','; @endphp
 									@endforeach
+                  @if(isset($phones))
 									{{ rtrim($phones, ',') }}
+                  @endif
 								</span>
 							</h4>
 							@endforeach
 						@endif
 						</div>
-                	</div>
-              	</div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- <script>
@@ -230,7 +232,7 @@ ul#ui-id-1 {
       var locations = <?php print_r(json_encode($locations)) ?>;
       var organization = <?php print_r(json_encode($organization->organization_name)) ?>;
       var maplocation = <?php print_r(json_encode($map)) ?>;
-      // console.log(locations);
+      console.log(locations);
 
       if(maplocation.active == 1){
         avglat = maplocation.lat;
@@ -247,8 +249,8 @@ ul#ui-id-1 {
     
       var mymap = new GMaps({
         el: '#map',
-        lat: avglat,
-        lng: avglng,
+        lat: locations[0].location_latitude,
+        lng: locations[0].location_longitude,
         zoom: zoom
       });
 

@@ -18,7 +18,7 @@ Locations
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Projects</h2>
+        <h2>Locations</h2>
         <div class="clearfix"></div>  
       </div>
       <div class="x_content" style="overflow: scroll;">
@@ -89,6 +89,14 @@ Locations
                       
                       @endforeach
                            
+                  </td>
+
+                  <td class="text-center">
+                  @if($location->location_address!='')
+                    @foreach($location->address as $address)
+                      <span class="badge bg-red">{{ $address->address_1 }}</span>
+                    @endforeach
+                  @endif
                   </td>
 
                   @if($source_data->active == 1 )

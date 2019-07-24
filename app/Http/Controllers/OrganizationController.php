@@ -272,7 +272,7 @@ class OrganizationController extends Controller
     public function organization($id)
     {
         $organization = Organization::where('organization_recordid', '=', $id)->first();
-        $locations = Location::with('services', 'address')->where('location_organization', '=', $id)->get();
+        $locations = Location::with('services', 'address', 'phones')->where('location_organization', '=', $id)->get();
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
