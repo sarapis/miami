@@ -275,10 +275,18 @@ $(document).ready(function(){
             zoom = 10
         }
 
+        latitude = locations[0].location_latitude;
+        longitude = locations[0].location_longitude;
+
+        if(latitude == null){
+            latitude = avglat;
+            longitude = avglng;
+        }
+
         var mymap = new GMaps({
           el: '#map',
-          lat: locations[0].location_latitude,
-          lng: locations[0].location_longitude,
+          lat: latitude,
+          lng: longitude,
           zoom: zoom
         });
 

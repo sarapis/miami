@@ -247,6 +247,7 @@ ul#ui-id-1 {
       }
 
       latitude = locations[0].location_latitude;
+      longitude = locations[0].location_longitude;
 
       if(latitude == null){
         latitude = avglat;
