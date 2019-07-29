@@ -73,7 +73,7 @@ ul#ui-id-1 {
 
                         @if(isset($service->phone()->first()->phone_number))  
                         <h4 style="line-height: inherit;">
-                            <span><i class="icon md-account font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                            <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
                             @foreach($service->phone as $phone)
                                 @if($loop->last)
                                 {{$phone->phone_number}}
@@ -87,7 +87,7 @@ ul#ui-id-1 {
 
                         @if(isset($service->phone()->first()->phone_extension)) 
                         <h4 style="line-height: inherit;">
-                            <span><i class="icon md-account font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                            <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
                             @foreach($service->phone as $phone) {!! $phone->phone_extension !!} @endforeach 
                             </span> 
                         </h4>
@@ -219,7 +219,7 @@ ul#ui-id-1 {
                                 
                                 <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
                                 <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
-                                <h4><span><i class="icon md-account font-size-24 vertical-align-top "></i>
+                                <h4><span><i class="icon md-phone font-size-24 vertical-align-top "></i>
                                         @foreach($location->phones as $phone)
                                         @php 
                                         $phones ='';

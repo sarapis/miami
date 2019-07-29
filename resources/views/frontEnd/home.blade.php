@@ -20,6 +20,9 @@ Home
     .home-category{
         cursor: pointer;
     }
+    .layout-full{
+        height: 50% !important;
+    }
 </style>
 <link href="{{asset('css/treeview.css')}}" rel="stylesheet">
 @section('content')
