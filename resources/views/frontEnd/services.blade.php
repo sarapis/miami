@@ -83,7 +83,7 @@ ul#ui-id-1 {
             </div>
             <div class="btn-group btn-feature">
                 @if(isset($search_results))
-                <p class="m-0 btn btn-primary">Results: {{$search_results}}</p>
+                <p class="m-0 btn btn-primary btn-button">Results: {{$search_results}}</p>
                 @endif
             </div>
             
