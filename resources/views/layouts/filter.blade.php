@@ -6,10 +6,10 @@
 				<div class="row">
 		          	<div class="col-md-2">
 		              	@if($layout->meta_filter_activate == 1)
-		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
+		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="meta_status" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
 		                    Metafilter
 		                </button>
-		                <div class="dropdown-menu bullet" aria-labelledby="exampleBulletDropdown1" role="menu">
+		                <div class="dropdown-menu bullet" aria-labelledby="meta_status" role="menu">
 		                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle1">{{$layout->meta_filter_on_label}}</a>
 		                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle2">{{$layout->meta_filter_off_label}}</a>
 		                </div>
@@ -44,3 +44,9 @@
   }
 }
 </style>
+<script type="text/javascript">
+	$('.dropdown-item').click(function(){
+		var status = $(this).html();
+		$("#meta_status").html(status);
+	});
+</script>

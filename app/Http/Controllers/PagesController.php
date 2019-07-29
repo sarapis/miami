@@ -19,6 +19,7 @@ use Session;
 use Validator;
 use Sentinel;
 use Route;
+use Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PagesController extends Controller
@@ -244,7 +245,7 @@ class PagesController extends Controller
             $filename =  $request->file('csv_import')->getClientOriginalName();
             $request->file('csv_import')->move(public_path('/csv/'), $filename);
 
-            if($filename != null){
+            if($metafilter->method =='CSV' && $filename != null){
                 if (count($data) > 0) {
                     $csv_header_fields = [];
                     foreach ($data[0] as $key => $value) {
@@ -252,10 +253,22 @@ class PagesController extends Controller
                     }
                     $csv_data = $data;
                 }
+                if($request->input('facet') == 'Postal_code' && $csv_header_fields[0] != 'postal_code'){
+
+                    return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+
+                }
+                if($request->input('facet') == 'Taxonomy' && $csv_header_fields[0] != 'taxonomy_name'){
+                    return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+                }
+                
+
                 $id_list ='';
                 foreach ($csv_data as $row) {
-
-                    $id = Address::where('address_postal_code', '=', $row[$csv_header_fields[0]])->first()->address_recordid;
+                    if($request->input('facet') == 'Postal_code')
+                        $id = Address::where('address_postal_code', '=', $row['postal_code'])->first()->address_recordid;
+                    if($request->input('facet') == 'Taxonomy')
+                        $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->first()->address_recordid;
                     $id_list = $id_list.','.$id;
                 }
                 $id_list = trim($id_list,",");
@@ -286,6 +299,9 @@ class PagesController extends Controller
                     }
                     $csv_data = $data;
                 }
+
+                var_dump($csv_header_fields);
+                exit();
                 $id_list ='';
                 foreach ($csv_data as $row) {
 

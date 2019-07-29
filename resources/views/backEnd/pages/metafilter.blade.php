@@ -60,7 +60,13 @@ Meta Filter
                 <div class="x_title">
                   <h2>Filters</h2>
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" style="margin-left: 10px;">Add</button>
-
+                  @if($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    {{$errors->first()}}
+                  </div>
+                  @endif
                   <div class="x_content">
                     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                       <div class="modal-dialog modal-lg">
