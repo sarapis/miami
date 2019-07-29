@@ -48,7 +48,7 @@ ul#ui-id-1 {
         <!-- Example Striped Rows -->
         <div class="col-md-8 pt-15 pb-15 pl-15">
             <div class="btn-group dropdown btn-feature">
-                <button type="button" class="btn btn-primary dropdown-toggle" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-button" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false">
                     Download
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleBulletDropdown1" role="menu">
@@ -57,7 +57,7 @@ ul#ui-id-1 {
                 </div>
             </div>
             <div class="btn-group dropdown btn-feature">
-                <button type="button" class="btn btn-primary dropdown-toggle"  id="exampleSizingDropdown2" data-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-button"  id="exampleSizingDropdown2" data-toggle="dropdown" aria-expanded="false">
                     Results Per Page
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
@@ -67,7 +67,7 @@ ul#ui-id-1 {
                 </div>
             </div>
             <div class="btn-group dropdown btn-feature">
-                <button type="button" class="btn btn-primary dropdown-toggle"  id="exampleSizingDropdown2" data-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-primary dropdown-toggle btn-button"  id="exampleSizingDropdown2" data-toggle="dropdown" aria-expanded="false">
                     Sort
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
@@ -77,7 +77,7 @@ ul#ui-id-1 {
                 </div>
             </div>
             <div class="btn-group btn-feature">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary btn-button">
                     <i class="icon md-share"></i> Share
                 </button>
             </div>

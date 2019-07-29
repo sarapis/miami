@@ -194,8 +194,8 @@ ul#ui-id-1 {
             
             <div class="col-md-4 property">
                 <div class="pt-10 pb-10 pl-0 btn-download">
-                    <a href="/download_service/{{$service->service_recordid}}" class="btn btn-primary ">Download PDF</a>
-                    <button type="button" class="btn btn-primary">
+                    <a href="/download_service/{{$service->service_recordid}}" class="btn btn-primary btn-button">Download PDF</a>
+                    <button type="button" class="btn btn-primary btn-button">
                         <i class="icon md-share"></i> Share
                     </button>
                 </div>

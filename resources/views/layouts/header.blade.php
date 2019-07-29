@@ -1,5 +1,5 @@
 <body>
-	<nav class="site-navbar navbar navbar-inverse navbar-fixed-top navbar-mega " role="navigation">
+	<nav class="site-navbar navbar navbar-inverse navbar-fixed-top navbar-mega bg-primary-color" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div class="navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">

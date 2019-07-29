@@ -4,17 +4,17 @@
 		<div class="col-md-8 col-sm-8 col-xs-12">
 			<form action="/search" method="POST">
 				<div class="row">
-          <div class="col-md-2">
-              @if($layout->meta_filter_activate == 1)
-                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
-                    Metafilter
-                </button>
-                <div class="dropdown-menu bullet" aria-labelledby="exampleBulletDropdown1" role="menu">
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle1">{{$layout->meta_filter_on_label}}</a>
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle2">{{$layout->meta_filter_off_label}}</a>
-                </div>
-              @endif
-          </div>
+		          	<div class="col-md-2">
+		              	@if($layout->meta_filter_activate == 1)
+		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="exampleBulletDropdown1" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
+		                    Metafilter
+		                </button>
+		                <div class="dropdown-menu bullet" aria-labelledby="exampleBulletDropdown1" role="menu">
+		                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle1">{{$layout->meta_filter_on_label}}</a>
+		                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="toggle2">{{$layout->meta_filter_off_label}}</a>
+		                </div>
+		              	@endif
+		          	</div>
 					<div class="col-md-4">
 						<div class="input-search">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -30,7 +30,7 @@
 						</div>
 					</div>
 					<div class="col-md-2">
-						<button class="btn btn-primary btn-block waves-effect waves-classic " title="Search" style="line-height: 31px;">Search</button>
+						<button class="btn btn-primary btn-block waves-effect waves-classic btn-button" title="Search" style="line-height: 31px;">Search</button>
 					</div>
 				</div>
 			</form>
