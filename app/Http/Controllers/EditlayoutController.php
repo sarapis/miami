@@ -125,6 +125,15 @@ class EditlayoutController extends Controller
         else{
             $layout->logo_active = 0;
         }
+
+        if ($request->input('title_active') == 'checked')
+        {
+            $layout->title_active = 1;
+        }
+        else{
+            $layout->title_active = 0;
+        }
+
         $layout->site_name=$request->site_name;
         $layout->tagline=$request->tagline;
         $layout->sidebar_content=$request->sidebar_content;

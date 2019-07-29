@@ -270,6 +270,32 @@ class PagesController extends Controller
             $metafilter->operations = $request->input('operation');
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
+
+            $path = $request->file('csv_import')->getRealPath();
+
+            $data = Excel::load($path)->get();
+
+            $filename =  $request->file('csv_import')->getClientOriginalName();
+            $request->file('csv_import')->move(public_path('/csv/'), $filename);
+
+            if($filename != null){
+                if (count($data) > 0) {
+                    $csv_header_fields = [];
+                    foreach ($data[0] as $key => $value) {
+                        $csv_header_fields[] = $key;
+                    }
+                    $csv_data = $data;
+                }
+                $id_list ='';
+                foreach ($csv_data as $row) {
+
+                    $id = Address::where('address_postal_code', '=', $row[$csv_header_fields[0]])->first()->address_recordid;
+                    $id_list = $id_list.','.$id;
+                }
+                $id_list = trim($id_list,",");
+                $metafilter->values = $id_list;
+            }
+            
             if($request->input('table_records') != null)
                 $metafilter->values = implode(",", $request->input('table_records'));
             $metafilter->save();

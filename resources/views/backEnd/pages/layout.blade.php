@@ -71,6 +71,14 @@ Appearance
                   <input id="occupation" type="text" name="tagline" class="optional form-control col-md-7 col-xs-12" value="{{$layout->tagline}}">
                 </div>
               </div>
+              <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">
+                </label>
+                <div class="col-md-6">
+                  <span><b>Hide Title and Tagline </b>&nbsp;&nbsp;
+                    <input type="checkbox" class="js-switch" value="checked" name="title_active"  @if($layout->title_active==1) checked @endif/>&nbsp;&nbsp;<b>Show Title and Tagline </b></span>
+                </div>
+              </div>
 
               <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Sidebar Content

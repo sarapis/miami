@@ -21,7 +21,7 @@ Home
         cursor: pointer;
     }
     .layout-full{
-        height: 50% !important;
+        height: 430px !important;
     }
 </style>
 <link href="{{asset('css/treeview.css')}}" rel="stylesheet">
@@ -61,7 +61,7 @@ Home
     <!--end top form content div -->
 
     <!-- start browse_category div -->
-    <div class="browse_category">
+    <div class="browse_category" id="category">
         <div class="page-content">
             <div class="py-15">
                 <div class="text-center">

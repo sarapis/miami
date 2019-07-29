@@ -5,17 +5,19 @@
 				<div class="navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
 					<a class="navbar-brand" href="/">
 						@if($layout->logo_active == 1)
-							<img class="navbar-brand-logo navbar-brand-logo-normal" src="../uploads/images/{{$layout->logo}}" title="{{$layout->site_name}}" style="height: 30px;">
-							<img class="navbar-brand-logo navbar-brand-logo-special" src="./uploads/images/{{$layout->logo}}" title="{{$layout->site_name}}" style="height: 30px;">
+							<img class="navbar-brand-logo navbar-brand-logo-normal" src="../uploads/images/{{$layout->logo}}" title="{{$layout->site_name}}" style="height: auto;">
+							<img class="navbar-brand-logo navbar-brand-logo-special" src="./uploads/images/{{$layout->logo}}" title="{{$layout->site_name}}" style="height: auto;">
 						@endif
+						@if($layout->title_active == 1)
 						<span class="navbar-brand-text hidden-xs-down">{{$layout->site_name}}</span>
+						@endif
 					</a>
 				</div>
 				<button type="button" id="sidebarCollapse" class="navbar-toggler hamburger hamburger-close navbar-toggler-center hided" data-toggle="menubar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="hamburger-bar"></span>
 				</button>
-				@if($layout->tagline!=null)
+				@if($layout->tagline!=null && $layout->title ==1)
 					<div class="navbar-brand ticker well ml-10 mr-10">
 						<label style="transition: none !important; display: content;">
 							<b>{{$layout->tagline}}</b>
@@ -31,6 +33,9 @@
 				<ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/services">Services</a>
+					</li>
+					<li class="nav-item responsive_menu">
+						<a class="nav-link waves-effect waves-light waves-round" href="#category">Category</a>
 					</li>
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/organizations">Organizations</a>
