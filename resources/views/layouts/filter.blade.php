@@ -6,12 +6,11 @@
 				<div class="row">
 		          	<div class="col-md-2">
 		              	@if($layout->meta_filter_activate == 1)
-		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="meta_status" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">
-		                    @if(isset($meta_status)) {{$meta_status}}  @else Off @endif
+		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="meta_status" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">@if(isset($meta_status) && $meta_status == 'On') {{$layout->meta_filter_on_label}} @else {{$layout->meta_filter_off_label}} @endif
 		                </button>
 		                <div class="dropdown-menu bullet" aria-labelledby="meta_status" role="menu">
-		                    <a class="dropdown-item dropdown-status" href="javascript:void(0)" role="menuitem" id="toggle1">{{$layout->meta_filter_on_label}}</a>
-		                    <a class="dropdown-item dropdown-status" href="javascript:void(0)" role="menuitem" id="toggle2">{{$layout->meta_filter_off_label}}</a>
+		                    <a class="dropdown-item dropdown-status" href="javascript:void(0)" role="menuitem" at="On">{{$layout->meta_filter_on_label}}</a>
+		                    <a class="dropdown-item dropdown-status" href="javascript:void(0)" role="menuitem"  at="Off">{{$layout->meta_filter_off_label}}</a>
 		                </div>
 		              	@endif
 		          	</div>
@@ -54,8 +53,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.dropdown-status').click(function(){
-		var status = $(this).html();
-		$("#meta_status").html(status);
+		var status = $(this).attr('at');
+		var status_meta = $(this).html();
+		$("#meta_status").html(status_meta);
 		$("#status").val(status);
 		$("#search").submit();
 	});
