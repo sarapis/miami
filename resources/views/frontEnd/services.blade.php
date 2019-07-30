@@ -61,9 +61,9 @@ ul#ui-id-1 {
                     Results Per Page
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
-                    <a @if(isset($pagination) && $pagination == '10') class="dropdown-item" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem" >10</a>
-                    <a @if(isset($pagination) && $pagination == '25') class="dropdown-item" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">25</a>
-                    <a @if(isset($pagination) && $pagination == '50') class="dropdown-item" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">50</a>
+                    <a @if(isset($pagination) && $pagination == '10') class="dropdown-item drop-paginate" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem" >10</a>
+                    <a @if(isset($pagination) && $pagination == '25') class="dropdown-item drop-paginate" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">25</a>
+                    <a @if(isset($pagination) && $pagination == '50') class="dropdown-item drop-paginate" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">50</a>
                 </div>
             </div>
             <div class="btn-group dropdown btn-feature">
