@@ -73,7 +73,7 @@
 	  background-color: {{$layout->primary_color}};
 	}
 	.bg-secondary{
-	  background-color: {{$layout->secondary_color}};
+	  background-color: {{$layout->secondary_color}} !important;
 	}
 	.btn-button {
 	  border-color: {{$layout->button_color}};

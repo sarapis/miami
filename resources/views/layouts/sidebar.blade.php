@@ -134,25 +134,7 @@ $(document).ready(function(){
         $('input', $(this).next().next()).prop('checked',0);
         $("#filter").submit();
     });
-    $('.drop-paginate').on('click', function(){
-        $("#paginate").val($(this).text());
-        $("#filter").submit();
-    });
-    $('.drop-sort').on('click', function(){
-        $("#sort").val($(this).text());
-        $("#filter").submit();
-    });
-    $('#download_csv').on('click', function(){
-        $("#csv").val('csv');
-        $("#filter").submit();
-        $("#csv").val('');
-    });
-    $('#download_pdf').on('click', function(){
-        $("#pdf").val('pdf');
-        $("#filter").submit();
-        $("#pdf").val('');
-    });
-
+    
     if($('input[checked]', $('#projectcategory')).length > 0){
         $('#projectcategory').prev().trigger('click');
     }

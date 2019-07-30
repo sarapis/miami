@@ -23,7 +23,7 @@ Route::get('/admin', function () {
 
 
 Route::match(['get', 'post'], '/search', [
-    'uses'          => 'ExploreController@geocode'
+    'uses'          => 'ExploreController@filter'
 ]);
 
 Route::get('/about', ['uses' => 'HomeController@about']);

@@ -6,7 +6,7 @@
 					<h3 class="feedback-title mt-20 mb-20">{{$layout->contact_text}}</h3>
 				</div>
 				<div class="col-md-4 feedback-btn text-right">
-					<a href="{{$layout->contact_btn_link}}" target="_blank" class="btn pb-10 pt-10 mt-15 mb-15 btn-raised waves-effect waves-classic waves-effect waves-classic btn-lg bg-secondary text-white">{{$layout->contact_btn_label}}</a>
+					<a href="{{$layout->contact_btn_link}}" target="_blank" class="btn pb-10 pt-10 mt-15 mb-15 btn-raised waves-effect waves-classic waves-effect waves-classic btn-lg text-white bg-secondary ">{{$layout->contact_btn_label}}</a>
 				</div>
 			</div>
 		</div>
