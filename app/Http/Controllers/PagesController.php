@@ -266,10 +266,11 @@ class PagesController extends Controller
                 $id_list ='';
                 foreach ($csv_data as $row) {
                     if($request->input('facet') == 'Postal_code')
-                        $id = Address::where('address_postal_code', '=', $row['postal_code'])->first()->address_recordid;
+                        $id = Address::where('address_postal_code', '=', $row['postal_code'])->pluck('address_recordid')->toArray();
                     if($request->input('facet') == 'Taxonomy')
-                        $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->first()->address_recordid;
-                    $id_list = $id_list.','.$id;
+                        $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->pluck('taxonomy_recordid')->toArray();
+
+                    $id_list = $id_list.','.implode(",", $id);
                 }
                 $id_list = trim($id_list,",");
                 $metafilter->values = $id_list;
