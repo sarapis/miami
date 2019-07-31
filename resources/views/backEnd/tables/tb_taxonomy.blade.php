@@ -55,11 +55,16 @@ Taxonomy
                   <td class="text-center">{{$taxonomy->taxonomy_id}}</td>
                   @endif
                   <td>{{$taxonomy->taxonomy_name}}</td>
-
+                  @if($source_data->active == 1 )
                   <td>@if(isset($taxonomy->parent()->first()->taxonomy_name))
                     <span class="badge bg-blue">{{$taxonomy->parent()->first()->taxonomy_name}}</span>
                   @endif
                   </td>
+                  @else
+                  <td>
+                    <span class="badge bg-blue">{{$taxonomy->taxonomy_parent_name}}</span>
+                  </td>
+                  @endif
                   @if($source_data->active == 0 )
                   <td class="text-center">{{$taxonomy->taxonomy_grandparent_name}}</td>
                   @endif
