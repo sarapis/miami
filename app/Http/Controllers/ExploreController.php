@@ -304,7 +304,7 @@ class ExploreController extends Controller
             
             $services = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids);
           
-            $services_ids = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids)->pluck('service_recordid')->toArray();
+            $services_ids = $services->pluck('service_recordid')->toArray();
             $locations_ids = Servicelocation::whereIn('service_recordid', $services_ids)->pluck('location_recordid')->toArray();
             $locations = $locations->whereIn('location_recordid', $locations_ids);
 

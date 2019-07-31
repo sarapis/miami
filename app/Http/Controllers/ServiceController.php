@@ -21,6 +21,7 @@ use App\Source_data;
 use App\Taxonomy;
 use App\Map;
 use App\Layout;
+use App\Metafilter;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -379,8 +380,8 @@ class ServiceController extends Controller
 
     public function services()
     {
-        $services = Service::with('locations')->orderBy('service_name')->paginate(10);
-        $locations = Location::with('services','organization')->get();
+        $services = Service::with('locations')->orderBy('service_name');
+        $locations = Location::with('services','organization');
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
@@ -392,8 +393,50 @@ class ServiceController extends Controller
         $checked_culturals = [];
         $checked_transportations = [];
         $checked_hours= [];
+        $meta_status = 'On';
 
-        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
+        $metas = Metafilter::all();
+        $count_metas = Metafilter::count();
+
+
+        if($meta_status == 'On' && $count_metas > 0){
+            $address_serviceids = Service::pluck('service_recordid')->toArray();
+            $taxonomy_serviceids = Service::pluck('service_recordid')->toArray();
+
+            foreach ($metas as $key => $meta) {
+                $values = explode(",", $meta->values);
+                if($meta->facet == 'Postal_code'){
+                    $address_serviceids = [];
+                    if($meta->operations == 'Include')
+                        $serviceids = Serviceaddress::whereIn('address_recordid', $values)->pluck('service_recordid')->toArray();
+                    if($meta->operations == 'Exclude')
+                        $serviceids = Serviceaddress::whereNotIn('address_recordid', $values)->pluck('service_recordid')->toArray();
+                    $address_serviceids = array_merge($serviceids, $address_serviceids);
+                    // var_dump($address_serviceids);
+                    // exit();
+                }
+                if($meta->facet == 'Taxonomy'){
+
+                    if($meta->operations == 'Include')
+                        $serviceids = Servicetaxonomy::whereIn('taxonomy_recordid', $values)->pluck('service_recordid')->toArray();
+                    if($meta->operations == 'Exclude')
+                        $serviceids = Servicetaxonomy::whereNotIn('taxonomy_recordid', $values)->pluck('service_recordid')->toArray();
+                    $taxonomy_serviceids = array_merge($serviceids, $axonomy_serviceids);
+                }
+            }
+            
+            $services = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids);
+          
+            $services_ids = $services->pluck('service_recordid')->toArray();
+            $locations_ids = Servicelocation::whereIn('service_recordid', $services_ids)->pluck('location_recordid')->toArray();
+            $locations = $locations->whereIn('location_recordid', $locations_ids);
+
+        }
+
+        $services = $services->paginate('10');
+        $locations = $locations->get();
+
+        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status'));
     }
 
     public function service($id)
