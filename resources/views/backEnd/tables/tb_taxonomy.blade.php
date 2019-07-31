@@ -32,7 +32,10 @@ Taxonomy
                     <th class="text-center">ID</th> 
                     @endif
                     <th class="text-center">Name</th>                   
-                    <th class="text-center">Parent name</th>                   
+                    <th class="text-center">Parent name</th>
+                    @if($source_data->active == 0 )
+                    <th class="text-center">Grandparent name</th>
+                    @endif                   
                     <th class="text-center">Vocabulary</th>
                     @if($source_data->active == 1 )
                     <th class="text-center">X-description</th>
@@ -53,11 +56,13 @@ Taxonomy
                   @endif
                   <td>{{$taxonomy->taxonomy_name}}</td>
 
-                  <td>@if($taxonomy->taxonomy_parent_name!='')
+                  <td>@if(isset($taxonomy->parent()->first()->taxonomy_name))
                     <span class="badge bg-blue">{{$taxonomy->parent()->first()->taxonomy_name}}</span>
                   @endif
                   </td>
-                  
+                  @if($source_data->active == 0 )
+                  <td class="text-center">{{$taxonomy->taxonomy_grandparent_name}}</td>
+                  @endif
                   <td class="text-center">{{$taxonomy->taxonomy_vocabulary}}</td>
                   @if($source_data->active == 1 )
                   <td class="text-center">{{$taxonomy->taxonomy_x_description}}</td>
@@ -110,6 +115,18 @@ Taxonomy
                         <input type="text" class="form-control" id="taxonomy_vocabulary" name="taxonomy_vocabulary" value="">
                       </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email">Alt Taxonomy
+                        </label>
+                        <div class="col-sm-7">
+                            <select class="form-control" name="taxonomy_grandparent_name" id="taxonomy_grandparent_name"> 
+                              <option>Choose option</option>
+                              @foreach($alt_taxonomies as $alt_taxonomy)
+                              <option value="{{$alt_taxonomy->alt_taxonomy_name}}">{{$alt_taxonomy->alt_taxonomy_name}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                       <label for="inputPassword3" class="col-sm-3 control-label">X-description</label>
@@ -132,7 +149,7 @@ Taxonomy
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="btn-save" value="add">Save changes</button>
-                    <input type="hidden" id="id" name="taxonomy_id" value="0">
+                    <input type="hidden" id="id" name="id" value="0">
                 </div>
             </form>
         </div>

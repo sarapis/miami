@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Taxonomy;
 use App\Servicetaxonomy;
+use App\Alt_taxonomy;
 use App\Airtables;
 use App\CSV_Source;
 use App\Source_data;
@@ -107,11 +108,13 @@ class TaxonomyController extends Controller
         }
 
 
-        Taxonomy::truncate();
-
         foreach ($csv_data as $key => $row) {
 
-            $taxonomy = new Taxonomy();
+            $taxonomy = Taxonomy::where('taxonomy_id', $row['id'])->first();
+
+            if(!isset($taxonomy->taxonomy_id)){
+                $taxonomy = new Taxonomy();
+            }
 
             $taxonomy->taxonomy_recordid = $key+1;
 
@@ -195,8 +198,9 @@ class TaxonomyController extends Controller
     {
         $taxonomies = Taxonomy::orderBy('taxonomy_recordid')->paginate(20);
         $source_data = Source_data::find(1);
+        $alt_taxonomies = Alt_taxonomy::all();
 
-        return view('backEnd.tables.tb_taxonomy', compact('taxonomies', 'source_data'));
+        return view('backEnd.tables.tb_taxonomy', compact('taxonomies', 'source_data', 'alt_taxonomies'));
     }
 
     /**
@@ -256,6 +260,7 @@ class TaxonomyController extends Controller
         $taxonomy->taxonomy_name = $request->taxonomy_name;
         $taxonomy->taxonomy_vocabulary = $request->taxonomy_vocabulary;
         $taxonomy->taxonomy_x_description = $request->taxonomy_x_description;
+        $taxonomy->taxonomy_grandparent_name = $request->taxonomy_grandparent_name;
         $taxonomy->taxonomy_x_notes = $request->taxonomy_x_notes;
         $taxonomy->flag = 'modified';
         $taxonomy->save();

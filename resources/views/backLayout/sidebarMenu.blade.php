@@ -60,6 +60,9 @@
             <li><a href="/tb_address">Address</a></li>
             <li><a href="/tb_schedule">Schedule</a></li>
             <li><a href="/tb_taxonomy">Taxonomy</a></li>
+            @if($source_data->active ==0 )
+            <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li>
+            @endif
             @if($source_data->active ==1 )
             <li><a href="/tb_details">Details</a></li>
             @endif

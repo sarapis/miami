@@ -511,12 +511,13 @@ class UploadController extends Controller
             $csv_data = $data;
         }
 
-
-        Taxonomy::truncate();
-
         foreach ($csv_data as $key => $row) {
 
-            $taxonomy = new Taxonomy();
+            $taxonomy = Taxonomy::where('taxonomy_id', $row['id'])->first();
+
+            if(!isset($taxonomy->taxonomy_id)){
+                $taxonomy = new Taxonomy();
+            }
 
             $taxonomy->taxonomy_recordid = $key+1;
 

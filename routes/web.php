@@ -117,6 +117,7 @@ Route::post('/range', 'ExploreController@filterValues1');
         });
 
         Route::resource('tb_taxonomy', 'TaxonomyController');
+        Route::resource('tb_alt_taxonomy', 'AltTaxonomyController');
         Route::resource('tb_details', 'DetailController');
         Route::resource('tb_languages', 'LanguageController');
         Route::resource('tb_accessibility', 'AccessibilityController');

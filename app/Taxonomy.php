@@ -20,12 +20,12 @@ class Taxonomy extends Model
      * @return string
     */
     public function childs() {
-        return $this->hasMany('App\Taxonomy','taxonomy_parent_name','taxonomy_recordid') ;
+        return $this->hasMany('App\Taxonomy','taxonomy_parent_name','taxonomy_name') ;
     }
 
     public function parent()
     {
-        return $this->belongsTo('App\Taxonomy', 'taxonomy_parent_name', 'taxonomy_recordid');
+        return $this->belongsTo('App\Taxonomy', 'taxonomy_parent_name', 'taxonomy_name');
     }
 
     public function service()
