@@ -81,7 +81,7 @@ Taxonomy
               @endforeach             
             </tbody>
         </table>
-        {!! $taxonomies->links() !!}
+       <!--  -->
       </div>
     </div>
   </div>
@@ -182,10 +182,10 @@ $(document).ready(function() {
                 }
             }
         },
-        "paging": false,
+        "paging": true,
         "pageLength": 20,
         "lengthChange": false,
-        "searching": false,
+        "searching": true,
         "ordering": true,
         "info": false,
         "autoWidth": true

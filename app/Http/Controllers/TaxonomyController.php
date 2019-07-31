@@ -196,7 +196,7 @@ class TaxonomyController extends Controller
      */
     public function index()
     {
-        $taxonomies = Taxonomy::orderBy('taxonomy_recordid')->paginate(20);
+        $taxonomies = Taxonomy::orderBy('taxonomy_recordid')->get();
         $source_data = Source_data::find(1);
         $alt_taxonomies = Alt_taxonomy::all();
 
