@@ -310,16 +310,6 @@ class ExploreController extends Controller
 
         }
 
-        if($sort == 'Service Name'){
-            $services = $services->orderBy('service_name');
-        }
-
-        if($sort == 'Organization Name'){
-            $services = $services->with(['organizations' => function($query) {
-                $query->orderBy('id');
-            }]);
-        }
-
         if($pdf == 'pdf'){
 
             $layout = Layout::find(1);
@@ -492,8 +482,19 @@ class ExploreController extends Controller
             return $csvExporter->build($services, ['service_name'=>'Service Name', 'service_alternate_name'=>'Service Alternate Name', 'taxonomies'=>'Category', 'organizations'=>'Organization', 'phones'=>'Phone', 'address1'=>'Address', 'contacts'=>'Contact', 'service_description'=>'Service Description', 'service_url'=>'URL','service_application_process'=>'Application Process', 'service_wait_time'=>'Wait Time', 'service_fees'=>'Fees', 'service_accreditations'=>'Accreditations', 'service_licenses'=>'Licenses', 'details'=>'Details'])->build($csv, ['name'=>'', 'description'=>''])->download();
         }
 
+        
+        if($sort == 'Service Name'){
+            $services = $services->orderBy('service_name')->paginate($pagination);
+        }
+
+        if($sort == 'Organization Name'){
+            $services = $services->with(['organizations' => function($query) {
+                $query->orderBy('id');
+            }])->paginate($pagination);
+        }
+
         $search_results = $services->count();
-        $services = $services->paginate($pagination);
+
         $locations = $locations->get();
 
         $analytic = Analytic::where('search_term', '=', $chip_service)->orWhere('search_term', '=', $chip_address)->first();
