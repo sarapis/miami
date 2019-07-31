@@ -482,18 +482,29 @@ class ExploreController extends Controller
             return $csvExporter->build($services, ['service_name'=>'Service Name', 'service_alternate_name'=>'Service Alternate Name', 'taxonomies'=>'Category', 'organizations'=>'Organization', 'phones'=>'Phone', 'address1'=>'Address', 'contacts'=>'Contact', 'service_description'=>'Service Description', 'service_url'=>'URL','service_application_process'=>'Application Process', 'service_wait_time'=>'Wait Time', 'service_fees'=>'Fees', 'service_accreditations'=>'Accreditations', 'service_licenses'=>'Licenses', 'details'=>'Details'])->build($csv, ['name'=>'', 'description'=>''])->download();
         }
 
-        
+        $search_results = $services->count();
+
         if($sort == 'Service Name'){
             $services = $services->orderBy('service_name')->paginate($pagination);
         }
 
+        // if($sort == 'Organization Name'){
+        //     $services = $services->with(['organizations' => function($q) {
+        //         $q->orderBy('organization_name', 'asc');
+        //     }])->paginate($pagination);
+        // }
+
+        // if($sort == 'Organization Name'){
+        //     $services = Service::leftjoin('service_organization', 'service_organization.service_recordid', '=', 'services.service_recordid')->leftjoin('organizations', 'organizations.organization_recordid', 'service_organization.organization_recordid');
+        //     $services = $services->whereIn('services.service_recordid', $services_ids)->orderBy('organization_name')->paginate($pagination);
+        // }
+
         if($sort == 'Organization Name'){
-            $services = $services->with(['organizations' => function($query) {
-                $query->orderBy('id');
-            }])->paginate($pagination);
+            $services = Service::whereIn('services.service_recordid', $services_ids);
+            $services = $services->leftjoin('service_organization', 'service_organization.service_recordid', '=', 'services.service_recordid')->leftjoin('organizations', 'organizations.organization_recordid', 'service_organization.organization_recordid')->orderBy('organization_name')->paginate($pagination);
         }
 
-        $search_results = $services->count();
+        
 
         $locations = $locations->get();
 
