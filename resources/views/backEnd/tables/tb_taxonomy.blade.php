@@ -40,8 +40,7 @@ Taxonomy
                     @if($source_data->active == 1 )
                     <th class="text-center">X-description</th>
                     <th class="text-center">X-note</th>
-                    @endif
-                    <th class="text-center">Services</th>             
+                    @endif           
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -68,11 +67,6 @@ Taxonomy
                   <td class="text-center">{{$taxonomy->taxonomy_x_description}}</td>
                   <td class="text-center">{{$taxonomy->taxonomy_x_notes}}</td>
                   @endif
-                  <td class="text-center">@if(isset($taxonomy->service))@foreach($taxonomy->service as $service)
-                    <span class="badge bg-green">{{$service->service_name}}</span>
-                  @endforeach
-                  @endif
-                  </td>
 
                   <td class="text-center">
                     <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$taxonomy->taxonomy_recordid}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
