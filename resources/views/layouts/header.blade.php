@@ -35,7 +35,7 @@
 						<a class="nav-link waves-effect waves-light waves-round" href="/services">Services</a>
 					</li>
 					<li class="nav-item responsive_menu">
-						<a class="nav-link waves-effect waves-light waves-round" href="#category">Categories</a>
+						<a class="nav-link waves-effect waves-light waves-round" href="/#category">Categories</a>
 					</li>
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/organizations">Organizations</a>
