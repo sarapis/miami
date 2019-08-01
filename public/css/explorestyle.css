@@ -796,7 +796,6 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
   font-size: 14px;
   line-height: 30px;}
 .browse_category .card-body ul li a { color: #555555}
-.browse_category .card-body ul li::before { content: '';font-family: "Material Design Iconic";position: absolute;left: 37px;font-weight: 500;}
 .browse_category .card .card-link + .card-link {margin: 0px;width: 90%;padding: 15.5px 0;}
 .browse_category .card .card-link + .card-link:before {display: none;}
 .browse_category .card .card-link.collapsed + .card-link {background:#f0f0f0;color: #555555;}

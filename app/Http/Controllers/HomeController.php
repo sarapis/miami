@@ -20,6 +20,8 @@ class HomeController extends Controller
         $home = Layout::find(1);
         $map = Map::find(1);
         $taxonomies = Taxonomy::where('taxonomy_parent_name', '=', NULL)->orderBy('taxonomy_name', 'asc')->get();
+        $grandparent_taxonomies = Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_grandparent_name')->pluck('taxonomy_grandparent_name')->toArray();
+
         $parent_taxonomy = [];
         $child_taxonomy = [];
         $checked_organizations = [];
@@ -31,7 +33,7 @@ class HomeController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
-        return view('frontEnd.home', compact('home', 'taxonomies', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
+        return view('frontEnd.home', compact('home', 'taxonomies', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'grandparent_taxonomies'));
     }
 
     public function about($value='')

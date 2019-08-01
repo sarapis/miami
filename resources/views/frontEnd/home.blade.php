@@ -14,16 +14,18 @@ Home
     .pac-logo:after{
       display: none;
     }
-    ul#tree1 {
-        column-count: 2;
-    }
     .home-category{
         cursor: pointer;
     }
     .layout-full{
         height: 430px !important;
     }
+    .glyphicon{
+        font-family: "Material Design Iconic" !important;
+        font-size: 16px;
+    }
 </style>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link href="{{asset('css/treeview.css')}}" rel="stylesheet">
 @section('content')
     <div class="home-sidebar">
@@ -71,272 +73,42 @@ Home
                     <div class="col-lg-2 col-md-2"></div>
                     <div class="col-lg-8 col-md-8 col-sm-12 col-12">
                         <div id="accordion">
+                           
                             <div class="row">
+                            @php
+                                $c = 0;
+                            @endphp
+                                @foreach(array_chunk($grandparent_taxonomies, count($grandparent_taxonomies) / 2) as  $key1 => $chunk)
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                 <!-- Example Collapsed -->
+                                    @foreach($chunk as $key2 => $grandparent_taxonomy)
                                     <div class="card">
                                         <div class="card-header">
-                                            <a class="card-link" data-toggle="collapse" href="#collapseOne"></a>
-                                            <a class="card-link" href="#">Assessment</a>
+                                            <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
+                                            <a class="card-link" href="#">{{$grandparent_taxonomy}}</a>
                                         </div>
-                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                        <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                             <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Psychiatric Assessment</a></a></li>
-                                                    <li><a href="#">Behavioral Health Assessment</a></li>
-                                                    <li><a href="#">Psycho-Sexual Evaluation</a></li>
-                                                    <li><a href="#">Psychological Testin</a>g</li>
-                                                    <li><a href="#">Substance Abuse Assessment</a></li>
-                                                    <li><a href="#">Trauma Assessment</a></li>
+                                                <ul class="tree1">
+                                                    @foreach($taxonomies as $taxonomy)
+                                                  
+                                                    <li>
+                                                        <a at="{{$taxonomy->taxonomy_recordid}}" class="home-category">{{$taxonomy->taxonomy_name}}</a>
+                                                        @if(count($taxonomy->childs))
+                                                            @include('layouts.manageChild',['childs' => $taxonomy->childs])
+                                                        @endif
+                                                    </li>
+                                                    
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo"></a>
-                                            <a class="card-link" href="#">Autism Spectrum Disorder</a>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Applied Behavioral Analysis (ABA)</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree"></a>
-                                            <a class="card-link" href="#">Case Management</a>
-                                        </div>
-                                        <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Behavioral health/Mental health case management</a></li>
-                                                    <li><a href="#">Case management; Nursing Services</a></li>
-                                                    <li><a href="#">Psychiatric Medication Monitoring</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse5"></a>
-                                            <a class="card-link" href="#">Certified Peer Support Specialist for Families</a>
-                                        </div>
-                                        <div id="collapse5" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Education Advocacy</a></li>
-                                                    <li><a href="#">Faith based</a></li>
-                                                    <li><a href="#">Family Based Service</a>s</li>
-                                                    <li><a href="#">IC3 Services (Wrap-around services)</a></li>
-                                                    <li><a href="#">Parent Counseling</a></li>
-                                                    <li><a href="#">Parent Peer Support</a></li>
-                                                    <li><a href="#">Parent Skills Classe</a>s</li>
-                                                    <li><a href="#">Parent or Family Support Group</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse6"></a>
-                                            <a class="card-link" href="#">Community Support</a>
-                                        </div>
-                                        <div id="collapse6" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Aftercare</a></li>
-                                                    <li><a href="#">Anti-bullying Program</a>s</li>
-                                                    <li><a href="#">Art Therapy</a></li>
-                                                    <li><a href="#">Behavior Modificatio</a>n</li>
-                                                    <li><a href="#">Developmental Disabilities</a></li>
-                                                    <li><a href="#">Emerging Adult Transition Programs</a></li>
-                                                    <li><a href="#">Gang Prevention</a></li>
-                                                    <li><a href="#">Independent Living Skills</a></li>
-                                                    <li><a href="#">Life skills</a></li>
-                                                    <li><a href="#">Mentoring</a></li>
-                                                    <li><a href="#">Pro-Social programs</a></li>
-                                                    <li><a href="#">Recreational program</a>s</li>
-                                                    <li><a href="#">School Behavior/IEP Management</a></li>
-                                                    <li><a href="#">Self-esteem</a></li>
-                                                    <li><a href="#">Supported Employment</a></li>
-                                                    <li><a href="#">Youth Leadership/Youth Development</a></li>
-                                                    <li><a href="#">Youth Violence Prevention</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse7"></a>
-                                            <a class="card-link" href="#">Counseling Specialties</a>
-                                        </div>
-                                        <div id="collapse7" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Depression</a></li>
-                                                    <li><a href="#">Family Violence</a></li>
-                                                    <li><a href="#">Trauma</a></li>
-                                                    <li><a href="#">Trauma EDMR</a></li>
-                                                    <li><a href="#">ADHD</a></li>
-                                                    <li><a href="#">ASD/IDD/Behavior Disorders</a></li>
-                                                    <li><a href="#">Anger Management</a></li>
-                                                    <li><a href="#">Child Sexual Abuse Counseling</a></li>
-                                                    <li><a href="#">Child/Adolescent</a></li>
-                                                    <li><a href="#">Children&#039;s Yoga</a></li>
-                                                    <li><a href="#">Cognitive Behavioral Therapy</a></li>
-                                                    <li><a href="#">Core Services</a></li>
-                                                    <li><a href="#">DBT</a></li>
-                                                    <li><a href="#">Executive Functionin</a>g</li>
-                                                    <li><a href="#">Exposure and Response Prevention Therapy</a></li>
-                                                    <li><a href="#">Gender Identity</a></li>
-                                                    <li><a href="#">Grief</a></li>
-                                                    <li><a href="#">Hoarding</a></li>
-                                                    <li><a href="#">Holistic Approach</a></li>
-                                                    <li><a href="#">Intensive family intervention</a></li>
-                                                    <li><a href="#">LGBTQ</a></li>
-                                                    <li><a href="#">Military</a></li>
-                                                    <li><a href="#">Mood Disorder</a></li>
-                                                    <li><a href="#">Motivational Interviewing; CORE services</a></li>
-                                                    <li><a href="#">Obsessive Compulsive Disorder (OCD)</a></li>
-                                                    <li><a href="#">Offender treatment</a></li>
-                                                    <li><a href="#">PTSD</a></li>
-                                                    <li><a href="#">Pet Assisted Therapy</a></li>
-                                                    <li><a href="#">Phobias</a></li>
-                                                    <li><a href="#">Play Therapy</a></li>
-                                                    <li><a href="#">Rape/Sexual Assault</a></li>
-                                                    <li><a href="#">Relationship Skills</a></li>
-                                                    <li><a href="#">Relaxation</a></li>
-                                                    <li><a href="#">Self-Awareness</a></li>
-                                                    <li><a href="#">Obsessive Compulsive Disorder (OCD)</a></li>
-                                                    <li><a href="#">Offender treatment</a></li>
-                                                    <li><a href="#">PTSD</a></li>
-                                                    <li><a href="#">Pet Assisted Therapy</a></li>
-                                                    <li><a href="#">Phobias</a></li>
-                                                    <li><a href="#">Play Therapy</a></li>
-                                                    <li><a href="#">Rape/Sexual Assault</a></li>
-                                                    <li><a href="#">Relationship Skills</a></li>
-                                                    <li><a href="#">Relaxation</a></li>
-                                                    <li><a href="#">Self-Awareness</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            
-                                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse8"></a>
-                                            <a class="card-link" href="#">Counseling/Therapy</a>
-                                        </div>
-                                        <div id="collapse8" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Substance Abuse Group Counseling</a></li>
-                                                    <li><a href="#">Clubhouse Model Substance Use Recovery</a></li>
-                                                    <li><a href="#">Group Counseling</a></li>
-                                                    <li><a href="#">Individual Counselin</a>g</li>
-                                                    <li><a href="#">Life Skills Group Counseling</a></li>
-                                                    <li><a href="#">Parent Education Grou</a>p</li>
-                                                    <li><a href="#">Seven Challenges</a></li>
-                                                    <li><a href="#">Substance Abuse Individual Counseling</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse9"></a>
-                                            <a class="card-link" href="#">Developmental Disabilities</a>
-                                        </div>
-                                        <div id="collapse9" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Developmental Disorde</a>r</li>
-                                                    <li><a href="#">Early Intervention</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse10"></a>
-                                            <a class="card-link" href="#">Families</a>
-                                        </div>
-                                        <div id="collapse10" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">At-Risk Families</a></li>
-                                                    <li><a href="#">Family Counseling</a></li>
-                                                    <li><a href="#">Family Preservation</a></li>
-                                                    <li><a href="#">Parenting Education; Psychological</a></li>
-                                                    <li><a href="#">Parenting and Family Services</a></li>
-                                                    <li><a href="#">Wrap-around</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse11"></a>
-                                            <a class="card-link" href="#">Mental Health/Developmental</a>
-                                        </div>
-                                        <div id="collapse11" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Crisis Hotline</a></li>
-                                                    <li><a href="#">Crisis Intervention Counseling</a></li>
-                                                    <li><a href="#">Crisis Intervention Stabilization</a></li>
-                                                    <li><a href="#">Emergency Behavioral Healthcare</a></li>
-                                                    <li><a href="#">Mental Health Counseling</a></li>
-                                                    <li><a href="#">Mobile Crisis Unit</a></li>
-                                                    <li><a href="#">Outpatient Mental Health Counseling</a></li>
-                                                    <li><a href="#">Psychiatric Evaluatio</a>n</li>
-                                                    <li><a href="#">Psychological Evaluation</a></li>
-                                                    <li><a href="#">Suicide Prevention</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse12"></a>
-                                            <a class="card-link" href="#">Psychiatric Services</a>
-                                        </div>
-                                        <div id="collapse12" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Autism Spectrum Disorder</a></li>
-                                                    <li><a href="#">Children&#039;s/Adolescent Psychiatric Hospitals</a></li>
-                                                    <li><a href="#">Clubhouse Model Psychiatric Rehabilitation</a></li>
-                                                    <li><a href="#">Medication Managemen</a>t</li>
-                                                    <li><a href="#">Psychiatric Case Management</a></li>
-                                                    <li><a href="#">Psychiatric Services</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse13"></a>
-                                            <a class="card-link" href="#">Support Services</a>
-                                        </div>
-                                        <div id="collapse13" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <li><a href="#">Family/Youth Support</a></li>
-                                                    <li><a href="#">Parent or Family Support Services</a></li>
-                                                    <li><a href="#">Youth Support Groups</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
+                            
                         </div>  
                     </div>
                 </div>
@@ -358,7 +130,7 @@ Home
             </div>
         </div>
     </div>
-		<!-- end below after serching div -->
+        <!-- end below after serching div -->
     {{-- <div id="content" class="container m-0" style="width: 100%;">
         <div class=" pt-20 pl-15" style="margin-right: 0">
             <div class="col-xl-7 col-md-7">
@@ -430,6 +202,10 @@ $(document).ready(function(){
         console.log(id);
         $("#category_" +  id).prop( "checked", true );
         $("#filter").submit();
+    });
+    $('.branch').each(function(){
+        if($('ul li', $(this)).length == 0)
+            $(this).hide();
     });
 });
 </script>
