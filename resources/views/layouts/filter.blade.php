@@ -6,7 +6,7 @@
 				<div class="row">
 		          	<div class="col-md-2">
 		              	@if($layout->meta_filter_activate == 1)
-		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="meta_status" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">@if(isset($meta_status) && $meta_status == 'On') {{$layout->meta_filter_on_label}} @else {{$layout->meta_filter_off_label}} @endif
+		                <button type="button" class="btn btn-primary btn-block waves-effect waves-classic dropdown-toggle  btn-button" id="meta_status" data-toggle="dropdown" aria-expanded="false" style="line-height: 31px;">@if(isset($meta_status) && $meta_status == 'Off') {{$layout->meta_filter_off_label}} @else {{$layout->meta_filter_on_label}} @endif
 		                </button>
 		                <div class="dropdown-menu bullet" aria-labelledby="meta_status" role="menu">
 		                    <a class="dropdown-item dropdown-status" href="javascript:void(0)" role="menuitem" at="On">{{$layout->meta_filter_on_label}}</a>
@@ -14,7 +14,7 @@
 		                </div>
 		              	@endif
 		          	</div>
-		          	<input type="hidden" name="meta_status" id="status" @if(isset($meta_status)) value="{{$meta_status}}" @else value="Off" @endif>
+		          	<input type="hidden" name="meta_status" id="status" @if(isset($meta_status)) value="{{$meta_status}}" @else value="On" @endif>
 					<div class="col-md-4">
 						<div class="input-search">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">

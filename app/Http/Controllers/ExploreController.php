@@ -191,13 +191,18 @@ class ExploreController extends Controller
 
     public function filter(Request $request)
     {   
+        $parents = $request->input('parents');
+        $childs = $request->input('childs');
+        $parent_taxonomy = [];
+        $child_taxonomy = [];
+
         $chip_service = $request->input('find');
         $chip_address = $request->input('search_address');
 
         $source_data = Source_data::find(1);
 
-        $location_serviceids = Service::pluck('service_recordid')->toArray();
-        $location_locationids = Location::with('services','organization')->pluck('location_recordid')->toArray();
+        $location_serviceids = Service::pluck('service_recordid');
+        $location_locationids = Location::with('services','organization')->pluck('location_recordid');
 
         if($source_data->active == 1)
 
@@ -209,15 +214,15 @@ class ExploreController extends Controller
                     $q->where('detail_value', 'like', '%'.$chip_service.'%');
                 })->select('services.*');
         else{
-            $serviceids= Service::where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->pluck('service_recordid')->toArray();
+            $serviceids= Service::where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->pluck('service_recordid');
 
-            $organization_recordids = Organization::where('organization_name', 'like', '%'.$chip_service.'%')->pluck('organization_recordid')->toArray();
-            $organization_serviceids = Serviceorganization::whereIn('organization_recordid', $organization_recordids)->pluck('service_recordid')->toArray();
-            $taxonomy_recordids = Taxonomy::where('taxonomy_name', 'like', '%'.$chip_service.'%')->pluck('taxonomy_recordid')->toArray();
-            $taxonomy_serviceids = Servicetaxonomy::whereIn('taxonomy_recordid', $taxonomy_recordids)->pluck('service_recordid')->toArray();
+            $organization_recordids = Organization::where('organization_name', 'like', '%'.$chip_service.'%')->pluck('organization_recordid');
+            $organization_serviceids = Serviceorganization::whereIn('organization_recordid', $organization_recordids)->pluck('service_recordid');
+            $taxonomy_recordids = Taxonomy::where('taxonomy_name', 'like', '%'.$chip_service.'%')->pluck('taxonomy_recordid');
+            $taxonomy_serviceids = Servicetaxonomy::whereIn('taxonomy_recordid', $taxonomy_recordids)->pluck('service_recordid');
 
 
-            $service_locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid')->toArray();
+            $service_locationids = Servicelocation::whereIn('service_recordid', $serviceids)->pluck('location_recordid');
         }
 
         if($chip_address != null){
@@ -232,15 +237,15 @@ class ExploreController extends Controller
             ->having('distance', '<', 2)
             ->orderBy('distance');
 
-            $location_locationids = $locations->pluck('location_recordid')->toArray();
+            $location_locationids = $locations->pluck('location_recordid');
 
-            $location_serviceids = Servicelocation::whereIn('location_recordid', $location_locationids)->pluck('service_recordid')->toArray();
+            $location_serviceids = Servicelocation::whereIn('location_recordid', $location_locationids)->pluck('service_recordid');
         }   
 
         if($chip_service != null)
         {
 
-            $service_ids = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->pluck('service_recordid')->toArray();
+            $service_ids = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->pluck('service_recordid');
 
             $services = Service::whereIn('service_recordid', $serviceids)->whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
 
@@ -254,6 +259,37 @@ class ExploreController extends Controller
             $services = Service::orderBy('service_name');
             $locations = Location::with('services','organization');
         }
+
+
+
+        if($parents!=null){
+            $parent_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_recordid');
+            $parent_taxonomy = json_decode(json_encode($parent_taxonomy));
+
+            $parent_taxonomy_name = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_name');
+
+            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_name)->pluck('taxonomy_id');
+
+            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
+ 
+            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
+            $services = $services->whereIn('service_recordid', $service_ids);
+            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+
+        }
+        if($childs!=null){
+            $child_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_recordid');
+            $child_taxonomy = json_decode(json_encode($child_taxonomy));
+
+            $child_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_name');
+            $child_taxonomy_ids = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_id');
+            
+            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $child_taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid');
+            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
+            $services = $services->whereIn('service_recordid', $service_ids);
+            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+        }
+
 
         // $services = $services->paginate(10);
 
@@ -270,6 +306,7 @@ class ExploreController extends Controller
         $meta_status = $request->input('meta_status');
         // var_dump($sort);
         // exit();
+
         $metas = Metafilter::all();
         $count_metas = Metafilter::count();
 

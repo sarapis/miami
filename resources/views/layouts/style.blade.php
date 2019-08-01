@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="../../frontend/assets/images/apple-touch-icon.png">
   <link rel="shortcut icon" href="../../frontend/assets/images/favicon.ico">
   <!-- Stylesheets -->
-   {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css" />
    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/
     jquery-ui.css"> -->
@@ -310,6 +310,7 @@ $(function () {
   }
   #google_translate_element{
     padding-top: 21px;
+    width: 140px;
   }
   .goog-te-banner-frame.skiptranslate{
     display: none;
@@ -357,8 +358,10 @@ $(function () {
     visibility: hidden;
   }
   .goog-te-gadget-simple .goog-te-menu-value span:before {
-    content: "\f1ab";
+    content: "Select Language";
     visibility: visible;
+    font-family: Roboto,sans-serif;
+    font-size: 1rem;
   }
   .goog-te-menu-value {
     max-width: 22px;

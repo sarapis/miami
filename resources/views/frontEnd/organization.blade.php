@@ -97,7 +97,7 @@ ul#ui-id-1 {
                 </div>
 
                 @if(isset($organization->services))
-                <h4 class="p-15 m-0 text-left" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($organization->services)){{$organization->services->count()}}@else 0 @endif)</h4>
+                <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($organization->services)){{$organization->services->count()}}@else 0 @endif)</h4>
                 @foreach($organization->services as $service)
                     <div class="card">
 					
@@ -163,8 +163,8 @@ ul#ui-id-1 {
             
             <div class="col-md-4 property">
 				<div class="pt-10 pb-10 pl-0 btn-download">
-					<a href="/download_organization/{{$organization->organization_recordid}}" class="btn btn-primary ">Download PDF</a>
-					<button type="button" class="btn btn-primary">
+					<a href="/download_organization/{{$organization->organization_recordid}}" class="btn btn-primary btn-button">Download PDF</a>
+					<button type="button" class="btn btn-primary btn-button">
 						<i class="icon md-share"></i> Share
 					</button>
 				</div>

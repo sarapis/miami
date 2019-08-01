@@ -57,7 +57,7 @@ ul#ui-id-1 {
                         <h4><span><b>Alternate Name:</b></span> {{$service->service_alternate_name}}</h4>
                         @endif
 
-                        <h4><span class="badge bg-red pl-0  pr-0 organize_font"><b>Organization:</b></span>
+                        <h4><span class=""><b>Organization:</b></span>
                             @if($service->service_organization!=0)                        
                                 @foreach($service->organizations as $organization)
                                     @if($loop->last)
@@ -228,7 +228,7 @@ ul#ui-id-1 {
                                         {{ rtrim($phones, ',') }}
                                     </span>
                                 </h4>  
-                                <h4 style="line-height:inherit">{{$location->location_description}}</h4>
+                                <!-- <h4 style="line-height:inherit">{{$location->location_description}}</h4> -->
                                 <h4><span><b>Accessibility for disabilities:</b></span> <br/>{{$location->accessibilities()->first()->accessibility}}</h4>
                                     @if(isset($location->schedules()->first()->schedule_days_of_week)) 
                                     <h4 class="panel-text"><span class="badge bg-red"><b>Schedules:</b></span>

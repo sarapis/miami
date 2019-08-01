@@ -108,7 +108,7 @@ ul#ui-id-1 {
                                     <h4 class="card-title">
                                         <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
                                     </h4>
-                                    <h4><span class="badge bg-red pl-0  pr-0 organize_font"><b>Organization:</b></span>
+                                    <h4><span class=""><b>Organization:</b></span>
                                         @if(isset($service->organizations))                        
                                             @foreach($service->organizations as $organization)
                                                 @if($loop->last)
@@ -130,14 +130,14 @@ ul#ui-id-1 {
                                         </span>
                                     </h4>
                                     <h4><span class="pl-0 category_badge"><b>Category:</b>
-                                        @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                     
                                             @foreach($service->taxonomy as $key => $taxonomy)
                                                 @if($loop->last)
                                                 <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>    @else
                                                 <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                 @endif
                                             @endforeach
-                                        @endif 
+                                 
                                     </span> 
                                     </h4>
                                 </div>

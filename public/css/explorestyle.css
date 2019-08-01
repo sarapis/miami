@@ -804,7 +804,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
 .inner_search img{ max-width: 100%;}
 .inner_search ul li {color: #000; line-height:30px ;font-size: 16px;}
 .footer-menu { background-color: #f0f0f0;padding-top: 20px; padding-bottom: 20px;}
-.feedback-title {font-size: 28px;color: black;}
+.feedback-title {font-size: 28px;color: white;}
 .footer-content { background:#3f51b5; }
 .footer-content p{ margin: 0px;}
 .footer-content p a { color: #fff;}

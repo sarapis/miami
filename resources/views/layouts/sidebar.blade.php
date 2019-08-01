@@ -40,7 +40,6 @@
     .regular-checkbox:active, .regular-checkbox:checked:active {
         box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
     }
-
     .regular-checkbox:checked {
         background-color: #2196F3;
        
@@ -73,12 +72,6 @@
     #culturals{
         padding-left: 12px;
     }
-    #transportations{
-        padding-left: 12px;
-    }
-    #hours{
-        padding-left: 12px;
-    }
     .alert{
         padding-left: 15px;
         padding-right: 30px;
@@ -98,31 +91,82 @@
 <nav id="sidebar">
     <ul class="list-unstyled components pt-0 mb-0 sidebar-menu"> 
         <li class="option-side">
-            <a href="/services" class="btn btn-block btn-primary waves-effect waves-classic" >Services</a>
+            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/services" style="display: block;padding-left: 10px;">Services</a></button>
         </li>
         <li class="option-side">
-            <a href="/organizations" class="btn btn-block btn-primary waves-effect waves-classic" >Organizations</a>
+            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/organizations" style="display: block;padding-left: 10px;">Organizations</a></button>
         </li>
         <li class="option-side">
-            <a href="/about" class="btn btn-block btn-primary waves-effect waves-classic" >About</a>
+            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/about" style="display: block;padding-left: 10px;">About</a></button>
         </li>
-        <li class="option-side">
-            <div class="input-search">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <i class="input-search-icon md-search" aria-hidden="true"></i>
-                <input type="text" class="form-control search-form" name="find" placeholder="Search for Services" id="search_address" @if(isset($chip_service)) value="{{$chip_service}}" @endif>
-            </div> 
-        </li>
-        <li class="option-side">
-            <div class="input-search">
-                <i class="input-search-icon md-pin" aria-hidden="true"></i>
-                <input id="location2" type="text" class="form-control search-form" name="search_address" placeholder="Search Address" @if(isset($chip_address)) value="{{$chip_address}}" @endif>
-                <button type="button" class="input-search-btn" title="Services Near Me"><a href="/services_near_me"><i class="icon md-gps-dot"></i></a></button>
-            </div>
-        </li>
-        <li class="option-side">
-            <button class="btn btn-primary btn-block waves-effect waves-classic " title="Search" style="line-height: 31px;">Search</button>
-        </li>
+    </ul>
+
+       <ul class="list-unstyled components pt-0"> 
+
+            <form action="/search" method="POST" id="filter">
+            {{ csrf_field() }}      
+            <li class="option-side">
+                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="false">Categories</a>
+                <ul class="collapse list-unstyled option-ul" id="projectcategory">
+                    <ul id="tree2">
+                        @foreach($taxonomies as $taxonomy)
+                            @if($taxonomy->taxonomy_name)
+                                                                
+                                <li class="nobranch">
+                                    
+                                        <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy)) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
+                                        <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
+                                    
+                                    @if(count($taxonomy->childs))
+                                        @include('layouts.manageChild1',['childs' => $taxonomy->childs])
+                                    @endif
+                                </li>
+                                    
+                            @endif
+                        @endforeach
+                    </ul>
+                </ul>
+            </li>
+
+
+
+            <li class="option-side mobile-btn">
+                <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
+                <ul class="collapse list-unstyled option-ul" id="export">
+                    <li class="nobranch">
+                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Expert CSV</a>
+                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Print PDF action</a>
+                    </li>   
+                </ul>
+            </li>
+            <li class="option-side mobile-btn">
+                <a href="#perpage" class="text-side" data-toggle="collapse" aria-expanded="false">Results Per Page</a>
+                <ul class="collapse list-unstyled option-ul" id="perpage">
+                    <li class="nobranch">
+                        <a @if(isset($pagination) && $pagination == '10') class="dropdown-item drop-paginate active" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem" >10</a>
+                        <a @if(isset($pagination) && $pagination == '25') class="dropdown-item drop-paginate active" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">25</a>
+                        <a @if(isset($pagination) && $pagination == '50') class="dropdown-item drop-paginate active" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">50</a>
+                    </li>   
+                </ul>
+            </li>
+            <li class="option-side mobile-btn">
+                <a href="#sort" class="text-side" data-toggle="collapse" aria-expanded="false">Sort</a>
+                <ul class="collapse list-unstyled option-ul" id="sort">
+                    <li class="nobranch">
+                        <a @if(isset($sort) && $sort == 'Service Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Service Name</a>
+                        <a @if(isset($sort) && $sort == 'Organization Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Organization Name</a>
+                        <a @if(isset($sort) && $sort == 'Distance from Address') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Distance from Address</a>
+                    </li>   
+                </ul>
+            </li>
+            <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
+            <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
+
+            <input type="hidden" name="pdf" id="pdf">
+
+            <input type="hidden" name="csv" id="csv">
+
+            </form>
     </ul>
 
 </nav>
@@ -134,35 +178,26 @@ $(document).ready(function(){
         $('input', $(this).next().next()).prop('checked',0);
         $("#filter").submit();
     });
-    
+    $('.drop-paginate').on('click', function(){
+        $("#paginate").val($(this).text());
+        $("#filter").submit();
+    });
+    $('.drop-sort').on('click', function(){
+        $("#sort").val($(this).text());
+        $("#filter").submit();
+    });
+    $('#download_csv').on('click', function(){
+        $("#csv").val('csv');
+        $("#filter").submit();
+        $("#csv").val('');
+    });
+    $('#download_pdf').on('click', function(){
+        $("#pdf").val('pdf');
+        $("#filter").submit();
+        $("#pdf").val('');
+    });
     if($('input[checked]', $('#projectcategory')).length > 0){
         $('#projectcategory').prev().trigger('click');
     }
-    if($('input[checked]', $('#cityagency')).length > 0){
-        $('#cityagency').prev().trigger('click');
-    }
-    if($('input[checked]', $('#insurance')).length > 0){
-        $('#insurance').prev().trigger('click');
-    }
-    if($('input[checked]', $('#ages')).length > 0){
-        $('#ages').prev().trigger('click');
-    }
-    if($('input[checked]', $('#languages')).length > 0){
-        $('#languages').prev().trigger('click');
-    }
-    if($('input[checked]', $('#service_settings')).length > 0){
-        $('#service_settings').prev().trigger('click');
-    }
-    if($('input[checked]', $('#culturals')).length > 0){
-        $('#culturals').prev().trigger('click');
-    }
-    if($('input[checked]', $('#transportations')).length > 0){
-        $('#transportations').prev().trigger('click');
-    }
-    if($('input[checked]', $('#hours')).length > 0){
-        $('#hours').prev().trigger('click');
-    }
 });
 </script>
-
-
