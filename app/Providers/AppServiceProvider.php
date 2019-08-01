@@ -21,11 +21,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with('organizations', $organizations);
         });
 
-        // view()->composer('layouts.sidebar', function($view)
-        // {
-        //     $taxonomies = \App\Taxonomy::where('taxonomy_parent_name', '=', NULL)->orderBy('taxonomy_name', 'asc')->get();
-        //     $view->with('taxonomies', $taxonomies);
-        // });
+        view()->composer('layouts.sidebar', function($view)
+        {
+            $taxonomies = \App\Taxonomy::where('taxonomy_parent_name', '=', NULL)->orderBy('taxonomy_name', 'asc')->get();
+            $view->with('taxonomies', $taxonomies);
+        });
 
         // view()->composer('layouts.sidebar', function($view)
         // {

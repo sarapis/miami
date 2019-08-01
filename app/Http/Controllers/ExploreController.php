@@ -485,7 +485,7 @@ class ExploreController extends Controller
         $search_results = $services->count();
 
         if($sort == 'Service Name'){
-            $services = $services->orderBy('service_name')->paginate($pagination);
+            $services = $services->orderBy('service_name');
         }
 
         // if($sort == 'Organization Name'){
@@ -501,10 +501,10 @@ class ExploreController extends Controller
 
         if($sort == 'Organization Name'){
             $services = Service::whereIn('services.service_recordid', $services_ids);
-            $services = $services->leftjoin('service_organization', 'service_organization.service_recordid', '=', 'services.service_recordid')->leftjoin('organizations', 'organizations.organization_recordid', 'service_organization.organization_recordid')->orderBy('organization_name')->paginate($pagination);
+            $services = $services->leftjoin('service_organization', 'service_organization.service_recordid', '=', 'services.service_recordid')->leftjoin('organizations', 'organizations.organization_recordid', 'service_organization.organization_recordid')->orderBy('organization_name');
         }
 
-        
+        $services = $services->paginate($pagination);
 
         $locations = $locations->get();
 

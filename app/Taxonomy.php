@@ -30,7 +30,7 @@ class Taxonomy extends Model
 
     public function service()
     {
-        $this->primaryKey='taxonomy_recordid';
+        $this->primaryKey='taxonomy_id';
         
         return $this->belongsToMany('App\Service', 'service_taxonomy', 'taxonomy_recordid', 'service_recordid');
     }
