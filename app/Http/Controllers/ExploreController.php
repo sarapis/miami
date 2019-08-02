@@ -266,9 +266,9 @@ class ExploreController extends Controller
             $parent_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_recordid');
             $parent_taxonomy = json_decode(json_encode($parent_taxonomy));
 
-            $parent_taxonomy_name = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_name');
+            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_name')->toArray();
 
-            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_name)->pluck('taxonomy_id');
+            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_names)->pluck('taxonomy_id');
 
             $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
  
@@ -562,7 +562,7 @@ class ExploreController extends Controller
        
         $map = Map::find(1);
 
-        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status'));
+        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names'));
 
     }
     /**
