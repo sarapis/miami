@@ -133,13 +133,18 @@ ul#ui-id-1 {
                                         </span>
                                     </h4>
                                     <h4><span class="pl-0 category_badge"><b>Category:</b>
-                                     
-                                            <!-- @foreach($service->taxonomy as $key => $taxonomy)
-                                                @if($loop->last)
-                                                <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>    @else
-                                                <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                            @php 
+                                                $names = [];
+                                            @endphp
+                                            @foreach($service->taxonomy as $key => $taxonomy)
+                                                @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                    <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">@if($taxonomy->taxonomy_grandparent_name){{$taxonomy->taxonomy_grandparent_name}} @else Other @endif , @if($taxonomy->taxonomy_parent_name) {{$taxonomy->taxonomy_parent_name}} @else Other @endif , {{$taxonomy->taxonomy_name}}</a>
+                                                    @php
+                                                        $names[] = $taxonomy->taxonomy_name;
+                                                    @endphp
                                                 @endif
-                                            @endforeach -->
+                                               
+                                            @endforeach
                                  
                                     </span> 
                                     </h4>

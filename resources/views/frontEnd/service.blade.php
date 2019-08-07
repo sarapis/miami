@@ -180,11 +180,17 @@ ul#ui-id-1 {
                         @endif
                         <h4 class="py-10" style="line-height: inherit;"><span class="mb-10 pl-0 category_badge"><b>Category:</b>
                             @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                @php 
+                                    $names = [];
+                                @endphp
                                 @foreach($service->taxonomy as $key => $taxonomy)
-                                    @if($loop->last)
-                                    <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>                                    @else
-                                    <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>,
+                                    @if(!in_array($taxonomy->taxonomy_name, $names))
+                                        <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">@if($taxonomy->taxonomy_grandparent_name){{$taxonomy->taxonomy_grandparent_name}} @else Other @endif , @if($taxonomy->taxonomy_parent_name) {{$taxonomy->taxonomy_parent_name}} @else Other @endif , {{$taxonomy->taxonomy_name}}</a>
+                                        @php
+                                            $names[] = $taxonomy->taxonomy_name;
+                                        @endphp
                                     @endif
+                                   
                                 @endforeach
                             @endif  
                         </h4>
