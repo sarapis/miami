@@ -8,7 +8,7 @@ class Taxonomy extends Model
 {
     protected $table = 'taxonomy';
 
-    protected $primaryKey = 'taxonomy_recordid';
+    protected $primaryKey = 'taxonomy_id';
 
     public $fillable = ['name','parent_name'];
 

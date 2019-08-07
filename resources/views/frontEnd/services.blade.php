@@ -134,12 +134,12 @@ ul#ui-id-1 {
                                     </h4>
                                     <h4><span class="pl-0 category_badge"><b>Category:</b>
                                      
-                                            @foreach($service->taxonomy as $key => $taxonomy)
+                                            <!-- @foreach($service->taxonomy as $key => $taxonomy)
                                                 @if($loop->last)
                                                 <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>    @else
                                                 <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                 @endif
-                                            @endforeach
+                                            @endforeach -->
                                  
                                     </span> 
                                     </h4>
