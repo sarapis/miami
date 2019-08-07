@@ -874,3 +874,8 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
 @media (max-width: 320px) {
   .browse_category .card .card-link + .card-link { width:89%;}
 }
+.st-label{
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  font-weight: 300 !important;
+}

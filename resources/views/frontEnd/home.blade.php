@@ -25,7 +25,7 @@ Home
         font-size: 16px;
     }
 </style>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
 <link href="{{asset('css/treeview.css')}}" rel="stylesheet">
 @section('content')
     <div class="home-sidebar">
@@ -85,7 +85,7 @@ Home
                                     <div class="card">
                                         <div class="card-header">
                                             <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                            <a class="card-link" href="#">{{$grandparent_taxonomy}}</a>
+                                            <a class="card-link" at="{{str_replace(' ', '_', $grandparent_taxonomy)}}">{{$grandparent_taxonomy}}</a>
                                         </div>
                                         <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                             <div class="card-body">
@@ -198,6 +198,12 @@ Home
 <script>
 $(document).ready(function(){
     $('.home-category').on('click', function(e){
+        var id = $(this).attr('at');
+        console.log(id);
+        $("#category_" +  id).prop( "checked", true );
+        $("#filter").submit();
+    });
+    $('.card-link').on('click', function(e){
         var id = $(this).attr('at');
         console.log(id);
         $("#category_" +  id).prop( "checked", true );

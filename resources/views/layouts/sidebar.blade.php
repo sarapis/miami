@@ -7,8 +7,8 @@
     ul, #myUL {
       list-style-type: none;
     }
-    #tree2{
-        padding-left: 30px;
+    .tree2{
+        padding-left: 25px;
     }
     .indicator{
         margin-left: -18px;
@@ -104,30 +104,40 @@
        <ul class="list-unstyled components pt-0"> 
 
             <form action="/search" method="POST" id="filter">
-            {{ csrf_field() }}      
+            {{ csrf_field() }}    
             <li class="option-side">
-                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="false">Categories</a>
-                <ul class="collapse list-unstyled option-ul" id="projectcategory">
-                    <ul id="tree2">
-                        @foreach($taxonomies as $taxonomy)
-                            @if($taxonomy->taxonomy_name)
-                                                                
-                                <li class="nobranch">
-                                    
-                                        <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy)) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
-                                        <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
-                                    
-                                    @if(count($taxonomy->childs))
-                                        @include('layouts.manageChild1',['childs' => $taxonomy->childs])
-                                    @endif
-                                </li>
-                                    
-                            @endif
-                        @endforeach
+                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Categories</a>
+                 
+                <ul class="collapse list-unstyled option-ul show" id="projectcategory">
+                @foreach($grandparent_taxonomies as $key => $grandparent_taxonomy) 
+                <ul class="tree2">
+                <li class="altbranch">
+                             <input type="checkbox" id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy}}" @if(  isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif> <span class="inputChecked">{{$grandparent_taxonomy}}</span>
+                    <ul class="tree2">
+                        
+                            @foreach($taxonomies as $taxonomy)
+                                @if($taxonomy->taxonomy_name)
+                                                                    
+                                    <li>
+                                        
+                                            <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy) || (isset($parent_taxonomy_names) && in_array($taxonomy->taxonomy_name, $parent_taxonomy_names))) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
+                                            <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
+                                        
+                                        @if(count($taxonomy->childs))
+                                            @include('layouts.manageChild1',['childs' => $taxonomy->childs])
+                                        @endif
+                                    </li>
+                                        
+                                @endif
+                            @endforeach
+                        
                     </ul>
+                    </li>
+                    </ul>
+                @endforeach
                 </ul>
             </li>
-
+          
 
 
             <li class="option-side mobile-btn">
@@ -196,8 +206,15 @@ $(document).ready(function(){
         $("#filter").submit();
         $("#pdf").val('');
     });
-    if($('input[checked]', $('#projectcategory')).length > 0){
-        $('#projectcategory').prev().trigger('click');
-    }
+    // if($('input[checked]', $('#projectcategory')).length > 0){
+    //     $('#projectcategory').prev().trigger('click');
+    // }
+    $('.indicator').click(function(){
+        $('.branch').each(function(){
+            if($('ul li', $(this)).length == 0)
+                $(this).hide();
+        });    
+    })
+    
 });
 </script>

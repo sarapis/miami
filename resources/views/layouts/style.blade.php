@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="../../frontend/assets/images/apple-touch-icon.png">
   <link rel="shortcut icon" href="../../frontend/assets/images/favicon.ico">
   <!-- Stylesheets -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css" />
    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/
     jquery-ui.css"> -->
@@ -32,6 +32,7 @@
   <!-- Fonts -->
   <link rel="stylesheet" href="../../../../frontend/global/fonts/web-icons/web-icons.css">
    <link rel="stylesheet" href="../../../../frontend/global/fonts/font-awesome/font-awesome.css">
+   <link rel="stylesheet" href="../../../../frontend/global/fonts/glyphicons/glyphicons.css">
   <link rel="stylesheet" href="../../../frontend/global/fonts/material-design/material-design.min.css">
   <link rel="stylesheet" href="../../../frontend/global/fonts/brand-icons/brand-icons.min.css">
   <link rel="stylesheet" href="../../../frontend/global/vend/asrange/asRange.css">
@@ -69,7 +70,7 @@
   <script>
   Breakpoints();
   </script>
-  <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5d162f2d55a8b200110cde49&product=inline-share-buttons' async='async'></script>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5d162f2d55a8b200110cde49&product=inline-share-buttons"></script>
 @if($map->active == 0)
 
 <script>

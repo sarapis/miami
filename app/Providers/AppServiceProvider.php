@@ -27,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
             $view->with('taxonomies', $taxonomies);
         });
 
+        view()->composer('layouts.sidebar', function($view)
+        {
+            $grandparent_taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_grandparent_name')->pluck('taxonomy_grandparent_name')->toArray();
+            $view->with('grandparent_taxonomies', $grandparent_taxonomies);
+        });
+
         // view()->composer('layouts.sidebar', function($view)
         // {
         //     $ages = \App\Detail::where('detail_type', '=', 'Ages Served')->orderBy('detail_value', 'asc')->get();

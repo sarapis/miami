@@ -43,9 +43,7 @@
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/about">About</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link waves-effect waves-light waves-round"><i class="icon md-share" style="    line-height: 22px;"></i></a>
-					</li>
+				
 					<li class="nav-item">
 						<a id="google_translate_element" class="nav-link waves-effect waves-light waves-round"></a>
 					</li>

@@ -77,10 +77,13 @@ ul#ui-id-1 {
                 </div>
             </div>
             <div class="btn-group btn-feature">
-                <button type="button" class="btn btn-primary btn-button">
-                    <i class="icon md-share"></i> Share
+                <button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
+                    <div class="sharethis-inline-share-buttons"></div>
                 </button>
             </div>
+        <!--     <div class="btn-group btn-feature">
+                <div class="sharethis-inline-share-buttons"></div>
+            </div> -->
             <div class="btn-group btn-feature">
                 @if(isset($search_results))
                 <p class="m-0 btn btn-primary btn-button">Results: {{$search_results}}</p>

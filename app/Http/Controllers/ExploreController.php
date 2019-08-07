@@ -191,6 +191,7 @@ class ExploreController extends Controller
 
     public function filter(Request $request)
     {   
+        $grandparents = $request->input('grandparents');
         $parents = $request->input('parents');
         $childs = $request->input('childs');
         $parent_taxonomy = [];
@@ -260,7 +261,17 @@ class ExploreController extends Controller
             $locations = Location::with('services','organization');
         }
 
+        if($grandparents!=null){
+            $grandparent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_grandparent_name')->toArray();
 
+            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_parent_name')->toArray();
+            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_names)->pluck('taxonomy_id')->toArray();
+            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
+ 
+            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
+            $services = $services->whereIn('service_recordid', $service_ids);
+            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+        }
 
         if($parents!=null){
             $parent_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_recordid');
@@ -562,7 +573,7 @@ class ExploreController extends Controller
        
         $map = Map::find(1);
 
-        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names'));
+        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names'));
 
     }
     /**
