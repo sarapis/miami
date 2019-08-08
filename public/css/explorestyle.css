@@ -796,7 +796,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
   font-size: 14px;
   line-height: 30px;}
 .browse_category .card-body ul li a { color: #555555}
-.browse_category .card .card-link + .card-link {margin: 0px;width: 90%;padding: 15.5px 0;color: #fff;}
+.browse_category .card .card-link + .card-link {margin: 0px;width: 90%;padding: 15.5px 0;color: #fff;cursor: pointer;}
 .browse_category .card .card-link + .card-link:before {display: none;}
 .browse_category .card .card-link.collapsed + .card-link {background:#f0f0f0;color: #555555;}
 .after_serach { background-image: url(../frontend/assets/examples/images/search_bg.jpg);    background-size: cover;padding: 60px 0px;}
