@@ -1,8 +1,9 @@
-  <div class="filter-bar container-fluid bg-secondary" style="padding-top: 14px;    background-color: #abcae9 !important;">
+  <form action="/search" method="POST" id="filter">
+  <div class="filter-bar container-fluid bg-secondary" style="padding: 14px;    background-color: #abcae9 !important;">
 	<div class="row">
 		<div class="col-md-2 col-sm-2"></div>
 		<div class="col-md-8 col-sm-8 col-xs-12">
-			<form action="/search" method="POST" id="search">
+			
 				<div class="row">
 		          	<div class="col-md-2">
 		              	@if($layout->meta_filter_activate == 1)
@@ -39,7 +40,7 @@
 
 		            <input type="hidden" name="csv" id="csv">
 				</div>
-			</form>
+			
 		</div>  
 	</div>
   </div>
@@ -57,25 +58,25 @@ $(document).ready(function(){
 		var status_meta = $(this).html();
 		$("#meta_status").html(status_meta);
 		$("#status").val(status);
-		$("#search").submit();
+		$("#filter").submit();
 	});
 
 	$('.drop-paginate').on('click', function(){
         $("#paginate").val($(this).text());
-        $("#search").submit();
+        $("#filter").submit();
     });
     $('.drop-sort').on('click', function(){
         $("#sort").val($(this).text());
-        $("#search").submit();
+        $("#filter").submit();
     });
     $('#download_csv').on('click', function(){
         $("#csv").val('csv');
-        $("#search").submit();
+        $("#filter").submit();
         $("#csv").val('');
     });
     $('#download_pdf').on('click', function(){
         $("#pdf").val('pdf');
-        $("#search").submit();
+        $("#filter").submit();
         $("#pdf").val('');
     });
 });

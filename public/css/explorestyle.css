@@ -840,6 +840,12 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
 .category_badge .panel-link:nth-child(14) { color: #fff;background-color: #3949ab;}
 .category_badge .panel-link:nth-child(15) { color: #fff;background-color: #007bff;}
 .category_badge .panel-link:nth-child(16) { color: #fff;background-color: #28a745;}
+.category_badge .panel-link:nth-child(17) { color: #fff;background-color: #17a2b8;}
+.category_badge .panel-link:nth-child(18) { color: #fff;background-color: #ffc107;}
+.category_badge .panel-link:nth-child(19) { color: #fff;background-color: #dc3545;}
+.category_badge .panel-link:nth-child(20) { color: #fff;background-color: #343a40;}
+.category_badge .panel-link:nth-child(21) { color: #fff;background-color: #3949ab;}
+.category_badge .panel-link:nth-child(22) { color: #fff;background-color: #007bff;}
 .page-register .home_serach_form .form-control{font-size: 1.286rem; color: #fff;}
 .card-columns {-webkit-column-count: 2;column-count: 2;}
 .property .card-block span { font-size:14px;}

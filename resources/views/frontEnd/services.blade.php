@@ -132,21 +132,41 @@ ul#ui-id-1 {
                                         @endif
                                         </span>
                                     </h4>
-                                    <h4><span class="pl-0 category_badge"><b>Category:</b>
-                                            @php 
-                                                $names = [];
-                                            @endphp
-                                            @foreach($service->taxonomy as $key => $taxonomy)
-                                                @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                    <a class="panel-link" href="/category/{{$taxonomy->taxonomy_recordid}}">@if($taxonomy->taxonomy_grandparent_name){{$taxonomy->taxonomy_grandparent_name}} @else Other @endif , @if($taxonomy->taxonomy_parent_name) {{$taxonomy->taxonomy_parent_name}} @else Other @endif , {{$taxonomy->taxonomy_name}}</a>
-                                                    @php
-                                                        $names[] = $taxonomy->taxonomy_name;
-                                                    @endphp
-                                                @endif
-                                               
-                                            @endforeach
-                                 
-                                    </span> 
+                                    <h4>
+                                        <span class="pl-0 category_badge"><b>Category:</b>
+                                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                @php 
+                                                    $names = [];
+                                                @endphp
+                                                @foreach($service->taxonomy as $key => $taxonomy)
+                                                    @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                                        @if($taxonomy->taxonomy_grandparent_name)
+                                                            <a class="panel-link">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                            @php
+                                                            $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                            @endphp
+                                                        @endif
+                                                    @endif
+                                                    @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                                        @if($taxonomy->taxonomy_parent_name)
+                                                            <a class="panel-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                            @php
+                                                            $names[] = $taxonomy->taxonomy_parent_name;
+                                                            @endphp
+                                                        @endif
+                                                    @endif
+                                                    @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                        @if($taxonomy->taxonomy_name)
+                                                            <a class="panel-link">{{$taxonomy->taxonomy_name}}</a>
+                                                            @php
+                                                            $names[] = $taxonomy->taxonomy_name;
+                                                            @endphp
+                                                        @endif
+                                                    @endif                                                    
+                                                   
+                                                @endforeach
+                                            @endif
+                                        </span> 
                                     </h4>
                                 </div>
                             </div>

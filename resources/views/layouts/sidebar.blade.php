@@ -103,8 +103,7 @@
 
        <ul class="list-unstyled components pt-0"> 
 
-            <form action="/search" method="POST" id="filter">
-            {{ csrf_field() }}    
+ 
             <li class="option-side">
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Categories</a>
                  
@@ -138,7 +137,37 @@
                 </ul>
             </li>
           
+            <li class="option-side">
+                <a href="#target_population" class="text-side" data-toggle="collapse" aria-expanded="true">Target Populations</a>
+                 
+                <ul class="collapse list-unstyled option-ul" id="target_population">
 
+                        
+                    @foreach($taxonomies as $taxonomy)
+                        @if($taxonomy->taxonomy_name)
+                                                            
+                            <li>
+                                
+                                @if(count($taxonomy->childs))
+
+                                    <ul class="child-ul">
+                                    @foreach($taxonomy->childs->sortBy('taxonomy_name') as $child)
+                                        @if($child->taxonomy_parent_name == 'Target Populations')
+                                        <li class="nobranch">
+                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( ( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names)) || in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
+                                        </li>
+                                        @endif
+                                    @endforeach
+                                    </ul>
+
+                                @endif
+                            </li>
+                                
+                        @endif
+                    @endforeach
+                        
+                </ul>
+            </li>
 
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
@@ -176,11 +205,11 @@
 
             <input type="hidden" name="csv" id="csv">
 
-            </form>
+          
     </ul>
 
 </nav>
-
+</form>
 <script src="{{asset('js/treeview2.js')}}"></script>
 <script>
 $(document).ready(function(){
