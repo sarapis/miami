@@ -30,6 +30,9 @@ a, a:hover, a:focus {
     border: none;
 }
 */
+body{
+  overflow-x: hidden;
+}
 .line {
     width: 100%;
     height: 1px;
