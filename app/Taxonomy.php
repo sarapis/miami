@@ -32,6 +32,6 @@ class Taxonomy extends Model
     {
         $this->primaryKey='taxonomy_id';
         
-        return $this->belongsToMany('App\Service', 'service_taxonomy', 'taxonomy_recordid', 'service_recordid');
+        return $this->belongsToMany('App\Service', 'service_taxonomy', 'taxonomy_id', 'service_recordid');
     }
 }

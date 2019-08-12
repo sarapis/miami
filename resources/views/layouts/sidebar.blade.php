@@ -108,67 +108,47 @@
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Categories</a>
                  
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
-                @foreach($grandparent_taxonomies as $key => $grandparent_taxonomy) 
-                <ul class="tree2">
-                <li class="altbranch">
-                             <input type="checkbox" id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy}}" @if(  isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif> <span class="inputChecked">{{$grandparent_taxonomy}}</span>
+                    @foreach($grandparent_taxonomies as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
-                        
-                            @foreach($taxonomies as $taxonomy)
-                                @if($taxonomy->taxonomy_name)
-                                                                    
-                                    <li>
-                                        
-                                            <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy) || (isset($parent_taxonomy_names) && in_array($taxonomy->taxonomy_name, $parent_taxonomy_names))) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
-                                            <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
-                                        
-                                        @if(count($taxonomy->childs))
-                                            @include('layouts.manageChild1',['childs' => $taxonomy->childs])
-                                        @endif
-                                    </li>
-                                        
-                                @endif
-                            @endforeach
-                        
-                    </ul>
-                    </li>
-                    </ul>
-                @endforeach
-                </ul>
-            </li>
-          
-            <li class="option-side">
-                <a href="#target_population" class="text-side" data-toggle="collapse" aria-expanded="true">Target Populations</a>
-                 
-                <ul class="collapse list-unstyled option-ul" id="target_population">
-
-                        
-                    @foreach($taxonomies as $taxonomy)
-                        @if($taxonomy->taxonomy_name)
-                                                            
-                            <li>
+                        <li class="altbranch">
+                            <input type="checkbox" id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy}}" @if(  isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif> <span class="inputChecked">{{$grandparent_taxonomy}}</span>
+                            <ul class="tree2">
                                 
-                                @if(count($taxonomy->childs))
-
-                                    <ul class="child-ul">
-                                    @foreach($taxonomy->childs->sortBy('taxonomy_name') as $child)
-                                        @if($child->taxonomy_parent_name == 'Target Populations')
-                                        <li class="nobranch">
-                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( ( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names)) || in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
-                                        </li>
+                                    @foreach($taxonomies as $taxonomy)
+                                        @if($taxonomy->taxonomy_name)
+                                                                            
+                                            <li>
+                                                
+                                                    <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy) || (isset($parent_taxonomy_names) && in_array($taxonomy->taxonomy_name, $parent_taxonomy_names))) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
+                                                    <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
+                                                
+                                                @if(count($taxonomy->childs))
+                                                    @include('layouts.manageChild1',['childs' => $taxonomy->childs])
+                                                @endif
+                                            </li>
+                                                
                                         @endif
                                     @endforeach
-                                    </ul>
-
-                                @endif
-                            </li>
                                 
-                        @endif
+                            </ul>
+                        </li>
+                    </ul>
                     @endforeach
-                        
                 </ul>
             </li>
-
+            <li class="option-side">
+                <div class="example">
+                    <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
+                       
+                        @foreach($taxonomy->childs->sortBy('taxonomy_name') as $child)
+                            @if($child->taxonomy_parent_name == 'Target Populations')
+                                <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
+                            @endif
+                        @endforeach
+                        
+                    </select>
+                </div>
+            </li>
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
                 <ul class="collapse list-unstyled option-ul" id="export">
@@ -235,6 +215,11 @@ $(document).ready(function(){
         $("#filter").submit();
         $("#pdf").val('');
     });
+    $('#target_multiple').on('change', function(){
+
+        $("#filter").submit();
+    });
+    
     // if($('input[checked]', $('#projectcategory')).length > 0){
     //     $('#projectcategory').prev().trigger('click');
     // }
@@ -243,7 +228,39 @@ $(document).ready(function(){
             if($('ul li', $(this)).length == 0)
                 $(this).hide();
         });    
-    })
+    });
+
+    function matchCustom(params, data) {
+    // If there are no search terms, return all of the data
+        if ($.trim(params.term) === '') {
+          return data;
+        }
+
+        // Do not display the item if there is no 'text' property
+        if (typeof data.text === 'undefined') {
+          return null;
+        }
+
+        // `params.term` should be the term that is used for searching
+        // `data.text` is the text that is displayed for the data object
+        if (data.text.indexOf(params.term) > -1) {
+          var modifiedData = $.extend({}, data, true);
+          // modifiedData.text += ' (matched)';
+
+          // You can return modified objects from here
+          // This includes matching the `children` how you want in nested data sets
+          return modifiedData;
+        }
+
+        // Return `null` if the term should not be displayed
+        return null;
+    }
+
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2({
+            matcher: matchCustom
+        });
+    });
     
 });
 </script>

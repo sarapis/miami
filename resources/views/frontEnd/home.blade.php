@@ -28,7 +28,9 @@ Home
 
 <link href="{{asset('css/treeview.css')}}" rel="stylesheet">
 @section('content')
+
     <div class="home-sidebar">
+        @include('layouts.filter')
         @include('layouts.sidebar')
     </div>
     <!-- start top form content div -->

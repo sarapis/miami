@@ -119,7 +119,7 @@ class TaxonomyController extends Controller
             $taxonomy->taxonomy_recordid = $key+1;
 
             $taxonomy->taxonomy_id =$row['id']!='NULL'?$row['id']:null;
-            
+            $taxonomy->category_id =$row['id']!='NULL'?$row['id']:null;
             $taxonomy->taxonomy_name = $row['name']!='NULL'?$row['name']:null;
             $taxonomy->taxonomy_facet = $row['taxonomy_facet']!='NULL'?$row['taxonomy_facet']:null;
             $taxonomy->taxonomy_parent_recordid= $row['parent_id']!='NULL'?$row['parent_id']:null;

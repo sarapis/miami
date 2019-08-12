@@ -77,14 +77,6 @@ ul#ui-id-1 {
                 </div>
             </div>
             <div class="btn-group btn-feature">
-                <button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
-                    <div class="sharethis-inline-share-buttons"></div>
-                </button>
-            </div>
-        <!--     <div class="btn-group btn-feature">
-                <div class="sharethis-inline-share-buttons"></div>
-            </div> -->
-            <div class="btn-group btn-feature">
                 @if(isset($search_results))
                 <p class="m-0 btn btn-primary btn-button">Results: {{$search_results}}</p>
                 @endif
@@ -138,7 +130,7 @@ ul#ui-id-1 {
                                                 @php 
                                                     $names = [];
                                                 @endphp
-                                                @foreach($service->taxonomy as $key => $taxonomy)
+                                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
                                                     @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
                                                         @if($taxonomy->taxonomy_grandparent_name)
                                                             <a class="panel-link">{{$taxonomy->taxonomy_grandparent_name}}</a>
@@ -164,6 +156,27 @@ ul#ui-id-1 {
                                                         @endif
                                                     @endif                                                    
                                                    
+                                                @endforeach
+                                            @endif
+                                        </span> 
+                                        <br>
+                                        <span class="pl-0 category_badge"><b>Target Populations:</b>
+                                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                @php 
+                                                    $names = [];
+                                                @endphp
+                                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                                    
+                                                    @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                        @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                            @if($taxonomy->taxonomy_name)
+                                                                <a class="panel-link">{{$taxonomy->taxonomy_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif                                                    
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </span> 

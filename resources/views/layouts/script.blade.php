@@ -39,6 +39,8 @@
   <script src="../../frontend/global/js/Plugin/asscrollable.js"></script>
   <script src="../../frontend/global/js/Plugin/slidepanel.js"></script>
   <script src="../../frontend/global/js/Plugin/switchery.js"></script>
+  <script src="../../../frontend/global/js/Plugin/select2.js"></script>
+  <script src="../../../frontend/global/js/Plugin/multi-select.js"></script>
   {{-- <script src="../../frontend/assets/examples/js/pages/faq.js"></script> --}}
 {{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script> --}}
 <script>
@@ -324,6 +326,10 @@ $('#widget').draggable();
           //   });
           // }
       });
+
+  // Example Multi-Select
+  // --------------------
+
   </script>
  <script>
     (function(document, window, $){

@@ -60,24 +60,5 @@ $(document).ready(function(){
 		$("#status").val(status);
 		$("#filter").submit();
 	});
-
-	$('.drop-paginate').on('click', function(){
-        $("#paginate").val($(this).text());
-        $("#filter").submit();
-    });
-    $('.drop-sort').on('click', function(){
-        $("#sort").val($(this).text());
-        $("#filter").submit();
-    });
-    $('#download_csv').on('click', function(){
-        $("#csv").val('csv');
-        $("#filter").submit();
-        $("#csv").val('');
-    });
-    $('#download_pdf').on('click', function(){
-        $("#pdf").val('pdf');
-        $("#filter").submit();
-        $("#pdf").val('');
-    });
 });
 </script>

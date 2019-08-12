@@ -29,6 +29,8 @@
   <link rel="stylesheet" href="../../frontend/global/vend/flag-icon-css/flag-icon.css">
   <link rel="stylesheet" href="../../frontend/global/vend/waves/waves.css">
   <link rel="stylesheet" href="../../frontend/assets/examples/css/uikit/dropdowns.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+  
   <!-- Fonts -->
   <link rel="stylesheet" href="../../../../frontend/global/fonts/web-icons/web-icons.css">
    <link rel="stylesheet" href="../../../../frontend/global/fonts/font-awesome/font-awesome.css">
@@ -58,7 +60,7 @@
 {{-- <script src="../../../frontend/global/vend/jquery/jquery.js"></script> --> --}}
  {{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> --}}
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 {{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> --}}
 <script type="text/javascript" src="../../js/jquery.jticker.js"></script>
 <script type="text/javascript">
@@ -70,7 +72,7 @@
   <script>
   Breakpoints();
   </script>
-<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5d162f2d55a8b200110cde49&product=inline-share-buttons"></script>
+
 @if($map->active == 0)
 
 <script>
