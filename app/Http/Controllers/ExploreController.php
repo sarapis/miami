@@ -387,9 +387,10 @@ class ExploreController extends Controller
             $services = $services->whereIn('service_recordid',$total_service_ids);
             $locations = $locations->whereIn('location_recordid', $total_location_ids)->with('services','organization');
         }
-        $services = $services->paginate(10);
+        
+        // $services = $services->paginate(10);
 
-        $locations = $locations->get();
+        // $locations = $locations->get();
 
         $map = Map::find(1);      
 
