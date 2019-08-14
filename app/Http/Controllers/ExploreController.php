@@ -301,8 +301,7 @@ class ExploreController extends Controller
                     if($meta->operations == 'Exclude')
                         $serviceids = Servicetaxonomy::whereNotIn('taxonomy_recordid', $values)->pluck('service_recordid')->toArray();
                     $taxonomy_serviceids = array_merge($serviceids, $axonomy_serviceids);
-                    var_dump($taxonomy_serviceids);
-                    exit();
+            
                 }
             }
             
@@ -314,6 +313,16 @@ class ExploreController extends Controller
 
         }
 
+        $grand_service_ids = [];
+        $parent_service_ids = [];
+        $child_service_ids = [];
+        $target_service_ids = [];
+
+        $grand_location_ids =[];
+        $parent_location_ids = [];
+        $child_location_ids = [];
+        $target_location_ids = [];
+
         if($grandparents!=null){
             $grandparent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_grandparent_name')->toArray();
 
@@ -322,15 +331,14 @@ class ExploreController extends Controller
             $child_taxonomy = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_recordid')->toArray();
 
             $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_names)->pluck('category_id')->toArray();
-            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
+            $grand_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
  
-            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
-            $services = $services->whereIn('service_recordid', $service_ids);
-            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+            $grand_location_ids = Servicelocation::whereIn('service_recordid', $grand_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
+            // $services = $services->whereIn('service_recordid', $service_ids);
+            // $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
         }
 
         if($parents!=null){
-
 
             $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_parent_name')->toArray();
 
@@ -338,11 +346,11 @@ class ExploreController extends Controller
 
             $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('category_id');
 
-            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
+            $parent_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
  
-            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
-            $services = $services->whereIn('service_recordid', $service_ids);
-            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+            $parent_location_ids = Servicelocation::whereIn('service_recordid', $parent_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
+            // $services = $services->whereIn('service_recordid', $service_ids);
+            // $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
 
         }
         if($childs!=null){
@@ -352,10 +360,10 @@ class ExploreController extends Controller
             $child_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_name');
             $child_taxonomy_ids = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('category_id');
             
-            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $child_taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid');
-            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
-            $services = $services->whereIn('service_recordid', $service_ids);
-            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+            $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $child_taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+            $child_location_ids = Servicelocation::whereIn('service_recordid', $child_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
+            // $services = $services->whereIn('service_recordid', $service_ids);
+            // $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
         }
 
         if($target_populations!=null){
@@ -364,15 +372,21 @@ class ExploreController extends Controller
             // var_dump($target_populations_ids);
             // exit();
 
-            $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $target_populations_ids)->groupBy('service_recordid')->pluck('service_recordid');
+            $target_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $target_populations_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
 
 
-            $location_ids = Servicelocation::whereIn('service_recordid', $service_ids)->groupBy('location_recordid')->pluck('location_recordid');
-            $services = $services->whereIn('service_recordid', $service_ids);
-            $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
+            $target_location_ids = Servicelocation::whereIn('service_recordid', $target_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
+            // $services = $services->whereIn('service_recordid', $service_ids);
+            // $locations = $locations->whereIn('location_recordid', $location_ids)->with('services','organization');
         }
 
+        $total_service_ids = array_merge($grand_service_ids, $parent_service_ids, $child_service_ids, $target_service_ids);
+        $total_location_ids = array_merge($grand_location_ids, $parent_location_ids, $child_location_ids, $target_location_ids);
 
+        if($total_service_ids){
+            $services = $services->whereIn('service_recordid',$total_service_ids);
+            $locations = $locations->whereIn('location_recordid', $total_location_ids)->with('services','organization');
+        }
         // $services = $services->paginate(10);
 
         // $locations = $locations->get();
