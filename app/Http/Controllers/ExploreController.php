@@ -313,15 +313,15 @@ class ExploreController extends Controller
 
         }
 
-        // $grand_service_ids = [];
-        // $parent_service_ids = [];
-        // $child_service_ids = [];
-        // $target_service_ids = [];
+        $grand_service_ids = [];
+        $parent_service_ids = [];
+        $child_service_ids = [];
+        $target_service_ids = [];
 
-        // $grand_location_ids =[];
-        // $parent_location_ids = [];
-        // $child_location_ids = [];
-        // $target_location_ids = [];
+        $grand_location_ids =[];
+        $parent_location_ids = [];
+        $child_location_ids = [];
+        $target_location_ids = [];
 
         if($grandparents!=null){
             $grandparent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_grandparent_name')->toArray();
@@ -334,8 +334,8 @@ class ExploreController extends Controller
             $grand_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
  
             $grand_location_ids = Servicelocation::whereIn('service_recordid', $grand_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            $services = $services->whereIn('service_recordid', $grand_service_ids);
-            $locations = $locations->whereIn('location_recordid', $grand_location_ids)->with('services','organization');
+            // $services = $services->whereIn('service_recordid', $grand_service_ids);
+            // $locations = $locations->whereIn('location_recordid', $grand_location_ids)->with('services','organization');
         }
 
         if($parents!=null){
@@ -349,8 +349,8 @@ class ExploreController extends Controller
             $parent_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
  
             $parent_location_ids = Servicelocation::whereIn('service_recordid', $parent_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            $services = $services->whereIn('service_recordid', $parent_service_ids);
-            $locations = $locations->whereIn('location_recordid', $parent_location_ids)->with('services','organization');
+            // $services = $services->whereIn('service_recordid', $parent_service_ids);
+            // $locations = $locations->whereIn('location_recordid', $parent_location_ids)->with('services','organization');
 
         }
         if($childs!=null){
@@ -362,8 +362,8 @@ class ExploreController extends Controller
             
             $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $child_taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
             $child_location_ids = Servicelocation::whereIn('service_recordid', $child_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            $services = $services->whereIn('service_recordid', $child_service_ids);
-            $locations = $locations->whereIn('location_recordid', $child_location_ids)->with('services','organization');
+            // $services = $services->whereIn('service_recordid', $child_service_ids);
+            // $locations = $locations->whereIn('location_recordid', $child_location_ids)->with('services','organization');
         }
 
         if($target_populations!=null){
@@ -376,20 +376,20 @@ class ExploreController extends Controller
 
 
             $target_location_ids = Servicelocation::whereIn('service_recordid', $target_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            $services = $services->whereIn('service_recordid', $target_service_ids);
-            $locations = $locations->whereIn('location_recordid', $target_location_ids)->with('services','organization');
+            // $services = $services->whereIn('service_recordid', $target_service_ids);
+            // $locations = $locations->whereIn('location_recordid', $target_location_ids)->with('services','organization');
         }
 
-        // $total_service_ids = array_merge($grand_service_ids, $parent_service_ids, $child_service_ids, $target_service_ids);
-        // $total_location_ids = array_merge($grand_location_ids, $parent_location_ids, $child_location_ids, $target_location_ids);
+        $total_service_ids = array_merge($grand_service_ids, $parent_service_ids, $child_service_ids, $target_service_ids);
+        $total_location_ids = array_merge($grand_location_ids, $parent_location_ids, $child_location_ids, $target_location_ids);
 
-        // if($total_service_ids){
-        //     $services = $services->whereIn('service_recordid',$total_service_ids);
-        //     $locations = $locations->whereIn('location_recordid', $total_location_ids)->with('services','organization');
-        // }
-        // $services = $services->paginate(10);
+        if($total_service_ids){
+            $services = $services->whereIn('service_recordid',$total_service_ids);
+            $locations = $locations->whereIn('location_recordid', $total_location_ids)->with('services','organization');
+        }
+        $services = $services->paginate(10);
 
-        // $locations = $locations->get();
+        $locations = $locations->get();
 
         $map = Map::find(1);      
 
