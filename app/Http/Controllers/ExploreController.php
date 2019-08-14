@@ -318,6 +318,9 @@ class ExploreController extends Controller
             $grandparent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_grandparent_name')->toArray();
 
             $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_parent_name')->toArray();
+
+            $child_taxonomy = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_recordid')->toArray();
+
             $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_names)->pluck('category_id')->toArray();
             $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
  
@@ -327,12 +330,13 @@ class ExploreController extends Controller
         }
 
         if($parents!=null){
-            $parent_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_recordid');
-            $parent_taxonomy = json_decode(json_encode($parent_taxonomy));
 
-            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $parents)->pluck('taxonomy_name')->toArray();
 
-            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_names)->pluck('category_id');
+            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_parent_name')->toArray();
+
+            $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_recordid')->toArray();
+
+            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('category_id');
 
             $service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid');
  

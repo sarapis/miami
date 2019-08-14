@@ -767,8 +767,8 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
   border-radius: 13px;}
 
 .browse_category .card { margin-bottom: 20px;}
-.browse_category .card-header {background: #f0f0f0;padding: 0px;}
-.browse_category .card-link { background:#3f51b5; padding: 15px;display: inline-block;padding-left: 40px;font-weight: 400;font-size: 14px;color: #fff;float: left;width: 10%;padding: 15.5px 16px;}
+.browse_category .card-header {background: #f0f0f0;padding: 0px; position: relative;}
+.browse_category .card-link { background:#3f51b5; padding: 15px;display: inline-block;padding-left: 40px;font-weight: 400;font-size: 14px;color: #fff;float: left;width: 100%;padding: 15.5px 16px;}
 .browse_category .card .card-link:before{
   position: relative;
   top: 0px;
@@ -799,7 +799,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
   font-size: 14px;
   line-height: 30px;}
 .browse_category .card-body ul li a { color: #555555}
-.browse_category .card .card-link + .card-link {margin: 0px;width: 90%;padding: 15.5px 0;color: #fff;cursor: pointer;}
+.browse_category .card .card-link + .card-link {margin: 0px; padding: 15.5px 0;color: #fff;cursor: pointer; position: absolute; width: auto; left: 10%;}
 .browse_category .card .card-link + .card-link:before {display: none;}
 .browse_category .card .card-link.collapsed + .card-link {background:#f0f0f0;color: #555555;}
 .after_serach { background-image: url(../frontend/assets/examples/images/search_bg.jpg);    background-size: cover;padding: 60px 0px;}

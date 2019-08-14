@@ -133,7 +133,7 @@ ul#ui-id-1 {
                                                 @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
                                                     @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
                                                         @if($taxonomy->taxonomy_grandparent_name)
-                                                            <a class="panel-link">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
                                                             @php
                                                             $names[] = $taxonomy->taxonomy_grandparent_name;
                                                             @endphp
@@ -141,7 +141,7 @@ ul#ui-id-1 {
                                                     @endif
                                                     @if(!in_array($taxonomy->taxonomy_parent_name, $names))
                                                         @if($taxonomy->taxonomy_parent_name)
-                                                            <a class="panel-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
                                                             @php
                                                             $names[] = $taxonomy->taxonomy_parent_name;
                                                             @endphp
@@ -149,7 +149,7 @@ ul#ui-id-1 {
                                                     @endif
                                                     @if(!in_array($taxonomy->taxonomy_name, $names))
                                                         @if($taxonomy->taxonomy_name)
-                                                            <a class="panel-link">{{$taxonomy->taxonomy_name}}</a>
+                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
                                                             @php
                                                             $names[] = $taxonomy->taxonomy_name;
                                                             @endphp
@@ -170,7 +170,7 @@ ul#ui-id-1 {
                                                     @if($taxonomy->taxonomy_parent_name == 'Target Populations')
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name)
-                                                                <a class="panel-link">{{$taxonomy->taxonomy_name}}</a>
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_name;
                                                                 @endphp

@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('layouts.sidebar', function($view)
         {
-            $taxonomies = \App\Taxonomy::where('taxonomy_parent_name', '=', NULL)->orderBy('taxonomy_name', 'asc')->get();
+            $taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->orderBy('taxonomy_name', 'asc')->get();
             $view->with('taxonomies', $taxonomies);
         });
 
@@ -33,6 +33,23 @@ class AppServiceProvider extends ServiceProvider
             $view->with('grandparent_taxonomies', $grandparent_taxonomies);
         });
 
+        view()->composer('layouts.sidebar', function($view)
+        {
+            $parent_taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+            $view->with('parent_taxonomies', $parent_taxonomies);
+        });
+
+        view()->composer('layouts.sidebar', function($view)
+        {
+            $target_taxonomies = \App\Taxonomy::where('taxonomy_parent_name', 'Target Populations')->orderBy('taxonomy_name', 'asc')->get();
+            $view->with('target_taxonomies', $target_taxonomies);
+        });
+
+        view()->composer('layouts.sidebar', function($view)
+        {
+            $son_taxonomies = \App\Taxonomy::pluck('taxonomy_name')->toArray();
+            $view->with('son_taxonomies', $son_taxonomies);
+        });
         // view()->composer('layouts.sidebar', function($view)
         // {
         //     $ages = \App\Detail::where('detail_type', '=', 'Ages Served')->orderBy('detail_value', 'asc')->get();

@@ -87,7 +87,7 @@ Home
                                     <div class="card">
                                         <div class="card-header">
                                             <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                            <a class="card-link" at="{{str_replace(' ', '_', $grandparent_taxonomy)}}">{{$grandparent_taxonomy}}</a>
+                                            <a class="card-link taxonomy-link" at="{{str_replace(' ', '_', $grandparent_taxonomy)}}">{{$grandparent_taxonomy}}</a>
                                         </div>
                                         <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                             <div class="card-body">

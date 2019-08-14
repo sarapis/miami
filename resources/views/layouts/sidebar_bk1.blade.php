@@ -79,9 +79,6 @@
     .mobile-btn{
         display: none;
     }
-    .select2-container{
-        width: 100% !important;
-    }
     @media (max-width: 768px) {
         .mobile-btn{
             display: block;
@@ -116,33 +113,21 @@
                         <li class="altbranch">
                             <input type="checkbox" id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy}}" @if(  isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif> <span class="inputChecked">{{$grandparent_taxonomy}}</span>
                             <ul class="tree2">
-                               
-                                    @foreach($parent_taxonomies as $parent_taxonomy)
-                                        @php $flag = 'false'; @endphp
-                                        @foreach($taxonomies->sortBy('taxonomy_name') as $key => $child)
-                                            @if($parent_taxonomy == $child->taxonomy_parent_name && $grandparent_taxonomy == $child->taxonomy_grandparent_name)
-                                             @if($flag == 'false')                               
-                                                <li>
-                                                    
-                                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif>
-                                                        <span class="inputChecked">{{$parent_taxonomy}}</span>
-                                                    
-                                                    <ul class="child-ul">
-                                                    @php $flag = 'true'; @endphp
-                                                    @endif
-                                                        @if($grandparent_taxonomy == $child->taxonomy_grandparent_name && $parent_taxonomy == $child->taxonomy_parent_name)
-                                                        <li class="nobranch">
-                                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( ( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names)) && in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
-                                                        </li>
-                                                        @endif
-                                                     
+                                
+                                    @foreach($taxonomies as $taxonomy)
+                                        @if($taxonomy->taxonomy_name)
+                                                                            
+                                            <li>
+                                                
+                                                    <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy) || (isset($parent_taxonomy_names) && in_array($taxonomy->taxonomy_name, $parent_taxonomy_names))) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
+                                                    <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
+                                                
+                                                @if(count($taxonomy->childs))
+                                                    @include('layouts.manageChild1',['childs' => $taxonomy->childs])
                                                 @endif
-                                        @endforeach
-                                            @if ($flag == 'true')
-                                                </ul>
-
                                             </li>
-                                             @endif   
+                                                
+                                        @endif
                                     @endforeach
                                 
                             </ul>
@@ -152,20 +137,17 @@
                 </ul>
             </li>
             <li class="option-side">
-                <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Target Populations</a>
-                <ul class="collapse list-unstyled option-ul" id="target_populations">
-                    <li>
-                        <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
-                           @foreach($target_taxonomies as $child)
-                              
-                                    <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
-                               
-                            @endforeach
-                           
-                            
-                        </select>
-                    </li>
-                </ul>
+                <div class="example">
+                    <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
+                       
+                        @foreach($taxonomy->childs->sortBy('taxonomy_name') as $child)
+                            @if($child->taxonomy_parent_name == 'Target Populations')
+                                <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
+                            @endif
+                        @endforeach
+                        
+                    </select>
+                </div>
             </li>
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
@@ -237,25 +219,16 @@ $(document).ready(function(){
 
         $("#filter").submit();
     });
-
-    $('.regular-checkbox').each(function(){
-        if($(this).prop('checked') && $('li', $(this).next().next()).length != 0 ){
-            $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
-        }
-    });
-    // $('.branch').each(function(){
-    //         if($('ul li', $(this)).length == 0)
-    //             $(this).hide();
-    //     }); 
+    
     // if($('input[checked]', $('#projectcategory')).length > 0){
     //     $('#projectcategory').prev().trigger('click');
     // }
-    // $('.indicator').click(function(){
-    //     $('.branch').each(function(){
-    //         if($('ul li', $(this)).length == 0)
-    //             $(this).hide();
-    //     });    
-    // });
+    $('.indicator').click(function(){
+        $('.branch').each(function(){
+            if($('ul li', $(this)).length == 0)
+                $(this).hide();
+        });    
+    });
 
     function matchCustom(params, data) {
     // If there are no search terms, return all of the data
@@ -291,20 +264,3 @@ $(document).ready(function(){
     
 });
 </script>
-<style>
-    @foreach ($grandparent_taxonomies as $chunk)
-        .{{str_replace(' ', '_', $chunk)}} {
-            background-color: rgb({{rand(0, 255)}}, {{rand(0, 255)}}, {{rand(0, 255)}}) !important;
-        }
-    @endforeach
-    @foreach ($parent_taxonomies as $chunk)
-        .{{str_replace(' ', '_', $chunk)}} {
-            background-color: rgb({{rand(0, 255)}}, {{rand(0, 255)}}, {{rand(0, 255)}}) !important;
-        }
-    @endforeach
-    @foreach ($son_taxonomies as $chunk)
-        .{{str_replace(' ', '_', $chunk)}} {
-            background-color: rgb({{rand(0, 255)}}, {{rand(0, 255)}}, {{rand(0, 255)}}) !important;
-        }
-    @endforeach
-</style>
