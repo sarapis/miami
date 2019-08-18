@@ -178,7 +178,7 @@ ul#ui-id-1 {
                             @endforeach  
                         </h4>
                         @endif
-                        <h4 class="py-10" style="line-height: inherit;"><span class="mb-10 pl-0 category_badge"><b>Category:</b>
+                        <h4 class="py-10" style="line-height: inherit;"><span class="mb-10 pl-0 category_badge"><b>Types of Services:</b>
                             @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                 @php 
                                     $names = [];
@@ -211,7 +211,7 @@ ul#ui-id-1 {
                                    
                                 @endforeach
                                 <br>
-                                <span class="pl-0 category_badge"><b>Target Populations:</b>
+                                <span class="pl-0 category_badge"><b>Types of People:</b>
                                     @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                         @php 
                                             $names = [];

@@ -106,9 +106,24 @@
 
        <ul class="list-unstyled components pt-0"> 
 
- 
             <li class="option-side">
-                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Categories</a>
+                <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
+                <ul class="collapse list-unstyled option-ul" id="target_populations">
+                    <li>
+                        <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
+                           @foreach($target_taxonomies as $child)
+                              
+                                    <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
+                               
+                            @endforeach
+                           
+                            
+                        </select>
+                    </li>
+                </ul>
+            </li>
+            <li class="option-side">
+                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Types of Services</a>
                  
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     @foreach($grandparent_taxonomies as $key => $grandparent_taxonomy) 
@@ -151,22 +166,7 @@
                     @endforeach
                 </ul>
             </li>
-            <li class="option-side">
-                <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Target Populations</a>
-                <ul class="collapse list-unstyled option-ul" id="target_populations">
-                    <li>
-                        <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
-                           @foreach($target_taxonomies as $child)
-                              
-                                    <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
-                               
-                            @endforeach
-                           
-                            
-                        </select>
-                    </li>
-                </ul>
-            </li>
+            
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
                 <ul class="collapse list-unstyled option-ul" id="export">

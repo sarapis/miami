@@ -125,7 +125,7 @@ ul#ui-id-1 {
                                         </span>
                                     </h4>
                                     <h4>
-                                        <span class="pl-0 category_badge"><b>Category:</b>
+                                        <span class="pl-0 category_badge"><b>Types of Services:</b>
                                             @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                                 @php 
                                                     $names = [];
@@ -160,7 +160,7 @@ ul#ui-id-1 {
                                             @endif
                                         </span> 
                                         <br>
-                                        <span class="pl-0 category_badge"><b>Target Populations:</b>
+                                        <span class="pl-0 category_badge"><b>Types of People:</b>
                                             @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                                 @php 
                                                     $names = [];
