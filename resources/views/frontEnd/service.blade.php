@@ -174,7 +174,28 @@ ul#ui-id-1 {
                             @endforeach  
                         </h4>
                         @endif
-                        <h4 class="py-10" style="line-height: inherit;"><span class="mb-10 pl-0 category_badge"><b>Types of Services:</b>
+                        <h4 class="py-10" style="line-height: inherit;"><span class="pl-0 category_badge"><b>Types of People:</b>
+                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                @php 
+                                    $names = [];
+                                @endphp
+                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                    
+                                    @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                        @if(!in_array($taxonomy->taxonomy_name, $names))
+                                            @if($taxonomy->taxonomy_name)
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_name;
+                                                @endphp
+                                            @endif
+                                        @endif                                                    
+                                    @endif
+                                @endforeach
+                            @endif
+                        </span> 
+                        <br>
+                        <span class="pl-0 category_badge"><b>Types of Services:</b>
                             @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                 @php 
                                     $names = [];
@@ -191,9 +212,9 @@ ul#ui-id-1 {
                                     @if(!in_array($taxonomy->taxonomy_parent_name, $names))
                                         @if($taxonomy->taxonomy_parent_name)
                                             @if($taxonomy->taxonomy_parent_name == 'Target Populations')
-                                            <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_name)}} panel-link target-population-child" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
-                                            @else
-                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                            <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}} panel-link target-population-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                            @elseif($taxonomy->taxonomy_grandparent_name)
+                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
                                             @endif
                                             @php
                                             $names[] = $taxonomy->taxonomy_parent_name;
@@ -202,7 +223,11 @@ ul#ui-id-1 {
                                     @endif
                                     @if(!in_array($taxonomy->taxonomy_name, $names))
                                         @if($taxonomy->taxonomy_name)
+                                            @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                            <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_name)}} panel-link target-population-child" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                            @else
                                             <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                            @endif
                                             @php
                                             $names[] = $taxonomy->taxonomy_name;
                                             @endphp
@@ -210,7 +235,8 @@ ul#ui-id-1 {
                                     @endif                                                    
                                    
                                 @endforeach
-                            @endif 
+                            @endif
+                        </span> 
                         </h4>
                     </div>
                 </div>
