@@ -897,9 +897,10 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
 
 .regular-checkbox.minus-checkbox:after{
   content: '\2012';
-  font-size: 20px;
+  font-size: 19px;
   position: absolute;
   top: -6px;
   left: 2px;
   color: #ffffff;
+  font-weight: 900;
 }

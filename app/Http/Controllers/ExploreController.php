@@ -197,6 +197,7 @@ class ExploreController extends Controller
         $target_populations = $request->input('target_populations');
 
         $checked_grandparents = $request->input('checked_grandparents');
+        $target_all = $request->input('target_all');
 
 
         $pdf = $request->input('pdf');
@@ -376,8 +377,20 @@ class ExploreController extends Controller
         if($target_populations!=null){
 
             $target_populations_ids = Taxonomy::whereIn('taxonomy_recordid', $target_populations)->pluck('category_id')->toArray();
-            // var_dump($target_populations_ids);
-            // exit();
+
+            $target_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $target_populations_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+
+
+            $target_location_ids = Servicelocation::whereIn('service_recordid', $target_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
+            // $services = $services->whereIn('service_recordid', $target_service_ids);
+            // $locations = $locations->whereIn('location_recordid', $target_location_ids)->with('services','organization');
+        }
+
+        if(isset($target_all) &&  $target_all == 'all'){
+
+            $target_populations_ids = Taxonomy::where('taxonomy_parent_name', '=', 'Target Populations')->pluck('category_id')->toArray();
+
+            $target_populations = Taxonomy::where('taxonomy_parent_name', '=', 'Target Populations')->pluck('taxonomy_recordid')->toArray();
 
             $target_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $target_populations_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
 

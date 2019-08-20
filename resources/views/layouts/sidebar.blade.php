@@ -200,6 +200,8 @@
             <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
             <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
 
+            <input type="hidden" name="target_all" id="target_all">
+
             <input type="hidden" name="pdf" id="pdf">
 
             <input type="hidden" name="csv" id="csv">

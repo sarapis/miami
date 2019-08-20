@@ -136,7 +136,11 @@ ul#ui-id-1 {
                                                         @endif
                                                         @if(!in_array($taxonomy->taxonomy_parent_name, $names))
                                                             @if($taxonomy->taxonomy_parent_name)
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                                <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_name)}} panel-link target-population-child" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                @else
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @endif
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_parent_name;
                                                                 @endphp
@@ -165,8 +169,7 @@ ul#ui-id-1 {
                                                         @if($taxonomy->taxonomy_parent_name == 'Target Populations')
                                                             @if(!in_array($taxonomy->taxonomy_name, $names))
                                                                 @if($taxonomy->taxonomy_name)
-                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at
-                                                                     at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                                     @php
                                                                     $names[] = $taxonomy->taxonomy_name;
                                                                     @endphp
@@ -221,7 +224,11 @@ ul#ui-id-1 {
                                                         @endif
                                                         @if(!in_array($taxonomy->taxonomy_parent_name, $names))
                                                             @if($taxonomy->taxonomy_parent_name)
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                                <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}} panel-link target-population-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @else
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @endif
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_parent_name;
                                                                 @endphp
@@ -229,7 +236,11 @@ ul#ui-id-1 {
                                                         @endif
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name)
+                                                                @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                                <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_name)}} panel-link target-population-child" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                @else
                                                                 <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                @endif
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_name;
                                                                 @endphp
@@ -355,11 +366,25 @@ ul#ui-id-1 {
         }, 2000);
 
         $('.panel-link').on('click', function(e){
+            if($(this).hasClass('target-population-link') || $(this).hasClass('target-population-child'))
+                return;
             var id = $(this).attr('at');
             console.log(id);
             $("#category_" +  id).prop( "checked", true );
             $("#checked_" +  id).prop( "checked", true );
             $("#filter").submit();
+        });
+        
+        $('.panel-link.target-population-link').on('click', function(e){
+            $("#target_all").val("all");
+            $("#filter").submit();
+        });
+
+        $('.panel-link.target-population-child').on('click', function(e){
+            var id = $(this).attr('at');
+            $("#target_multiple").val(id);
+            $("#filter").submit();
+
         });
     });
     
