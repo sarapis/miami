@@ -222,7 +222,7 @@ $(document).ready(function(){
         $("#checked_" +  id).prop( "checked", true );
         $("#filter").submit();
     });
-    $('.card-link').on('click', function(e){
+    $('.card-link.taxonomy-link').on('click', function(e){
         var id = $(this).attr('at');
         console.log(id);
         $("#category_" +  id).prop( "checked", true );
