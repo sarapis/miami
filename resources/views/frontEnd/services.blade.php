@@ -128,7 +128,7 @@ ul#ui-id-1 {
                                                     @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
                                                         @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
                                                             @if($taxonomy->taxonomy_grandparent_name)
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_grandparent_name;
                                                                 @endphp
@@ -144,7 +144,7 @@ ul#ui-id-1 {
                                                         @endif
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name)
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_name;
                                                                 @endphp
@@ -165,7 +165,8 @@ ul#ui-id-1 {
                                                         @if($taxonomy->taxonomy_parent_name == 'Target Populations')
                                                             @if(!in_array($taxonomy->taxonomy_name, $names))
                                                                 @if($taxonomy->taxonomy_name)
-                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at
+                                                                     at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                                     @php
                                                                     $names[] = $taxonomy->taxonomy_name;
                                                                     @endphp
@@ -212,7 +213,7 @@ ul#ui-id-1 {
                                                     @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
                                                         @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
                                                             @if($taxonomy->taxonomy_grandparent_name)
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_grandparent_name;
                                                                 @endphp
@@ -228,7 +229,7 @@ ul#ui-id-1 {
                                                         @endif
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name)
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_name;
                                                                 @endphp
@@ -249,7 +250,7 @@ ul#ui-id-1 {
                                                         @if($taxonomy->taxonomy_parent_name == 'Target Populations')
                                                             @if(!in_array($taxonomy->taxonomy_name, $names))
                                                                 @if($taxonomy->taxonomy_name)
-                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                                     @php
                                                                     $names[] = $taxonomy->taxonomy_name;
                                                                     @endphp
@@ -351,7 +352,15 @@ ul#ui-id-1 {
                     });
                 }
             });
-        }, 2000)
+        }, 2000);
+
+        $('.panel-link').on('click', function(e){
+            var id = $(this).attr('at');
+            console.log(id);
+            $("#category_" +  id).prop( "checked", true );
+            $("#checked_" +  id).prop( "checked", true );
+            $("#filter").submit();
+        });
     });
     
 </script>

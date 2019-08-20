@@ -138,9 +138,9 @@
                                             @if($parent_taxonomy == $child->taxonomy_parent_name && $grandparent_taxonomy == $child->taxonomy_grandparent_name)
                                              @if($flag == 'false')                               
                                                 <li>
-                                                        <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grandparent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif style="display: none;">
+                                                        <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grandparent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grandparent_taxonomy)}}_{{str_replace(' ', '_', $parent_taxonomy)}}">
 
-                                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif>
+                                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}_{{str_replace(' ', '_', $parent_taxonomy)}}">
                                                         <span class="inputChecked">{{$parent_taxonomy}}</span>
                                                     
                                                     <ul class="child-ul">
@@ -148,7 +148,7 @@
                                                     @endif
                                                         @if($grandparent_taxonomy == $child->taxonomy_grandparent_name && $parent_taxonomy == $child->taxonomy_parent_name)
                                                         <li class="nobranch">
-                                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names) && in_array($child->taxonomy_recordid, $child_taxonomy) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
+                                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names) && in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
                                                         </li>
                                                         @endif
                                                      
@@ -242,7 +242,20 @@ $(document).ready(function(){
 
     $('.regular-checkbox').each(function(){
         if($(this).prop('checked') && $('li', $(this).next().next()).length != 0 ){
-            $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
+            if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
+                $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
+            if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(0).prop('checked'))
+                $('.regular-checkbox', $(this).parent().parent().parent()).eq(0).addClass('minus-checkbox');
+        }
+        if($(this).prop('checked') && $(this).parent().hasClass('nobranch') ){
+            if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
+                $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
+            if($('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
+                $('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).trigger('click');
+            if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(1).prop('checked'))
+                $('.regular-checkbox', $(this).parent().parent().parent()).eq(1).addClass('minus-checkbox');
+            if(!$('.regular-checkbox', $(this).parent().parent().parent().parent().parent().parent()).eq(1).prop('checked'))
+                $('.regular-checkbox', $(this).parent().parent().parent().parent().parent().parent()).eq(0).addClass('minus-checkbox');
         }
     });
     // $('.branch').each(function(){

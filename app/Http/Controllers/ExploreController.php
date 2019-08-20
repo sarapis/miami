@@ -329,6 +329,8 @@ class ExploreController extends Controller
         if($grandparents!=null){
             $grandparent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_grandparent_name')->toArray();
 
+            $checked_grandparents = $grandparents;
+
             $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_parent_name')->toArray();
 
             $child_taxonomy = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_recordid')->toArray();
@@ -345,7 +347,7 @@ class ExploreController extends Controller
 
             $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->pluck('taxonomy_parent_name')->toArray();
 
-            $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_recordid')->toArray();
+            $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->pluck('taxonomy_recordid')->toArray();
 
             $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('category_id');
 
@@ -359,6 +361,8 @@ class ExploreController extends Controller
         if($childs!=null){
             $child_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_recordid');
             $child_taxonomy = json_decode(json_encode($child_taxonomy));
+
+            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_parent_name')->toArray();
 
             $child_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_name');
             $child_taxonomy_ids = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('category_id');

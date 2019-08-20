@@ -92,15 +92,31 @@ Home
                                         <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                             <div class="card-body">
                                                 <ul class="tree1">
-                                                    @foreach($taxonomies as $taxonomy)
-                                                  
-                                                    <li>
-                                                        <a at="{{$taxonomy->taxonomy_recordid}}" class="home-category">{{$taxonomy->taxonomy_name}}</a>
-                                                        @if(count($taxonomy->childs))
-                                                            @include('layouts.manageChild',['childs' => $taxonomy->childs])
-                                                        @endif
-                                                    </li>
-                                                    
+
+                                                    @foreach($parent_taxonomies as $parent_taxonomy)
+                                                        @php $flag = 'false'; @endphp
+                                                        @foreach($taxonomies->sortBy('taxonomy_name') as $key => $child)
+                                                            @if($parent_taxonomy == $child->taxonomy_parent_name && $grandparent_taxonomy == $child->taxonomy_grandparent_name)
+                                                             @if($flag == 'false')                               
+                                                                <li>
+                                                                    <a at="{{str_replace(' ', '_', $grandparent_taxonomy)}}_{{str_replace(' ', '_', $parent_taxonomy)}}" class="home-category">{{$parent_taxonomy}}</a>
+                                                                    
+                                                                    <ul>
+                                                                    @php $flag = 'true'; @endphp
+                                                                    @endif
+                                                                        @if($grandparent_taxonomy == $child->taxonomy_grandparent_name && $parent_taxonomy == $child->taxonomy_parent_name)
+                                                                        <li>
+                                                                              <a at="{{$child->taxonomy_recordid}}" class="home-category">{{ $child->taxonomy_name }}</a>
+                                                                        </li>
+                                                                        @endif
+                                                                     
+                                                                @endif
+                                                        @endforeach
+                                                            @if ($flag == 'true')
+                                                                </ul>
+
+                                                            </li>
+                                                             @endif   
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -203,6 +219,7 @@ $(document).ready(function(){
         var id = $(this).attr('at');
         console.log(id);
         $("#category_" +  id).prop( "checked", true );
+        $("#checked_" +  id).prop( "checked", true );
         $("#filter").submit();
     });
     $('.card-link').on('click', function(e){
@@ -211,10 +228,10 @@ $(document).ready(function(){
         $("#category_" +  id).prop( "checked", true );
         $("#filter").submit();
     });
-    $('.branch').each(function(){
-        if($('ul li', $(this)).length == 0)
-            $(this).hide();
-    });
+    // $('.branch').each(function(){
+    //     if($('ul li', $(this)).length == 0)
+    //         $(this).hide();
+    // });
 });
 </script>
 @endsection

@@ -890,3 +890,16 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
   font-family: Roboto, sans-serif;
   font-weight: 300 !important;
 }
+.regular-checkbox.minus-checkbox{
+  background-color: #2196F3;
+  color: #ffffff;  
+}
+
+.regular-checkbox.minus-checkbox:after{
+  content: '\2012';
+  font-size: 20px;
+  position: absolute;
+  top: -6px;
+  left: 2px;
+  color: #ffffff;
+}
