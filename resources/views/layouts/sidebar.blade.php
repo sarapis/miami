@@ -138,8 +138,9 @@
                                             @if($parent_taxonomy == $child->taxonomy_parent_name && $grandparent_taxonomy == $child->taxonomy_grandparent_name)
                                              @if($flag == 'false')                               
                                                 <li>
-                                                    
-                                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif>
+                                                        <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grandparent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif style="display: none;">
+
+                                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif>
                                                         <span class="inputChecked">{{$parent_taxonomy}}</span>
                                                     
                                                     <ul class="child-ul">
@@ -147,7 +148,7 @@
                                                     @endif
                                                         @if($grandparent_taxonomy == $child->taxonomy_grandparent_name && $parent_taxonomy == $child->taxonomy_parent_name)
                                                         <li class="nobranch">
-                                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( ( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names)) && in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
+                                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names) && in_array($child->taxonomy_recordid, $child_taxonomy) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
                                                         </li>
                                                         @endif
                                                      
@@ -188,7 +189,7 @@
             </li>
             <li class="option-side mobile-btn">
                 <a href="#sort" class="text-side" data-toggle="collapse" aria-expanded="false">Sort</a>
-                <ul class="collapse list-unstyled option-ul" id="sort">
+                <ul class="collapse list-unstyled option-ul">
                     <li class="nobranch">
                         <a @if(isset($sort) && $sort == 'Service Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Service Name</a>
                         <a @if(isset($sort) && $sort == 'Organization Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Organization Name</a>
@@ -212,6 +213,7 @@
 <script>
 $(document).ready(function(){
     $('.regular-checkbox').on('click', function(e){
+        $(this).prev().trigger('click');
         $('input', $(this).next().next()).prop('checked',0);
         $("#filter").submit();
     });

@@ -61,9 +61,9 @@ ul#ui-id-1 {
                     Results Per Page
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
-                    <a @if(isset($pagination) && $pagination == '10') class="dropdown-item drop-paginate" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem" >10</a>
-                    <a @if(isset($pagination) && $pagination == '25') class="dropdown-item drop-paginate" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">25</a>
-                    <a @if(isset($pagination) && $pagination == '50') class="dropdown-item drop-paginate" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">50</a>
+                    <a @if(isset($pagination) && $pagination == '10') class="dropdown-item drop-paginate active" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem" >10</a>
+                    <a @if(isset($pagination) && $pagination == '25') class="dropdown-item drop-paginate active" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">25</a>
+                    <a @if(isset($pagination) && $pagination == '50') class="dropdown-item drop-paginate active" @else class="dropdown-item drop-paginate" @endif href="javascript:void(0)" role="menuitem">50</a>
                 </div>
             </div>
             <div class="btn-group dropdown btn-feature">
@@ -96,78 +96,52 @@ ul#ui-id-1 {
                     @endif
 
                     @if(count($services) != 0)
-                        @foreach($services as $service)
-                            @if($service->service_name != null)
-                            <div class="card">
-                                <div class="card-block">
-                                    <h4 class="card-title">
-                                        <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
-                                    </h4>
-                                    <h4><span class=""><b>Organization:</b></span>
-                                        @if(isset($service->organizations))                        
-                                            @foreach($service->organizations as $organization)
-                                                @if($loop->last)
-                                                <a class="panel-link" href="/organization/{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>
-                                                @else
-                                                <a class="panel-link" href="/organization/{{$organization->organization_recordid}}" class="notranslate"> {{$organization->organization_name}}</a>,
-                                                @endif
-                                            @endforeach                       
-                                        @endif
-                                    </h4>
-                                    <h4  style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
-                                    <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4>
-                                    <h4><span><i class="icon md-pin font-size-24 vertical-align-top mr-5 pr-10"></i>
-                                        @if(isset($service->address))
-                                            @foreach($service->address as $address)
-                                            {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-                                            @endforeach
-                                        @endif
-                                        </span>
-                                    </h4>
-                                    <h4>
-                                        <span class="pl-0 category_badge"><b>Types of Services:</b>
-                                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                                @php 
-                                                    $names = [];
-                                                @endphp
-                                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                                    @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
-                                                        @if($taxonomy->taxonomy_grandparent_name)
-                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
-                                                            @php
-                                                            $names[] = $taxonomy->taxonomy_grandparent_name;
-                                                            @endphp
-                                                        @endif
-                                                    @endif
-                                                    @if(!in_array($taxonomy->taxonomy_parent_name, $names))
-                                                        @if($taxonomy->taxonomy_parent_name)
-                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
-                                                            @php
-                                                            $names[] = $taxonomy->taxonomy_parent_name;
-                                                            @endphp
-                                                        @endif
-                                                    @endif
-                                                    @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                        @if($taxonomy->taxonomy_name)
-                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
-                                                            @php
-                                                            $names[] = $taxonomy->taxonomy_name;
-                                                            @endphp
-                                                        @endif
-                                                    @endif                                                    
-                                                   
+                        @if(isset($sort) && $sort ="Organization Name")
+                            @foreach($services->sortBy('organization_name') as $service)
+                                @if($service->service_name != null)
+                                <div class="card">
+                                    <div class="card-block">
+                                        <h4 class="card-title">
+                                            <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
+                                        </h4>
+                                        <h4><span class=""><b>Organization:</b></span>
+                                            @if(isset($service->organizations))                        
+                                                <a class="panel-link" class="notranslate" href="/organization/{{$service->organizations()->first()->organization_recordid}}"> {{$service->organizations()->first()->organization_name}}</a>                    
+                                            @endif
+                                        </h4>
+                                        <h4  style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
+                                        <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4>
+                                        <h4><span><i class="icon md-pin font-size-24 vertical-align-top mr-5 pr-10"></i>
+                                            @if(isset($service->address))
+                                                @foreach($service->address as $address)
+                                                {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
                                                 @endforeach
                                             @endif
-                                        </span> 
-                                        <br>
-                                        <span class="pl-0 category_badge"><b>Types of People:</b>
-                                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                                @php 
-                                                    $names = [];
-                                                @endphp
-                                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                                    
-                                                    @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                            </span>
+                                        </h4>
+                                        <h4>
+                                            <span class="pl-0 category_badge"><b>Types of Services:</b>
+                                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                    @php 
+                                                        $names = [];
+                                                    @endphp
+                                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                                        @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                                            @if($taxonomy->taxonomy_grandparent_name)
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif
+                                                        @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                                            @if($taxonomy->taxonomy_parent_name)
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_parent_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name)
                                                                 <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
@@ -176,15 +150,121 @@ ul#ui-id-1 {
                                                                 @endphp
                                                             @endif
                                                         @endif                                                    
-                                                    @endif
+                                                       
+                                                    @endforeach
+                                                @endif
+                                            </span> 
+                                            <br>
+                                            <span class="pl-0 category_badge"><b>Types of People:</b>
+                                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                    @php 
+                                                        $names = [];
+                                                    @endphp
+                                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                                        
+                                                        @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                            @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                                @if($taxonomy->taxonomy_name)
+                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                    @php
+                                                                    $names[] = $taxonomy->taxonomy_name;
+                                                                    @endphp
+                                                                @endif
+                                                            @endif                                                    
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </span> 
+                                        </h4>
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+                        @else
+                            @foreach($services->sortBy('service_name') as $service)
+                                @if($service->service_name != null)
+                                <div class="card">
+                                    <div class="card-block">
+                                        <h4 class="card-title">
+                                            <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
+                                        </h4>
+                                        <h4><span class=""><b>Organization:</b></span>
+                                            @if(isset($service->organizations))                        
+                                                <a class="panel-link" class="notranslate" href="/organization/{{$service->organizations()->first()->organization_recordid}}"> {{$service->organizations()->first()->organization_name}}</a>                    
+                                            @endif
+                                        </h4>
+                                        <h4  style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
+                                        <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4>
+                                        <h4><span><i class="icon md-pin font-size-24 vertical-align-top mr-5 pr-10"></i>
+                                            @if(isset($service->address))
+                                                @foreach($service->address as $address)
+                                                {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
                                                 @endforeach
                                             @endif
-                                        </span> 
-                                    </h4>
+                                            </span>
+                                        </h4>
+                                        <h4>
+                                            <span class="pl-0 category_badge"><b>Types of Services:</b>
+                                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                    @php 
+                                                        $names = [];
+                                                    @endphp
+                                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                                        @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                                            @if($taxonomy->taxonomy_grandparent_name)
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif
+                                                        @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                                            @if($taxonomy->taxonomy_parent_name)
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_parent_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif
+                                                        @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                            @if($taxonomy->taxonomy_name)
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif                                                    
+                                                       
+                                                    @endforeach
+                                                @endif
+                                            </span> 
+                                            <br>
+                                            <span class="pl-0 category_badge"><b>Types of People:</b>
+                                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                    @php 
+                                                        $names = [];
+                                                    @endphp
+                                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                                        
+                                                        @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                            @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                                @if($taxonomy->taxonomy_name)
+                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                    @php
+                                                                    $names[] = $taxonomy->taxonomy_name;
+                                                                    @endphp
+                                                                @endif
+                                                            @endif                                                    
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </span> 
+                                        </h4>
+                                    </div>
                                 </div>
-                            </div>
-                            @endif
-                        @endforeach
+                                @endif
+                            @endforeach
+                        @endif
                     @else
                         <div class="alert dark alert-warning ml-15" role="alert">
                         <p style="color: #ffffff;">

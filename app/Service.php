@@ -15,12 +15,19 @@ class Service extends Model
     
 	public $timestamps = false;
 
+    // public function organizations()
+    // {
+    //     $this->primaryKey='service_recordid';
+
+    //     return $this->belongsToMany('App\Organization', 'service_organization', 'service_recordid', 'organization_recordid');
+
+    // }
+
     public function organizations()
     {
         $this->primaryKey='service_recordid';
-
-        return $this->belongsToMany('App\Organization', 'service_organization', 'service_recordid', 'organization_recordid');
-
+        return $this->belongsTo('App\Organization', 'service_organization', 'organization_recordid');
+        
     }
 
     public function locations()

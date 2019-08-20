@@ -33,12 +33,6 @@
 					<div class="col-md-2">
 						<button class="btn btn-primary btn-block waves-effect waves-classic btn-button" title="Search" style="line-height: 31px;">Search</button>
 					</div>
-					<input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
-		            <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" else value="" @endif>
-
-		            <input type="hidden" name="pdf" id="pdf">
-
-		            <input type="hidden" name="csv" id="csv">
 				</div>
 			
 		</div>  

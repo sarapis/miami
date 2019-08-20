@@ -196,6 +196,9 @@ class ExploreController extends Controller
         $childs = $request->input('childs');
         $target_populations = $request->input('target_populations');
 
+        $checked_grandparents = $request->input('checked_grandparents');
+
+
         $pdf = $request->input('pdf');
         $csv = $request->input('csv');
 
@@ -340,7 +343,7 @@ class ExploreController extends Controller
 
         if($parents!=null){
 
-            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_parent_name')->toArray();
+            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->pluck('taxonomy_parent_name')->toArray();
 
             $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_recordid')->toArray();
 
@@ -584,8 +587,8 @@ class ExploreController extends Controller
         // }
 
         if($sort == 'Organization Name'){
-            $services = Service::whereIn('services.service_recordid', $services_ids);
-            $services = $services->leftjoin('service_organization', 'service_organization.service_recordid', '=', 'services.service_recordid')->leftjoin('organizations', 'organizations.organization_recordid', 'service_organization.organization_recordid')->orderBy('organization_name');
+            // $services = Service::whereIn('services.service_recordid', $services_ids);
+            $services = $services->leftjoin('organizations', 'services.service_organization', '=', 'organizations.organization_recordid')->orderBy('organization_name');
         }
 
         $services = $services->paginate($pagination);
@@ -609,7 +612,7 @@ class ExploreController extends Controller
        
         $map = Map::find(1);
 
-        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations'));
+        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents'));
 
     }
     /**
