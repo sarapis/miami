@@ -83,4 +83,10 @@
 	  background-color: {{$layout->button_hover_color}};
 	  color: {{$layout->button_color}};
 	}
+	.after_serach{
+		background-image: url(../uploads/images/{{$layout->bottom_background}});
+	}
+	.page-register:before{
+		background-image: url(../uploads/images/{{$layout->top_background}});
+	}
   </style>
