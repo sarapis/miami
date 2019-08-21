@@ -89,12 +89,17 @@ Appearance
                     <div class="row">
                       <img src="/uploads/images/{{$layout->top_background}}" id="blah1" style="width: 100%;">
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 10px;">
                       <div class="col-md-6">
                         <label class="custom-file">
                             <input type="file" id="file3" class="custom-file-input" onchange="readURL_top(this);" name="top_background">
                             <span class="custom-file-control"></span>
                         </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label>Recommended size 1200px wide.</label>
                       </div>
                     </div>
                 </div>
@@ -109,12 +114,17 @@ Appearance
                     <div class="row">
                       <img src="/uploads/images/{{$layout->bottom_background}}" id="blah2" style="width: 100%;">
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 10px;">
                       <div class="col-md-6">
                         <label class="custom-file">
                             <input type="file" id="file4" class="custom-file-input" onchange="readURL_bottom(this);" name="bottom_background">
                             <span class="custom-file-control"></span>
                         </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label>Recommended size 1200px wide.</label>
                       </div>
                     </div>
                 </div>
