@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Organization
+{{$organization->organization_name}}
 @stop
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
