@@ -1,4 +1,4 @@
-  <form action="/search" method="POST" id="filter">
+  <form action="/search" method="GET" id="filter">
   <div class="filter-bar container-fluid bg-secondary" style="padding: 14px;    background-color: #abcae9 !important;">
 	<div class="row">
 		<div class="col-md-2 col-sm-2"></div>
@@ -18,7 +18,7 @@
 		          	<input type="hidden" name="meta_status" id="status" @if(isset($meta_status)) value="{{$meta_status}}" @else value="On" @endif>
 					<div class="col-md-4">
 						<div class="input-search">
-							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							
 							<i class="input-search-icon md-search" aria-hidden="true"></i>
 							<input type="text" class="form-control search-form" name="find" placeholder="Search for Services" id="search_address" @if(isset($chip_service)) value="{{$chip_service}}" @endif>
 						</div>    
