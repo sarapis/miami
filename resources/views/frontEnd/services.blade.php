@@ -76,11 +76,13 @@ ul#ui-id-1 {
                     <a @if(isset($sort) && $sort == 'Distance from Address') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Distance from Address</a>
                 </div>
             </div>
+
             <div class="btn-group btn-feature">
                 <button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
                     <div class="sharethis-inline-share-buttons"></div>
                 </button>
             </div>
+            
             <div class="btn-group btn-feature">
                 @if(isset($search_results))
                 <p class="m-0 btn btn-primary btn-button">Results: {{$search_results}}</p>
