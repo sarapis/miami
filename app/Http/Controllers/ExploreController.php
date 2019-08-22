@@ -199,7 +199,6 @@ class ExploreController extends Controller
         $checked_grandparents = $request->input('checked_grandparents');
         $target_all = $request->input('target_all');
 
-
         $pdf = $request->input('pdf');
         $csv = $request->input('csv');
 
@@ -331,9 +330,9 @@ class ExploreController extends Controller
 
             $grandparent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_grandparent_name')->toArray();
 
-            $checked_grandparents = $grandparents;
-
             $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+
+            $checked_grandparents = $grandparents;
 
             $child_taxonomy = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_recordid')->toArray();
 
@@ -346,13 +345,16 @@ class ExploreController extends Controller
         }
 
         if($parents!=null){
+
+            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+
             if($grandparents!=null){
-                $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                $checked_grandparents = $grandparents;
+                $parent_taxonomy_names_grand = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_names_grand);
+
+                $checked_grandparents = array_merge($grandparents, $checked_grandparents);
             }
-            else{
-                $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-            }
+
 
             $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->pluck('taxonomy_recordid')->toArray();
 
@@ -372,13 +374,18 @@ class ExploreController extends Controller
             $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_parent_name')->toArray();
 
             if($parents!=null){
-                $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->pluck('taxonomy_recordid')->toArray();
+                $parent_taxonomy_names_parent = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+                $child_taxonomy_parent = Taxonomy::whereIn('taxonomy_parent_name', $parents)->whereIn('taxonomy_grandparent_name', $checked_grandparents)->pluck('taxonomy_recordid')->toArray();
+                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_names_parent);
+                $child_taxonomy = array_merge($child_taxonomy, $child_taxonomy_parent);
             }
             if($grandparents!=null){
-                $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                $checked_grandparents = $grandparents;
-                $child_taxonomy = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_recordid')->toArray();
+                $parent_taxonomy_names_grand = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+                $child_taxonomy_grand = Taxonomy::whereIn('taxonomy_grandparent_name', $grandparents)->pluck('taxonomy_recordid')->toArray();
+                // $checked_grandparents = array_merge($grandparents, $checked_grandparents);
+                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_names_grand);
+                $child_taxonomy = array_merge($child_taxonomy, $child_taxonomy_grand);
+
             }
 
 

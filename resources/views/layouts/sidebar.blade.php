@@ -243,7 +243,7 @@ $(document).ready(function(){
     });
 
     $('.regular-checkbox').each(function(){
-        if($(this).prop('checked') && $('li', $(this).next().next()).length != 0 ){
+        if($(this).prop('checked') && $('li', $(this).next().next()).length != 0 && $(this).parent().parent().parent().attr('id') != 'projectcategory'){
             if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
                 $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
             if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(0).prop('checked'))
