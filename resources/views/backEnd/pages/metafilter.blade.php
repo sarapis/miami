@@ -227,8 +227,8 @@ Meta Filter
 @endsection
 @section('scripts')
 <script type="text/javascript">
-  $('#sample').DataTable( {
-    
+  $('#example').DataTable( {
+      "searching": true,
   });
 </script>
 <script src="{{asset('js/operation_ajaxscript.js')}}"></script>

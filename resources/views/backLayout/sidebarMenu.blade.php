@@ -37,8 +37,15 @@
             <li><a href="/layout_edit">Appearance</a></li>
             <!-- <li><a href="/home_edit">Home</a></li> -->
             <li><a href="/about_edit">About Page</a></li>
-            <li><a href="/map">Map</a></li>
+            <li><a href="/map">Map</a></li> 
+          </ul>
+        </li>
+        <li><a><i class="fa fa-gears"></i> Tools <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
             <li><a href="/meta_filter">Meta Filter</a></li>
+            @if($source_data->active ==0 )
+            <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li>
+            @endif
           </ul>
         </li>
         <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>      
@@ -60,9 +67,6 @@
             <li><a href="/tb_address">Address</a></li>
             <li><a href="/tb_schedule">Schedule</a></li>
             <li><a href="/tb_taxonomy">Taxonomy</a></li>
-            @if($source_data->active ==0 )
-            <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li>
-            @endif
             @if($source_data->active ==1 )
             <li><a href="/tb_details">Details</a></li>
             @endif

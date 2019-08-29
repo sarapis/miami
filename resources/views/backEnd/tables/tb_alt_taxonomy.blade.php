@@ -18,7 +18,7 @@ Alt Taxonomy
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Taxonomy</h2>
+        <h2>Alt Taxonomy</h2>
         <button class="btn btn-block btn-primary btn-md pull-right" style="width: 80px;" id="btn-add"><i class="fa fa-plus text-white"></i> Add</button>
         <div class="clearfix"></div>  
       </div>
@@ -29,7 +29,7 @@ Alt Taxonomy
                 <tr>
                     <th class="text-center">No</th>
                     <th class="text-center">Name</th>                                
-                    <th class="text-center">Vocabulary</th>           
+                    <th class="text-center"># Terms</th>           
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -40,6 +40,7 @@ Alt Taxonomy
                   <td>{{$alt_taxonomy->alt_taxonomy_name}}</td>                 
                   <td>{{$alt_taxonomy->alt_taxonomy_vocabulary}}</td>
                   <td class="text-center">
+                    <button class="btn btn-default btn-success btn-sm open_term_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-pencil-square"></i>Term</button>
                     <button class="btn btn-default btn-info btn-sm open_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                     <button class="btn btn-default btn-danger btn-sm delete-product"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-remove"></i>Delete</button>
                   </td>
