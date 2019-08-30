@@ -222,8 +222,9 @@ class PagesController extends Controller
     {
         $addresses = Address::orderBy('id')->get();
         $source_data = Source_data::find(1);
+        $checked_addresses = [];
 
-        return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data'))->render();
+        return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
     }
 
     public function operation(Request $request){
