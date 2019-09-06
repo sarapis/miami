@@ -69,10 +69,9 @@ class AreaController extends Controller
 
     public function index()
     {
-        $accessibilities = Area::orderBy('accessibility_recordid')->paginate(20);
-        $source_data = Source_data::find(1);
+        $areas = Area::orderBy('area_recordid')->paginate(20);
 
-        return view('backEnd.tables.tb_accessibility', compact('accessibilities', 'source_data'));
+        return view('backEnd.tables.tb_area', compact('areas'));
     }
 
     /**
@@ -104,8 +103,8 @@ class AreaController extends Controller
      */
     public function show($id)
     {
-        $process= Area::find($id);
-        return response()->json($process);
+        $area= Area::find($id);
+        return response()->json($area);
     }
 
     /**
@@ -128,19 +127,11 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $location = Area::find($id);
-        // $project = Project::where('id', '=', $id)->first();
-        $location->location_name = $request->location_name;
-        $location->location_alternate_name = $request->location_alternate_name;
-        $location->location_transportation = $request->location_transportation;
-        $location->location_latitude = $request->location_latitude;
-        $location->location_longitude = $request->location_longitude;
-        $location->location_description = $request->location_description;
-        $location->flag = 'modified';
-        $location->save();
-        // var_dump($project);
-        // exit();
-        return response()->json($location);
+        $area = Area::find($id);
+        $area->area_description = $request->area_description;
+        $area->save();
+
+        return response()->json($area);
     }
 
     /**

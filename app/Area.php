@@ -11,8 +11,13 @@ class Area extends Model
 
     protected $table = 'areas';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'area_recordid';
     
 	public $timestamps = false;
+
+	public function services()
+    {
+        return $this->belongsTo('App\Service', 'area_service', 'service_recordid');
+    }
 
 }

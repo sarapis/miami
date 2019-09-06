@@ -74,6 +74,7 @@
             <li><a href="/tb_languages">Languages</a></li>
             <li><a href="/tb_accessibility">Accessibility</a></li>
             @endif
+            <li><a href="/tb_service_areas">Service area</a></li>
           </ul>
         </li>            
       </ul>

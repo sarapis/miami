@@ -112,6 +112,8 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::resource('tb_phones', 'PhoneController');
         Route::resource('tb_address', 'AddressController');
         Route::resource('tb_schedule', 'ScheduleController');
+        Route::resource('tb_service_areas', 'AreaController');
+
 
         Route::get('/tb_regular_schedules', function () {
             return redirect('/tb_schedule');
