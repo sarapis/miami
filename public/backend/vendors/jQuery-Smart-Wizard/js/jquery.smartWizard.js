@@ -258,15 +258,147 @@ function SmartWizard(target, options) {
         }
     };
 
+
     var _adjustButton = function($this) {
+
+        var original_facet = "";
+        var method = $( "#method option:selected" ).text();
+        var facet = $( "#facet option:selected" ).text();
+        var id = document.getElementById('status').value;  
+
         if (! $this.options.cycleSteps){
             if (0 >= $this.curStepIdx) {
-                $($this.buttons.previous).addClass("buttonDisabled");
+                $($this.buttons.finish).hide()               
+                $($this.buttons.previous).hide();
+                $($this.buttons.next).show();
+                $($this.buttons.next).text("Next");
 				if ($this.options.hideButtonsOnDisabled) {
                     $($this.buttons.previous).hide();
                 }
-            }else{
-                $($this.buttons.previous).removeClass("buttonDisabled");
+            }else{                
+                if ($this.curStepIdx == 1) {
+                    $($this.buttons.finish).show()                
+                    $($this.buttons.previous).show();
+                    $($this.buttons.next).show();
+                    $($this.buttons.finish).text("Save");
+
+                    if(method == 'Checklist'){
+                        $("#step-2 div#csv_form").hide();
+                        $("#step-2 div#checklist_form").show();
+                        $($this.buttons.next).text("CSV");
+                        if(facet == 'Taxonomy'){
+                            $.ajaxSetup({
+                              headers: {
+                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }
+                            })
+
+                            if(original_facet == facet){
+                              var url = 'meta_filter/'+id;
+                            }
+                            else{
+                              var url = '/taxonomy_filter';
+                            }
+
+                            console.log(url);
+                            $.ajax({
+                              type: 'POST',
+                              url: url.toLowerCase(),
+                              success: function(data){
+                                  $('#step-2 #list_tb').html(data);
+                              }
+                            });
+                        }
+
+                        if(facet == 'Postal_code'){
+                            $.ajaxSetup({
+                              headers: {
+                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }
+                            })
+
+                            if(original_facet == facet)
+                              var url = 'meta_filter/'+id;
+                            else
+                              var url = '/postal_code_filter';
+
+                            $.ajax({
+                              type: 'POST',
+                              url: url.toLowerCase(),
+                              success: function(data){
+                                  $('#step-2 #list_tb').html(data);
+                              }
+                            });
+                        }
+                    }
+                    else{
+                        $("#step-2 div#checklist_form").hide();
+                        $("#step-2 div#csv_form").show();
+                        $($this.buttons.next).text("Checklist");
+                    }
+                } 
+
+                if ($this.curStepIdx == 2) { 
+                    $($this.buttons.finish).show()                
+                    $($this.buttons.previous).show(); 
+                    $($this.buttons.next).hide();
+                    $($this.buttons.finish).text("Save");
+
+                    if(method == 'Checklist'){
+                        $("#step-3 div#csv_form").show();
+                        $("#step-3 div#checklist_form").hide();
+                    }
+                    else{
+                        $("#step-3 div#checklist_form").show();
+                        $("#step-3 div#csv_form").hide();
+
+                        if(facet == 'Taxonomy'){
+                            $.ajaxSetup({
+                              headers: {
+                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }
+                            })
+
+                            if(original_facet == facet){
+                              var url = 'meta_filter/'+id;
+                            }
+                            else{
+                              var url = '/taxonomy_filter';
+                            }
+
+                            console.log(url);
+                            $.ajax({
+                              type: 'POST',
+                              url: url.toLowerCase(),
+                              success: function(data){
+                                  $('#step-3 #list_tb').html(data);
+                              }
+                            });
+                        }
+
+                        if(facet == 'Postal_code'){
+                            $.ajaxSetup({
+                              headers: {
+                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }
+                            })
+
+                            if(original_facet == facet)
+                              var url = 'meta_filter/'+id;
+                            else
+                              var url = '/postal_code_filter';
+
+                            $.ajax({
+                              type: 'POST',
+                              url: url.toLowerCase(),
+                              success: function(data){
+                                  $('#step-3 #list_tb').html(data);
+                              }
+                            });
+                        }
+                    }                  
+                }
+
                 if ($this.options.hideButtonsOnDisabled) {
                     $($this.buttons.previous).show();
                 }
@@ -290,7 +422,6 @@ function SmartWizard(target, options) {
                 $($this.buttons.finish).show();
             }
         }else{
-            $($this.buttons.finish).addClass("buttonDisabled");
             if ($this.options.hideButtonsOnDisabled) {
                 $($this.buttons.finish).hide();
             }

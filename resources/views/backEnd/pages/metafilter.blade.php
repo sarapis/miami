@@ -100,6 +100,15 @@ Meta Filter
                                     </span>
                                   </a>
                                 </li>
+                                <li>
+                                  <a href="#step-3">
+                                    <span class="step_no">3</span>
+                                    <span class="step_descr">
+                                        Step 3<br />
+                                        <small>Step 3 description</small>
+                                    </span>
+                                  </a>
+                                </li>
                               </ul>
                               
                               <div id="step-1">
@@ -134,7 +143,6 @@ Meta Filter
                                       </select>
                                     </div>
                                   </div>
-                                
 
                               </div>
                               <div id="step-2">
@@ -153,6 +161,23 @@ Meta Filter
                                   </div>
                                 </div>
                               </div>
+                              <div id="step-3">
+                                <div class="form-group">
+                                  <h2 class="StepTitle">Step 3 Content</h2>
+                                </div>
+                                <div class="form-group" id="csv_form">
+                                  <label class="control-label col-md-2 col-sm-2 col-xs-12">Import CSV</label>
+                                  <div class="col-md-6 col-sm-9 col-xs-12">
+                                  <input type="file" class="form-control" name="csv_import">
+                                  </div>
+                                </div>
+                                <div class="form-group" id="checklist_form">
+                                  <div class="table-responsive" id="list_tb" style="overflow-y: scroll;height: 50%;">
+
+                                  </div>
+                                </div>
+                              </div>
+
 
                             </div>
                           </form>
