@@ -263,8 +263,10 @@ function SmartWizard(target, options) {
 
         var original_facet = "";
         var method = $( "#method option:selected" ).text();
+        console.log(method);
         var facet = $( "#facet option:selected" ).text();
         var id = document.getElementById('status').value;  
+        console.log($this.curStepIdx);
 
         if (! $this.options.cycleSteps){
             if (0 >= $this.curStepIdx) {
@@ -283,8 +285,8 @@ function SmartWizard(target, options) {
                     $($this.buttons.finish).text("Save");
 
                     if(method == 'Checklist'){
-                        $("#step-2 div#csv_form").hide();
-                        $("#step-2 div#checklist_form").show();
+                        $("#step-2 div#csv_form_2").hide();
+                        $("#step-2 div#checklist_form_2").show();
                         $($this.buttons.next).text("CSV");
                         if(facet == 'Taxonomy'){
                             $.ajaxSetup({
@@ -305,7 +307,7 @@ function SmartWizard(target, options) {
                               type: 'POST',
                               url: url.toLowerCase(),
                               success: function(data){
-                                  $('#step-2 #list_tb').html(data);
+                                  $('#step-2 #list_tb_2').html(data);
                               }
                             });
                         }
@@ -326,14 +328,14 @@ function SmartWizard(target, options) {
                               type: 'POST',
                               url: url.toLowerCase(),
                               success: function(data){
-                                  $('#step-2 #list_tb').html(data);
+                                  $('#step-2 #list_tb_2').html(data);
                               }
                             });
                         }
                     }
                     else{
-                        $("#step-2 div#checklist_form").hide();
-                        $("#step-2 div#csv_form").show();
+                        $("#step-2 div#checklist_form_2").hide();
+                        $("#step-2 div#csv_form_2").show();
                         $($this.buttons.next).text("Checklist");
                     }
                 } 
@@ -345,12 +347,12 @@ function SmartWizard(target, options) {
                     $($this.buttons.finish).text("Save");
 
                     if(method == 'Checklist'){
-                        $("#step-3 div#csv_form").show();
-                        $("#step-3 div#checklist_form").hide();
+                        $("#step-3 div#csv_form_3").show();
+                        $("#step-3 div#checklist_form_3").hide();
                     }
                     else{
-                        $("#step-3 div#checklist_form").show();
-                        $("#step-3 div#csv_form").hide();
+                        $("#step-3 div#checklist_form_3").show();
+                        $("#step-3 div#csv_form_3").hide();
 
                         if(facet == 'Taxonomy'){
                             $.ajaxSetup({
@@ -371,7 +373,7 @@ function SmartWizard(target, options) {
                               type: 'POST',
                               url: url.toLowerCase(),
                               success: function(data){
-                                  $('#step-3 #list_tb').html(data);
+                                  $('#step-3 #list_tb_3').html(data);
                               }
                             });
                         }
@@ -392,7 +394,7 @@ function SmartWizard(target, options) {
                               type: 'POST',
                               url: url.toLowerCase(),
                               success: function(data){
-                                  $('#step-3 #list_tb').html(data);
+                                  $('#step-3 #list_tb_3').html(data);
                               }
                             });
                         }

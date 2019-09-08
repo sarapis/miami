@@ -149,14 +149,14 @@ Meta Filter
                                 <div class="form-group">
                                   <h2 class="StepTitle">Step 2 Content</h2>
                                 </div>
-                                <div class="form-group" id="csv_form">
+                                <div class="form-group" id="csv_form_2">
                                   <label class="control-label col-md-2 col-sm-2 col-xs-12">Import CSV</label>
                                   <div class="col-md-6 col-sm-9 col-xs-12">
                                   <input type="file" class="form-control" name="csv_import">
                                   </div>
                                 </div>
-                                <div class="form-group" id="checklist_form">
-                                  <div class="table-responsive" id="list_tb" style="overflow-y: scroll;height: 50%;">
+                                <div class="form-group" id="checklist_form_2">
+                                  <div class="table-responsive" id="list_tb_2" style="overflow-y: scroll;height: 50%;">
 
                                   </div>
                                 </div>
@@ -165,14 +165,14 @@ Meta Filter
                                 <div class="form-group">
                                   <h2 class="StepTitle">Step 3 Content</h2>
                                 </div>
-                                <div class="form-group" id="csv_form">
+                                <div class="form-group" id="csv_form_3">
                                   <label class="control-label col-md-2 col-sm-2 col-xs-12">Import CSV</label>
                                   <div class="col-md-6 col-sm-9 col-xs-12">
                                   <input type="file" class="form-control" name="csv_import">
                                   </div>
                                 </div>
-                                <div class="form-group" id="checklist_form">
-                                  <div class="table-responsive" id="list_tb" style="overflow-y: scroll;height: 50%;">
+                                <div class="form-group" id="checklist_form_3">
+                                  <div class="table-responsive" id="list_tb_3" style="overflow-y: scroll;height: 50%;">
 
                                   </div>
                                 </div>
@@ -251,10 +251,6 @@ Meta Filter
 
 @endsection
 @section('scripts')
-<script type="text/javascript">
-  $('#example').DataTable( {
-      "searching": true,
-  });
-</script>
+
 <script src="{{asset('js/operation_ajaxscript.js')}}"></script>
 @endsection
