@@ -239,14 +239,13 @@ class PagesController extends Controller
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
 
-            $path = $request->file('csv_import')->getRealPath();
-
-            $data = Excel::load($path)->get();
-
-            $filename =  $request->file('csv_import')->getClientOriginalName();
-            $request->file('csv_import')->move(public_path('/csv/'), $filename);
-
             if($metafilter->method =='CSV' && $filename != null){
+
+                $path = $request->file('csv_import_2')->getRealPath();
+                $data = Excel::load($path)->get();
+                $filename =  $request->file('csv_import_2')->getClientOriginalName();
+                $request->file('csv_import_2')->move(public_path('/csv/'), $filename);
+            
                 if (count($data) > 0) {
                     $csv_header_fields = [];
                     foreach ($data[0] as $key => $value) {
@@ -286,12 +285,12 @@ class PagesController extends Controller
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
 
-            $path = $request->file('csv_import')->getRealPath();
+            $path = $request->file('csv_import_2')->getRealPath();
 
             $data = Excel::load($path)->get();
 
-            $filename =  $request->file('csv_import')->getClientOriginalName();
-            $request->file('csv_import')->move(public_path('/csv/'), $filename);
+            $filename =  $request->file('csv_import_2')->getClientOriginalName();
+            $request->file('csv_import_2')->move(public_path('/csv/'), $filename);
 
             if($filename != null){
                 if (count($data) > 0) {

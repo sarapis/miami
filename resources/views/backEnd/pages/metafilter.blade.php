@@ -152,7 +152,7 @@ Meta Filter
                                 <div class="form-group" id="csv_form_2">
                                   <label class="control-label col-md-2 col-sm-2 col-xs-12">Import CSV</label>
                                   <div class="col-md-6 col-sm-9 col-xs-12">
-                                  <input type="file" class="form-control" name="csv_import">
+                                  <input type="file" class="form-control" name="csv_import_2">
                                   </div>
                                 </div>
                                 <div class="form-group" id="checklist_form_2">
@@ -168,7 +168,7 @@ Meta Filter
                                 <div class="form-group" id="csv_form_3">
                                   <label class="control-label col-md-2 col-sm-2 col-xs-12">Import CSV</label>
                                   <div class="col-md-6 col-sm-9 col-xs-12">
-                                  <input type="file" class="form-control" name="csv_import">
+                                  <input type="file" class="form-control" name="csv_import_3">
                                   </div>
                                 </div>
                                 <div class="form-group" id="checklist_form_3">
