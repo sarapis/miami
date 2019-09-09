@@ -239,41 +239,43 @@ class PagesController extends Controller
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
 
-            if($metafilter->method =='CSV' && $filename != null){
+
+            if($metafilter->method =='CSV'){
 
                 $path = $request->file('csv_import_2')->getRealPath();
                 $data = Excel::load($path)->get();
                 $filename =  $request->file('csv_import_2')->getClientOriginalName();
-                $request->file('csv_import_2')->move(public_path('/csv/'), $filename);
-            
-                if (count($data) > 0) {
-                    $csv_header_fields = [];
-                    foreach ($data[0] as $key => $value) {
-                        $csv_header_fields[] = $key;
+                if($filename != null) {
+                    $request->file('csv_import_2')->move(public_path('/csv/'), $filename);
+
+                    if (count($data) > 0) {
+                        $csv_header_fields = [];
+                        foreach ($data[0] as $key => $value) {
+                            $csv_header_fields[] = $key;
+                        }
+                        $csv_data = $data;
                     }
-                    $csv_data = $data;
-                }
-                if($request->input('facet') == 'Postal_code' && $csv_header_fields[0] != 'postal_code'){
+                    if($request->input('facet') == 'Postal_code' && $csv_header_fields[0] != 'postal_code'){
 
-                    return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+                        return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
 
-                }
-                if($request->input('facet') == 'Taxonomy' && $csv_header_fields[0] != 'taxonomy_name'){
-                    return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
-                }
-                
+                    }
+                    if($request->input('facet') == 'Taxonomy' && $csv_header_fields[0] != 'taxonomy_name'){
+                        return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+                    }
 
-                $id_list ='';
-                foreach ($csv_data as $row) {
-                    if($request->input('facet') == 'Postal_code')
-                        $id = Address::where('address_postal_code', '=', $row['postal_code'])->pluck('address_recordid')->toArray();
-                    if($request->input('facet') == 'Taxonomy')
-                        $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->pluck('taxonomy_recordid')->toArray();
+                    $id_list ='';
+                    foreach ($csv_data as $row) {
+                        if($request->input('facet') == 'Postal_code')
+                            $id = Address::where('address_postal_code', '=', $row['postal_code'])->pluck('address_recordid')->toArray();
+                        if($request->input('facet') == 'Taxonomy')
+                            $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->pluck('taxonomy_recordid')->toArray();
 
-                    $id_list = $id_list.','.implode(",", $id);
+                        $id_list = $id_list.','.implode(",", $id);
+                    }
+                    $id_list = trim($id_list,",");
+                    $metafilter->values = $id_list;
                 }
-                $id_list = trim($id_list,",");
-                $metafilter->values = $id_list;
             }
             if($request->input('table_records') != null)
                 $metafilter->values = implode(",", $request->input('table_records'));
