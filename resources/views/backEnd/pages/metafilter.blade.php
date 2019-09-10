@@ -189,6 +189,41 @@ Meta Filter
                         </div>
                       </div>
                     </div>
+
+                    <div class="modal fade bs-edit-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Meta Filter</h4>
+                          </div>
+                          <div class="modal-body">
+                          <!-- Smart Wizard -->
+                            <form class="form-horizontal form-label-left" action="/meta_filter" method="POST" id="meta_filter_edit" enctype="multipart/form-data">
+                              {!! Form::token() !!}
+                                <input type="hidden" id="status" name="status" value="0">
+                                <input type="hidden" id="operation" name="operation">
+                                <input type="hidden" id="facet" name="facet">
+                                <input type="hidden" id="method" name="method">
+     
+                                <div class="form-group" id="checklist_form_edit">
+                                  <div class="table-responsive" id="list_tb_edit" style="overflow-y: scroll;height: 50%;">
+                                  </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-success btn-save">Save</button>
+                                </div>
+                            </form>                         
+                            <!-- End SmartWizard Content -->
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="modal fade bs-delete-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                       <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -235,7 +270,7 @@ Meta Filter
                         <td class="text-center">{{$metafilter->operations}}</td>
                         <td class="text-center">{{$metafilter->facet}}</td>
                         <td class="text-center">{{$metafilter->method}}</td>
-                        <td class="text-center"><button class="btn btn-block btn-primary btn-sm edit-meta" value="{{$metafilter->id}}" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-fw fa-edit"></i>Edit</button></td>
+                        <td class="text-center"><button class="btn btn-block btn-primary btn-sm edit-meta" value="{{$metafilter->id}}" data-toggle="modal" data-target=".bs-edit-modal-lg"><i class="fa fa-fw fa-edit"></i>Edit</button></td>
                         <td class="text-center"><button class="btn btn-block btn-danger btn-sm delete-meta" value="{{$metafilter->id}}" data-toggle="modal" data-target=".bs-delete-modal-lg"><i class="fa fa-fw fa-edit"></i>Delete</button></td>
                       </tr>
                       @endforeach 

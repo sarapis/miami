@@ -13,14 +13,49 @@ $(document).ready(function(){
     var id = $(this).val();
     $("#status").val(id);
 
-    id = $(this).parent().parent().children().eq(0);
     operation = $(this).parent().parent().children().eq(1).html();
     original_facet = $(this).parent().parent().children().eq(2).html();
     method = $(this).parent().parent().children().eq(3).html();
 
-    $("div#operation select").val(operation);
-    $("div#facet select").val(original_facet);
-    $("div#method select").val(method);
+    $("input#operation").val(operation);
+    $("input#facet").val(original_facet);
+    $("input#method").val(method);
+    if(original_facet == 'Taxonomy'){
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
+
+        var url = 'meta_filter/'+id;
+
+        console.log(url);
+        $.ajax({
+          type: 'POST',
+          url: url.toLowerCase(),
+          success: function(data){
+              $('#list_tb_edit').html(data);
+          }
+        });
+    }
+
+    if(original_facet == 'Postal_code'){
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
+
+        var url = 'meta_filter/'+id;
+
+        $.ajax({
+          type: 'POST',
+          url: url.toLowerCase(),
+          success: function(data){
+              $('#list_tb_edit').html(data);
+          }
+        });
+    }
 
   });
 

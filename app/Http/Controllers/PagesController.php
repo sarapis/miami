@@ -327,8 +327,10 @@ class PagesController extends Controller
 
     public function delete_operation(Request $request){
         $id = $request->input('id');
+        var_dump($id);
 
         $metafilter = Metafilter::find($id);
+        var_dump($metafilter);
         $metafilter->delete();
 
         return redirect('meta_filter');

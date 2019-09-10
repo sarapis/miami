@@ -404,7 +404,10 @@ function SmartWizard(target, options) {
                 if ($this.options.hideButtonsOnDisabled) {
                     $($this.buttons.previous).show();
                 }
-            }
+            }            
+
+            
+
             if (($this.steps.length-1) <= $this.curStepIdx){
                 $($this.buttons.next).addClass("buttonDisabled");
                 if ($this.options.hideButtonsOnDisabled) {
