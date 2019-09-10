@@ -55,6 +55,9 @@ Meta Filter
                 </div>
                 {!! Form::close() !!}
               </div>
+              <div class="col-md-6">
+                <h1>Filtered Services: {{count($metafilters)}}</h1>
+              </div> 
               @if($meta->meta_filter_activate==1)
               <div class="col-md-12">
                 <div class="x_title">
@@ -202,11 +205,11 @@ Meta Filter
                           <!-- Smart Wizard -->
                             <form class="form-horizontal form-label-left" action="/meta_filter" method="POST" id="meta_filter_edit" enctype="multipart/form-data">
                               {!! Form::token() !!}
-                                <input type="hidden" id="status" name="status" value="0">
-                                <input type="hidden" id="operation" name="operation">
-                                <input type="hidden" id="facet" name="facet">
-                                <input type="hidden" id="method" name="method">
-     
+                                <input type="hidden" id="edit-status" name="status" value="0">
+                                <input type="hidden" id="edit-operation" name="operation">
+                                <input type="hidden" id="edit-facet" name="facet">
+                                <input type="hidden" id="edit-method" name="method">
+
                                 <div class="form-group" id="checklist_form_edit">
                                   <div class="table-responsive" id="list_tb_edit" style="overflow-y: scroll;height: 50%;">
                                   </div>

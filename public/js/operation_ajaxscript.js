@@ -11,15 +11,16 @@ $(document).ready(function(){
   $('.edit-meta').click(function(){
 
     var id = $(this).val();
-    $("#status").val(id);
+    console.log(id);
+    $("#edit-status").val(id);
 
     operation = $(this).parent().parent().children().eq(1).html();
     original_facet = $(this).parent().parent().children().eq(2).html();
     method = $(this).parent().parent().children().eq(3).html();
 
-    $("input#operation").val(operation);
-    $("input#facet").val(original_facet);
-    $("input#method").val(method);
+    $("input#edit-operation").val(operation);
+    $("input#edit-facet").val(original_facet);
+    $("input#edit-method").val(method);
     if(original_facet == 'Taxonomy'){
         $.ajaxSetup({
           headers: {
