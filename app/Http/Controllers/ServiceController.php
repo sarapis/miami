@@ -421,7 +421,7 @@ class ServiceController extends Controller
                         $serviceids = Servicetaxonomy::whereIn('taxonomy_recordid', $values)->pluck('service_recordid')->toArray();
                     if($meta->operations == 'Exclude')
                         $serviceids = Servicetaxonomy::whereNotIn('taxonomy_recordid', $values)->pluck('service_recordid')->toArray();
-                    $taxonomy_serviceids = array_merge($serviceids, $axonomy_serviceids);
+                    $taxonomy_serviceids = array_merge($serviceids, $taxonomy_serviceids);
                 }
             }
             
