@@ -133,7 +133,8 @@ Meta Filter
                                     <div class="col-md-6 col-sm-6 col-xs-12" id="facet">
                                       <select class="form-control" name="facet">
                                         <option value="Taxonomy">Taxonomy</option>
-                                        <option value="Postal_code">Postal_code</option>
+                                        <option value="Postal_code">Postal code</option>
+                                        <option value="Service_area">Service area</option>
                                       </select>
                                     </div>
                                   </div>
