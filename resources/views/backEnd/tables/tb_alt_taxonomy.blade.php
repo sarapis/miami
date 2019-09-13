@@ -28,7 +28,8 @@ Alt Taxonomy
             <thead>
                 <tr>
                     <th class="text-center">No</th>
-                    <th class="text-center">Name</th>                                
+                    <th class="text-center">Name</th>   
+                    <th class="text-center">Vocabulary</th>                              
                     <th class="text-center"># Terms</th>           
                     <th class="text-center">Actions</th>
                 </tr>
@@ -38,6 +39,7 @@ Alt Taxonomy
                 <tr id="alt_taxonomy{{$alt_taxonomy->id}}">
                   <td class="text-center">{{$key+1}}</td>
                   <td>{{$alt_taxonomy->alt_taxonomy_name}}</td>                 
+                  <td>{{$alt_taxonomy->alt_taxonomy_vocabulary}}</td>
                   <td>{{$alt_taxonomy->alt_taxonomy_vocabulary}}</td>
                   <td class="text-center">
                     <button class="btn btn-default btn-success btn-sm open_term_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-pencil-square"></i>Term</button>

@@ -275,7 +275,7 @@ Meta Filter
                         <td class="text-center">{{$metafilter->facet}}</td>
                         <td class="text-center">{{$metafilter->method}}</td>
                         <td class="text-center"><button class="btn btn-block btn-primary btn-sm edit-meta" value="{{$metafilter->id}}" data-toggle="modal" data-target=".bs-edit-modal-lg"><i class="fa fa-fw fa-edit"></i>Edit</button></td>
-                        <td class="text-center"><button class="btn btn-block btn-danger btn-sm delete-meta" value="{{$metafilter->id}}" data-toggle="modal" data-target=".bs-delete-modal-lg"><i class="fa fa-fw fa-edit"></i>Delete</button></td>
+                        <td class="text-center"><button class="btn btn-block btn-danger btn-sm delete-meta" value="{{$metafilter->id}}" data-toggle="modal" data-target=".bs-delete-modal-lg"><i class="fa fa-fw fa-remove"></i>Delete</button></td>
                       </tr>
                       @endforeach 
                   </tbody>
