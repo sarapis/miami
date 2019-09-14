@@ -40,7 +40,7 @@ Alt Taxonomy
                   <td class="text-center">{{$key+1}}</td>
                   <td>{{$alt_taxonomy->alt_taxonomy_name}}</td>                 
                   <td>{{$alt_taxonomy->alt_taxonomy_vocabulary}}</td>
-                  <td>{{$alt_taxonomy->alt_taxonomy_vocabulary}}</td>
+                  <td>{{$counts[$key]}}</td>
                   <td class="text-center">
                     <button class="btn btn-default btn-success btn-sm open_term_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-pencil-square"></i>Term</button>
                     <button class="btn btn-default btn-info btn-sm open_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>

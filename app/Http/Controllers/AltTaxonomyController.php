@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Alt_taxonomy;
+use App\Taxonomy;
 use App\Servicetaxonomy;
 use App\Airtables;
 use App\CSV_Source;
@@ -25,9 +26,18 @@ class AltTaxonomyController extends Controller
     public function index()
     {
         $alt_taxonomies = Alt_taxonomy::orderBy('id')->paginate(20);
+        $counts = [];
+        foreach ($alt_taxonomies as $key => $alt_taxonomy) {
+            $alt_taxonomy_name = $alt_taxonomy->alt_taxonomy_name;
+            $count = Taxonomy::where('taxonomy_grandparent_name', 'like', $alt_taxonomy_name)
+                            ->orWhere('taxonomy_parent_name', 'like', $alt_taxonomy_name)
+                            ->orWhere('taxonomy_name', 'like', $alt_taxonomy_name)->count();
+            array_push($counts, $count);
+        }
+
         $source_data = Source_data::find(1);
 
-        return view('backEnd.tables.tb_alt_taxonomy', compact('alt_taxonomies', 'source_data'));
+        return view('backEnd.tables.tb_alt_taxonomy', compact('alt_taxonomies', 'counts', 'source_data'));
     }
 
     /**
