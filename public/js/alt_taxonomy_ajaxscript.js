@@ -44,6 +44,9 @@ $(document).ready(function(){
         if (original_alt_taxonomy_name.includes("/") == true) {
             alt_taxonomy_name = original_alt_taxonomy_name.replace("/", "-")
         }
+        else {
+            alt_taxonomy_name = original_alt_taxonomy_name;
+        }
 
         // Populate Data in Edit Modal Form
         $.ajax({
