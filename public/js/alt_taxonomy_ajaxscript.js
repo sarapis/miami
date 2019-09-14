@@ -37,6 +37,54 @@ $(document).ready(function(){
         });
     });
 
+    //display modal form for open_term_modal ***************************
+    $(document).on('click','.open_term_modal',function(e){
+
+        var original_alt_taxonomy_name = $(this).val();    
+        if (original_alt_taxonomy_name.includes("/") == true) {
+            alt_taxonomy_name = original_alt_taxonomy_name.replace("/", "-")
+        }
+
+        // Populate Data in Edit Modal Form
+        $.ajax({
+            type: "GET",
+            url: url + '/terms/' + alt_taxonomy_name,
+            success: function (data) {
+                console.log(data);
+                var html = '';
+                html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
+                html += '<thead>'
+                html += '<tr>'
+                html += '<th class="text-center">No</th>'
+                html += '<th class="text-center">Name</th>'
+                html += '<th class="text-center">Parent Name</th>'
+                html += '<th class="text-center">GrandParent Name</th>'
+                html += '<th class="text-center">Vocabulary</th>'
+                html += '</tr>'
+                html += '</thead>'
+                html += '<tbody>'
+                for (var i = 0; i < data.length; i ++) {
+                    html += '<tr>'
+                    html += '<td class="text-center">'+data[i].id+'</td>'
+                    html += '<td class="text-center">'+data[i].taxonomy_name+'</td>'
+                    html += '<td class="text-center">'+data[i].taxonomy_parent_name+'</td>'
+                    html += '<td class="text-center">'+data[i].taxonomy_grandparent_name+'</td>'
+                    html += '<td class="text-center">'+data[i].taxonomy_vocabulary+'</td>'
+                    html += '</tr>'
+                }
+                        
+                html += '</tbody>'
+                html += '</table>'
+                $('#open_term_modal').modal('show');
+                $('#list_tb_open_term').html(html);
+                $('#term_tb').DataTable();
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    });
+
 
 
     //create new product / update existing product ***************************
@@ -95,7 +143,7 @@ $(document).ready(function(){
         });
     });
 
-     //display modal form for product EDIT ***************************
+     //display modal form for product Delete ***************************
     $(document).on('click','.delete-product',function(){
         var id = $(this).val();
        

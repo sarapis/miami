@@ -84,9 +84,17 @@ class AltTaxonomyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function open_terms($alt_taxonomy_name)
     {
-        //
+        $original_alt_taxonomy_name = $alt_taxonomy_name;
+        if (strpos($alt_taxonomy_name, '-') !== false) {
+            $original_alt_taxonomy_name = str_replace("-", "/", $alt_taxonomy_name);            
+        }
+        $terms = Taxonomy::where('taxonomy_grandparent_name', 'like', $original_alt_taxonomy_name)
+                            ->orWhere('taxonomy_parent_name', 'like', $original_alt_taxonomy_name)
+                            ->orWhere('taxonomy_name', 'like', $original_alt_taxonomy_name)->get();
+        return response()->json($terms);
+
     }
 
     /**

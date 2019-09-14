@@ -42,7 +42,7 @@ Alt Taxonomy
                   <td>{{$alt_taxonomy->alt_taxonomy_vocabulary}}</td>
                   <td>{{$counts[$key]}}</td>
                   <td class="text-center">
-                    <button class="btn btn-default btn-success btn-sm open_term_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-pencil-square"></i>Term</button>
+                    <button class="btn btn-default btn-success btn-sm open_term_modal"  value="{{$alt_taxonomy->alt_taxonomy_name}}" style="width: 80px;"><i class="fa fa-fw fa-pencil-square"></i>Term</button>
                     <button class="btn btn-default btn-info btn-sm open_modal"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                     <button class="btn btn-default btn-danger btn-sm delete-product"  value="{{$alt_taxonomy->id}}" style="width: 80px;"><i class="fa fa-fw fa-remove"></i>Delete</button>
                   </td>
@@ -118,6 +118,30 @@ Alt Taxonomy
               <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="btn-delete" value="delete">Delete</button>
+                    <input type="hidden" id="product_id" name="product_id" value="0">
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade in" id="open_term_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content form-horizontal">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>                 
+              </div>
+              
+              <div class="modal-body">
+                  <form class="m-form m-form--fit m-form--label-align-right user" id="form-open-terms" name="form-open-terms">                      
+                      <div class="form-group m-form__group" id="open_term_form">
+                          <div class="table-responsive" id="list_tb_open_term" style="overflow-y: scroll;height: 50%;">
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <input type="hidden" id="product_id" name="product_id" value="0">
               </div>
           </div>
