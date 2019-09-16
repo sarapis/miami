@@ -12,6 +12,7 @@ use App\CSV_Source;
 use App\Layout;
 use App\Taxonomy;
 use App\Address;
+use App\Area;
 use App\Metafilter;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -209,6 +210,13 @@ class PagesController extends Controller
 
             return view('backEnd.pages.metafilter_taxonomy', compact('taxonomies', 'source_data', 'checked_taxonomies'))->render();
         }
+        else if($metafilter->facet = 'Service_area'){
+
+            $addresses = Address::orderBy('id')->get();
+            $checked_addresses = explode(",",$metafilter->values);
+
+            return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
+        }
         else{
 
             $addresses = Address::orderBy('id')->get();
@@ -260,6 +268,10 @@ class PagesController extends Controller
                     if($request->input('facet') == 'Taxonomy' && $csv_header_fields[0] != 'taxonomy_name'){
                         return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
                     }
+                    if($request->input('facet') == 'Service_area' && $csv_header_fields[0] != 'service_area'){
+                        return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+                    }
+
 
                     $id_list ='';
                     foreach ($csv_data as $row) {
@@ -267,6 +279,8 @@ class PagesController extends Controller
                             $id = Address::where('address_postal_code', '=', $row['postal_code'])->pluck('address_recordid')->toArray();
                         if($request->input('facet') == 'Taxonomy')
                             $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->pluck('taxonomy_recordid')->toArray();
+                        if($request->input('facet') == 'Service_area')
+                            $id = Address::where('address_postal_code', '=', $row['service_area'])->pluck('address_recordid')->toArray();
 
                         $id_list = $id_list.','.implode(",", $id);
                     }
@@ -295,11 +309,8 @@ class PagesController extends Controller
     }
 
     public function delete_operation(Request $request){
-        $id = $request->input('id');
-        var_dump($id);
-
-        $metafilter = Metafilter::find($id);
-        var_dump($metafilter);
+        $id = $request->input('id');   
+        $metafilter = Metafilter::find($id);    
         $metafilter->delete();
 
         return redirect('meta_filter');

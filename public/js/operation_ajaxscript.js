@@ -58,6 +58,24 @@ $(document).ready(function(){
         });
     }
 
+    if(original_facet == 'Service_area'){
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
+
+        var url = 'meta_filter/'+id;
+
+        $.ajax({
+          type: 'POST',
+          url: url.toLowerCase(),
+          success: function(data){
+              $('#list_tb_edit').html(data);
+          }
+        });
+    }
+
   });
 
   $('.delete-meta').click(function(){
