@@ -4,6 +4,7 @@
   <script src="../../frontend/global/vend/tether/tether.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.5/jquery.csv.min.js" integrity="sha256-zGo0JbZ5Sn6wU76MyVL0TrUZUq5GLXaFnMQCe/hSwVI=" crossorigin="anonymous"></script>
 {{-- <script src="../../frontend/global/vend/animsition/animsition.js"></script> --}}
   <script src="../../frontend/global/vend/mousewheel/jquery.mousewheel.js"></script>
   <script src="../../frontend/global/vend/asscrollbar/jquery-asScrollbar.js"></script>

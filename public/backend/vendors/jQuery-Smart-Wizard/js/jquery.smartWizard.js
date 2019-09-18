@@ -265,7 +265,9 @@ function SmartWizard(target, options) {
         var method = $( "#method option:selected" ).val();
         console.log(method);
         var facet = $( "#facet option:selected" ).val();
-        var id = document.getElementById('status').value;  
+        var id = document.getElementById('status').value;
+        var csv_header = '';
+        var csv_data = [];
         console.log($this.curStepIdx);
 
         if (! $this.options.cycleSteps){
@@ -357,6 +359,25 @@ function SmartWizard(target, options) {
                     else{
                         $("#step-2 div#checklist_form_2").hide();
                         $("#step-2 div#csv_form_2").show();
+                        $("#step-2 div#csv_form_2 input").on('change', function(evt) {
+                            var file = evt.target.files[0];
+                            var reader = new FileReader();
+                            reader.readAsText(file);
+                            reader.onload = function(event) {
+                                var csvData = event.target.result;
+                                data = $.csv.toArrays(csvData);
+                                if (data && data.length > 0) {
+                                    csv_header = data[0][0];
+                                    for (var i = 1; i < data.length; i++) {
+                                        csv_data.push(parseInt(data[i][0]));
+                                        console.log(csv_data);
+                                    }
+                                }
+                            };
+                            reader.onerror = function() {
+                                alert('Unable to read ' + file.fileName);
+                            };
+                        })
                         $($this.buttons.next).text("Next");
                     }
                 } 
@@ -401,7 +422,6 @@ function SmartWizard(target, options) {
                         }
 
                         if(facet == 'Postal_code'){
-                            console.log("asdfasdf", original_facet);
                             $.ajaxSetup({
                               headers: {
                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

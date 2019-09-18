@@ -253,8 +253,7 @@ class PagesController extends Controller
             $metafilter->method = $request->input('method');
 
             $id_list ='';
-            if($metafilter->method =='CSV'){
-
+            if($metafilter->method =='CSV'){                
                 $path = $request->file('csv_import_2')->getRealPath();
                 $data = Excel::load($path)->get();
                 $filename =  $request->file('csv_import_2')->getClientOriginalName();
@@ -296,6 +295,50 @@ class PagesController extends Controller
                     
                 }
             }
+
+            if($metafilter->method =='Checklist'){                
+                $path = $request->file('csv_import_3')->getRealPath();
+                $data = Excel::load($path)->get();
+                $filename =  $request->file('csv_import_3')->getClientOriginalName();
+                if($filename != null) {
+                    $request->file('csv_import_3')->move(public_path('/csv/'), $filename);
+
+                    if (count($data) > 0) {
+                        $csv_header_fields = [];
+                        foreach ($data[0] as $key => $value) {
+                            $csv_header_fields[] = $key;
+                        }
+                        $csv_data = $data;
+                    }
+                    if($request->input('facet') == 'Postal_code' && $csv_header_fields[0] != 'postal_code'){
+
+                        return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+
+                    }
+                    if($request->input('facet') == 'Taxonomy' && $csv_header_fields[0] != 'taxonomy_name'){
+                        return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+                    }
+                    if($request->input('facet') == 'Service_area' && $csv_header_fields[0] != 'service_area'){
+                        return Redirect::back()->withErrors(['This CSV is not correct.', 'This CSV is not correct.']);
+                    }
+
+
+                    
+                    foreach ($csv_data as $row) {
+                        if($request->input('facet') == 'Postal_code')
+                            $id = Address::where('address_postal_code', '=', $row['postal_code'])->pluck('address_recordid')->toArray();
+                        if($request->input('facet') == 'Taxonomy')
+                            $id = Taxonomy::where('taxonomy_name', '=', $row['taxonomy_name'])->pluck('taxonomy_recordid')->toArray();
+                        if($request->input('facet') == 'Service_area')
+                            $id = Address::where('address_postal_code', '=', $row['service_area'])->pluck('address_recordid')->toArray();
+
+                        $id_list = $id_list.','.implode(",", $id);
+                    }
+                    $id_list = trim($id_list,",");
+                    
+                }
+            }
+
             if($request->input('table_records') != null) {
                 $id_list = $id_list.','.implode(",", $request->input('table_records'));
             }
@@ -303,6 +346,7 @@ class PagesController extends Controller
             $metafilter->save();
         }
         else{
+
             $metafilter = Metafilter::where('id', '=', $id)->first();
             $metafilter->operations = $request->input('operation');
             $metafilter->facet = $request->input('facet');
