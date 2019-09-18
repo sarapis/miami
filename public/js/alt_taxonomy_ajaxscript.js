@@ -54,19 +54,14 @@ $(document).ready(function(){
             url: url + '/terms/' + alt_taxonomy_name,
             success: function (data) {
                 console.log(data);
-                var html = '';
+                var html = '<h2>'+ alt_taxonomy_name +'</h2>';
                 html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
                 html += '<thead>'
                 html += '<tr>'
                 html += '<th class="text-center">No</th>'
                 html += '<th class="text-center">Name</th>'            
                 html += '<th class="text-center">Parent Name</th>'
-                html += '<th class="text-center">GrandParent Name</th>'
-                html += '<th class="text-center">Vocabulary</th>'
                 html += '<th class="text-center">Category ID</th>'
-                html += '<th class="text-center">Parent RecordID</th>'
-                html += '<th class="text-center">Facet</th>'
-                html += '<th class="text-center">Services</th>'
                 html += '</tr>'
                 html += '</thead>'
                 html += '<tbody>'
@@ -74,13 +69,8 @@ $(document).ready(function(){
                     html += '<tr>'
                     html += '<td class="text-center">'+data[i].id+'</td>'
                     html += '<td class="text-center">'+data[i].taxonomy_name+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_parent_name+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_grandparent_name+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_vocabulary+'</td>'
-                    html += '<td class="text-center">'+data[i].category_id+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_parent_recordid+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_facet+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_services+'</td>'
+                    html += '<td class="text-center">'+data[i].taxonomy_parent_name+'</td>'                  
+                    html += '<td class="text-center">'+data[i].category_id+'</td>'               
                     html += '</tr>'
                 }
                         
