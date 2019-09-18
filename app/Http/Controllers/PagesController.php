@@ -168,8 +168,16 @@ class PagesController extends Controller
         $meta = Layout::find(1);
         $source_data = Source_data::find(1);
         $metafilters = Metafilter::all();
+        $service_count = 0;
+        foreach ($metafilters as $key => $metafilter) {
+            $values = explode(',', $metafilter->values);
+            
+            $values = array_filter($values);
 
-        return view('backEnd.pages.metafilter', compact('meta', 'source_data', 'metafilters'));
+            $service_count += count($values);
+        }
+
+        return view('backEnd.pages.metafilter', compact('meta', 'source_data', 'metafilters', 'service_count'));
     }
 
     public function metafilter_save($id, Request $request)
@@ -244,7 +252,7 @@ class PagesController extends Controller
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
 
-
+            $id_list ='';
             if($metafilter->method =='CSV'){
 
                 $path = $request->file('csv_import_2')->getRealPath();
@@ -273,7 +281,7 @@ class PagesController extends Controller
                     }
 
 
-                    $id_list ='';
+                    
                     foreach ($csv_data as $row) {
                         if($request->input('facet') == 'Postal_code')
                             $id = Address::where('address_postal_code', '=', $row['postal_code'])->pluck('address_recordid')->toArray();
@@ -285,11 +293,13 @@ class PagesController extends Controller
                         $id_list = $id_list.','.implode(",", $id);
                     }
                     $id_list = trim($id_list,",");
-                    $metafilter->values = $id_list;
+                    
                 }
             }
-            if($request->input('table_records') != null)
-                $metafilter->values = implode(",", $request->input('table_records'));
+            if($request->input('table_records') != null) {
+                $id_list = $id_list.','.implode(",", $request->input('table_records'));
+            }
+            $metafilter->values = trim($id_list,",");
             $metafilter->save();
         }
         else{

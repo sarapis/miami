@@ -56,7 +56,7 @@ Meta Filter
                 {!! Form::close() !!}
               </div>
               <div class="col-md-6">
-                <h1>Filtered Services: {{count($metafilters)}}</h1>
+                <h1>Filtered Services: {{$service_count}}</h1>
               </div> 
               @if($meta->meta_filter_activate==1)
               <div class="col-md-12">
@@ -90,7 +90,7 @@ Meta Filter
                                     <span class="step_no">1</span>
                                     <span class="step_descr">
                                         Step 1<br />
-                                        <small>Step 1 description</small>
+                                        <small>Select Filter Options</small>
                                     </span>
                                   </a>
                                 </li>
@@ -99,7 +99,7 @@ Meta Filter
                                     <span class="step_no">2</span>
                                     <span class="step_descr">
                                         Step 2<br />
-                                        <small>Step 2 description</small>
+                                        <small>Add Filter Data</small>
                                     </span>
                                   </a>
                                 </li>
@@ -108,7 +108,7 @@ Meta Filter
                                     <span class="step_no">3</span>
                                     <span class="step_descr">
                                         Step 3<br />
-                                        <small>Step 3 description</small>
+                                        <small>Confirm Data</small>
                                     </span>
                                   </a>
                                 </li>

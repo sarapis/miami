@@ -262,9 +262,9 @@ function SmartWizard(target, options) {
     var _adjustButton = function($this) {
 
         var original_facet = "";
-        var method = $( "#method option:selected" ).text();
+        var method = $( "#method option:selected" ).val();
         console.log(method);
-        var facet = $( "#facet option:selected" ).text();
+        var facet = $( "#facet option:selected" ).val();
         var id = document.getElementById('status').value;  
         console.log($this.curStepIdx);
 
@@ -332,11 +332,32 @@ function SmartWizard(target, options) {
                               }
                             });
                         }
+
+                        if(facet == 'Service_area'){
+                            $.ajaxSetup({
+                              headers: {
+                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }
+                            })
+
+                            if(original_facet == facet)
+                              var url = 'meta_filter/'+id;
+                            else
+                              var url = '/postal_code_filter';
+
+                            $.ajax({
+                              type: 'POST',
+                              url: url.toLowerCase(),
+                              success: function(data){
+                                  $('#step-2 #list_tb_2').html(data);
+                              }
+                            });
+                        }
                     }
                     else{
                         $("#step-2 div#checklist_form_2").hide();
                         $("#step-2 div#csv_form_2").show();
-                        $($this.buttons.next).text("Checklist");
+                        $($this.buttons.next).text("Next");
                     }
                 } 
 
@@ -353,6 +374,7 @@ function SmartWizard(target, options) {
                     else{
                         $("#step-3 div#checklist_form_3").show();
                         $("#step-3 div#csv_form_3").hide();
+                        console.log(facet);
 
                         if(facet == 'Taxonomy'){
                             $.ajaxSetup({
@@ -379,6 +401,28 @@ function SmartWizard(target, options) {
                         }
 
                         if(facet == 'Postal_code'){
+                            console.log("asdfasdf", original_facet);
+                            $.ajaxSetup({
+                              headers: {
+                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }
+                            })
+
+                            if(original_facet == facet)
+                              var url = 'meta_filter/'+id;
+                            else
+                              var url = '/postal_code_filter';
+
+                            $.ajax({
+                              type: 'POST',
+                              url: url.toLowerCase(),
+                              success: function(data){
+                                  $('#step-3 #list_tb_3').html(data);
+                              }
+                            });
+                        }
+
+                        if(facet == 'Service_area'){
                             $.ajaxSetup({
                               headers: {
                                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
