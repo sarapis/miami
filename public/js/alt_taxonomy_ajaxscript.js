@@ -54,23 +54,31 @@ $(document).ready(function(){
             url: url + '/terms/' + alt_taxonomy_name,
             success: function (data) {
                 console.log(data);
+                var selected_ids = [];
+                for (var i = 0; i < data.terms.length; i ++) {
+                    selected_ids.push(data.terms[i].id);
+                }
                 var html = '<h2>'+ alt_taxonomy_name +'</h2>';
                 html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
                 html += '<thead>'
                 html += '<tr>'
-                html += '<th class="text-center">No</th>'
+                html += '<th class="text-center"></th>'
                 html += '<th class="text-center">Name</th>'            
                 html += '<th class="text-center">Parent Name</th>'
                 html += '<th class="text-center">Category ID</th>'
                 html += '</tr>'
                 html += '</thead>'
                 html += '<tbody>'
-                for (var i = 0; i < data.length; i ++) {
+                for (var i = 0; i < data.all_terms.length; i ++) {
+                    var term_id = data.all_terms[i].id
                     html += '<tr>'
-                    html += '<td class="text-center">'+data[i].id+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_name+'</td>'
-                    html += '<td class="text-center">'+data[i].taxonomy_parent_name+'</td>'                  
-                    html += '<td class="text-center">'+data[i].category_id+'</td>'               
+                    html += '<td class="text-center">'
+                    var checkbox = '<input type="checkbox" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
+                    html += checkbox
+                    html += '</td>'
+                    html += '<td class="text-center">'+data.all_terms[i].taxonomy_name+'</td>'
+                    html += '<td class="text-center">'+data.all_terms[i].taxonomy_parent_name+'</td>'                  
+                    html += '<td class="text-center">'+data.all_terms[i].category_id+'</td>'               
                     html += '</tr>'
                 }
                         
@@ -78,7 +86,14 @@ $(document).ready(function(){
                 html += '</table>'
                 $('#open_term_modal').modal('show');
                 $('#list_tb_open_term').html(html);
-                $('#term_tb').DataTable();
+                $('#term_tb').DataTable({
+                    "columnDefs":[
+                    {
+                        "targets": 0,
+                        "orderDataType": "dom-checkbox"
+                    }],
+                    "order": [[ 0, "desc" ]]
+                });
             },
             error: function (data) {
                 console.log('Error:', data);

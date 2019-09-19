@@ -90,10 +90,11 @@ class AltTaxonomyController extends Controller
         if (strpos($alt_taxonomy_name, '-') !== false) {
             $original_alt_taxonomy_name = str_replace("-", "/", $alt_taxonomy_name);            
         }
-        $terms = Taxonomy::where('taxonomy_grandparent_name', 'like', $original_alt_taxonomy_name)
+        $terms = Taxonomy::select('id')->where('taxonomy_grandparent_name', 'like', $original_alt_taxonomy_name)
                             ->orWhere('taxonomy_parent_name', 'like', $original_alt_taxonomy_name)
                             ->orWhere('taxonomy_name', 'like', $original_alt_taxonomy_name)->get();
-        return response()->json($terms);
+        $all_terms = Taxonomy::all()->toArray();
+        return response()->json(array('all_terms' => $all_terms, 'terms' => $terms));
 
     }
 

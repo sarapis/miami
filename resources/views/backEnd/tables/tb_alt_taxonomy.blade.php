@@ -183,5 +183,6 @@ $(document).ready(function() {
     } );
 } );
 </script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/custom-data-source/dom-checkbox.js"></script>
 <script src="{{asset('js/alt_taxonomy_ajaxscript.js')}}"></script>
 @endsection
