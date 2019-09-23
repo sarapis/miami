@@ -102,8 +102,7 @@ class AltTaxonomyController extends Controller
 
     public function operation(Request $request){
         $checked_terms_list = $request->input("checked_terms");
-        $id = $request->input("alt_taxonomy_id");
-        var_dump($id);
+        $id = $request->input("alt_taxonomy_id");        
         $alt_taxonomy = Alt_taxonomy::find($id);
         $alt_taxonomy->terms()->sync($checked_terms_list);
         return redirect('tb_alt_taxonomy');
