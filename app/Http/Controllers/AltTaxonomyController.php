@@ -30,14 +30,14 @@ class AltTaxonomyController extends Controller
         $counts = [];
         // $terms = $alt_taxonomies->terms();
         foreach ($alt_taxonomies as $key => $alt_taxonomy) {
-            // $id = $alt_taxonomy->id;
-            // $tmp_alt_taxonomy = Alt_taxonomy::find($id);
-            // var_dump($tmp_alt_taxonomy);
+            $id = $alt_taxonomy->id;
+            $tmp_alt_taxonomy = AltTaxonomiesTermRelation::where('alt_taxonomy_id','=',$id)->get();
+            //exit();
             // var_dump($tmp_alt_taxonomy->terms()->allRelatedIds());
             // exit;
-            $count = count($alt_taxonomy->terms()->allRelatedIds());
+            //$count = count($alt_taxonomy->terms()->allRelatedIds());
             // var_dump($terms);    
-            // $count = count($terms);
+            $count = count($tmp_alt_taxonomy);
             array_push($counts, $count);
         }
         // var_dump($alt_taxonomies);
@@ -94,7 +94,7 @@ class AltTaxonomyController extends Controller
     {
         $alt_taxonomy = Alt_taxonomy::find($id);
         $alt_taxonomy_name = $alt_taxonomy->alt_taxonomy_name;
-        $terms = $alt_taxonomy->terms()->allRelatedIds();
+        $terms = AltTaxonomiesTermRelation::where('alt_taxonomy_id','=',$id)->get();
         $all_terms = Taxonomy::all()->toArray();
         return response()->json(array('all_terms' => $all_terms, 'terms' => $terms, 'alt_taxonomy_name' => $alt_taxonomy_name));
 
