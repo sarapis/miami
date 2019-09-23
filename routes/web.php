@@ -121,7 +121,8 @@ Route::post('/range', 'ExploreController@filterValues1');
 
         Route::resource('tb_taxonomy', 'TaxonomyController');
         Route::resource('tb_alt_taxonomy', 'AltTaxonomyController');
-        Route::get('tb_alt_taxonomy/terms/{alt_taxonomy_name}', 'AltTaxonomyController@open_terms');
+        Route::get('tb_alt_taxonomy/terms/{id}', 'AltTaxonomyController@open_terms');
+        Route::post('/tb_alt_taxonomy', 'AltTaxonomyController@operation');
         Route::resource('tb_details', 'DetailController');
         Route::resource('tb_languages', 'LanguageController');
         Route::resource('tb_accessibility', 'AccessibilityController');

@@ -8,6 +8,7 @@ use App\Functions\Airtable;
 use App\Alt_taxonomy;
 use App\Taxonomy;
 use App\Servicetaxonomy;
+use App\AltTaxonomiesTermRelation;
 use App\Airtables;
 use App\CSV_Source;
 use App\Source_data;
@@ -27,14 +28,19 @@ class AltTaxonomyController extends Controller
     {
         $alt_taxonomies = Alt_taxonomy::orderBy('id')->paginate(20);
         $counts = [];
+        // $terms = $alt_taxonomies->terms();
         foreach ($alt_taxonomies as $key => $alt_taxonomy) {
-            $alt_taxonomy_name = $alt_taxonomy->alt_taxonomy_name;
-            $count = Taxonomy::where('taxonomy_grandparent_name', 'like', $alt_taxonomy_name)
-                            ->orWhere('taxonomy_parent_name', 'like', $alt_taxonomy_name)
-                            ->orWhere('taxonomy_name', 'like', $alt_taxonomy_name)->count();
+            // $id = $alt_taxonomy->id;
+            // $tmp_alt_taxonomy = Alt_taxonomy::find($id);
+            // var_dump($tmp_alt_taxonomy);
+            // var_dump($tmp_alt_taxonomy->terms()->allRelatedIds());
+            // exit;
+            $count = count($alt_taxonomy->terms()->allRelatedIds());
+            // var_dump($terms);    
+            // $count = count($terms);
             array_push($counts, $count);
         }
-
+        // var_dump($alt_taxonomies);
         $source_data = Source_data::find(1);
 
         return view('backEnd.tables.tb_alt_taxonomy', compact('alt_taxonomies', 'counts', 'source_data'));
@@ -84,18 +90,23 @@ class AltTaxonomyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function open_terms($alt_taxonomy_name)
+    public function open_terms($id)
     {
-        $original_alt_taxonomy_name = $alt_taxonomy_name;
-        if (strpos($alt_taxonomy_name, '-') !== false) {
-            $original_alt_taxonomy_name = str_replace("-", "/", $alt_taxonomy_name);            
-        }
-        $terms = Taxonomy::select('id')->where('taxonomy_grandparent_name', 'like', $original_alt_taxonomy_name)
-                            ->orWhere('taxonomy_parent_name', 'like', $original_alt_taxonomy_name)
-                            ->orWhere('taxonomy_name', 'like', $original_alt_taxonomy_name)->get();
+        $alt_taxonomy = Alt_taxonomy::find($id);
+        $alt_taxonomy_name = $alt_taxonomy->alt_taxonomy_name;
+        $terms = $alt_taxonomy->terms()->allRelatedIds();
         $all_terms = Taxonomy::all()->toArray();
-        return response()->json(array('all_terms' => $all_terms, 'terms' => $terms));
+        return response()->json(array('all_terms' => $all_terms, 'terms' => $terms, 'alt_taxonomy_name' => $alt_taxonomy_name));
 
+    }
+
+    public function operation(Request $request){
+        $checked_terms_list = $request->input("checked_terms");
+        $id = $request->input("alt_taxonomy_id");
+        var_dump($id);
+        $alt_taxonomy = Alt_taxonomy::find($id);
+        $alt_taxonomy->terms()->sync($checked_terms_list);
+        return redirect('tb_alt_taxonomy');
     }
 
     /**

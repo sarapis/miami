@@ -15,4 +15,8 @@ class Alt_taxonomy extends Model
     
 	public $timestamps = false;
 
+	public function terms() {
+		return $this->belongsToMany('App\Taxonomy', 'alt_taxonomies_term_relation');
+	}
+
 }

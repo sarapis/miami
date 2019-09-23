@@ -34,4 +34,9 @@ class Taxonomy extends Model
         
         return $this->belongsToMany('App\Service', 'service_taxonomy', 'taxonomy_id', 'service_recordid');
     }
+
+    public function alt_taxonomies()
+    {
+        return $this->belongsToMany('App\Alt_taxonomy', 'alt_taxonomies_term_relation');
+    }
 }

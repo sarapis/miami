@@ -40,25 +40,19 @@ $(document).ready(function(){
     //display modal form for open_term_modal ***************************
     $(document).on('click','.open_term_modal',function(e){
 
-        var original_alt_taxonomy_name = $(this).val();    
-        if (original_alt_taxonomy_name.includes("/") == true) {
-            alt_taxonomy_name = original_alt_taxonomy_name.replace("/", "-")
-        }
-        else {
-            alt_taxonomy_name = original_alt_taxonomy_name;
-        }
-
+        var alt_taxonomy_id = $(this).val();    
+        $("#alt_taxonomy_id").val(alt_taxonomy_id);
         // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            url: url + '/terms/' + alt_taxonomy_name,
+            url: url + '/terms/' + alt_taxonomy_id,
             success: function (data) {
                 console.log(data);
                 var selected_ids = [];
                 for (var i = 0; i < data.terms.length; i ++) {
                     selected_ids.push(data.terms[i].id);
                 }
-                var html = '<h2>'+ alt_taxonomy_name +'</h2>';
+                var html = '<h2>'+ data.alt_taxonomy_name +'</h2>';
                 html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
                 html += '<thead>'
                 html += '<tr>'
@@ -73,7 +67,7 @@ $(document).ready(function(){
                     var term_id = data.all_terms[i].id
                     html += '<tr>'
                     html += '<td class="text-center">'
-                    var checkbox = '<input type="checkbox" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
+                    var checkbox = '<input type="checkbox" name="checked_terms[]" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
                     html += checkbox
                     html += '</td>'
                     html += '<td class="text-center">'+data.all_terms[i].taxonomy_name+'</td>'
