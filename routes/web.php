@@ -78,14 +78,14 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
         Route::get('/sync_services/{api_key}/{base_url}', ['uses' => 'ServiceController@airtable']);  
-        Route::get('/sync_locations', ['uses' => 'LocationController@airtable']);
-        Route::get('/sync_organizations', ['uses' => 'OrganizationController@airtable']);
-        Route::get('/sync_contact', ['uses' => 'ContactController@airtable']);
-        Route::get('/sync_phones', ['uses' => 'PhoneController@airtable']);
-        Route::get('/sync_address', ['uses' => 'AddressController@airtable']);
-        Route::get('/sync_schedule', ['uses' => 'ScheduleController@airtable']);
-        Route::get('/sync_taxonomy', ['uses' => 'TaxonomyController@airtable']);
-        Route::get('/sync_details', ['uses' => 'DetailController@airtable']);
+        Route::get('/sync_locations/{api_key}/{base_url}', ['uses' => 'LocationController@airtable']);
+        Route::get('/sync_organizations/{api_key}/{base_url}', ['uses' => 'OrganizationController@airtable']);
+        Route::get('/sync_contact/{api_key}/{base_url}', ['uses' => 'ContactController@airtable']);
+        Route::get('/sync_phones/{api_key}/{base_url}', ['uses' => 'PhoneController@airtable']);
+        Route::get('/sync_address/{api_key}/{base_url}', ['uses' => 'AddressController@airtable']);
+        Route::get('/sync_schedule/{api_key}/{base_url}', ['uses' => 'ScheduleController@airtable']);
+        Route::get('/sync_taxonomy/{api_key}/{base_url}', ['uses' => 'TaxonomyController@airtable']);
+        Route::get('/sync_details/{api_key}/{base_url}', ['uses' => 'DetailController@airtable']);
 
 
         Route::post('/csv_services', ['uses' => 'ServiceController@csv']);  

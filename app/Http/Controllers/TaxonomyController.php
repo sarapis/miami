@@ -17,13 +17,17 @@ use Maatwebsite\Excel\Facades\Excel;
 class TaxonomyController extends Controller
 {
 
-    public function airtable()
+    public function airtable($api_key, $base_url)
     {
 
         Taxonomy::truncate();
+        // $airtable = new Airtable(array(
+        //     'api_key'   => env('AIRTABLE_API_KEY'),
+        //     'base'      => env('AIRTABLE_BASE_URL'),
+        // ));
         $airtable = new Airtable(array(
-            'api_key'   => env('AIRTABLE_API_KEY'),
-            'base'      => env('AIRTABLE_BASE_URL'),
+            'api_key'   => $api_key,
+            'base'      => $base_url,
         ));
 
         $request = $airtable->getContent( 'taxonomy' );
