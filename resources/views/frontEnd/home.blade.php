@@ -80,6 +80,7 @@ Home
                             @php
                                 $c = 0;
                             @endphp
+                            @if(count($grandparent_taxonomies) > 0)
                                 @foreach(array_chunk($grandparent_taxonomies, count($grandparent_taxonomies) / 2) as  $key1 => $chunk)
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                 <!-- Example Collapsed -->
@@ -125,6 +126,7 @@ Home
                                     @endforeach
                                 </div>
                                 @endforeach
+                            @endif
                             </div>
                             
                         </div>  
