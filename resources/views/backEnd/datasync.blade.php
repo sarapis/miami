@@ -64,13 +64,13 @@ Import
         <div class="x_content">
             <div class="form-group">
                 <label for="airtable_api_key_input">Airtable Key</label>
-                <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" required />
-                <span id="airtable_api_key_validation"></span>
+                <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" required />                
             </div>
             <div class="form-group">
                 <label for="airtable_base_url_input">Airtable Base</label>
                 <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" required />
             </div>
+            <span id="airtable_info_validation"></span>
 
             <table class="table table-striped jambo_table bulk_action" id="tblUsers">
                 <thead>

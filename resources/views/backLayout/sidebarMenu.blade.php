@@ -43,9 +43,7 @@
         <li><a><i class="fa fa-gears"></i> Tools <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="/meta_filter">Meta Filter</a></li>
-            @if($source_data->active ==0 )
             <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li>
-            @endif
           </ul>
         </li>
         <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>      
