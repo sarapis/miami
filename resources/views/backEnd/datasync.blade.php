@@ -72,7 +72,7 @@ Import
             </div>
             <div class="alert alert-danger alert-dismissible field-invalid">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Either of these info is invalid or empty. Retype with valid Airtable Key and Airtable Base Url.</strong> 
+                <strong>Either of these infos is invalid or empty. Retype valid Airtable Key and Airtable Base Url.</strong> 
             </div> 
             
             
