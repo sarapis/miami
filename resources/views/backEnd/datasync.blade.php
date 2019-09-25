@@ -62,6 +62,15 @@ Import
         </div>
         @if($source_data->active == 1)
         <div class="x_content">
+            <div class="form-group">
+                <label for="airtable_api_key_input">Airtable Key</label>
+                <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" required />
+                <span id="airtable_api_key_validation"></span>
+            </div>
+            <div class="form-group">
+                <label for="airtable_base_url_input">Airtable Base</label>
+                <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" required />
+            </div>
 
             <table class="table table-striped jambo_table bulk_action" id="tblUsers">
                 <thead>
@@ -161,10 +170,12 @@ Import
             
             $here = current;
             name = name.toLowerCase();
+            airtable_api_key = $('#airtable_api_key_input').val();
+            airtable_base_url = $('#airtable_base_url_input').val();
             
             $.ajax({
                 type: "GET",
-                url: '/sync_'+name,
+                url: '/sync_'+name+'/'+airtable_api_key+'/'+airtable_base_url,
                 success: function(result) {
                     $img.remove();
                     $here.show();
@@ -187,9 +198,11 @@ Import
             $(this).after($img);
             $here = $(this);
             name = name.toLowerCase();
+            airtable_api_key = $('#airtable_api_key_input').val();
+            airtable_base_url = $('#airtable_base_url_input').val();
             $.ajax({
                 type: "GET",
-                url: '/sync_'+name,
+                url: '/sync_'+name+'/'+airtable_api_key+'/'+airtable_base_url,
                 success: function(result) {
                     $img.remove();
                     $here.show();

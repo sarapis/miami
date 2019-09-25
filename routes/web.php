@@ -77,7 +77,7 @@ Route::post('/range', 'ExploreController@filterValues1');
 
         Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
-        Route::get('/sync_services', ['uses' => 'ServiceController@airtable']);  
+        Route::get('/sync_services/{api_key}/{base_url}', ['uses' => 'ServiceController@airtable']);  
         Route::get('/sync_locations', ['uses' => 'LocationController@airtable']);
         Route::get('/sync_organizations', ['uses' => 'OrganizationController@airtable']);
         Route::get('/sync_contact', ['uses' => 'ContactController@airtable']);
