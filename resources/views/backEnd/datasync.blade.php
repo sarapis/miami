@@ -67,7 +67,7 @@ Import
                 <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" required />                
             </div>
             <div class="form-group">
-                <label for="airtable_base_url_input">Airtable Base</label>
+                <label for="airtable_base_url_input">Airtable Base Url</label>
                 <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" required />
             </div>
             <div class="alert alert-danger alert-dismissible field-invalid">
