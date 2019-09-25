@@ -70,7 +70,12 @@ Import
                 <label for="airtable_base_url_input">Airtable Base</label>
                 <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" required />
             </div>
-            <span id="airtable_info_validation"></span>
+            <div class="alert alert-danger alert-dismissible field-invalid">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Danger!</strong> These infos are invalid. Retry with valid Airtable Key and Airtable Base Url.
+            </div> 
+            
+            
 
             <table class="table table-striped jambo_table bulk_action" id="tblUsers">
                 <thead>
@@ -147,10 +152,9 @@ Import
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var $img = $('<img class="probar titleimage" id="title" src="images/xpProgressBar.gif" alt="Loading..." />');
-
-
-
+        var $img = $('<img class="probar titleimage" id="title" src="images/xpProgressBar.gif" alt="Loading..." />');   
+        var field_invalid= $('.field-invalid');
+        field_invalid.hide();
         $('.sync_all').click(function(){
             sync_all_now(this, 0);
         });
@@ -186,6 +190,11 @@ Import
                     c ++;
                     if($('.sync_now').length != c)
                         sync_all_now(parent, c);
+                },
+                error: function(e) {
+                    $img.remove();
+                    $here.show();
+                    field_invalid.show();
                 }
             });
         }
@@ -210,6 +219,11 @@ Import
                     $here.removeClass('bg-yellow');
                     $here.addClass('bg-purple');
                     $here.parent().prev().html('<?php echo date("Y/m/d H:i:s"); ?>');
+                },
+                error: function(e) {
+                    $img.remove();
+                    $here.show();
+                    field_invalid.show();
                 }
             });
         });
