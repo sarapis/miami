@@ -67,18 +67,20 @@ ul#ui-id-1 {
 
                         <h4 style="line-height: inherit;">{!! $service->service_description !!}</h4>
 
-                        @if(isset($service->phone()->first()->phone_number))  
-                        <h4 style="line-height: inherit;">
-                            <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
-                            @foreach($service->phone as $phone)
-                                @if($loop->last)
-                                {{$phone->phone_number}}
-                                @else
-                                {{$phone->phone_number}},
-                                @endif
-                            @endforeach    
-                            </span>                   
-                        </h4>
+                        @if(isset($service->service_phones))                            
+                            @if(isset($service->phone()->first()->phone_number))  
+                            <h4 style="line-height: inherit;">
+                                <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                                @foreach($service->phone as $phone)
+                                    @if($loop->last)
+                                    {{$phone->phone_number}}
+                                    @else
+                                    {{$phone->phone_number}},
+                                    @endif
+                                @endforeach    
+                                </span>                   
+                            </h4>
+                            @endif
                         @endif
 
                         @if(isset($service->phone()->first()->phone_extension)) 
@@ -179,19 +181,22 @@ ul#ui-id-1 {
                                 @php 
                                     $names = [];
                                 @endphp
-                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                    
-                                    @if($taxonomy->taxonomy_parent_name == 'Target Populations')
-                                        @if(!in_array($taxonomy->taxonomy_name, $names))
-                                            @if($taxonomy->taxonomy_name)
-                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
-                                                @php
-                                                $names[] = $taxonomy->taxonomy_name;
-                                                @endphp
-                                            @endif
-                                        @endif                                                    
-                                    @endif
-                                @endforeach
+
+                                @if($service->taxonomy->sortBy('taxonomy_name') != null)
+                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                        
+                                        @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                            @if(!in_array($taxonomy->taxonomy_name, $names))
+                                                @if($taxonomy->taxonomy_name)
+                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                    @php
+                                                    $names[] = $taxonomy->taxonomy_name;
+                                                    @endphp
+                                                @endif
+                                            @endif                                                    
+                                        @endif
+                                    @endforeach
+                                @endif
                             @endif
                         </span> 
                         <br>
@@ -200,37 +205,39 @@ ul#ui-id-1 {
                                 @php 
                                     $names = [];
                                 @endphp
-                                @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                    @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
-                                        @if($taxonomy->taxonomy_grandparent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
-                                            @php
-                                            $names[] = $taxonomy->taxonomy_grandparent_name;
-                                            @endphp
-                                        @endif
-                                    @endif
-                                    @if(!in_array($taxonomy->taxonomy_parent_name, $names))
-                                        @if($taxonomy->taxonomy_parent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                            @if($taxonomy->taxonomy_parent_name == 'Target Populations')
-                                            <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}} panel-link target-population-link">{{$taxonomy->taxonomy_parent_name}}</a>
-                                            @elseif($taxonomy->taxonomy_grandparent_name)
-                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                @if($service->taxonomy->sortBy('taxonomy_name') != null)
+                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                        @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                            @if($taxonomy->taxonomy_grandparent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                @endphp
                                             @endif
-                                            @php
-                                            $names[] = $taxonomy->taxonomy_parent_name;
-                                            @endphp
                                         @endif
-                                    @endif
-                                    @if(!in_array($taxonomy->taxonomy_name, $names))
-                                        @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
-                                            @php
-                                            $names[] = $taxonomy->taxonomy_name;
-                                            @endphp
+                                        @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                            @if($taxonomy->taxonomy_parent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}} panel-link target-population-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                @elseif($taxonomy->taxonomy_grandparent_name)
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                @endif
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_parent_name;
+                                                @endphp
+                                            @endif
                                         @endif
-                                    @endif                                                    
-                                   
-                                @endforeach
+                                        @if(!in_array($taxonomy->taxonomy_name, $names))
+                                            @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_name;
+                                                @endphp
+                                            @endif
+                                        @endif                                                    
+                                       
+                                    @endforeach
+                                @endif
                             @endif
                         </span> 
                         </h4>
@@ -250,48 +257,59 @@ ul#ui-id-1 {
                     <div class="card-block">
                         <div class="p-10">
                             @if(isset($service->locations))
-                                @foreach($service->locations as $location)
-                                <h4>
-                                    <span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>{{$location->location_name}}</span> 
-                                </h4>
-                                <h4>
-                                    <span><i class="icon md-pin font-size-24 vertical-align-top "></i>@if(isset($location->address))
-                                        @foreach($location->address as $address)
-                                        {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-                                        @endforeach
+                                @if($service->locations != null)
+                                    @foreach($service->locations as $location)
+                                        <h4>
+                                            <span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>{{$location->location_name}}</span> 
+                                        </h4>
+                                        <h4>
+                                            <span><i class="icon md-pin font-size-24 vertical-align-top "></i>
+                                                @if(isset($location->address))
+                                                    @if($location->address != null)
+                                                        @foreach($location->address as $address)
+                                                        {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                                        @endforeach
+                                                    @endif
+                                                @endif
+                                            </span>
+                                        </h4>
+                                        
+                                        <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
+                                        <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
+                                        <h4><span><i class="icon md-phone font-size-24 vertical-align-top "></i>
+                                            @if(isset($location->phones))
+                                                @if($location->phones != null)
+                                                    @foreach($location->phones as $phone)
+                                                    @php 
+                                                    $phones ='';
+                                                    $phones = $phones.$phone->phone_number.','; @endphp
+                                                    @endforeach
+                                                    {{ rtrim($phones, ',') }}
+                                                @endif 
+                                            @endif 
+                                            </span>
+                                        </h4>  
+                                        <!-- <h4 style="line-height:inherit">{{$location->location_description}}</h4> -->
+                                        @if(isset($location->accessibilities()->first()->accessibility)) 
+                                        <h4><span><b>Accessibility for disabilities:</b></span> <br/>
+                                            {{$location->accessibilities()->first()->accessibility}}
+                                        </h4>
                                         @endif
-                                    </span>
-                                </h4>
-                                
-                                <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
-                                <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
-                                <h4><span><i class="icon md-phone font-size-24 vertical-align-top "></i>
-                                        @foreach($location->phones as $phone)
-                                        @php 
-                                        $phones ='';
-                                        $phones = $phones.$phone->phone_number.','; @endphp
-                                        @endforeach
-                                        {{ rtrim($phones, ',') }}
-                                    </span>
-                                </h4>  
-                                <!-- <h4 style="line-height:inherit">{{$location->location_description}}</h4> -->
-                                @if(isset($location->accessibilities()->first()->accessibility)) 
-                                <h4><span><b>Accessibility for disabilities:</b></span> <br/>
-                                    {{$location->accessibilities()->first()->accessibility}}
-                                </h4>
-                                @endif
-                                @if(isset($location->schedules()->first()->schedule_days_of_week)) 
-                                <h4 class="panel-text"><span class="badge bg-red"><b>Schedules:</b></span>
-                                    @foreach($location->schedules as $schedule)
-                                        @if($loop->last)
-                                        {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}
-                                        @else
-                                        {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}},
+                                        @if(isset($location->schedules()->first()->schedule_days_of_week)) 
+                                        <h4 class="panel-text"><span class="badge bg-red"><b>Schedules:</b></span>
+                                            @if($location->schedules != null)
+                                                @foreach($location->schedules as $schedule)
+                                                    @if($loop->last)
+                                                    {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}
+                                                    @else
+                                                    {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}},
+                                                    @endif
+                                                @endforeach  
+                                            @endif                     
+                                        </h4>
                                         @endif
-                                    @endforeach                       
-                                </h4>
+                                    @endforeach
                                 @endif
-                              @endforeach
                             @endif
                         </div>
                     </div>

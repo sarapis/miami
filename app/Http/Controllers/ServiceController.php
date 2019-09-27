@@ -384,8 +384,10 @@ class ServiceController extends Controller
 
     public function services()
     {
-        $services = Service::with('locations')->orderBy('service_name');
+        $services = Service::with('locations')->orderBy('service_name');  
+
         $locations = Location::with('services','organization');
+
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
@@ -400,8 +402,8 @@ class ServiceController extends Controller
         $meta_status = 'On';
 
         $metas = Metafilter::all();
-        $count_metas = Metafilter::count();
-
+        $count_metas = Metafilter::count();       
+        
 
         if($meta_status == 'On' && $count_metas > 0){
             $address_serviceids = Service::pluck('service_recordid')->toArray();
@@ -409,15 +411,16 @@ class ServiceController extends Controller
 
             foreach ($metas as $key => $meta) {
                 $values = explode(",", $meta->values);
+
                 if($meta->facet == 'Postal_code'){
                     $address_serviceids = [];
                     if($meta->operations == 'Include')
                         $serviceids = Serviceaddress::whereIn('address_recordid', $values)->pluck('service_recordid')->toArray();
                     if($meta->operations == 'Exclude')
                         $serviceids = Serviceaddress::whereNotIn('address_recordid', $values)->pluck('service_recordid')->toArray();
+                    
                     $address_serviceids = array_merge($serviceids, $address_serviceids);
-                    // var_dump($address_serviceids);
-                    // exit();
+                    
                 }
                 if($meta->facet == 'Taxonomy'){
 
@@ -426,9 +429,10 @@ class ServiceController extends Controller
                     if($meta->operations == 'Exclude')
                         $serviceids = Servicetaxonomy::whereNotIn('taxonomy_recordid', $values)->pluck('service_recordid')->toArray();
                     $taxonomy_serviceids = array_merge($serviceids, $taxonomy_serviceids);
+
                 }
             }
-            
+            // $services = $services->whereIn('service_recordid', $taxonomy_serviceids);
             $services = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids);
           
             $services_ids = $services->pluck('service_recordid')->toArray();
@@ -437,7 +441,7 @@ class ServiceController extends Controller
 
         }
 
-        $services = $services->paginate('10');
+        $services = $services->paginate(20);         
         $locations = $locations->get();
 
         return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status'));
@@ -445,9 +449,8 @@ class ServiceController extends Controller
 
     public function service($id)
     {
-        $service = Service::where('service_recordid', '=', $id)->first(); 
-        $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();  
-
+        $service = Service::where('service_recordid', '=', $id)->first();         
+        $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
