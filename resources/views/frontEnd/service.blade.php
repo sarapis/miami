@@ -277,9 +277,9 @@ ul#ui-id-1 {
                                         <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
                                         <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
                                         <h4><span><i class="icon md-phone font-size-24 vertical-align-top "></i>
-                                            @if(isset($location->phones))
-                                                @if($location->phones != null)
-                                                    @foreach($location->phones as $phone)
+                                            @if(isset($location->location_phones))
+                                                @if($location->location_phones != null)
+                                                    @foreach($location->location_phones as $phone)
                                                     @php 
                                                     $phones ='';
                                                     $phones = $phones.$phone->phone_number.','; @endphp
