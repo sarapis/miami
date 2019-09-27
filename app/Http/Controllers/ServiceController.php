@@ -504,12 +504,14 @@ class ServiceController extends Controller
     {
         $service = Service::where('service_recordid', '=', $id)->first();
         $service_name= $service->service_name;
+        
 
         $layout = Layout::find(1);
 
         $pdf = PDF::loadView('frontEnd.service_download', compact('service', 'layout'));
+        $service_name = str_replace('"','',$service_name);
 
-        return $pdf->download($service_name.'.pdf');
+        return $pdf->download($service_name.'111.pdf');
 
     }
 

@@ -58,14 +58,16 @@ ul#ui-id-1 {
                                     @endif
                                 @endforeach
                             @endif    
-                        </h4>
+                        </h4>                        
                         <h4 class="panel-text"><span class="badge bg-red">Organization:</span>
                             @if(isset($service->organizations))                           
                                 @foreach($service->organizations as $organization)
-                                    @if($loop->last)
-                                    <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
-                                    @else
-                                    <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>,
+                                    @if(isset($organization->organization_name)) 
+                                        @if($loop->last)
+                                        <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                        @else
+                                        <a class="panel-link" href="{{ config('app.url')}}/organization_{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                        @endif
                                     @endif
                                 @endforeach                       
                             @endif
@@ -109,7 +111,7 @@ ul#ui-id-1 {
 
                         <hr>
 
-                        
+                        @if(isset($service->address))    
                         <h4><span class="badge bg-blue">Address:</span>
                             
                                 @foreach($service->address as $address)
@@ -117,14 +119,13 @@ ul#ui-id-1 {
                                 @endforeach
                             
                         </h4>
-                  
+                        @endif
                       
+                        @if(isset($service->contact()->first()->contact_name))
                         <h4><span class="badge bg-red">Contact:</span>
-                          
                             {{$service->contact()->first()->contact_name}}
-                        
                         </h4>
-                
+                        @endif
 
                         <h3>Details</h3>
                         @if($service->service_details!=NULL)
