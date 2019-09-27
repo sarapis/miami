@@ -441,7 +441,7 @@ class ServiceController extends Controller
 
         }
 
-        $services = $services->paginate(20);         
+        $services = $services->paginate(10);         
         $locations = $locations->get();
 
         return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status'));
@@ -450,8 +450,8 @@ class ServiceController extends Controller
     public function service($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first();         
-        $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get(); 
-             
+        $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
+
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];

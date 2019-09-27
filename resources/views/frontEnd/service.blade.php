@@ -279,12 +279,14 @@ ul#ui-id-1 {
                                         <h4><span><i class="icon md-phone font-size-24 vertical-align-top "></i>
                                             @if(isset($location->location_phones))
                                                 @if($location->location_phones != null)
-                                                    @foreach($location->location_phones as $phone)
-                                                    @php 
-                                                    $phones ='';
-                                                    $phones = $phones.$phone->phone_number.','; @endphp
-                                                    @endforeach
-                                                    {{ rtrim($phones, ',') }}
+                                                    @if(is_array($location->location_phones))
+                                                        @foreach($location->location_phones as $phone)
+                                                        @php 
+                                                        $phones ='';
+                                                        $phones = $phones.$phone->phone_number.','; @endphp
+                                                        @endforeach
+                                                        {{ rtrim($phones, ',') }}
+                                                    @endif
                                                 @endif 
                                             @endif 
                                             </span>
