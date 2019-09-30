@@ -27,10 +27,12 @@
                         <h4><span class="badge bg-red">Organization:</span>
                             @if($service->service_organization!=0)                        
                                 @foreach($service->organizations as $organization)
-                                    @if($loop->last)
-                                    <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
-                                    @else
-                                    <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>,
+                                    @if(isset($organization->organization_name)) 
+                                        @if($loop->last)
+                                        <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                        @else
+                                        <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                        @endif
                                     @endif
                                 @endforeach                       
                             @endif

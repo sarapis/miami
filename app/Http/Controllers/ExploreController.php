@@ -217,6 +217,7 @@ class ExploreController extends Controller
 
         $location_serviceids = Service::pluck('service_recordid');
         $location_locationids = Location::with('services','organization')->pluck('location_recordid');
+        $service_locationids = [];
 
         if($source_data->active == 1)
 
