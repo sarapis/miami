@@ -25,16 +25,18 @@
                             @endif    
                         </h4>
                         <h4><span class="badge bg-red">Organization:</span>
-                            @if($service->service_organization!=0)                        
-                                @foreach($service->organizations as $organization)
-                                    @if(isset($organization->organization_name)) 
-                                        @if($loop->last)
-                                        <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
-                                        @else
-                                        <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                            @if($service->service_organization!=0)   
+                                @if(isset($service->organizations))                      
+                                    @foreach($service->organizations as $organization)
+                                        @if(isset($organization->organization_name)) 
+                                            @if($loop->last)
+                                            <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                            @else
+                                            <a class="panel-link" href="{{ config('app.url')}}/organization/{{$organization->organization_recordid}}"> {{$organization->organization_name}}</a>
+                                            @endif
                                         @endif
-                                    @endif
-                                @endforeach                       
+                                    @endforeach 
+                                @endif                      
                             @endif
                         </h4>
                         <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>

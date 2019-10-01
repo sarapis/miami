@@ -443,7 +443,7 @@ class ExploreController extends Controller
 
             $layout = Layout::find(1);
 
-            $services = $services->get();
+            $services = $services->paginate(10);                      
 
             $pdf = PDF::loadView('frontEnd.services_download', compact('services', 'layout'));
 

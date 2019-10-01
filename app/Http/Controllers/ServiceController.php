@@ -503,7 +503,7 @@ class ServiceController extends Controller
     public function download($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first();
-        $service_name= $service->service_name;
+        $service_name = $service->service_name;
         
 
         $layout = Layout::find(1);
