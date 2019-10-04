@@ -9,11 +9,11 @@ $(document).ready(function(){
         $('#btn-save').val("add");
         $('#frmProducts').trigger("reset");
         $('#myModal').modal('show');
-
+        
         $('#btn-save').on('click', function() {
             var data = {
-                alt_taxonomy_name: $('#alt_taxonomy_name').val(),
-                alt_taxonomy_vocabulary: $('#alt_taxonomy_vocabulary').val()
+                parent_taxonomy_name: $('#parent_taxonomy_name').val(),
+                parent_taxonomy_name: $('#parent_taxonomy_vocabulary').val()
             }
 
             $.ajax({
@@ -28,7 +28,6 @@ $(document).ready(function(){
                 }
             });
         });
-        
     });
 
 
@@ -45,9 +44,9 @@ $(document).ready(function(){
             success: function (data) {
                 // console.log(data);
                 $('#id').val(data.id);
-                $('#alt_taxonomy_name').val(data.alt_taxonomy_name);
-                $('#alt_taxonomy_vocabulary').val(data.alt_taxonomy_vocabulary);
-                //if(data.alt_taxonomy_vocabulary != "")
+                $('#parent_taxonomy_name').val(data.parent_taxonomy_name);
+                $('#parent_taxonomy_vocabulary').val(data.parent_taxonomy_vocabulary);
+                //if(data.parent_taxonomy_vocabulary != "")
                 $('#btn-save').val("update");
                 $('#myModal').modal('show');
             },
@@ -57,23 +56,23 @@ $(document).ready(function(){
         });
     });
 
-    //display modal form for open_term_modal ***************************
-    $(document).on('click','.open_term_modal',function(e){
+    //display modal form for open_taxonomy_modal ***************************
+    $(document).on('click','.open_taxonomy_modal',function(e){
 
-        var alt_taxonomy_id = $(this).val();    
-        $("#alt_taxonomy_id").val(alt_taxonomy_id);
+        var parent_taxonomy_id = $(this).val();    
+        $("#parent_taxonomy_id").val(parent_taxonomy_id);
         // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            url: url + '/terms/' + alt_taxonomy_id,
+            url: url + '/taxonomies/' + parent_taxonomy_id,
             success: function (data) {
                 console.log(data);
                 var selected_ids = [];
-                for (var i = 0; i < data.terms.length; i ++) {
-                    selected_ids.push(data.terms[i].id);
+                for (var i = 0; i < data.taxonomies.length; i ++) {
+                    selected_ids.push(data.taxonomies[i].id);
                 }
-                var html = '<h2>'+ data.alt_taxonomy_name +'</h2>';
-                html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
+                var html = '<h2>'+ data.parent_taxonomy_name +'</h2>';
+                html += '<table id="taxonomy_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
                 html += '<thead>'
                 html += '<tr>'
                 html += '<th class="text-center"></th>'
@@ -83,24 +82,24 @@ $(document).ready(function(){
                 html += '</tr>'
                 html += '</thead>'
                 html += '<tbody>'
-                for (var i = 0; i < data.all_terms.length; i ++) {
-                    var term_id = data.all_terms[i].id
+                for (var i = 0; i < data.all_taxonomies.length; i ++) {
+                    var taxonomy_id = data.all_taxonomies[i].id
                     html += '<tr>'
                     html += '<td class="text-center">'
-                    var checkbox = '<input type="checkbox" name="checked_terms[]" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
+                    var checkbox = '<input type="checkbox" name="checked_taxonomies[]" value="'+taxonomy_id+'" '+ (selected_ids.indexOf(taxonomy_id) > -1 ? 'checked >' : '>');
                     html += checkbox
                     html += '</td>'
-                    html += '<td class="text-center">'+data.all_terms[i].taxonomy_name+'</td>'
-                    html += '<td class="text-center">'+data.all_terms[i].taxonomy_parent_name+'</td>'                  
-                    html += '<td class="text-center">'+data.all_terms[i].category_id+'</td>'               
+                    html += '<td class="text-center">'+data.all_taxonomies[i].taxonomy_name+'</td>'
+                    html += '<td class="text-center">'+data.all_taxonomies[i].taxonomy_parent_name+'</td>'                  
+                    html += '<td class="text-center">'+data.all_taxonomies[i].category_id+'</td>'               
                     html += '</tr>'
                 }
                         
                 html += '</tbody>'
                 html += '</table>'
-                $('#open_term_modal').modal('show');
-                $('#list_tb_open_term').html(html);
-                $('#term_tb').DataTable({
+                $('#open_taxonomy_modal').modal('show');
+                $('#list_tb_open_taxonomy').html(html);
+                $('#taxonomy_tb').DataTable({
                     "columnDefs":[
                     {
                         "targets": 0,
@@ -128,8 +127,8 @@ $(document).ready(function(){
 
         e.preventDefault(); 
         var formData = {
-            alt_taxonomy_name: $('#alt_taxonomy_name').val(),
-            alt_taxonomy_vocabulary: $('#alt_taxonomy_vocabulary').val(),
+            parent_taxonomy_name: $('#parent_taxonomy_name').val(),
+            parent_taxonomy_vocabulary: $('#parent_taxonomy_vocabulary').val(),
         }
 
         //used to determine the http verb to use [add=POST], [update=PUT]

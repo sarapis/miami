@@ -44,6 +44,7 @@
           <ul class="nav child_menu">
             <li><a href="/meta_filter">Meta Filter</a></li>
             <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li>
+            <li><a href="/tb_parent_taxonomy">Parent Taxonomy</a></li>
           </ul>
         </li>
         <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>      

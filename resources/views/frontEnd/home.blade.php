@@ -93,7 +93,14 @@ Home
                                                     <ul class="tree1">
                                                         @foreach($grandparent_taxonomy->terms as $parent_taxonomy)
                                                             <li>
-                                                                <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->taxonomy_parent_name)}}" class="home-category">{{$parent_taxonomy->taxonomy_parent_name}}</a>
+                                                                <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->parent_taxonomy_name)}}" class="home-category">{{$parent_taxonomy->parent_taxonomy_name}}</a>
+                                                                <ul>
+                                                                    @foreach($parent_taxonomy->taxonomies as $child)
+                                                                    <li>
+                                                                          <a at="{{$child->taxonomy_recordid}}" class="home-category">{{ $child->taxonomy_name }}</a>
+                                                                    </li>
+                                                                    @endforeach
+                                                                </ul>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -114,9 +121,17 @@ Home
                                             <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                 <div class="card-body">
                                                     <ul class="tree1">
+
                                                         @foreach($grandparent_taxonomy->terms as $parent_taxonomy)
                                                             <li>
                                                                 <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->taxonomy_parent_name)}}" class="home-category">{{$parent_taxonomy->taxonomy_parent_name}}</a>
+                                                                <ul>
+                                                                    @foreach($parent_taxonomy->taxonomies as $child)
+                                                                    <li>
+                                                                          <a at="{{$child->taxonomy_recordid}}" class="home-category">{{ $child->taxonomy_name }}</a>
+                                                                    </li>
+                                                                    @endforeach
+                                                                </ul>
                                                             </li>
                                                         @endforeach
                                                     </ul>

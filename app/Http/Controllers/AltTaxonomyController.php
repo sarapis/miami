@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Alt_taxonomy;
 use App\Taxonomy;
+use App\ParentTaxonomies;
 use App\Servicetaxonomy;
 use App\AltTaxonomiesTermRelation;
 use App\Airtables;
@@ -54,6 +55,12 @@ class AltTaxonomyController extends Controller
     public function create()
     {
         //
+        $alt_taxonomy= new Alt_taxonomy();
+        $alt_taxonomy->alt_taxonomy_name = $request->alt_taxonomy_name;
+        $alt_taxonomy->alt_taxonomy_vocabulary = $request->alt_taxonomy_vocabulary;
+        $alt_taxonomy->save();
+
+        return response()->json($alt_taxonomy);
     }
 
     /**
@@ -95,7 +102,7 @@ class AltTaxonomyController extends Controller
         $alt_taxonomy = Alt_taxonomy::find($id);
         $alt_taxonomy_name = $alt_taxonomy->alt_taxonomy_name;
         $terms = AltTaxonomiesTermRelation::where('alt_taxonomy_id','=',$id)->get();
-        $all_terms = Taxonomy::all()->toArray();
+        $all_terms = ParentTaxonomies::all()->toArray();
         return response()->json(array('all_terms' => $all_terms, 'terms' => $terms, 'alt_taxonomy_name' => $alt_taxonomy_name));
 
     }
@@ -105,7 +112,8 @@ class AltTaxonomyController extends Controller
         $id = $request->input("alt_taxonomy_id");             
         $alt_taxonomy = Alt_taxonomy::find($id);
         $alt_taxonomy->terms()->sync($checked_terms_list);
-        return redirect('tb_alt_taxonomy');
+
+        return redirect('tb_alt_taxonomy');  
     }
 
     /**

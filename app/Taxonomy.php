@@ -30,6 +30,11 @@ class Taxonomy extends Model
         return $this->belongsTo('App\Taxonomy', 'taxonomy_parent_name', 'taxonomy_name');
     }
 
+    public function parents() {
+        $this->primaryKey='taxonomy_id';
+        return $this->belongsToMany('App\ParentTaxonomies', 'parent_taxonomies_taxonomies', 'taxonomy_id', 'parent_taxonomy_id');
+    }
+
     public function service()
     {
         $this->primaryKey='taxonomy_id';
@@ -37,9 +42,9 @@ class Taxonomy extends Model
         return $this->belongsToMany('App\Service', 'service_taxonomy', 'taxonomy_id', 'service_recordid');
     }
 
-    public function alt_taxonomies()
-    {
-        $this->primaryKey='taxonomy_id';
-        return $this->belongsToMany('App\Alt_taxonomy', 'alt_taxonomies_term_relation');
-    }
+    // public function alt_taxonomies()
+    // {
+    //     $this->primaryKey='taxonomy_id';
+    //     return $this->belongsToMany('App\Alt_taxonomy', 'alt_taxonomies_term_relation');
+    // }
 }
