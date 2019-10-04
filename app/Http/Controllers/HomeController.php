@@ -22,6 +22,7 @@ class HomeController extends Controller
         $map = Map::find(1);
         // $taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->orderBy('taxonomy_name', 'asc')->get();
         $grandparent_taxonomies = Alt_taxonomy::with('terms')->get();
+        
         // $parent_taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
 
         $parent_taxonomy = [];
