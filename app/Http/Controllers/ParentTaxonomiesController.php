@@ -24,19 +24,11 @@ class ParentTaxonomiesController extends Controller
     public function index()
     {
         $parent_taxonomies = ParentTaxonomies::orderBy('id')->paginate(20);
-        $counts = [];
-        // $terms = $alt_taxonomies->terms();
-        foreach ($parent_taxonomies as $key => $parent_taxonomy) {
-            // $id = $alt_taxonomy->id;
-            // $tmp_alt_taxonomy = AltTaxonomiesTermRelation::where('alt_taxonomy_id','=',$id)->get();
-            //exit();
-            // var_dump($tmp_alt_taxonomy->terms()->allRelatedIds());
-            // exit;
-            $count = $parent_taxonomy->taxonomies()->count();
-            // var_dump($terms);    
+        $counts = [];        
+        foreach ($parent_taxonomies as $key => $parent_taxonomy) {    
+            $count = $parent_taxonomy->taxonomies()->count();               
             array_push($counts, $count);
-        }
-        // var_dump($alt_taxonomies);
+        }       
         $source_data = Source_data::find(1);
 
         return view('backEnd.tables.tb_parent_taxonomy', compact('parent_taxonomies', 'counts', 'source_data'));
@@ -49,12 +41,7 @@ class ParentTaxonomiesController extends Controller
      */
     public function create()
     {
-        $parent_taxonomy= new ParentTaxonomies();
-        $parent_taxonomy->parent_taxonomy_name = $request->parent_taxonomy_name;
-        $parent_taxonomy->parent_taxonomy_vocabulary = $request->parent_taxonomy_vocabulary;
-        $parent_taxonomy->save();
-
-        return response()->json($parent_taxonomy);
+       
     }
 
     /**
@@ -65,6 +52,7 @@ class ParentTaxonomiesController extends Controller
      */
     public function store(Request $request)
     {
+        var_dump('store');        
         $parent_taxonomy= new ParentTaxonomies();
         $parent_taxonomy->parent_taxonomy_name = $request->parent_taxonomy_name;
         $parent_taxonomy->parent_taxonomy_vocabulary = $request->parent_taxonomy_vocabulary;
@@ -117,7 +105,10 @@ class ParentTaxonomiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+
     {
+        var_dump('update');
+        exit;
         $parent_taxonomy = ParentTaxonomies::find($id);
         $parent_taxonomy->parent_taxonomy_name = $request->parent_taxonomy_name;
         $parent_taxonomy->parent_taxonomy_vocabulary = $request->parent_taxonomy_vocabulary;

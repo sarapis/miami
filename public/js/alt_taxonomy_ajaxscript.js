@@ -9,25 +9,6 @@ $(document).ready(function(){
         $('#btn-save').val("add");
         $('#frmProducts').trigger("reset");
         $('#myModal').modal('show');
-
-        $('#btn-save').on('click', function() {
-            var data = {
-                alt_taxonomy_name: $('#alt_taxonomy_name').val(),
-                alt_taxonomy_vocabulary: $('#alt_taxonomy_vocabulary').val()
-            }
-
-            $.ajax({
-                type: "post",
-                url: url,
-                data: data,
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-        });
         
     });
 
