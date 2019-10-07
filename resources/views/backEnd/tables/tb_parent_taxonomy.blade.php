@@ -133,7 +133,7 @@ Parent Taxonomy
               </div>
               
               <div class="modal-body">
-                  <form class="m-form m-form--fit m-form--label-align-right user" action="/tb_parent_taxonomy" method="POST" id="form-open-taxonomies" name="form-open-taxonomies" enctype="multipart/form-data">
+                  <form class="m-form m-form--fit m-form--label-align-right user" action="/tb_parent_taxonomy/operation" method="POST" id="form-open-taxonomies" name="form-open-taxonomies" enctype="multipart/form-data">
                   {!! Form::token() !!}                      
                       <div class="form-group m-form__group" id="open_taxonomy_form">
                           <div class="table-responsive" id="list_tb_open_taxonomy" style="overflow-y: scroll;height: 50%;">

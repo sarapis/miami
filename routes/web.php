@@ -56,6 +56,8 @@ Route::get('/download_organization/{id}', 'OrganizationController@download');
 
 Route::post('/range', 'ExploreController@filterValues1');
 
+Route::resource('tb_parent_taxonomy', 'ParentTaxonomiesController');
+
 
  Route::group(['middleware' => ['web', 'auth', 'permission'] ], function () {
         Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'home.dashboard']);
@@ -120,12 +122,11 @@ Route::post('/range', 'ExploreController@filterValues1');
         });
 
         Route::resource('tb_taxonomy', 'TaxonomyController');
-        Route::resource('tb_alt_taxonomy', 'AltTaxonomyController');
-        Route::get('tb_parent_taxonomy', 'ParentTaxonomiesController@index');
+        Route::resource('tb_alt_taxonomy', 'AltTaxonomyController');        
         Route::get('tb_alt_taxonomy/terms/{id}', 'AltTaxonomyController@open_terms');
         Route::get('tb_parent_taxonomy/taxonomies/{id}', 'ParentTaxonomiesController@open_taxonomies');
-        Route::post('/tb_alt_taxonomy', 'AltTaxonomyController@operation');
-        Route::post('/tb_parent_taxonomy', 'ParentTaxonomiesController@operation');
+        Route::post('/tb_alt_taxonomy/operation', 'AltTaxonomyController@operation');
+        Route::post('/tb_parent_taxonomy/operation', 'ParentTaxonomiesController@operation');
         Route::resource('tb_details', 'DetailController');
         Route::resource('tb_languages', 'LanguageController');
         Route::resource('tb_accessibility', 'AccessibilityController');

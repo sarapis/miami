@@ -49,7 +49,12 @@ class ParentTaxonomiesController extends Controller
      */
     public function create()
     {
-        //
+        $parent_taxonomy= new ParentTaxonomies();
+        $parent_taxonomy->parent_taxonomy_name = $request->parent_taxonomy_name;
+        $parent_taxonomy->parent_taxonomy_vocabulary = $request->parent_taxonomy_vocabulary;
+        $parent_taxonomy->save();
+
+        return response()->json($parent_taxonomy);
     }
 
     /**
