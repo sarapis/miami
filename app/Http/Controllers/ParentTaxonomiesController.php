@@ -107,8 +107,6 @@ class ParentTaxonomiesController extends Controller
     public function update(Request $request, $id)
 
     {
-        var_dump('update');
-        exit;
         $parent_taxonomy = ParentTaxonomies::find($id);
         $parent_taxonomy->parent_taxonomy_name = $request->parent_taxonomy_name;
         $parent_taxonomy->parent_taxonomy_vocabulary = $request->parent_taxonomy_vocabulary;
