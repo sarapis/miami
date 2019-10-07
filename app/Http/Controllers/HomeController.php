@@ -11,6 +11,7 @@ use App\Taxonomy;
 use App\Map;
 use App\Location;
 use App\Analytic;
+use App\Alt_taxonomy;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -19,9 +20,10 @@ class HomeController extends Controller
     {
         $home = Layout::find(1);
         $map = Map::find(1);
-        $taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->orderBy('taxonomy_name', 'asc')->get();
-        $grandparent_taxonomies = Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_grandparent_name')->pluck('taxonomy_grandparent_name')->toArray();
-        $parent_taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+        // $taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->orderBy('taxonomy_name', 'asc')->get();
+        // $grandparent_taxonomies = Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_grandparent_name')->pluck('taxonomy_grandparent_name')->toArray();
+        // $parent_taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
+        $grandparent_taxonomies = Alt_taxonomy::with('terms')->get();
 
         $parent_taxonomy = [];
         $child_taxonomy = [];
@@ -34,7 +36,7 @@ class HomeController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
-        return view('frontEnd.home', compact('home', 'taxonomies', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'grandparent_taxonomies', 'parent_taxonomies'));
+        return view('frontEnd.home', compact('home', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'grandparent_taxonomies'));
     }
 
     public function about($value='')

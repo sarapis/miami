@@ -8,7 +8,7 @@ class Taxonomy extends Model
 {
     protected $table = 'taxonomy';
 
-    protected $primaryKey = 'taxonomy_id';
+    protected $primaryKey = 'taxonomy_recordid';
 
     public $fillable = ['name','parent_name'];
 
@@ -20,11 +20,13 @@ class Taxonomy extends Model
      * @return string
     */
     public function childs() {
+        $this->primaryKey='taxonomy_id';
         return $this->hasMany('App\Taxonomy','taxonomy_parent_name','taxonomy_name') ;
     }
 
     public function parent()
     {
+        $this->primaryKey='taxonomy_id';
         return $this->belongsTo('App\Taxonomy', 'taxonomy_parent_name', 'taxonomy_name');
     }
 
@@ -37,6 +39,7 @@ class Taxonomy extends Model
 
     public function alt_taxonomies()
     {
+        $this->primaryKey='taxonomy_id';
         return $this->belongsToMany('App\Alt_taxonomy', 'alt_taxonomies_term_relation');
     }
 }
