@@ -75,45 +75,35 @@ Home
                     <div class="col-lg-2 col-md-2"></div>
                     <div class="col-lg-8 col-md-8 col-sm-12 col-12">
                         <div id="accordion">
-                           
                             <div class="row">
-                                @php
-                                    $c = 0;
-                                @endphp
-                                @if(count($grandparent_taxonomies) > 0)
-                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                                        @foreach($grandparent_taxonomies as $key2 => $grandparent_taxonomy)
+                            @php
+                                $c = 0;
+                            @endphp
+                            @if(count($grandparent_taxonomies) > 0)
+                                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                                    @foreach($grandparent_taxonomies as $key2 => $grandparent_taxonomy)
+                                        @if ($key2 % 2 == 0)
                                         <div class="card">
                                             <div class="card-header">
                                                 <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
                                                 <a class="card-link taxonomy-link" at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}">{{$grandparent_taxonomy->alt_taxonomy_name}}</a>
                                             </div>
-
-                                            @if ($key2 % 2 == 0)
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}">{{$grandparent_taxonomy->alt_taxonomy_name}}</a>
-                                                </div>
-                                                <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <ul class="tree1">
-                                                            @foreach($grandparent_taxonomy->terms as $parent_taxonomy)
-                                                                <li>
-                                                                    <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->taxonomy_parent_name)}}" class="home-category">{{$parent_taxonomy->taxonomy_parent_name}}</a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                            <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <ul class="tree1">
+                                                        @foreach($grandparent_taxonomy->terms as $parent_taxonomy)
+                                                            <li>
+                                                                <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->taxonomy_parent_name)}}" class="home-category">{{$parent_taxonomy->taxonomy_parent_name}}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
                                             </div>
-                                            @endif
-
                                         </div>
-                                        @endforeach
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                     @foreach($grandparent_taxonomies as $key2 => $grandparent_taxonomy)
                                         @if ($key2 % 2 == 1)
                                         <div class="card">
@@ -135,7 +125,8 @@ Home
                                         </div>
                                         @endif
                                     @endforeach
-                                @endif
+                                </div>
+                            @endif
                             </div>
                         </div>  
                     </div>
