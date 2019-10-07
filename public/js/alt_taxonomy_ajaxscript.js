@@ -51,8 +51,9 @@ $(document).ready(function(){
                 console.log(data);
                 var selected_ids = [];
                 for (var i = 0; i < data.terms.length; i ++) {
-                    selected_ids.push(data.terms[i].id);
+                    selected_ids.push(data.terms[i].taxonomy_taxonomy_id);
                 }
+                console.log(selected_ids);
                 var html = '<h2>'+ data.alt_taxonomy_name +'</h2>';
                 html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
                 html += '<thead>'

@@ -30,7 +30,7 @@ Alt Taxonomy
                     <th class="text-center">No</th>
                     <th class="text-center">Name</th>   
                     <th class="text-center">Vocabulary</th>                              
-                    <th class="text-center"># Terms (Number of Parent Taxonomies)</th>           
+                    <th class="text-center">Number of Parent Taxonomies</th>           
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
