@@ -76,9 +76,9 @@ $(document).ready(function(){
                 html += '<thead>'
                 html += '<tr>'
                 html += '<th class="text-center"></th>'
-                html += '<th class="text-center">Name</th>'            
-                html += '<th class="text-center">Parent Name</th>'
-                html += '<th class="text-center">Category ID</th>'
+                html += '<th class="text-center">Taxonomy Name (Name of Child Taxonomy)</th>'            
+                // html += '<th class="text-center">Parent Name</th>'
+                // html += '<th class="text-center">Category ID</th>'
                 html += '</tr>'
                 html += '</thead>'
                 html += '<tbody>'
@@ -90,8 +90,8 @@ $(document).ready(function(){
                     html += checkbox
                     html += '</td>'
                     html += '<td class="text-center">'+data.all_taxonomies[i].taxonomy_name+'</td>'
-                    html += '<td class="text-center">'+data.all_taxonomies[i].taxonomy_parent_name+'</td>'                  
-                    html += '<td class="text-center">'+data.all_taxonomies[i].category_id+'</td>'               
+                    // html += '<td class="text-center">'+data.all_taxonomies[i].taxonomy_parent_name+'</td>'                  
+                    // html += '<td class="text-center">'+data.all_taxonomies[i].category_id+'</td>'               
                     html += '</tr>'
                 }
                         

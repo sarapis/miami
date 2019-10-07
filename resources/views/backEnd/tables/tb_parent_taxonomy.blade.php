@@ -30,7 +30,7 @@ Parent Taxonomy
                     <th class="text-center">No</th>
                     <th class="text-center">Name</th>   
                     <th class="text-center">Vocabulary</th>                              
-                    <th class="text-center"># Terms</th>           
+                    <th class="text-center"># Terms(Number of Child Taxonomies)</th>           
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
