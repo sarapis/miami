@@ -23,20 +23,34 @@ class HomeController extends Controller
         // $taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->orderBy('taxonomy_name', 'asc')->get();
         // $grandparent_taxonomies = Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_grandparent_name')->pluck('taxonomy_grandparent_name')->toArray();
         // $parent_taxonomies = \App\Taxonomy::whereNotNull('taxonomy_grandparent_name')->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-        $grandparent_taxonomies = Alt_taxonomy::with('terms')->get();
+        $grandparent_taxonomies = Alt_taxonomy::all();
+        $taxonomy_tree = [];
+        foreach ($grandparent_taxonomies as $key => $grandparent) {
+            $taxonomy_data['alt_taxonomy_name'] = $grandparent->alt_taxonomy_name;
+            $terms = $grandparent->terms()->orderBy('taxonomy_parent_name')->get(['taxonomy_parent_name']);
+            $parent_taxonomy = [];
+            foreach ($terms as $term_key => $term) {
+                $parent_count = Taxonomy::where('taxonomy_parent_name', '=', $term->taxonomy_parent_name)->count();
+                $term_count = $grandparent->terms()->where('taxonomy_parent_name', '=', $term->taxonomy_parent_name)->count();
+                if ($parent_count == $term_count) {
+                    $child_data['parent_taxonomy'] = $term->taxonomy_parent_name;
+                    $child_taxonomies = Taxonomy::where('taxonomy_parent_name', '=', $term->taxonomy_parent_name)->get(['taxonomy_name']);
+                    $child_data['child_taxonomies'] = $child_taxonomies;
+                    array_push($parent_taxonomy, $child_data);
+                } else {
+                    foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $term->taxonomy_parent_name)->get() as $child_key => $child_term) {
+                        $child_data['parent_taxonomy'] = $child_term->taxonomy_name;
+                        $child_data['child_taxonomies'] = "";
+                        array_push($parent_taxonomy, $child_data);
+                    }
+                }
+            }
+            $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
+            array_push($taxonomy_tree, $taxonomy_data);
+        }
 
-        $parent_taxonomy = [];
-        $child_taxonomy = [];
-        $checked_organizations = [];
-        $checked_insurances = [];
-        $checked_ages = [];
-        $checked_languages = [];
-        $checked_settings = [];
-        $checked_culturals = [];
-        $checked_transportations = [];
-        $checked_hours= [];
 
-        return view('frontEnd.home', compact('home', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'grandparent_taxonomies'));
+        return view('frontEnd.home', compact('home', 'map', 'grandparent_taxonomies'))->with('taxonomy_tree', $taxonomy_tree);
     }
 
     public function about($value='')
