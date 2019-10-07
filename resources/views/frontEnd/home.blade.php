@@ -124,7 +124,7 @@ Home
 
                                                         @foreach($grandparent_taxonomy->terms as $parent_taxonomy)
                                                             <li>
-                                                                <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->taxonomy_parent_name)}}" class="home-category">{{$parent_taxonomy->taxonomy_parent_name}}</a>
+                                                                <a at="{{str_replace(' ', '_', $grandparent_taxonomy->alt_taxonomy_name)}}_{{str_replace(' ', '_', $parent_taxonomy->parent_taxonomy_name)}}" class="home-category">{{$parent_taxonomy->parent_taxonomy_name}}</a>
                                                                 <ul>
                                                                     @foreach($parent_taxonomy->taxonomies as $child)
                                                                     <li>
