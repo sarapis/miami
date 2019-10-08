@@ -455,9 +455,9 @@ class ExploreController extends Controller
 
             $layout = Layout::find(1);
 
-            $services = $services->whereNotNull('service_name')->get();
+            $services = $services->whereNotNull('service_name')->get();                 
 
-            foreach ($services as $service) {
+            foreach ($services as $service) {                
                 $taxonomies = '';
                 $organizations = '';
                 $phones = '';
@@ -470,9 +470,14 @@ class ExploreController extends Controller
                 }
                 $service['taxonomies'] = $taxonomies;
 
-                foreach ($service->organizations as $organization) {
-                    $organizations = $organizations.$organization->organization_name;
-                }    
+                if(isset($service->organizations)){
+                    if(is_array($service->organizations)){
+                        foreach ($service->organizations as $organization) {                        
+                            $organizations = $organizations.$organization->organization_name;
+                        } 
+                    }                      
+                }
+
                 $service['organizations'] = $organizations;
 
                 foreach($service->phone as $phone1){
@@ -523,77 +528,102 @@ class ExploreController extends Controller
 
             $csv = CSV::find(2);
             $description = '';
-            if($child_taxonomy_names != ""){
-                $filter_category ='';
-                foreach($child_taxonomy_names as $child_taxonomy_name){
-                    $filter_category = $filter_category.$child_taxonomy_name.',';
+            if(isset($child_taxonomy_names)){
+                if($child_taxonomy_names != ""){
+                    $filter_category ='';
+                    foreach($child_taxonomy_names as $child_taxonomy_name){
+                        $filter_category = $filter_category.$child_taxonomy_name.',';
+                    }
+                    $description = $description."Category: ".$filter_category;
                 }
-
-                $description = $description."Category: ".$filter_category;
             }
-            if($checked_organization_names != ""){
-                $filter_organization ='';
-                foreach($checked_organization_names as $checked_organization_name){
-                    $filter_organization = $filter_organization.$checked_organization_name.',';
-                }
 
-                $description = $description."Organization: ".$filter_organization;
+            if(isset($checked_organization_names)){
+                if($checked_organization_names != ""){
+                    $filter_organization ='';
+                    foreach($checked_organization_names as $checked_organization_name){
+                        $filter_organization = $filter_organization.$checked_organization_name.',';
+                    }
+
+                    $description = $description."Organization: ".$filter_organization;
+                }
             }
-            if($checked_insurance_names != ""){
-                $filter_insurance ='';
-                foreach($checked_insurance_names as $checked_insurance_name){
-                    $filter_insurance = $filter_insurance.$checked_insurance_name.',';
-                }
+            
+            if(isset($checked_insurance_names)){
+                if($checked_insurance_names != ""){
+                    $filter_insurance ='';
+                    foreach($checked_insurance_names as $checked_insurance_name){
+                        $filter_insurance = $filter_insurance.$checked_insurance_name.',';
+                    }
 
-                $description = $description."Insurance: ".$filter_insurance;
+                    $description = $description."Insurance: ".$filter_insurance;
+                }
             }
-            if($checked_age_names != ""){
-                $filter_age ='';
-                foreach($checked_age_names as $checked_age_name){
-                    $filter_age = $filter_age.$checked_age_name.',';
-                }
+            
+            if(isset($checked_age_names)){
+                if($checked_age_names != ""){
+                    $filter_age ='';
+                    foreach($checked_age_names as $checked_age_name){
+                        $filter_age = $filter_age.$checked_age_name.',';
+                    }
 
-                $description = $description."Age: ".$filter_age;
+                    $description = $description."Age: ".$filter_age;
+                } 
             }
-            if($checked_language_names != ""){
-                $filter_language ='';
-                foreach($checked_language_names as $checked_language_name){
-                    $filter_language = $filter_language.$checked_language_name.',';
-                }
+            
+            if(isset($checked_language_names)){
+                if($checked_language_names != ""){
+                    $filter_language ='';
+                    foreach($checked_language_names as $checked_language_name){
+                        $filter_language = $filter_language.$checked_language_name.',';
+                    }
 
-                $description = $description."Language: ".$filter_language;
+                    $description = $description."Language: ".$filter_language;
+                }
             }
-            if($checked_setting_names != ""){
-                $filter_setting ='';
-                foreach($checked_setting_names as $checked_setting_name){
-                    $filter_setting = $filter_setting.$checked_setting_name.',';
-                }
+            
+            if(isset($checked_setting_names)){
+                if($checked_setting_names != ""){
+                    $filter_setting ='';
+                    foreach($checked_setting_names as $checked_setting_name){
+                        $filter_setting = $filter_setting.$checked_setting_name.',';
+                    }
 
-                $description = $description."Setting: ".$filter_setting;
+                    $description = $description."Setting: ".$filter_setting;
+                }
             }
-            if($checked_cultural_names != ""){
-                $filter_cultural ='';
-                foreach($checked_cultural_names as $checked_cultural_name){
-                    $filter_cultural = $filter_cultural.$checked_cultural_name.',';
-                }
+            
+            if(isset($checked_cultural_names)){
+                if($checked_cultural_names != ""){
+                    $filter_cultural ='';
+                    foreach($checked_cultural_names as $checked_cultural_name){
+                        $filter_cultural = $filter_cultural.$checked_cultural_name.',';
+                    }
 
-                $description = $description."Cultural: ".$filter_cultural;
+                    $description = $description."Cultural: ".$filter_cultural;
+                }
             }
-            if($checked_transportation_names != ""){
-                $filter_transportation ='';
-                foreach($checked_transportation_names as $checked_transportation_name){
-                    $filter_transportation = $filter_cultural.$checked_transportation_name.',';
-                }
+            
+            if(isset($checked_transportation_names)){
+                if($checked_transportation_names != ""){
+                    $filter_transportation ='';
+                    foreach($checked_transportation_names as $checked_transportation_name){
+                        $filter_transportation = $filter_cultural.$checked_transportation_name.',';
+                    }
 
-                $description = $description."Transportation: ".$filter_transportation;
+                    $description = $description."Transportation: ".$filter_transportation;
+                }
             }
-            if($checked_hour_names != ""){
-                $filter_hour ='';
-                foreach($checked_hour_names as $checked_hour_name){
-                    $filter_hour = $filter_hour.$checked_hour_name.',';
-                }
+            
+            if(isset($checked_hour_names)){
+                if($checked_hour_names != ""){
+                    $filter_hour ='';
+                    foreach($checked_hour_names as $checked_hour_name){
+                        $filter_hour = $filter_hour.$checked_hour_name.',';
+                    }
 
-                $description = $description."Additional Hour: ".$filter_hour;
+                    $description = $description."Additional Hour: ".$filter_hour;
+                }
             }
 
             $csv->description = $description;
@@ -602,13 +632,15 @@ class ExploreController extends Controller
             $csv = CSV::find(3);
             $csv->description = date('m/d/Y H:i:s');
             $csv->save();
-            // var_dump($projects);
-            // var_dump($collection);
-            // exit();
-            $csv = CSV::all();
 
+            $csv = CSV::all();
+            // var_dump($services);            
+
+
+            // return $csvExporter->build($services, ['service_name'=>'Service Name', 'service_alternate_name'=>'Service Alternate Name', 'taxonomies'=>'Category', 'organizations'=>'Organization', 'phones'=>'Phone', 'address1'=>'Address', 'contacts'=>'Contact', 'service_description'=>'Service Description', 'service_url'=>'URL','service_application_process'=>'Application Process', 'service_wait_time'=>'Wait Time', 'service_fees'=>'Fees', 'service_accreditations'=>'Accreditations', 'service_licenses'=>'Licenses', 'details'=>'Details'])->build($csv, ['name'=>'', 'description'=>''])->download();
 
             return $csvExporter->build($services, ['service_name'=>'Service Name', 'service_alternate_name'=>'Service Alternate Name', 'taxonomies'=>'Category', 'organizations'=>'Organization', 'phones'=>'Phone', 'address1'=>'Address', 'contacts'=>'Contact', 'service_description'=>'Service Description', 'service_url'=>'URL','service_application_process'=>'Application Process', 'service_wait_time'=>'Wait Time', 'service_fees'=>'Fees', 'service_accreditations'=>'Accreditations', 'service_licenses'=>'Licenses', 'details'=>'Details'])->build($csv, ['name'=>'', 'description'=>''])->download();
+
         }
 
         $search_results = $services->count();
