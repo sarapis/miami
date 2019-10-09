@@ -137,7 +137,7 @@
                                 <li>
                                     <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parent_taxonomy_names) && in_array($parent_name, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
 
-                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parent_taxonomy_names) && in_array($parent_name, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if(isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
 
                                     <span class="inputChecked">{{$parent_name}}</span>
 

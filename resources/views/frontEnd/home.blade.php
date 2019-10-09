@@ -237,6 +237,8 @@ $(document).ready(function(){
     $('.home-category').on('click', function(e){
         var id = $(this).attr('at');
         console.log(id);
+        var cate_id = $('.card-link.taxonomy-link', $(this).closest('.card')).attr('at');
+        console.log(cate_id);
         $("#category_" +  id).prop( "checked", true );
         $("#checked_" +  id).prop( "checked", true );
         $("#filter").submit();

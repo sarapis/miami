@@ -196,14 +196,18 @@ class ExploreController extends Controller
         $parents = $request->input('parents');
         $childs = $request->input('childs');
 
-        var_dump($grandparents);
-        var_dump($parents);
-        var_dump($childs);        
+
 
         $target_populations = $request->input('target_populations');
 
         $checked_grandparents = $request->input('checked_grandparents');
         $target_all = $request->input('target_all');
+
+        // var_dump($grandparents);
+        // var_dump($parents);
+        // var_dump($childs);
+        // var_dump($checked_grandparents);
+        // exit();
 
         $pdf = $request->input('pdf');
         $csv = $request->input('csv');
@@ -692,6 +696,8 @@ class ExploreController extends Controller
        
         $map = Map::find(1);
 
+        //=====================updated tree==========================//
+
         $grandparent_taxonomies = Alt_taxonomy::all();
         $taxonomy_tree = [];
         foreach ($grandparent_taxonomies as $key => $grandparent) {
@@ -725,6 +731,14 @@ class ExploreController extends Controller
             $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
             array_push($taxonomy_tree, $taxonomy_data);
         }
+
+        // var_dump('============grandparent_taxonomy_names============');
+        // var_dump($grandparent_taxonomy_names);
+        var_dump('============parent_taxonomy_names============');
+        var_dump($parent_taxonomy_names);
+        var_dump('============checked_grandparents============');
+        var_dump($checked_grandparents);    
+        
 
         return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents', 'grandparent_taxonomies'))->with('taxonomy_tree', $taxonomy_tree);
 
