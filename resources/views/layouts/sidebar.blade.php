@@ -129,15 +129,15 @@
                     @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
                         @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
-                        <input type="checkbox" id="category_{{str_replace(' ', '_', $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(  isset($grandparent_taxonomy_names) && in_array($grand_name, $grandparent_taxonomy_names)) checked @endif>
+                        <input type="checkbox" id="category_{{str_replace(' ', '_', $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
                         <span class="inputChecked">{{$grand_name}}</span>
                         <ul class="tree2">
                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                 @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
                                 <li>
-                                    <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parent_taxonomy_names) && in_array($parent_name, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+                                    <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
 
-                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if(isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
 
                                     <span class="inputChecked">{{$parent_name}}</span>
 
