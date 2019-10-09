@@ -128,13 +128,15 @@
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
-                        <input type="checkbox" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy['alt_taxonomy_name']}}">
-                        <span class="inputChecked">{{$grandparent_taxonomy['alt_taxonomy_name']}}</span>
+                        @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
+                        <input type="checkbox" id="category_{{str_replace(' ', '_', $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(  isset($grandparent_taxonomy_names) && in_array($grand_name, $grandparent_taxonomy_names)) checked @endif>
+                        <span class="inputChecked">{{$grand_name}}</span>
                         <ul class="tree2">
                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
                                 <li>
-                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy['parent_taxonomy']}}" >
-                                    <span class="inputChecked">{{$parent_taxonomy['parent_taxonomy']}}</span>
+                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" >
+                                    <span class="inputChecked">{{$parent_name}}</span>
 
                                     @if ($parent_taxonomy['child_taxonomies'] != "")
                                         <ul class="child-ul">
