@@ -195,6 +195,11 @@ class ExploreController extends Controller
         $grandparents = $request->input('grandparents');
         $parents = $request->input('parents');
         $childs = $request->input('childs');
+
+        var_dump($grandparents);
+        var_dump($parents);
+        var_dump($childs);        
+
         $target_populations = $request->input('target_populations');
 
         $checked_grandparents = $request->input('checked_grandparents');

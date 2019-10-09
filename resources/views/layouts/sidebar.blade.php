@@ -135,22 +135,24 @@
                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                 @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
                                 <li>
-                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" >
+                                    <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parent_taxonomy_names) && in_array($parent_name, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+
+                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parent_taxonomy_names) && in_array($parent_name, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+
                                     <span class="inputChecked">{{$parent_name}}</span>
 
                                     @if ($parent_taxonomy['child_taxonomies'] != "")
                                         <ul class="child-ul">
-                                            @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
+                                            @foreach($parent_taxonomy['child_taxonomies'] as $child)
                                                 <li class="nobranch">
-                                                    <input type="checkbox" id="category_{{$child_taxonomy->taxonomy_recordid}}" name="childs[]" value="{{$child_taxonomy->taxonomy_recordid}}"  class="regular-checkbox" />
+                                                    <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if(isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names) && in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif />
                                                     <span class="inputChecked">
-                                                        {{$child_taxonomy->taxonomy_name}}
+                                                        {{$child->taxonomy_name}}
                                                     </span>
                                                 </li>   
                                             @endforeach 
                                         </ul>  
                                     @endif
-
                                 </li>    
                             @endforeach
                         </ul>    
