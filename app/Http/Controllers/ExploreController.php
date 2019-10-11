@@ -87,7 +87,7 @@ class ExploreController extends Controller
     public function geocode(Request $request)
     {
         $chip_service = $request->input('find');
-        $chip_address = $request->input('search_address');
+        $chip_address = $request->input('search_address');        
 
         $source_data = Source_data::find(1);
 
@@ -252,14 +252,13 @@ class ExploreController extends Controller
 
         if($chip_address != null){
             
-            $response = Geocode::make()->address($chip_address);
-
+            $response = Geocode::make()->address($chip_address);   
 
             $lat =$response->latitude();
-            $lng =$response->longitude();
+            $lng =$response->longitude();            
 
             $locations = Location::with('services','organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
-            ->having('distance', '<', 2)
+            ->having('distance', '<', 5)
             ->orderBy('distance');
 
             $location_locationids = $locations->pluck('location_recordid');
@@ -731,7 +730,7 @@ class ExploreController extends Controller
             $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
             array_push($taxonomy_tree, $taxonomy_data);
         }       
- 
+
         // var_dump('============parents============');
         // var_dump($parents);
         // var_dump('============grandparents============');
