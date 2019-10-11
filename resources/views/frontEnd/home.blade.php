@@ -130,7 +130,7 @@ Home
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
-                                                                                    <a at="{{$child_taxonomy->taxonomy_recordid}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a at="{{str_replace(' ','_',$child_taxonomy->taxonomy_name)}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -247,6 +247,11 @@ $(document).ready(function(){
         var id = $(this).attr('at');
         console.log(id);
         $("#category_" +  id).prop( "checked", true );
+        $("#filter").submit();
+    });
+    $('.child-link').on('click', function(e){
+        var id = $(this).attr('at');
+        $('#category_'+id).prop('checked', true);
         $("#filter").submit();
     });
     // $('.branch').each(function(){

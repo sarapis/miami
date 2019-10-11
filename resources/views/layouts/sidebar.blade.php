@@ -145,7 +145,7 @@
                                         <ul class="child-ul">
                                             @foreach($parent_taxonomy['child_taxonomies'] as $child)
                                                 <li class="nobranch">
-                                                    <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if(isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names) && in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif />
+                                                    <input type="checkbox" id="category_{{str_replace(' ', '_',$child->taxonomy_name)}}" name="childs[]" value="{{$child->taxonomy_name}}"  class="regular-checkbox child-link" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
                                                     <span class="inputChecked">
                                                         {{$child->taxonomy_name}}
                                                     </span>
