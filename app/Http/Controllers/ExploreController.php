@@ -196,10 +196,9 @@ class ExploreController extends Controller
         $parents = $request->input('parents');
         $childs = $request->input('childs');
 
-
+        $sort_by_distance_clickable = "false";
 
         $target_populations = $request->input('target_populations');
-
         $checked_grandparents = $request->input('checked_grandparents');
         $target_all = $request->input('target_all');
 
@@ -264,6 +263,7 @@ class ExploreController extends Controller
             $location_locationids = $locations->pluck('location_recordid');
 
             $location_serviceids = Servicelocation::whereIn('location_recordid', $location_locationids)->pluck('service_recordid');
+            $sort_by_distance_clickable = "true";
         }   
 
         if($chip_service != null)
@@ -738,7 +738,7 @@ class ExploreController extends Controller
         // var_dump('============$childs============');
         // var_dump($childs);    
 
-        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents', 'grandparent_taxonomies', 'parents', 'grandparents', 'childs'))->with('taxonomy_tree', $taxonomy_tree);
+        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents', 'grandparent_taxonomies', 'parents', 'grandparents', 'childs', 'sort_by_distance_clickable'))->with('taxonomy_tree', $taxonomy_tree);
 
     }
     /**
