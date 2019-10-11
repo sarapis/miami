@@ -732,14 +732,12 @@ class ExploreController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }       
  
- 
-        var_dump('============parents============');
-        var_dump($parents);
-        var_dump('============grandparents============');
-        var_dump($grandparents);
-        var_dump('============$childs============');
-        var_dump($childs);    
-        
+        // var_dump('============parents============');
+        // var_dump($parents);
+        // var_dump('============grandparents============');
+        // var_dump($grandparents);
+        // var_dump('============$childs============');
+        // var_dump($childs);    
 
         return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents', 'grandparent_taxonomies', 'parents', 'grandparents', 'childs'))->with('taxonomy_tree', $taxonomy_tree);
 
