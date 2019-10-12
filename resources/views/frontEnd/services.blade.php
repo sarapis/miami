@@ -74,7 +74,7 @@ ul#ui-id-1 {
                 <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
                     <a @if(isset($sort) && $sort == 'Service Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Service Name</a>                    
                     <a @if(isset($sort) && $sort == 'Organization Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Organization Name</a>
-                    @if($sort_by_distance_clickable == "false")
+                    @if(!$sort_by_distance_clickable)
                     <a @if(isset($sort) && $sort == 'Distance from Address') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif role="menuitem" >Distance from Address</a>
                     @else
                     <a @if(isset($sort) && $sort == 'Distance from Address') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem" >Distance from Address</a>

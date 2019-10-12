@@ -182,7 +182,8 @@ $(document).ready(function() {
         "searching": false,
         "ordering": true,
         "info": false,
-        "autoWidth": true
+        "autoWidth": true,
+        "stateSave": true
     } );
 } );
 </script>

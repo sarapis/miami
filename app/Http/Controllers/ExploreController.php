@@ -196,7 +196,7 @@ class ExploreController extends Controller
         $parents = $request->input('parents');
         $childs = $request->input('childs');
 
-        $sort_by_distance_clickable = "false";
+        $sort_by_distance_clickable = false;
 
         $target_populations = $request->input('target_populations');
         $checked_grandparents = $request->input('checked_grandparents');
@@ -263,7 +263,7 @@ class ExploreController extends Controller
             $location_locationids = $locations->pluck('location_recordid');
 
             $location_serviceids = Servicelocation::whereIn('location_recordid', $location_locationids)->pluck('service_recordid');
-            $sort_by_distance_clickable = "true";
+            $sort_by_distance_clickable = true;
         }   
 
         if($chip_service != null)

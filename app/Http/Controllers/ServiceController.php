@@ -388,7 +388,7 @@ class ServiceController extends Controller
         $services = Service::with('locations')->orderBy('service_name');  
 
         $locations = Location::with('services','organization');
-
+        $sort_by_distance_clickable = false;
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
@@ -481,7 +481,7 @@ class ServiceController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }
 
-        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies'))->with('taxonomy_tree', $taxonomy_tree);  
+        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies', 'sort_by_distance_clickable'))->with('taxonomy_tree', $taxonomy_tree);  
     }
 
     public function service($id)
