@@ -24,6 +24,17 @@ Home
         font-family: "Material Design Iconic" !important;
         font-size: 16px;
     }
+    .glyphicon-plus:before {
+        display: inline-block;
+        text-align: center;
+        width: 22px;
+        height: 22px;
+        border: solid 1px #fff;
+        border-radius: 50%;
+        background-color: orchid;
+        color: white;
+    }
+
 </style>
 
 <link href="{{asset('css/treeview.css')}}" rel="stylesheet">
