@@ -255,10 +255,7 @@ $(document).ready(function(){
         $("#filter").submit();
     });
     $('.card-link.taxonomy-link').on('click', function(e){
-        console.log($(this).attr('at'));
-        var id = $(this).attr('at').replace('/', 'AAA').replace('(', 'BBB').replace(')', 'CCC');
-        console.log(id);        
-
+        var id = $(this).attr('at');
         $("#category_" +  id).prop( "checked", true );
         $("#filter").submit();
     });
