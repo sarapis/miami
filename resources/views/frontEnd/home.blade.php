@@ -255,8 +255,11 @@ $(document).ready(function(){
         $("#filter").submit();
     });
     $('.card-link.taxonomy-link').on('click', function(e){
-        var id = $(this).attr('at');
-        console.log(id);
+        debugger;
+        var id = $(this).attr('at').replace('/', 'AAA');
+        // id = id.replace('/', '&S&');
+        // console.log(id.replace('/', '&S&'));
+
         $("#category_" +  id).prop( "checked", true );
         $("#filter").submit();
     });

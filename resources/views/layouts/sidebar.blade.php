@@ -129,7 +129,7 @@
                     @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
                         @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
-                        <input type="checkbox" id="category_{{str_replace(' ', '_', $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
+                        <input type="checkbox" id="category_{{str_replace(array(' ', '/'), array('_', 'AAA'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
                         <span class="inputChecked">{{$grand_name}}</span>
                         <ul class="tree2">
                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)

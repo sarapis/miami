@@ -192,9 +192,13 @@ class ExploreController extends Controller
 
     public function filter(Request $request)
     {   
-        $grandparents = $request->input('grandparents');
-        $parents = $request->input('parents');
-        $childs = $request->input('childs');
+        $grandparents_response = $request->input('grandparents');
+        $parents_response = $request->input('parents');
+        $childs_response = $request->input('childs');
+
+        $grandparents = str_replace(array('AAA'), array('/'), $grandparents_response);
+        $parents = str_replace(array('AAA'), array('/'), $parents_response);
+        $childs = str_replace(array('AAA'), array('/'), $childs_response);
 
         $sort_by_distance_clickable = false;
 
@@ -202,11 +206,10 @@ class ExploreController extends Controller
         $checked_grandparents = $request->input('checked_grandparents');
         $target_all = $request->input('target_all');
 
-        // var_dump($grandparents);
-        // var_dump($parents);
-        // var_dump($childs);
-        // var_dump($checked_grandparents);
-        // exit();
+        var_dump($grandparents);
+        var_dump($parents);
+        var_dump($childs);
+        var_dump($checked_grandparents);        
 
         $pdf = $request->input('pdf');
         $csv = $request->input('csv');
