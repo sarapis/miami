@@ -27,11 +27,11 @@ Home
     .glyphicon-plus:before {
         display: inline-block;
         text-align: center;
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
         border: solid 1px #fff;
         border-radius: 50%;
-        background-color: orchid;
+        background-color: orange;
         color: white;
     }
 

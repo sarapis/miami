@@ -786,7 +786,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
   height: 22px;
   border: solid 1px #fff;
   border-radius: 50%;
-  background-color: orchid;
+  background-color: sienna;
   
 }
 .browse_category .card .card-link.collapsed:before { content: '';
