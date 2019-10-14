@@ -202,10 +202,10 @@ class ExploreController extends Controller
         $checked_grandparents = $request->input('checked_grandparents');
         $target_all = $request->input('target_all');
 
-        var_dump($grandparents);
-        var_dump($parents);
-        var_dump($childs);
-        var_dump($checked_grandparents);
+        // var_dump($grandparents);
+        // var_dump($parents);
+        // var_dump($childs);
+        // var_dump($checked_grandparents);
         
 
         $pdf = $request->input('pdf');
