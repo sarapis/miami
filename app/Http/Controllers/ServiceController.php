@@ -501,7 +501,41 @@ class ServiceController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours'));
+        $grandparent_taxonomies = Alt_taxonomy::all();
+        $taxonomy_tree = [];
+        foreach ($grandparent_taxonomies as $key => $grandparent) {
+
+            $taxonomy_data['alt_taxonomy_name'] = $grandparent->alt_taxonomy_name;
+            $terms = $grandparent->terms()->get();
+            $taxonomy_parent_name_list = [];
+            foreach ($terms as $term_key => $term) {
+                array_push($taxonomy_parent_name_list, $term->taxonomy_parent_name);
+            }
+
+            $taxonomy_parent_name_list = array_unique($taxonomy_parent_name_list);
+
+            $parent_taxonomy = [];
+            foreach ($taxonomy_parent_name_list as $term_key => $taxonomy_parent_name) {
+                $parent_count = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
+                $term_count = $grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
+                if ($parent_count == $term_count) {
+                    $child_data['parent_taxonomy'] = $taxonomy_parent_name;
+                    $child_taxonomies = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get(['taxonomy_name']);
+                    $child_data['child_taxonomies'] = $child_taxonomies;
+                    array_push($parent_taxonomy, $child_data);
+                } else {
+                    foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_term) {
+                        $child_data['parent_taxonomy'] = $child_term->taxonomy_name;
+                        $child_data['child_taxonomies'] = "";
+                        array_push($parent_taxonomy, $child_data);
+                    }
+                }
+            }
+            $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
+            array_push($taxonomy_tree, $taxonomy_data);
+        }
+
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree'));
     }
 
     public function taxonomy($id)
