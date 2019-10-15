@@ -54,6 +54,8 @@ Route::get('/explore/cityagency_{id}', 'ExploreController@cityagency');
 Route::get('/download_service/{id}', 'ServiceController@download');
 Route::get('/download_organization/{id}', 'OrganizationController@download');
 
+Route::get('tb_alt_taxonomy/all_terms', 'AltTaxonomyController@get_all_terms');
+
 Route::post('/range', 'ExploreController@filterValues1');
 
 
@@ -122,6 +124,7 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::resource('tb_taxonomy', 'TaxonomyController');
         Route::resource('tb_alt_taxonomy', 'AltTaxonomyController');
         Route::get('tb_alt_taxonomy/terms/{id}', 'AltTaxonomyController@open_terms');
+
         Route::post('/tb_alt_taxonomy', 'AltTaxonomyController@operation');
         Route::resource('tb_details', 'DetailController');
         Route::resource('tb_languages', 'LanguageController');

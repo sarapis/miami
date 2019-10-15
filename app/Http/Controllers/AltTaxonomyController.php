@@ -100,6 +100,15 @@ class AltTaxonomyController extends Controller
 
     }
 
+    public function get_all_terms() {
+        $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name', 'category_id')->get();
+        $result = [];
+        foreach ($all_terms as $term) {
+            array_push($result, collect($term)->flatten()->all());
+        }
+        return response()->json(array('data'=>$result));
+    }
+
     public function operation(Request $request){
         $checked_terms_list = $request->input("checked_terms");
         $id = $request->input("alt_taxonomy_id");             

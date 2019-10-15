@@ -63,31 +63,41 @@ $(document).ready(function(){
                 html += '<th class="text-center">Category ID</th>'
                 html += '</tr>'
                 html += '</thead>'
-                html += '<tbody>'
-                for (var i = 0; i < data.all_terms.length; i ++) {
-                    var term_id = data.all_terms[i].id
-                    html += '<tr>'
-                    html += '<td class="text-center">'
-                    var checkbox = '<input type="checkbox" name="checked_terms[]" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
-                    html += checkbox
-                    html += '</td>'
-                    html += '<td class="text-center">'+data.all_terms[i].taxonomy_name+'</td>'
-                    html += '<td class="text-center">'+data.all_terms[i].taxonomy_parent_name+'</td>'                  
-                    html += '<td class="text-center">'+data.all_terms[i].category_id+'</td>'               
-                    html += '</tr>'
-                }
+                // html += '<tbody>'
+                // for (var i = 0; i < data.all_terms.length; i ++) {
+                //     var term_id = data.all_terms[i].id
+                //     html += '<tr>'
+                //     // html += '<td class="text-center">'
+                //     // var checkbox = '<input type="checkbox" name="checked_terms[]" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
+                //     // html += checkbox
+                //     // html += '</td>'
+                //     html += '<td></td>'
+                //     html += '<td class="text-center">'+data.all_terms[i].taxonomy_name+'</td>'
+                //     html += '<td class="text-center">'+data.all_terms[i].taxonomy_parent_name+'</td>'                  
+                //     html += '<td class="text-center">'+data.all_terms[i].category_id+'</td>'               
+                //     html += '</tr>'
+                // }
                         
-                html += '</tbody>'
+                // html += '</tbody>'
                 html += '</table>'
                 $('#open_term_modal').modal('show');
                 $('#list_tb_open_term').html(html);
                 $('#term_tb').DataTable({
-                    "columnDefs":[
-                    {
-                        "targets": 0,
-                        "orderDataType": "dom-checkbox"
+                    // 'ajax': 'https://api.myjson.com/bins/1us28',
+                    'ajax': url + '/all_terms',
+                    "columnDefs":[{
+                        'targets': 0,
+                        'checkboxes': {
+                           'selectRow': true
+                        },
+                        'render': function (data, type, full, meta){
+                             return '<input type="checkbox" name="checked_terms[]" value="' + data + '">';
+                         }
                     }],
-                    "order": [[ 0, "desc" ]]
+                    'select': {
+                        'style': 'multi'
+                    },
+                    "order": [[ 0, "asc" ]]
                 });
             },
             error: function (data) {
