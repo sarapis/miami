@@ -97,19 +97,19 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(' ', '_', $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}</a>
+                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}</a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
                                                         <ul class="tree1">
                                                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                                                 <li>
-                                                                    <a at="{{str_replace(' ', '_', $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(' ', '_', $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
+                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
                                                                     @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
-                                                                                    <a at="{{$child_taxonomy->taxonomy_recordid}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child_taxonomy->taxonomy_name)}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -129,19 +129,19 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(' ', '_', $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}</a>
+                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}</a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
                                                         <ul class="tree1">
                                                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                                                 <li>
-                                                                    <a at="{{str_replace(' ', '_', $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(' ', '_', $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
+                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
                                                                     @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
-                                                                                    <a at="{{str_replace(' ','_',$child_taxonomy->taxonomy_name)}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child_taxonomy->taxonomy_name)}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
