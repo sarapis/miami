@@ -18,7 +18,7 @@
     
   <link rel="stylesheet" href="../../frontend/global/css/bootstrap.min.css">
   <link rel="stylesheet" href="../../frontend/global/css/bootstrap-extend.min.css">
-  <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+  <link type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="../../frontend/assets/css/site.min.css">
   <!-- Plugins -->

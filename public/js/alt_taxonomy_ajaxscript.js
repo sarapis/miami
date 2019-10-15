@@ -89,10 +89,7 @@ $(document).ready(function(){
                         'targets': 0,
                         'checkboxes': {
                            'selectRow': true
-                        },
-                        'render': function (data, type, full, meta){
-                             return '<input type="checkbox" name="checked_terms[]" value="' + data + '">';
-                         }
+                        }
                     }],
                     'select': {
                         'style': 'multi'
