@@ -139,6 +139,7 @@ Alt Taxonomy
                           <div class="table-responsive" id="list_tb_open_term" style="overflow-y: scroll;height: 50%;">
                           </div>
                           <input type="hidden" id="alt_taxonomy_id" name="alt_taxonomy_id">
+                          <input type="hidden" id="checked_terms" name="checked_terms">
                       </div>                      
 
                       <div class="modal-footer">

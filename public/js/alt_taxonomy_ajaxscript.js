@@ -3,6 +3,8 @@ $(document).ready(function(){
 
     //get base URL *********************
     var url = $('#url').val();
+    var term_table;
+    var checked_terms_set = false;
     //display modal form for creating new product *********************
     $('#btn-add').click(function(e){
 
@@ -17,6 +19,7 @@ $(document).ready(function(){
     $(document).on('click','.open_modal',function(e){
 
         var id = $(this).val();
+
 
         // Populate Data in Edit Modal Form
         $.ajax({
@@ -39,7 +42,7 @@ $(document).ready(function(){
 
     //display modal form for open_term_modal ***************************
     $(document).on('click','.open_term_modal',function(e){
-
+        checked_terms_set = false;
         var alt_taxonomy_id = $(this).val();    
         $("#alt_taxonomy_id").val(alt_taxonomy_id);
         // Populate Data in Edit Modal Form
@@ -63,32 +66,21 @@ $(document).ready(function(){
                 html += '<th class="text-center">Category ID</th>'
                 html += '</tr>'
                 html += '</thead>'
-                // html += '<tbody>'
-                // for (var i = 0; i < data.all_terms.length; i ++) {
-                //     var term_id = data.all_terms[i].id
-                //     html += '<tr>'
-                //     // html += '<td class="text-center">'
-                //     // var checkbox = '<input type="checkbox" name="checked_terms[]" value="'+term_id+'" '+ (selected_ids.indexOf(term_id) > -1 ? 'checked >' : '>');
-                //     // html += checkbox
-                //     // html += '</td>'
-                //     html += '<td></td>'
-                //     html += '<td class="text-center">'+data.all_terms[i].taxonomy_name+'</td>'
-                //     html += '<td class="text-center">'+data.all_terms[i].taxonomy_parent_name+'</td>'                  
-                //     html += '<td class="text-center">'+data.all_terms[i].category_id+'</td>'               
-                //     html += '</tr>'
-                // }
-                        
-                // html += '</tbody>'
                 html += '</table>'
                 $('#open_term_modal').modal('show');
                 $('#list_tb_open_term').html(html);
-                $('#term_tb').DataTable({
+                term_table = $('#term_tb').DataTable({
                     // 'ajax': 'https://api.myjson.com/bins/1us28',
                     'ajax': url + '/all_terms',
                     "columnDefs":[{
                         'targets': 0,
                         'checkboxes': {
                            'selectRow': true
+                        },
+                        'createdCell':  function (td, cellData, rowData, row, col){
+                            if(selected_ids.indexOf(cellData) > -1){
+                                this.api().cell(td).checkboxes.select();
+                            }
                         }
                     }],
                     'select': {
@@ -102,6 +94,16 @@ $(document).ready(function(){
             }
         });
     });
+
+    $( "#form-open-terms button[type='submit']" ).click(function(e) {
+        if (!checked_terms_set) {
+            e.preventDefault();
+            var checked_terms = term_table.column(0).checkboxes.selected();
+            $('#checked_terms').val(checked_terms.join(","));
+            checked_terms_set = true;
+            $(this).trigger('click');
+        }
+    })
 
 
 
