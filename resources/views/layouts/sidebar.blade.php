@@ -110,8 +110,7 @@
                 <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
                 <ul class="collapse list-unstyled option-ul" id="target_populations">
                     <li>
-                        <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
-                            <option value="" disabled selected>Search Here</option>
+                        <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">                            
                             @foreach($target_taxonomies as $child)
                                 <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
                             @endforeach
@@ -293,7 +292,9 @@ $(document).ready(function(){
 
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2({
-            matcher: matchCustom
+            matcher: matchCustom,
+            placeholder: "Search Here",
+            allowClear: true
         });
     });
     
