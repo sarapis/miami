@@ -287,7 +287,7 @@ ul#ui-id-1 {
                             @endforeach
                         @endif
                     @else
-                        <div class="alert dark alert-warning ml-15" role="alert">
+                        <div class="alert dark alert-warning ml-15" role="alert" style="background-color: lightblue; border-color: lightblue;">
                             <span style="color: #ffffff;">
                                 <b>We’re unable to find any services based on your search.</b>
                             </span>
