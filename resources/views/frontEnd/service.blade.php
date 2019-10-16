@@ -65,7 +65,7 @@ ul#ui-id-1 {
                             @endif
                         </h4>
 
-                        <h4 style="line-height: inherit;">{!! $service->service_description !!}</h4>
+                        <h4 style="line-height: inherit;">{!! str_replace(array('\n', '*'), array(' ', ' '), $service->service_description) !!}</h4>
 
                         @if(isset($service->service_phones))                            
                             @if(isset($service->phone()->first()->phone_number))  
