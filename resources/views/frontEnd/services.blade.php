@@ -288,9 +288,17 @@ ul#ui-id-1 {
                         @endif
                     @else
                         <div class="alert dark alert-warning ml-15" role="alert">
-                        <p style="color: #ffffff;">
-                            <b>There are no results.</b>
-                        </p>
+                            <span style="color: #ffffff;">
+                                <b>We’re unable to find any services based on your search.</b>
+                            </span>
+                            <p style="color: #ffffff;">
+                                <b>To improve the search results, we suggest:</b>
+                            </p>
+                            <ul>
+                                <li style="color: #ffffff; list-style: disc;">Remove any location filters</li>
+                                <li style="color: #ffffff; list-style: disc;">Use more general terms in the search bar</li>
+                                <li style="color: #ffffff; list-style: disc;">Click on Types of Services on the left side of the screen instead of using the search field</li>                            
+                            </ul>
                         </div>
                     @endif
                     <div class="example">
