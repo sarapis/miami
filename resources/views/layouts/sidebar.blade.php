@@ -82,6 +82,9 @@
     .select2-container{
         width: 100% !important;
     }
+    .select2-search__field {
+        width: 100% !important;
+    }
     @media (max-width: 768px) {
         .mobile-btn{
             display: block;
@@ -292,9 +295,7 @@ $(document).ready(function(){
 
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2({
-            matcher: matchCustom
-        });
-        $(".js-example-placeholder-multiple").select2({
+            matcher: matchCustom,
             placeholder: "Search here"
         });
     });

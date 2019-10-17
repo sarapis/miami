@@ -65,7 +65,7 @@ ul#ui-id-1 {
                             @endif
                         </h4>
 
-                        <h4 style="line-height: inherit;">{!! $service->service_description !!}</h4>
+                        <h4 class="service-description" style="line-height: inherit;"></h4>
 
                         @if(isset($service->service_phones))                            
                             @if(isset($service->phone()->first()->phone_number))  
@@ -373,6 +373,10 @@ $(document).ready(function(){
          });
         
     }, 2000);
+
+    var description = "{{ $service->service_description }}";
+    replaced_description = description.replace(/\n/g, "<br />");    
+    $('.service-description').html(replaced_description);
 
     $('.panel-link').on('click', function(e){
         if($(this).hasClass('target-population-link') || $(this).hasClass('target-population-child'))
