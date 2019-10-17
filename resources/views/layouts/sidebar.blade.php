@@ -127,36 +127,38 @@
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
-                        @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
-                        @php $grand_parentscount = count($grandparent_taxonomy['parent_taxonomies']); @endphp
-                        <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
-                        <span class="inputChecked">{{$grand_name}} ({{$grand_parentscount}})</span>
-                        <ul class="tree2">
-                            @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
-                                @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
-                                <li>
+                        <li class="altbranch">
+                            @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
+                            @php $grand_parentscount = count($grandparent_taxonomy['parent_taxonomies']); @endphp
+                            <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
+                            <span class="inputChecked">{{$grand_name}} ({{$grand_parentscount}})</span>
+                            <ul class="tree2">
+                                @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                    @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
+                                    <li>
 
-                                   <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">                                    
+                                       <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">                                    
 
-                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">
+                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">
 
-                                    <span class="inputChecked">{{$parent_name}}</span>
+                                        <span class="inputChecked">{{$parent_name}}</span>
 
-                                    @if ($parent_taxonomy['child_taxonomies'] != "")
-                                        <ul class="child-ul">
-                                            @foreach($parent_taxonomy['child_taxonomies'] as $child)
-                                                <li class="nobranch">
-                                                    <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child->taxonomy_name)}}" name="childs[]" value="{{$child->taxonomy_name}}"  class="regular-checkbox child-link" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
-                                                    <span class="inputChecked">
-                                                        {{$child->taxonomy_name}}
-                                                    </span>
-                                                </li>   
-                                            @endforeach 
-                                        </ul>  
-                                    @endif
-                                </li>    
-                            @endforeach
-                        </ul>    
+                                        @if ($parent_taxonomy['child_taxonomies'] != "")
+                                            <ul class="child-ul">
+                                                @foreach($parent_taxonomy['child_taxonomies'] as $child)
+                                                    <li class="nobranch">
+                                                        <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child->taxonomy_name)}}" name="childs[]" value="{{$child->taxonomy_name}}"  class="regular-checkbox child-link" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
+                                                        <span class="inputChecked">
+                                                            {{$child->taxonomy_name}}
+                                                        </span>
+                                                    </li>   
+                                                @endforeach 
+                                            </ul>  
+                                        @endif
+                                    </li>    
+                                @endforeach
+                            </ul> 
+                        </li>   
                     </ul>
                     @endforeach
                 </ul>
