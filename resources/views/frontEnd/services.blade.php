@@ -122,7 +122,7 @@ ul#ui-id-1 {
                                                 <a class="panel-link" class="notranslate" href="/organization/{{$service->organizations()->first()->organization_recordid}}"> {{$service->organizations()->first()->organization_name}}</a>                    
                                             @endif
                                         </h4>
-                                        <h4  style="line-height: inherit;">{!! str_limit(str_replace(array('\n', '/n', '*'), array(' ', ' ', ' '), $service->service_description), 200) !!}</h4>
+                                        <h4  style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
                                         <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4>
                                         <h4><span><i class="icon md-pin font-size-24 vertical-align-top mr-5 pr-10"></i>
                                             @if(isset($service->address))
@@ -210,7 +210,7 @@ ul#ui-id-1 {
                                                 <a class="panel-link" class="notranslate" href="/organization/{{$service->organizations()->first()->organization_recordid}}"> {{$service->organizations()->first()->organization_name}}</a>                    
                                             @endif
                                         </h4>
-                                        <h4  style="line-height: inherit;">{!! str_limit(str_replace(array('\n', '/n', '*'), array(' ', ' ', ' '), $service->service_description), 200) !!}</h4>
+                                        <h4  style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
                                         <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4>
                                         <h4><span><i class="icon md-pin font-size-24 vertical-align-top mr-5 pr-10"></i>
                                             @if(isset($service->address))
