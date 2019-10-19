@@ -129,7 +129,7 @@
                     <ul class="tree2">
                         <li class="altbranch">
                             @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
-                            @php $grand_parentscount = count($grandparent_taxonomy['parent_taxonomies']); @endphp
+                            @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
                             <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
                             <span class="inputChecked">{{$grand_name}} ({{$grand_parentscount}})</span>
                             <ul class="tree2">

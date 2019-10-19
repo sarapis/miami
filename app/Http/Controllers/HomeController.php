@@ -12,6 +12,7 @@ use App\Map;
 use App\Location;
 use App\Analytic;
 use App\Alt_taxonomy;
+use App\Servicetaxonomy;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -37,6 +38,7 @@ class HomeController extends Controller
             $taxonomy_parent_name_list = array_unique($taxonomy_parent_name_list);
 
             $parent_taxonomy = [];
+            $grandparent_service_count = 0;
             foreach ($taxonomy_parent_name_list as $term_key => $taxonomy_parent_name) {
                 $parent_count = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
                 $term_count = $grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
@@ -52,8 +54,15 @@ class HomeController extends Controller
                         array_push($parent_taxonomy, $child_data);
                     }
                 }
+                
+                $taxonomies = $grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get();
+                foreach($taxonomies as $child_key => $child_term) {
+                    $grand_service_ids = Servicetaxonomy::where('taxonomy_id', '=', $child_term->taxonomy_id)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+                    $grandparent_service_count += count($grand_service_ids); 
+                }
             }
             $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
+            $taxonomy_data['service_count'] = $grandparent_service_count;
             array_push($taxonomy_tree, $taxonomy_data);
         }
 

@@ -351,6 +351,8 @@ class ExploreController extends Controller
  
             $grand_location_ids = Servicelocation::whereIn('service_recordid', $grand_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
             // $services = $services->whereIn('service_recordid', $grand_service_ids);
+            // var_dump(count($grand_service_ids));
+         
             // $locations = $locations->whereIn('location_recordid', $grand_location_ids)->with('services','organization');
         }
 
@@ -711,6 +713,7 @@ class ExploreController extends Controller
             $taxonomy_parent_name_list = array_unique($taxonomy_parent_name_list);
 
             $parent_taxonomy = [];
+            $grandparent_service_count = 0;
             foreach ($taxonomy_parent_name_list as $term_key => $taxonomy_parent_name) {
                 $parent_count = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
                 $term_count = $grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
@@ -726,8 +729,13 @@ class ExploreController extends Controller
                         array_push($parent_taxonomy, $child_data);
                     }
                 }
+                foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_item) {
+                    $grand_service_ids = Servicetaxonomy::where('taxonomy_id', '=', $child_item->taxonomy_id)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+                    $grandparent_service_count += count($grand_service_ids); 
+                }
             }
             $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
+            $taxonomy_data['service_count'] = $grandparent_service_count;
             array_push($taxonomy_tree, $taxonomy_data);
         }       
 
