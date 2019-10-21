@@ -63,12 +63,23 @@ Import
         @if($source_data->active == 1)
         <div class="x_content">
             <div class="form-group">
-                <label for="airtable_api_key_input">Airtable Key</label>
+                <label for="airtable_api_key_input">Airtable API Key</label>
                 <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" required />                
             </div>
             <div class="form-group">
-                <label for="airtable_base_url_input">Airtable Base Url</label>
+                <label for="airtable_base_url_input">Airtable Base ID</label>
                 <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" required />
+            </div>
+            <div class="form-group">
+                <h5>
+                    You can import data organized in the <a href="https://airtable.com/universe/expwt9yr65lFGUJAr/open-referral-directory-v20" style="color: #027bff;">Open Referral Airtable Template</a> into this software by filling our the following information and clicking “Sync All”
+
+                    Find your Airtable ID and API Key by clicking the “Help” menu item in your base and selecting the “API documentation” option. 
+
+                    The Base ID is in the top section entitled “introduction”. 
+
+                    The API Key is accessible by clicking “show API key” on the top right of the page. The key will then be displayed on the right side in the Authentication section of the docs.
+                </h5>
             </div>
             <div class="alert alert-danger alert-dismissible field-invalid">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
