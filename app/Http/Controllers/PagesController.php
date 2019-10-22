@@ -154,8 +154,9 @@ class PagesController extends Controller
         $airtables = Airtables::all();
         $csvs = CSV_Source::all();
         $source_data = Source_data::find(1);
+        $enable_auto_sync_options = ['No', 'Yes'];
 
-        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data'));
+        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data', 'enable_auto_sync_options'));
     }
 
     public function export()
