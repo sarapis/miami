@@ -266,7 +266,7 @@ class ExploreController extends Controller
             $sort_by_distance_clickable = true;
         }   
 
-        if($chip_service != null)
+        if($chip_service != null && isset($serviceids))
         {
 
             $service_ids = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->pluck('service_recordid');
