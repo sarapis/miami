@@ -119,7 +119,25 @@ Import
 
         @else
         <div class="x_content">
-
+            <div class="form-group">
+                <label for="airtable_api_key_input">URL Path</label>
+                <input class="form-control" type="text" name="import_csv_url_path_input" id="import_csv_url_path_input" required />                
+            </div>
+            <div class="form-group">
+                <label for="airtable_base_url_input">Username</label>
+                <input class="form-control" type="text" name="import_csv_username_input" id="import_csv_username_input" required />
+            </div>
+            <div class="form-group">
+                <label for="airtable_base_url_input">Key</label>
+                <input class="form-control" type="text" name="import_csv_key_input" id="import_csv_key_input" required />
+            </div>
+            <div class="form-group">
+                <h5>
+                    You can upload individual CSVs that follow the Open Referral Human Services Data (HSDS) format.
+                    You can also import an entire dataset by uploading an HSDS Zip File.</br>
+                    You can automate the import of an HSDS Zip File by filling out the following info:
+                </h5>
+            </div>
             <table class="table table-striped jambo_table bulk_action" id="tbcsv">
                 <thead>
                     <tr>
