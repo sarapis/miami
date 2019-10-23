@@ -34,7 +34,17 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
+    public function test_airtable($api_key, $base_url)
+    {
+        // var_dump($api_key);
+        // var_dump($base_url);
+        // var_dump("this is test function for auto sync");
+        $response_text = "this is test function for auto sync";
+        echo $response_text;
+        exit();
+        //return $response_text;
+    }
 
     public function airtable($api_key, $base_url)
     {

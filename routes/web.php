@@ -80,6 +80,8 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
         Route::get('/sync_services/{api_key}/{base_url}', ['uses' => 'ServiceController@airtable']);  
+        Route::get('/sync_test/{api_key}/{base_url}', ['uses' => 'ServiceController@test_airtable']);      
+        
         Route::get('/sync_locations/{api_key}/{base_url}', ['uses' => 'LocationController@airtable']);
         Route::get('/sync_organizations/{api_key}/{base_url}', ['uses' => 'OrganizationController@airtable']);
         Route::get('/sync_contact/{api_key}/{base_url}', ['uses' => 'ContactController@airtable']);
@@ -89,6 +91,7 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::get('/sync_taxonomy/{api_key}/{base_url}', ['uses' => 'TaxonomyController@airtable']);
         Route::get('/sync_details/{api_key}/{base_url}', ['uses' => 'DetailController@airtable']);
 
+        Route::post('/cron_datasync', ['uses' => 'CronController@cron_datasync']);
 
         Route::post('/csv_services', ['uses' => 'ServiceController@csv']);  
         Route::post('/csv_locations', ['uses' => 'LocationController@csv']);

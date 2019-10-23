@@ -87,20 +87,22 @@ Import
             <div class="form-group">                 
                 <label for="airtable_enable_auto_sync">Enable auto-sync: </label>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <select class="form-control selectpicker" data-live-search="true" id="airtable_enable_auto_sync" name="airtable_enable_auto_sync" style="width: 75px;">
-                            @foreach($enable_auto_sync_options as $key => $option)                                
-                                <option value="{{$option}}" >{{$option}}</option>
-                            @endforeach
-                        </select>
-                    </div>   
-                    <div class="col-sm-4">
-                        <div class="form-group" id="auto_sync_div">
-                            <label for="airtable_auto_sync_period">Sync every</label>
-                            <input class="form-control" type="text" name="airtable_auto_sync_period" id="airtable_auto_sync_period" style="width: 75px;" required />
-                            <label for="airtable_auto_sync_period">number of days</label>
+                    <form action="/cron_datasync" method="POST" id="cron_airtable">
+                        {!! Form::token() !!}
+                        <div class="col-sm-4">
+                            <input class="form-control" type="checkbox" name="airtable_enable_auto_sync" id="airtable_enable_auto_sync" onclick="airtable_enable_autosync_Function()" >
+                        </div>   
+                        <div class="col-sm-4">
+                            <div class="form-group" id="auto_sync_div">
+                                <label for="airtable_auto_sync_period">Sync every</label>
+                                <input class="form-control" type="text" name="airtable_auto_sync_period" id="airtable_auto_sync_period" style="width: 75px;" required />
+                                <label for="airtable_auto_sync_period">number of days</label>
+                            </div>
+                        </div> 
+                        <div class="col-sm-4">
+                            <button type="submit" id="btn-startautosync" class="btn btn-primary btn-start">Start</button>
                         </div>
-                    </div>    
+                    </form>   
                 </div>
             </div>
            
@@ -200,8 +202,12 @@ Import
 
 
 <script type="text/javascript">
+
     $(document).ready(function() {
+
         $("#auto_sync_div").hide();
+        $("#btn-startautosync").hide();
+        
         var $img = $('<img class="probar titleimage" id="title" src="images/xpProgressBar.gif" alt="Loading..." />');   
         var field_invalid= $('.field-invalid');
         field_invalid.hide();
@@ -373,14 +379,19 @@ Import
                 }
             });
         });
-        $("#airtable_enable_auto_sync").on("change", function(e){
-            if ($(this).val() == "Yes") {
-                $("#auto_sync_div").show();
-            }
-            else {
-                $("#auto_sync_div").hide();
-            }
-        });
+        
     });
+
+    function airtable_enable_autosync_Function() {
+        var checkBox = document.getElementById("airtable_enable_auto_sync");
+        if (checkBox.checked == true){
+            $("#auto_sync_div").show();
+            $("#btn-startautosync").show();
+          } else {
+            $("#auto_sync_div").hide();
+            $("#btn-startautosync").hide();
+          }
+    }
+    
 </script>
 @endsection
