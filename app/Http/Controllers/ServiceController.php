@@ -398,8 +398,6 @@ class ServiceController extends Controller
     public function services()
     {
         $services = Service::with('locations')->orderBy('service_name');  
-        // echo $DAY;
-        // exit;
 
         $locations = Location::with('services','organization');
         $sort_by_distance_clickable = false;
