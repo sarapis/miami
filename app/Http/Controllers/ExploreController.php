@@ -265,7 +265,8 @@ class ExploreController extends Controller
             $location_serviceids = Servicelocation::whereIn('location_recordid', $location_locationids)->pluck('service_recordid');
             $sort_by_distance_clickable = true;
         }   
-
+        
+      
         if($chip_service != null && isset($serviceids))
         {
 
