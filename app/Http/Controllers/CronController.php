@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Client; 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
+use App\AutoSyncAirtable;
 
 class CronController extends Controller
 {
@@ -22,14 +20,31 @@ class CronController extends Controller
 
     public function cron_datasync(Request $request)
     {
-        
-        $client = new \GuzzleHttp\Client();
-        // $res = $client->request('GET', 'http://localhost:8000/sync_test/keyIvQZcMYmjNbtUO/appPeL7kL29MLnxOk');
-        $res = $client->request('GET', 'https://api.github.com/repos/guzzle/guzzle');
-        echo $res->getStatusCode();
-        exit();
+      
+        $auto_sync_opt = $request->airtable_enable_auto_sync;
+        $auto_sync_period_days = $request->airtable_auto_sync_period;
 
-        return $res;
+        $auto_sync = AutoSyncAirtable::find(1);
+
+        $auto_sync->days = $auto_sync_period_days;
+
+        if ($auto_sync_opt = "on") {
+            $auto_sync->option = "yes"; 
+        }
+        else {
+            $auto_sync->option = "no"; 
+        }
+
+        switch ($request->input('btn_submit')) {
+            case 'autosyncbtn-start':
+                $auto_sync->working_status = 'yes';
+            case 'autosyncbtn-stop':
+                $auto_sync->working_status = 'no';
+        }
+
+        $auto_sync->save();
+
+        return redirect('import');
     }
 
     /**

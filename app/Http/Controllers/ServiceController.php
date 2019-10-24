@@ -40,10 +40,12 @@ class ServiceController extends Controller
         // var_dump($api_key);
         // var_dump($base_url);
         // var_dump("this is test function for auto sync");
+        var_dump($api_key);
+        var_dump($base_url);
         $response_text = "this is test function for auto sync";
         echo $response_text;
-        exit();
-        //return $response_text;
+
+        return $response_text;
     }
 
     public function airtable($api_key, $base_url)
@@ -396,6 +398,8 @@ class ServiceController extends Controller
     public function services()
     {
         $services = Service::with('locations')->orderBy('service_name');  
+        // echo $DAY;
+        // exit;
 
         $locations = Location::with('services','organization');
         $sort_by_distance_clickable = false;

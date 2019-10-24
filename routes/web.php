@@ -91,7 +91,7 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::get('/sync_taxonomy/{api_key}/{base_url}', ['uses' => 'TaxonomyController@airtable']);
         Route::get('/sync_details/{api_key}/{base_url}', ['uses' => 'DetailController@airtable']);
 
-        Route::post('/cron_datasync', ['uses' => 'CronController@cron_datasync']);
+        Route::get('/cron_datasync', ['uses' => 'CronController@cron_datasync']);
 
         Route::post('/csv_services', ['uses' => 'ServiceController@csv']);  
         Route::post('/csv_locations', ['uses' => 'LocationController@csv']);

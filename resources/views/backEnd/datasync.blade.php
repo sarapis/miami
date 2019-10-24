@@ -87,20 +87,32 @@ Import
             <div class="form-group">                 
                 <label for="airtable_enable_auto_sync">Enable auto-sync: </label>
                 <div class="row">
-                    <form action="/cron_datasync" method="POST" id="cron_airtable">
+                    <form action="/cron_datasync" method="GET" id="cron_airtable">
                         {!! Form::token() !!}
                         <div class="col-sm-4">
+                            @if ($autosync->option == 'no')
                             <input class="form-control" type="checkbox" name="airtable_enable_auto_sync" id="airtable_enable_auto_sync" onclick="airtable_enable_autosync_Function()" >
+                            @endif
+                            @if ($autosync->option == 'yes')
+                            <input class="form-control" type="checkbox" name="airtable_enable_auto_sync" id="airtable_enable_auto_sync" onclick="airtable_enable_autosync_Function()" checked>
+                            @endif
                         </div>   
                         <div class="col-sm-4">
                             <div class="form-group" id="auto_sync_div">
                                 <label for="airtable_auto_sync_period">Sync every</label>
-                                <input class="form-control" type="text" name="airtable_auto_sync_period" id="airtable_auto_sync_period" style="width: 75px;" required />
+                                <input class="form-control" type="text" name="airtable_auto_sync_period" id="airtable_auto_sync_period" value="{{$autosync->days}}" style="width: 75px;" required />
                                 <label for="airtable_auto_sync_period">number of days</label>
                             </div>
                         </div> 
                         <div class="col-sm-4">
-                            <button type="submit" id="btn-startautosync" class="btn btn-primary btn-start">Start</button>
+                            @if ($autosync->option == 'yes')
+                                @if ($autosync->working_status == 'no')
+                                <button type="submit" name="btn_submit" class="btn btn-primary btn-start autosyncbtn" value="autosyncbtn-start" id="autosyncbtn-start">Start</button>
+                                @endif
+                                @if ($autosync->working_status == 'yes')
+                                <button type="submit" name="btn_submit" class="btn btn-warning btn-stop autosyncbtn" value="autosyncbtn-stop" id="autosyncbtn-stop">Stop</button>
+                                @endif
+                            @endif
                         </div>
                     </form>   
                 </div>
@@ -205,9 +217,6 @@ Import
 
     $(document).ready(function() {
 
-        $("#auto_sync_div").hide();
-        $("#btn-startautosync").hide();
-        
         var $img = $('<img class="probar titleimage" id="title" src="images/xpProgressBar.gif" alt="Loading..." />');   
         var field_invalid= $('.field-invalid');
         field_invalid.hide();
@@ -386,10 +395,10 @@ Import
         var checkBox = document.getElementById("airtable_enable_auto_sync");
         if (checkBox.checked == true){
             $("#auto_sync_div").show();
-            $("#btn-startautosync").show();
+            $(".autosyncbtn").show();
           } else {
             $("#auto_sync_div").hide();
-            $("#btn-startautosync").hide();
+            $(".autosyncbtn").hide();
           }
     }
     
