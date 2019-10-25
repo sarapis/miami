@@ -79,6 +79,12 @@
     .mobile-btn{
         display: none;
     }
+    .select2-container{
+        width: 100% !important;
+    }
+    .select2-search__field {
+        width: 100% !important;
+    }
     @media (max-width: 768px) {
         .mobile-btn{
             display: block;
@@ -103,52 +109,61 @@
 
        <ul class="list-unstyled components pt-0"> 
 
- 
             <li class="option-side">
-                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Categories</a>
+                <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
+                <ul class="collapse list-unstyled option-ul" id="target_populations">
+                    <li>
+                        <select class="js-example-basic-multiple js-example-placeholder-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">                                                  
+                            @foreach($target_taxonomies as $child)
+                                <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
+                            @endforeach
+                        </select>
+                    </li>
+                </ul>
+            </li>
+            <li class="option-side">
+                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Types of Services</a>
                  
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
-                    @foreach($grandparent_taxonomies as $key => $grandparent_taxonomy) 
+                    @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
                         <li class="altbranch">
-                            <input type="checkbox" id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy}}" @if(  isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif> <span class="inputChecked">{{$grandparent_taxonomy}}</span>
+                            @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
+                            @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
+                            <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
+                            <span class="inputChecked">{{$grand_name}} ({{$grand_parentscount}})</span>
                             <ul class="tree2">
-                                
-                                    @foreach($taxonomies as $taxonomy)
-                                        @if($taxonomy->taxonomy_name)
-                                                                            
-                                            <li>
-                                                
-                                                    <input type="checkbox" id="category_{{$taxonomy->taxonomy_recordid}}" @if(count($taxonomy->childs)) name="parents[]" @else name="childs[]" @endif value="{{$taxonomy->taxonomy_recordid}}"  class="regular-checkbox" @if(in_array($taxonomy->taxonomy_recordid, $parent_taxonomy) || (isset($parent_taxonomy_names) && in_array($taxonomy->taxonomy_name, $parent_taxonomy_names))) checked @elseif(in_array($taxonomy->taxonomy_recordid, $child_taxonomy)) checked @endif/>
-                                                    <span class="inputChecked">{{$taxonomy->taxonomy_name}}</span>
-                                                
-                                                @if(count($taxonomy->childs))
-                                                    @include('layouts.manageChild1',['childs' => $taxonomy->childs])
-                                                @endif
-                                            </li>
-                                                
+                                @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                    @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
+                                    <li>
+
+                                       <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">                                    
+
+                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">
+
+                                        <span class="inputChecked">{{$parent_name}}</span>
+
+                                        @if ($parent_taxonomy['child_taxonomies'] != "")
+                                            <ul class="child-ul">
+                                                @foreach($parent_taxonomy['child_taxonomies'] as $child)
+                                                    <li class="nobranch">
+                                                        <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child->taxonomy_name)}}" name="childs[]" value="{{$child->taxonomy_name}}"  class="regular-checkbox child-link" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
+                                                        <span class="inputChecked">
+                                                            {{$child->taxonomy_name}}
+                                                        </span>
+                                                    </li>   
+                                                @endforeach 
+                                            </ul>  
                                         @endif
-                                    @endforeach
-                                
-                            </ul>
-                        </li>
+                                    </li>    
+                                @endforeach
+                            </ul> 
+                        </li>   
                     </ul>
                     @endforeach
                 </ul>
             </li>
-            <li class="option-side">
-                <div class="example">
-                    <select class="js-example-basic-multiple form-control" multiple data-plugin="select2" id="target_multiple" name="target_populations[]">
-                       
-                        @foreach($taxonomy->childs->sortBy('taxonomy_name') as $child)
-                            @if($child->taxonomy_parent_name == 'Target Populations')
-                                <option value="{{$child->taxonomy_recordid}}" @if((isset($target_populations) && in_array($child->taxonomy_recordid, $target_populations))) selected @endif>{{$child->taxonomy_name}}</option>
-                            @endif
-                        @endforeach
-                        
-                    </select>
-                </div>
-            </li>
+            
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
                 <ul class="collapse list-unstyled option-ul" id="export">
@@ -170,7 +185,7 @@
             </li>
             <li class="option-side mobile-btn">
                 <a href="#sort" class="text-side" data-toggle="collapse" aria-expanded="false">Sort</a>
-                <ul class="collapse list-unstyled option-ul" id="sort">
+                <ul class="collapse list-unstyled option-ul">
                     <li class="nobranch">
                         <a @if(isset($sort) && $sort == 'Service Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Service Name</a>
                         <a @if(isset($sort) && $sort == 'Organization Name') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Organization Name</a>
@@ -180,6 +195,8 @@
             </li>
             <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
             <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
+
+            <input type="hidden" name="target_all" id="target_all">
 
             <input type="hidden" name="pdf" id="pdf">
 
@@ -194,6 +211,7 @@
 <script>
 $(document).ready(function(){
     $('.regular-checkbox').on('click', function(e){
+        $(this).prev().trigger('click');
         $('input', $(this).next().next()).prop('checked',0);
         $("#filter").submit();
     });
@@ -219,16 +237,41 @@ $(document).ready(function(){
 
         $("#filter").submit();
     });
-    
+
+    $('.regular-checkbox').each(function(){
+        console.log($(this).parent().parent().parent().attr('id'));
+        if($(this).prop('checked') && $('li', $(this).next().next()).length != 0 && $(this).parent().parent().parent().attr('id') != 'projectcategory'){
+            console.log('hahahaha');
+            if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
+                $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
+            if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(0).prop('checked'))
+                $('.regular-checkbox', $(this).parent().parent().parent()).eq(0).addClass('minus-checkbox');
+        }
+        if($(this).prop('checked') && $(this).parent().hasClass('nobranch') ){
+            console.log('hehehehe');
+            if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
+                $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
+            if($('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
+                $('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).trigger('click');
+            if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(1).prop('checked'))
+                $('.regular-checkbox', $(this).parent().parent().parent()).eq(1).addClass('minus-checkbox');
+            if(!$('.regular-checkbox', $(this).parent().parent().parent().parent().parent().parent()).eq(1).prop('checked'))
+                $('.regular-checkbox', $(this).parent().parent().parent().parent().parent().parent()).eq(0).addClass('minus-checkbox');
+        }
+    });
+    // $('.branch').each(function(){
+    //         if($('ul li', $(this)).length == 0)
+    //             $(this).hide();
+    //     }); 
     // if($('input[checked]', $('#projectcategory')).length > 0){
     //     $('#projectcategory').prev().trigger('click');
     // }
-    $('.indicator').click(function(){
-        $('.branch').each(function(){
-            if($('ul li', $(this)).length == 0)
-                $(this).hide();
-        });    
-    });
+    // $('.indicator').click(function(){
+    //     $('.branch').each(function(){
+    //         if($('ul li', $(this)).length == 0)
+    //             $(this).hide();
+    //     });    
+    // });
 
     function matchCustom(params, data) {
     // If there are no search terms, return all of the data
@@ -258,9 +301,27 @@ $(document).ready(function(){
 
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2({
-            matcher: matchCustom
+            matcher: matchCustom,
+            placeholder: "Search here"
         });
     });
     
 });
 </script>
+<style>
+    @foreach ($grandparent_taxonomies as $chunk)
+        .{{str_replace(' ', '_', $chunk)}} {
+            background-color: rgb({{rand(0, 255)}}, {{rand(0, 255)}}, {{rand(0, 255)}}) !important;
+        }
+    @endforeach
+    @foreach ($parent_taxonomies as $chunk)
+        .{{str_replace(' ', '_', $chunk)}} {
+            background-color: rgb({{rand(0, 255)}}, {{rand(0, 255)}}, {{rand(0, 255)}}) !important;
+        }
+    @endforeach
+    @foreach ($son_taxonomies as $chunk)
+        .{{str_replace(' ', '_', $chunk)}} {
+            background-color: rgb({{rand(0, 255)}}, {{rand(0, 255)}}, {{rand(0, 255)}}) !important;
+        }
+    @endforeach
+</style>

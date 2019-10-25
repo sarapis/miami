@@ -45,24 +45,9 @@
   <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
 
   <link rel="stylesheet" href="../../frontend/assets/examples/css/pages/register.css">
-
-
-<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-  <!--script src="https://raw.githubusercontent.com/719media/bootstrap-table/bootstrap4/src/bootstrap-table.js"></script-->
-  <!--[if lt IE 9]>
-    <script src="../../../frontend/global/vend/html5shiv/html5shiv.min.js"></script>
-    <![endif]-->
-  <!--[if lt IE 10]>
-    <script src="../../../frontend/global/vend/media-match/media.match.min.js"></script>
-    <script src="../../../frontend/global/vend/respond/respond.min.js"></script>
-    <![endif]-->
-  <!-- Scripts -->
   
-{{-- <script src="../../../frontend/global/vend/jquery/jquery.js"></script> --> --}}
- {{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> --}}
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
-{{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> --}}
 <script type="text/javascript" src="../../js/jquery.jticker.js"></script>
 <script type="text/javascript">
       jQuery(function($) {

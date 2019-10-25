@@ -126,36 +126,43 @@
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Types of Services</a>
                  
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
-                    @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
+                    @foreach($grandparent_taxonomies as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
-                        @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
-                        <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
-                        <span class="inputChecked">{{$grand_name}}</span>
-                        <ul class="tree2">
-                            @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
-                                @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
-                                <li>
-                                    <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+                        <li class="altbranch">
+                            <input type="checkbox" id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}" class="regular-checkbox" name="grandparents[]" value="{{$grandparent_taxonomy}}" @if(  isset($grandparent_taxonomy_names) && in_array($grandparent_taxonomy, $grandparent_taxonomy_names)) checked @endif> <span class="inputChecked">{{$grandparent_taxonomy}}</span>
+                            <ul class="tree2">
+                               
+                                    @foreach($parent_taxonomies as $parent_taxonomy)
+                                        @php $flag = 'false'; @endphp
+                                        @foreach($taxonomies->sortBy('taxonomy_name') as $key => $child)
+                                            @if($parent_taxonomy == $child->taxonomy_parent_name && $grandparent_taxonomy == $child->taxonomy_grandparent_name)
+                                             @if($flag == 'false')                               
+                                                <li>
+                                                        <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grandparent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grandparent_taxonomy)}}_{{str_replace(' ', '_', $parent_taxonomy)}}">
 
-                                    <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
+                                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_taxonomy}}" @if( isset($parent_taxonomy_names) && in_array($parent_taxonomy, $parent_taxonomy_names) && isset($checked_grandparents) && in_array($grandparent_taxonomy, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grandparent_taxonomy)}}_{{str_replace(' ', '_', $parent_taxonomy)}}">
+                                                        <span class="inputChecked">{{$parent_taxonomy}}</span>
+                                                    
+                                                    <ul class="child-ul">
+                                                    @php $flag = 'true'; @endphp
+                                                    @endif
+                                                        @if($grandparent_taxonomy == $child->taxonomy_grandparent_name && $parent_taxonomy == $child->taxonomy_parent_name)
+                                                        <li class="nobranch">
+                                                              <input type="checkbox" id="category_{{$child->taxonomy_recordid}}" name="childs[]" value="{{$child->taxonomy_recordid}}"  class="regular-checkbox" @if( isset($parent_taxonomy_names) && in_array($child->taxonomy_parent_name, $parent_taxonomy_names) && in_array($child->taxonomy_recordid, $child_taxonomy)) checked @endif/> <span class="inputChecked">{{$child->taxonomy_name}}</span>
+                                                        </li>
+                                                        @endif
+                                                     
+                                                @endif
+                                        @endforeach
+                                            @if ($flag == 'true')
+                                                </ul>
 
-                                    <span class="inputChecked">{{$parent_name}}</span>
-
-                                    @if ($parent_taxonomy['child_taxonomies'] != "")
-                                        <ul class="child-ul">
-                                            @foreach($parent_taxonomy['child_taxonomies'] as $child)
-                                                <li class="nobranch">
-                                                    <input type="checkbox" id="category_{{str_replace(' ', '_',$child->taxonomy_name)}}" name="childs[]" value="{{$child->taxonomy_name}}"  class="regular-checkbox child-link" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
-                                                    <span class="inputChecked">
-                                                        {{$child->taxonomy_name}}
-                                                    </span>
-                                                </li>   
-                                            @endforeach 
-                                        </ul>  
-                                    @endif
-                                </li>    
-                            @endforeach
-                        </ul>    
+                                            </li>
+                                             @endif   
+                                    @endforeach
+                                
+                            </ul>
+                        </li>
                     </ul>
                     @endforeach
                 </ul>

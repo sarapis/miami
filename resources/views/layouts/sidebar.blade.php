@@ -1,5 +1,4 @@
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/themes/default/style.min.css" />
 <style>
     .pac-logo:after{
       display: none;
@@ -93,6 +92,19 @@
             display: none;
         }
     }
+    #sidebar ul li a {
+        color: #000;
+    }
+    .jstree-themeicon {
+        display: none !important;
+    }
+    .jstree-wholerow-clicked {
+        background: transparent !important;
+    }
+    .jstree-wholerow-hovered {
+        background: transparent !important;
+    }
+
 </style>
 <nav id="sidebar">
     <ul class="list-unstyled components pt-0 mb-0 sidebar-menu"> 
@@ -125,21 +137,21 @@
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Types of Services</a>
                  
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
-                    @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
+      <!--               @foreach($taxonomy_tree as $key => $grandparent_taxonomy) 
                     <ul class="tree2">
                         <li class="altbranch">
                             @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
                             @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
-                            <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
+                            <input type="checkbox" id="category_{{str_replace(' ', '_', $grand_name)}}" class="regular-checkbox" name="grandparents[]" value="{{$grand_name}}" @if(isset($grandparents) && in_array($grand_name, $grandparents)) checked @endif>
                             <span class="inputChecked">{{$grand_name}} ({{$grand_parentscount}})</span>
                             <ul class="tree2">
                                 @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                     @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
-                                    <li class="branch">
+                                    <li>
 
-                                       <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">                                    
+                                       <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">                                    
 
-                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">
+                                        <input type="checkbox" class="regular-checkbox" name="parents[]" value="{{$parent_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif id="category_{{str_replace(' ', '_', $grand_name)}}_{{str_replace(' ', '_', $parent_name)}}">
 
                                         <span class="inputChecked">{{$parent_name}}</span>
 
@@ -147,7 +159,7 @@
                                             <ul class="child-ul">
                                                 @foreach($parent_taxonomy['child_taxonomies'] as $child)
                                                     <li class="nobranch">
-                                                        <input type="checkbox" id="category_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child->taxonomy_name)}}" name="childs[]" value="{{$child->taxonomy_name}}"  class="regular-checkbox child-link" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
+                                                        <input type="checkbox" id="category_{{$child->taxonomy_name}}" class="regular-checkbox" @if(isset($childs) && in_array($child->taxonomy_name, $childs)) checked @endif />
                                                         <span class="inputChecked">
                                                             {{$child->taxonomy_name}}
                                                         </span>
@@ -160,7 +172,40 @@
                             </ul> 
                         </li>   
                     </ul>
-                    @endforeach
+                    @endforeach -->
+                    <div id="sidebar_tree">
+                        @foreach($taxonomy_tree as $key => $grandparent_taxonomy)
+                        <ul class="tree2">
+                            @if(isset($grandparents) && in_array($grand_name, $grandparents))
+                                <li class="altbranch" data-jstree='{"opened":false,"selected":true}'>
+                            @else
+                                <li class="altbranch">
+                            @endif
+
+                                @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
+                                @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
+                                {{$grand_name}} ({{$grand_parentscount}})
+                                    <ul class="tree2">
+                                        @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                            @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
+                                            <li class="altbranch">
+                                                {{$parent_name}}
+                                                @if ($parent_taxonomy['child_taxonomies'] != "")
+                                                    <ul class="child-ul">
+                                                        @foreach($parent_taxonomy['child_taxonomies'] as $child)
+                                                            <li class="nobranch">
+                                                                {{$child->taxonomy_name}}
+                                                            </li>
+                                                        @endforeach 
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                        </ul>
+                        @endforeach
+                    </div>
                 </ul>
             </li>
             
@@ -208,8 +253,13 @@
 </nav>
 </form>
 <script src="{{asset('js/treeview2.js')}}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/jstree.min.js"></script>
+
 <script>
 $(document).ready(function(){
+    $('#sidebar_tree').jstree({
+        "plugins": ["checkbox", "wholerow"]
+    });
     $('.regular-checkbox').on('click', function(e){
         $(this).prev().trigger('click');
         $('input', $(this).next().next()).prop('checked',0);
@@ -239,13 +289,15 @@ $(document).ready(function(){
     });
 
     $('.regular-checkbox').each(function(){
-        if($(this).prop('checked') && $('li', $(this).next().next()).length != 0 && $(this).parent().parent().parent().attr('id') != 'projectcategory'){
+        if($(this).prop('checked') && $('li', $(this).next().next()).length != 0){
+            
             if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
                 $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
             if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(0).prop('checked'))
                 $('.regular-checkbox', $(this).parent().parent().parent()).eq(0).addClass('minus-checkbox');
         }
         if($(this).prop('checked') && $(this).parent().hasClass('nobranch') ){
+            
             if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
                 $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
             if($('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
