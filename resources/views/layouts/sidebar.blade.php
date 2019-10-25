@@ -135,7 +135,7 @@
                             <ul class="tree2">
                                 @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                     @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
-                                    <li>
+                                    <li class="branch">
 
                                        <input type="checkbox" class="regular-checkbox" name="checked_grandparents[]" value="{{$grand_name}}" @if( isset($parents) && in_array($parent_name, $parents) && isset($checked_grandparents) && in_array($grand_name, $checked_grandparents)) checked @endif style="display: none;" id="checked_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grand_name)}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_name)}}">                                    
 

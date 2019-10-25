@@ -51,11 +51,9 @@ $(document).ready(function(){
             url: url + '/terms/' + alt_taxonomy_id,
             success: function (data) {
                 console.log(data);
-                var selected_ids = [];
-                for (var i = 0; i < data.terms.length; i ++) {
-                    selected_ids.push(data.terms[i].taxonomy_taxonomy_id);
-                }
-                console.log(selected_ids);
+                var selected_ids = data.terms;
+                
+                console.log(data.terms);
                 var html = '<h2>'+ data.alt_taxonomy_name +'</h2>';
                 html += '<table id="term_tb" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">'
                 html += '<thead>'
@@ -96,7 +94,7 @@ $(document).ready(function(){
                     var hmc = row.find(':checkbox:checked').length;
                     var kluj = parseInt(hmc);
                     row.find('td.counter').text(kluj);
-                    table.row(row).invalidate('dom');
+                    term_table.row(row).invalidate('dom');
                   }); 
             },
             error: function (data) {
