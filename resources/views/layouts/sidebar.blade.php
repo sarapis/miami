@@ -101,9 +101,6 @@
     .jstree-wholerow-clicked {
         background: transparent !important;
     }
-    .jstree-wholerow-hovered {
-        background: transparent !important;
-    }
 
 </style>
 <nav id="sidebar">
