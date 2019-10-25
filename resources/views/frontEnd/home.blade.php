@@ -93,11 +93,12 @@ Home
                             @if(count($taxonomy_tree) > 0)
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                     @foreach($taxonomy_tree as $key2 => $grandparent_taxonomy)
+                                        @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
                                         @if ($key2 % 2 == 0)
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}</a>
+                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}   ({{$grand_parentscount}})</a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
@@ -125,11 +126,12 @@ Home
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                     @foreach($taxonomy_tree as $key2 => $grandparent_taxonomy)
+                                        @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
                                         @if ($key2 % 2 == 1)
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}</a>
+                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}  ({{$grand_parentscount}})</a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
