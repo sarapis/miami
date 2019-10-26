@@ -230,6 +230,7 @@ $(document).ready(function(){
     $('#sidebar_tree').jstree({
         "plugins": ["checkbox", "wholerow"]
     });
+    
     $('.regular-checkbox').on('click', function(e){
         $(this).prev().trigger('click');
         $('input', $(this).next().next()).prop('checked',0);
