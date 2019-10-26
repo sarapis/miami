@@ -192,14 +192,11 @@ class ExploreController extends Controller
 
     public function filter(Request $request)
     {   
-        $grandparents = $request->input('grandparents');
-        $parents = $request->input('parents');
-        $childs = $request->input('childs');
+        $checked_taxonomies = $request->input('selected_taxonomies');
 
         $sort_by_distance_clickable = false;
 
         $target_populations = $request->input('target_populations');
-        $checked_grandparents = $request->input('checked_grandparents');
         $target_all = $request->input('target_all');
 
         // var_dump($grandparents);
@@ -327,127 +324,14 @@ class ExploreController extends Controller
 
         }
 
-        $grand_service_ids = [];
-        $parent_service_ids = [];
-        $child_service_ids = [];
+        
+
+        $selected_taxonomies = explode(',', $checked_taxonomies);
+        $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $selected_taxonomies)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+
+        $child_location_ids = Servicelocation::whereIn('service_recordid', $child_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
         $target_service_ids = [];
-
-        $grand_location_ids =[];
-        $parent_location_ids = [];
-        $child_location_ids = [];
         $target_location_ids = [];
-
-        if($grandparents!=null){
-
-            $grandparent_taxonomy_names = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->pluck('alt_taxonomy_name')->toArray();            
-
-            $grandparent_taxonomies = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->get();
-
-            $parent_taxonomy_names = [];
-            foreach ($grandparent_taxonomies as $key => $grandparent) {
-                $parent_taxonomy_name_element = $grandparent->terms()->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_name_element);
-            }
-
-            // $parent_taxonomy_names = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->terms()->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-
-            $checked_grandparents = $grandparents;
-
-            $child_taxonomy = [];
-            foreach ($grandparent_taxonomies as $key => $grandparent) {
-                $child_taxonomy_element = $grandparent->terms()->pluck('taxonomy_recordid')->toArray();
-                $child_taxonomy = array_merge($child_taxonomy, $child_taxonomy_element);
-            }
-
-            // $child_taxonomy = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->terms()->pluck('taxonomy_recordid')->toArray();
-
-            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parent_taxonomy_names)->pluck('category_id')->toArray();
-            $grand_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
- 
-            $grand_location_ids = Servicelocation::whereIn('service_recordid', $grand_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            // $services = $services->whereIn('service_recordid', $grand_service_ids);
-            // var_dump(count($grand_service_ids));
-         
-            // $locations = $locations->whereIn('location_recordid', $grand_location_ids)->with('services','organization');
-        }
-
-        if($parents!=null){
-
-            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_parent_name', $parents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-
-            if($grandparents!=null){
-
-                $parent_taxonomy_names_grand = [];
-                foreach ($grandparent_taxonomies as $key => $grandparent) {
-                    $parent_taxonomy_names_grand_element = $grandparent->terms()->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                    $parent_taxonomy_names_grand = array_merge($parent_taxonomy_names_grand, $parent_taxonomy_names_grand_element);
-                }
-
-                // $parent_taxonomy_names_grand = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->terms()->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-
-
-                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_names_grand);
-                $checked_grandparents = array_merge($grandparents, $checked_grandparents);
-            }
-
-
-            $child_taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_recordid')->toArray();
-
-            $taxonomy = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('category_id');
-
-            $parent_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
- 
-            $parent_location_ids = Servicelocation::whereIn('service_recordid', $parent_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            // $services = $services->whereIn('service_recordid', $parent_service_ids);
-            // $locations = $locations->whereIn('location_recordid', $parent_location_ids)->with('services','organization');
-
-        }
-        if($childs!=null){
-            $child_taxonomy = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_recordid');
-            $child_taxonomy = json_decode(json_encode($child_taxonomy));
-
-            $parent_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $childs)->pluck('taxonomy_parent_name')->toArray();
-
-            if($parents!=null){
-                $parent_taxonomy_names_parent = Taxonomy::whereIn('taxonomy_parent_name', $parents)->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                $child_taxonomy_parent = Taxonomy::whereIn('taxonomy_parent_name', $parents)->pluck('taxonomy_recordid')->toArray();
-                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_names_parent);
-                $child_taxonomy = array_merge($child_taxonomy, $child_taxonomy_parent);
-            }
-            if($grandparents!=null){
-
-                $parent_taxonomy_names_grand = [];
-                foreach ($grandparent_taxonomies as $key => $grandparent) {
-                    $parent_taxonomy_names_grand_element = $grandparent->terms()->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-                    $parent_taxonomy_names_grand = array_merge($parent_taxonomy_names_grand, $parent_taxonomy_names_grand_element);
-                }
-
-                // $parent_taxonomy_names_grand = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->terms()->groupBy('taxonomy_parent_name')->pluck('taxonomy_parent_name')->toArray();
-
-                $child_taxonomy_grand = [];
-                foreach ($grandparent_taxonomies as $key => $grandparent) {
-                    $child_taxonomy_grand_element = $grandparent->terms()->pluck('taxonomy_recordid')->toArray();
-                    $child_taxonomy_grand = array_merge($child_taxonomy_grand, $child_taxonomy_grand_element);
-                }
-
-                // $child_taxonomy_grand = Alt_taxonomy::whereIn('alt_taxonomy_name', $grandparents)->terms()->pluck('taxonomy_recordid')->toArray();
-
-                // $checked_grandparents = array_merge($grandparents, $checked_grandparents);
-                $parent_taxonomy_names = array_merge($parent_taxonomy_names, $parent_taxonomy_names_grand);
-                $child_taxonomy = array_merge($child_taxonomy, $child_taxonomy_grand);
-
-            }
-
-
-            $child_taxonomy_names = Taxonomy::whereIn('taxonomy_recordid', $child_taxonomy)->pluck('taxonomy_name');
-            $child_taxonomy_ids = Taxonomy::whereIn('taxonomy_recordid', $child_taxonomy)->pluck('category_id');
-            
-            $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $child_taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
-            $child_location_ids = Servicelocation::whereIn('service_recordid', $child_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
-            // $services = $services->whereIn('service_recordid', $child_service_ids);
-            // $locations = $locations->whereIn('location_recordid', $child_location_ids)->with('services','organization');
-        }
-
         if($target_populations!=null){
 
             $target_populations_ids = Taxonomy::whereIn('taxonomy_recordid', $target_populations)->pluck('category_id')->toArray();
@@ -474,14 +358,13 @@ class ExploreController extends Controller
             // $locations = $locations->whereIn('location_recordid', $target_location_ids)->with('services','organization');
         }
 
-        $total_service_ids = array_merge($grand_service_ids, $parent_service_ids, $child_service_ids, $target_service_ids);
-        $total_location_ids = array_merge($grand_location_ids, $parent_location_ids, $child_location_ids, $target_location_ids);
-
+        $total_service_ids = array_merge($child_service_ids, $target_service_ids);
+        $total_location_ids = array_merge($child_location_ids, $target_location_ids);
         if($total_service_ids){
             $services = $services->whereIn('service_recordid',$total_service_ids);
             $locations = $locations->whereIn('location_recordid', $total_location_ids)->with('services','organization');
         }
-        
+
         // $services = $services->paginate(10);
 
         // $locations = $locations->get();
@@ -757,21 +640,21 @@ class ExploreController extends Controller
                 $term_count = $grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
                 if ($parent_count == $term_count) {
                     $child_data['parent_taxonomy'] = $taxonomy_parent_name;
-                    $child_taxonomies = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get(['taxonomy_name']);
+                    $child_taxonomies = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get(['taxonomy_name', 'taxonomy_id']);
                     $child_data['child_taxonomies'] = $child_taxonomies;
                     array_push($parent_taxonomy, $child_data);
                 } else {
                     foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_term) {
-                        $child_data['parent_taxonomy'] = $child_term->taxonomy_name;
+                        $child_data['parent_taxonomy'] = $child_term;
                         $child_data['child_taxonomies'] = "";
                         array_push($parent_taxonomy, $child_data);
                     }
                 }
-                foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_item) {
-                    $grand_service_ids = Servicetaxonomy::where('taxonomy_id', '=', $child_item->taxonomy_id)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
-                    $grandparent_service_count += count($grand_service_ids); 
-                }
             }
+            $taxonomy_ids = $grandparent->terms()->allRelatedIds();
+            $grand_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+            $grandparent_service_count = Service::whereIn('service_recordid',$grand_service_ids)->count();
+
             $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
             $taxonomy_data['service_count'] = $grandparent_service_count;
             array_push($taxonomy_tree, $taxonomy_data);

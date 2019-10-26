@@ -479,21 +479,21 @@ class ServiceController extends Controller
                 $term_count = $grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->count();
                 if ($parent_count == $term_count) {
                     $child_data['parent_taxonomy'] = $taxonomy_parent_name;
-                    $child_taxonomies = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get(['taxonomy_name']);
+                    $child_taxonomies = Taxonomy::where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get(['taxonomy_name', 'taxonomy_id']);
                     $child_data['child_taxonomies'] = $child_taxonomies;
                     array_push($parent_taxonomy, $child_data);
                 } else {
                     foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_term) {
-                        $child_data['parent_taxonomy'] = $child_term->taxonomy_name;
+                        $child_data['parent_taxonomy'] = $child_term;
                         $child_data['child_taxonomies'] = "";
                         array_push($parent_taxonomy, $child_data);
                     }
                 }
-                foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_item) {
-                    $grand_service_ids = Servicetaxonomy::where('taxonomy_id', '=', $child_item->taxonomy_id)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
-                    $grandparent_service_count += count($grand_service_ids); 
-                }
             }
+            $taxonomy_ids = $grandparent->terms()->allRelatedIds();
+            $grand_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $taxonomy_ids)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+            $grandparent_service_count = Service::whereIn('service_recordid',$grand_service_ids)->count();
+
             $taxonomy_data['parent_taxonomies'] = $parent_taxonomy;
             $taxonomy_data['service_count'] = $grandparent_service_count;
             array_push($taxonomy_tree, $taxonomy_data);
