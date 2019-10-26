@@ -104,9 +104,10 @@ Home
                                                     <div class="card-body">
                                                         <ul class="tree1">
                                                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                                                @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                 <li>
                                                                     <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
-                                                                    @if ($parent_taxonomy['child_taxonomies'] != "")
+                                                                    
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
@@ -114,8 +115,13 @@ Home
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
-                                                                    @endif
+                                                                    
                                                                 </li>
+                                                                @else
+                                                                <li>
+                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                </li>
+                                                                @endif
                                                             @endforeach
                                                         </ul>
                                                     </div>
@@ -137,9 +143,10 @@ Home
                                                     <div class="card-body">
                                                         <ul class="tree1">
                                                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                                                @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                 <li>
                                                                     <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
-                                                                    @if ($parent_taxonomy['child_taxonomies'] != "")
+                                                                    
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
@@ -147,8 +154,13 @@ Home
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
-                                                                    @endif
+                                                                    
                                                                 </li>
+                                                                @else
+                                                                <li>
+                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                </li>
+                                                                @endif
                                                             @endforeach
                                                         </ul>
                                                     </div>
