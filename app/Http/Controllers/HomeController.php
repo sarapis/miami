@@ -49,7 +49,7 @@ class HomeController extends Controller
                     array_push($parent_taxonomy, $child_data);
                 } else {
                     foreach($grandparent->terms()->where('taxonomy_parent_name', '=', $taxonomy_parent_name)->get() as $child_key => $child_term) {
-                        $child_data['parent_taxonomy'] = $child_terms;
+                        $child_data['parent_taxonomy'] = $child_term;
                         $child_data['child_taxonomies'] = "";
                         array_push($parent_taxonomy, $child_data);
                     }
