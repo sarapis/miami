@@ -236,7 +236,7 @@ $(document).ready(function(){
                     parent_data.state = {};
                     if (selected_taxonomies.indexOf(parent_data.id) > -1) {
                         parent_data.state.selected = true;
-                        parent_data.state.opened = true;
+                        // parent_data.state.opened = true;
                     }
                 }
                 var parent_tree_child_taxonomies = [];

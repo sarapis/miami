@@ -68,7 +68,7 @@ class HomeController extends Controller
         return view('frontEnd.home', compact('home', 'map', 'grandparent_taxonomies'))->with('taxonomy_tree', $taxonomy_tree);
     }
 
-    public function about($value='')
+    public function about($value ='')
     {
         $parent_taxonomy = [];
         $child_taxonomy = [];
