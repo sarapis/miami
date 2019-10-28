@@ -326,7 +326,13 @@ class ExploreController extends Controller
 
         
 
-        $selected_taxonomies = explode(',', $checked_taxonomies);
+        $assert_selected_taxonomies = explode(',', $checked_taxonomies);
+        
+        $selected_taxonomies = [];
+        for ($i=0; $i < count($assert_selected_taxonomies); $i++) { 
+            array_push($selected_taxonomies, explode('_child_', $assert_selected_taxonomies[$i])[1]);
+        }
+
         $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $selected_taxonomies)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
 
         $child_location_ids = Servicelocation::whereIn('service_recordid', $child_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();

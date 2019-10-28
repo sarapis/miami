@@ -81,7 +81,7 @@ body{
     padding: 10px;
 }
 
-#sidebar ul li a {
+#sidebar ul li a.text-side {
     padding: 10px;
     padding-left: 20px;
     font-size: 1.1em;
@@ -89,7 +89,7 @@ body{
     color: #fff;
     font-weight: 400;
 }
-#sidebar ul li a:hover {
+#sidebar ul li a.text-side:hover {
     color: #7386D5;
     background: #fff;
 }

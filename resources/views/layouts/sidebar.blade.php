@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.8/themes/default/style.min.css" />
 <style>
     .pac-logo:after{
       display: none;
@@ -92,21 +91,13 @@
             display: none;
         }
     }
-    #sidebar ul li a {
-        color: #000;
-    }
+
     .jstree-themeicon {
         display: none !important;
     }
-    .jstree-wholerow-clicked {
-        background: transparent !important;
-    }
-    #sidebar ul li a {
-        padding: 0px;
-    }
-
 
 </style>
+
 <nav id="sidebar">
     <ul class="list-unstyled components pt-0 mb-0 sidebar-menu"> 
         <li class="option-side">
@@ -192,10 +183,7 @@
 
 <script>
 $(document).ready(function(){
-    // var nodeids = ["NL-6000.2000-220", "NL-6000.2000-220_anchor"];
-    // var jstree = $('#sidebar_tree').jstree({
-    //     "plugins": ["checkbox", "wholerow"]
-    // }).select_node(nodeids);
+    
     var tree_data_list = [];
     
     var taxonomy_tree = <?php print_r(json_encode($taxonomy_tree)) ?>;
@@ -228,11 +216,11 @@ $(document).ready(function(){
             if (parent_tree.parent_taxonomy != undefined) {
                 if (typeof(parent_tree.parent_taxonomy) == "string") {
                     parent_data.text = parent_tree.parent_taxonomy;
-                    parent_data.id = alt_data.id + '_parent' + parent_key;
+                    parent_data.id = alt_data.id + '_parent_' + parent_key;
                 }
                 else {
                     parent_data.text = parent_tree.parent_taxonomy.taxonomy_name;
-                    parent_data.id = parent_tree.parent_taxonomy.taxonomy_id;
+                    parent_data.id = alt_data.id + '_child_' + parent_tree.parent_taxonomy.taxonomy_id;
                     parent_data.state = {};
                     if (selected_taxonomies.indexOf(parent_data.id) > -1) {
                         parent_data.state.selected = true;
@@ -250,7 +238,7 @@ $(document).ready(function(){
                     if (child_tree != undefined) {
                         child_data.text = child_tree.taxonomy_name;
                         child_data.state = {};
-                        child_data.id = child_tree.taxonomy_id;
+                        child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_id;
 
                         if (selected_taxonomies.indexOf(child_data.id) > -1) {
                             child_data.state.selected = true;
@@ -448,7 +436,7 @@ $(document).ready(function(){
     $('#sidebar_tree').on("select_node.jstree", function (e, data) {
         var all_selected_ids = $('#sidebar_tree').jstree("get_checked");
         var selected_taxonomy_ids = all_selected_ids.filter(function(id) {
-            return id.indexOf('alt_') == -1;
+            return id.indexOf('_child_') > -1;
         });
         selected_taxonomy_ids = selected_taxonomy_ids.toString();
         $("#selected_taxonomies").val(selected_taxonomy_ids);
