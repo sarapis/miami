@@ -327,6 +327,8 @@ class ExploreController extends Controller
         
 
         $assert_selected_taxonomies = explode(',', $checked_taxonomies);
+        // var_dump($checked_taxonomies);
+        // exit;
         
         $selected_taxonomies = [];
         for ($i=0; $i < count($assert_selected_taxonomies); $i++) { 
