@@ -105,8 +105,7 @@ ul#ui-id-1 {
                         <b>{{ session('address') }}</b>
                         </div>
                     @endif
-                    @if(count($services) != 0)
-
+                    @if(count($services) != 0)                        
                         @if(isset($sort) && $sort ="Organization Name")
                             @foreach($services->sortBy('organization_name') as $service)
                                 @if($service->service_name != null)
