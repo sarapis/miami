@@ -101,6 +101,9 @@
     .jstree-wholerow-clicked {
         background: transparent !important;
     }
+    #sidebar ul li a {
+        padding: 0px;
+    }
 
 
 </style>
