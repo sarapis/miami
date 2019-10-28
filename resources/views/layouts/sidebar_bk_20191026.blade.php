@@ -136,7 +136,45 @@
                 <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     <div id="sidebar_tree">
-                        
+                        @foreach($taxonomy_tree as $key => $grandparent_taxonomy)
+                        <ul class="tree2">
+                            @if(isset($grandparents) && in_array($grand_name, $grandparents))
+                                <li class="altbranch" data-jstree='{"opened":false,"selected":true}'>
+                            @else
+                                <li class="altbranch" id="{{'alt_'.$key}}">
+                            @endif
+
+                                @php $grand_name = $grandparent_taxonomy['alt_taxonomy_name']; @endphp
+                                @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
+                                {{$grand_name}} ({{$grand_parentscount}})
+                                    <ul class="tree2">
+                                        @foreach($grandparent_taxonomy['parent_taxonomies'] as $pkey => $parent_taxonomy)
+                                            
+                                            @if ($parent_taxonomy['child_taxonomies'] == "")
+                                            <li class="altbranch" id="{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">
+                                                @php $parent_name = $parent_taxonomy['parent_taxonomy']->taxonomy_name; @endphp
+                                                {{$parent_name}}
+                                            </li>
+                                            @else
+                                            <li class="altbranch" id="{{'alt_'.$key.'parent_'.$pkey}}">
+                                                @php $parent_name = $parent_taxonomy['parent_taxonomy']; @endphp
+                                                {{$parent_name}}
+                                                @if ($parent_taxonomy['child_taxonomies'] != "")
+                                                    <ul class="child-ul" >
+                                                        @foreach($parent_taxonomy['child_taxonomies'] as $child)
+                                                            <li class="nobranch" id="{{$child->taxonomy_id}}" >
+                                                                {{$child->taxonomy_name}}
+                                                            </li>
+                                                        @endforeach 
+                                                    </ul>
+                                                @endif
+                                            </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </li>
+                        </ul>
+                        @endforeach
                     </div>
                 </ul>
             </li>
@@ -189,161 +227,10 @@
 
 <script>
 $(document).ready(function(){
-    // var nodeids = ["NL-6000.2000-220", "NL-6000.2000-220_anchor"];
-    // var jstree = $('#sidebar_tree').jstree({
-    //     "plugins": ["checkbox", "wholerow"]
-    // }).select_node(nodeids);
-    var tree_data_list = [];
-    
-    var taxonomy_tree = <?php print_r(json_encode($taxonomy_tree)) ?>;
-    var alt_key;
-    var urlParams = new URLSearchParams(window.location.search);
-    var selected_taxonomies = [];
-    if(urlParams.has('selected_taxonomies')) {
-        selected_taxonomies = urlParams.get('selected_taxonomies').split(',');
-    }
-
-    console.log(selected_taxonomies);
-
-    for (alt_key = 0; alt_key < taxonomy_tree.length; alt_key++) {
-        var alt_data = {};
-        var alt_tree = taxonomy_tree[alt_key];
-        alt_data.text = alt_tree.alt_taxonomy_name + ' (' + alt_tree.service_count + ')';
-        alt_data.state = {};
-        // alt_data.state.opened = true;
-        alt_data.id = 'alt_' + alt_key;
-        var alt_tree_parent_taxonomies = [];
-        if (alt_tree.parent_taxonomies != undefined) {
-            alt_tree_parent_taxonomies = alt_tree.parent_taxonomies;
-        }
-
-        var parent_data_list = [];
-        for (parent_key = 0; parent_key < alt_tree_parent_taxonomies.length; parent_key++) {
-            var parent_tree = alt_tree_parent_taxonomies[parent_key];
-            var parent_data = {};
-            
-            if (parent_tree.parent_taxonomy != undefined) {
-                if (typeof(parent_tree.parent_taxonomy) == "string") {
-                    parent_data.text = parent_tree.parent_taxonomy;
-                    parent_data.id = alt_data.id + '_parent' + parent_key;
-                }
-                else {
-                    parent_data.text = parent_tree.parent_taxonomy.taxonomy_name;
-                    parent_data.id = parent_tree.parent_taxonomy.taxonomy_id;
-                    parent_data.state = {};
-                    if (selected_taxonomies.indexOf(parent_data.id) > -1) {
-                        parent_data.state.selected = true;
-                        parent_data.state.opened = true;
-                    }
-                }
-                var parent_tree_child_taxonomies = [];
-                if (parent_tree.child_taxonomies != undefined) {
-                    parent_tree_child_taxonomies = parent_tree.child_taxonomies;
-                }
-                var child_data_list = [];
-                for (child_key = 0; child_key < parent_tree_child_taxonomies.length; child_key++) {
-                    var child_tree = parent_tree_child_taxonomies[child_key];
-                    var child_data = {};
-                    if (child_tree != undefined) {
-                        child_data.text = child_tree.taxonomy_name;
-                        child_data.state = {};
-                        child_data.id = child_tree.taxonomy_id;
-
-                        if (selected_taxonomies.indexOf(child_data.id) > -1) {
-                            child_data.state.selected = true;
-                        }
-                        child_data_list.push(child_data);
-                    }
-                }
-                if (child_data_list.length != 0) {
-                    parent_data.children = child_data_list;
-                }
-                parent_data_list.push(parent_data);
-            }
-        }   
-        if (parent_data_list.length != 0) {
-            alt_data.children = parent_data_list;
-        }
-        tree_data_list[alt_key] = alt_data;
-    }
-
-     $('#sidebar_tree').jstree({
-        'plugins': ["checkbox", "wholerow"],
-        'core': {
-            select_node: 'sidebar_taxonomy_tree',
-            data: tree_data_list
-        }
-    });
-
-    // $('#sidebar_tree').jstree({
-    //     'plugins': ["checkbox", "wholerow"],
-    //     'core': {
-    //         select_node: 'sidebar_taxonomy_tree',
-    //         data: [
-    //             {
-    //                 text: 'Alt1',
-    //                 state: {
-    //                     opened: true, //'opened' takes effect after refresh
-    //                 },
-    //                 children: [
-    //                     {
-    //                         text: 'parent1',
-    //                         id: 'alt_1',
-    //                         state: {
-    //                           selected: true, 
-    //                         }
-    //                     }, 
-    //                     {
-    //                         text: 'parent2',
-    //                         id: 'parent2',
-    //                         state: {
-    //                           selected: true ,
-    //                           opened: true,
-    //                         },
-    //                         children : [
-    //                             {
-    //                                 text: 'child1',
-    //                                 id: 'child1',
-    //                                 state: {
-    //                                   selected: true, 
-    //                                 }
-    //                             }, 
-    //                             {
-    //                                 text: 'child2',
-    //                                 id: 'child2',
-    //                                 state: {
-    //                                   selected: true 
-    //                                 }
-    //                             }
-    //                         ]
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 text: 'Alt2',
-    //                 state: {
-    //                     opened: true, //'opened' takes effect after refresh
-    //                 },
-    //                 children: [
-    //                     {
-    //                         text: 'parent1',
-    //                         id: 'alt_1',
-    //                         state: {
-    //                           selected: true, 
-    //                         }
-    //                     }, 
-    //                     {
-    //                         text: 'parent2',
-    //                         id: 'alt_2',
-    //                         state: {
-    //                           selected: true 
-    //                         }
-    //                     }
-    //                 ]
-    //             },
-    //         ]
-    //     }
-    // });
+    var nodeids = ["NL-6000.2000-220", "NL-6000.2000-220_anchor"];
+    var jstree = $('#sidebar_tree').jstree({
+        "plugins": ["checkbox", "wholerow"]
+    }).select_node(nodeids);
 
 
 
@@ -449,7 +336,7 @@ $(document).ready(function(){
         });
         selected_taxonomy_ids = selected_taxonomy_ids.toString();
         $("#selected_taxonomies").val(selected_taxonomy_ids);
-        $("#filter").submit();
+        // $("#filter").submit();
     });
     
 });

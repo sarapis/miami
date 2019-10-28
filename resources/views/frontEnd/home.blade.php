@@ -86,6 +86,7 @@ Home
                     <div class="col-lg-2 col-md-2"></div>
                     <div class="col-lg-8 col-md-8 col-sm-12 col-12">
                         <div id="accordion">
+                            <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
                             <div class="row">
                             @php
                                 $c = 0;
@@ -98,7 +99,7 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}   ({{$grand_parentscount}})</a>
+                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}}  ({{$grand_parentscount}})</a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
@@ -106,12 +107,12 @@ Home
                                                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                                                 @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                 <li>
-                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
+                                                                    <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
                                                                     
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
-                                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child_taxonomy->taxonomy_name)}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a class="child_node" href="javascript:void(0);"  value="{{$child_taxonomy->taxonomy_id}}">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -119,7 +120,7 @@ Home
                                                                 </li>
                                                                 @else
                                                                 <li>
-                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    <a class="child_node" href="javascript:void(0);" value="{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
                                                                 </li>
                                                                 @endif
                                                             @endforeach
@@ -137,7 +138,7 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="card-link taxonomy-link" at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}">{{$grandparent_taxonomy['alt_taxonomy_name']}}  ({{$grand_parentscount}})</a>
+                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}}  ({{$grand_parentscount}})</a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
@@ -145,12 +146,12 @@ Home
                                                             @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
                                                                 @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                 <li>
-                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']}}</a>
+                                                                    <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
                                                                     
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
                                                                                 <li>
-                                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $child_taxonomy->taxonomy_name)}}" class="home-category">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a class="child_node" href="javascript:void(0);"  value="{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -158,7 +159,7 @@ Home
                                                                 </li>
                                                                 @else
                                                                 <li>
-                                                                    <a at="{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $grandparent_taxonomy['alt_taxonomy_name'])}}_{{str_replace(array(' ', '/', '(', ')'), array('_', 'AAA', 'BBB', 'CCC'), $parent_taxonomy['parent_taxonomy'])}}" class="home-category">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    <a class="child_node" href="javascript:void(0);" value="{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
                                                                 </li>
                                                                 @endif
                                                             @endforeach
@@ -259,28 +260,44 @@ Home
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 $(document).ready(function(){
-    $('.home-category').on('click', function(e){
-        var id = $(this).attr('at');
-        console.log(id);
-        var cate_id = $('.card-link.taxonomy-link', $(this).closest('.card')).attr('at');
-        console.log(cate_id);
-        $("#category_" +  id).prop( "checked", true );
-        $("#checked_" +  id).prop( "checked", true );
+    $('.grand_taxonomy').on('click', function(e){
+        var childs = $('.child_node', $(this).parent().parent());
+        console.log(childs.length);
+        var selected_taxonomy_ids = [];
+        for (var i = 0; i < childs.length; i ++) {
+            selected_taxonomy_ids.push(childs.eq(i).attr('value'));
+        }
+        $('#selected_taxonomies').val(selected_taxonomy_ids.toString());
         $("#filter").submit();
     });
-    $('.card-link.taxonomy-link').on('click', function(e){
-        console.log($(this).attr('at'));
-        var id = $(this).attr('at').replace('/', 'AAA').replace('(', 'BBB').replace(')', 'CCC');
-        console.log(id);        
+    $('.parent_taxonomy').on('click', function(e){
+        var childs = $('.child_node', $(this).parent().parent());
+        console.log(childs.length);
+        var selected_taxonomy_ids = [];
+        for (var i = 0; i < childs.length; i ++) {
+            selected_taxonomy_ids.push(childs.eq(i).attr('value'));
+        }
+        $('#selected_taxonomies').val(selected_taxonomy_ids.toString());
+        $("#filter").submit();
+    });
+    $('.child_node').on('click', function(e){
+        selected_taxonomy_ids = $(this).attr('value');
+        $('#selected_taxonomies').val(selected_taxonomy_ids);
+        $("#filter").submit();
+    });
+    // $('.card-link.taxonomy-link').on('click', function(e){
+    //     console.log($(this).attr('at'));
+    //     var id = $(this).attr('at').replace('/', 'AAA').replace('(', 'BBB').replace(')', 'CCC');
+    //     console.log(id);        
 
-        $("#category_" +  id).prop( "checked", true );
-        $("#filter").submit();
-    });
-    $('.child-link').on('click', function(e){
-        var id = $(this).attr('at');
-        $('#category_'+id).prop('checked', true);
-        $("#filter").submit();
-    });
+    //     $("#category_" +  id).prop( "checked", true );
+    //     $("#filter").submit();
+    // });
+    // $('.child-link').on('click', function(e){
+    //     var id = $(this).attr('at');
+    //     $('#category_'+id).prop('checked', true);
+    //     $("#filter").submit();
+    // });
     // $('.branch').each(function(){
     //     if($('ul li', $(this)).length == 0)
     //         $(this).hide();
