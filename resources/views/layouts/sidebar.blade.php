@@ -201,7 +201,6 @@ $(document).ready(function(){
         var alt_tree = taxonomy_tree[alt_key];
         alt_data.text = alt_tree.alt_taxonomy_name + ' (' + alt_tree.service_count + ')';
         alt_data.state = {};
-        // alt_data.state.opened = true;
         alt_data.id = 'alt_' + alt_key;
         var alt_tree_parent_taxonomies = [];
         if (alt_tree.parent_taxonomies != undefined) {
@@ -224,7 +223,6 @@ $(document).ready(function(){
                     parent_data.state = {};
                     if (selected_taxonomies.indexOf(parent_data.id) > -1) {
                         parent_data.state.selected = true;
-                        // parent_data.state.opened = true;
                     }
                 }
                 var parent_tree_child_taxonomies = [];
@@ -266,77 +264,7 @@ $(document).ready(function(){
         }
     });
 
-    // $('#sidebar_tree').jstree({
-    //     'plugins': ["checkbox", "wholerow"],
-    //     'core': {
-    //         select_node: 'sidebar_taxonomy_tree',
-    //         data: [
-    //             {
-    //                 text: 'Alt1',
-    //                 state: {
-    //                     opened: true, //'opened' takes effect after refresh
-    //                 },
-    //                 children: [
-    //                     {
-    //                         text: 'parent1',
-    //                         id: 'alt_1',
-    //                         state: {
-    //                           selected: true, 
-    //                         }
-    //                     }, 
-    //                     {
-    //                         text: 'parent2',
-    //                         id: 'parent2',
-    //                         state: {
-    //                           selected: true ,
-    //                           opened: true,
-    //                         },
-    //                         children : [
-    //                             {
-    //                                 text: 'child1',
-    //                                 id: 'child1',
-    //                                 state: {
-    //                                   selected: true, 
-    //                                 }
-    //                             }, 
-    //                             {
-    //                                 text: 'child2',
-    //                                 id: 'child2',
-    //                                 state: {
-    //                                   selected: true 
-    //                                 }
-    //                             }
-    //                         ]
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 text: 'Alt2',
-    //                 state: {
-    //                     opened: true, //'opened' takes effect after refresh
-    //                 },
-    //                 children: [
-    //                     {
-    //                         text: 'parent1',
-    //                         id: 'alt_1',
-    //                         state: {
-    //                           selected: true, 
-    //                         }
-    //                     }, 
-    //                     {
-    //                         text: 'parent2',
-    //                         id: 'alt_2',
-    //                         state: {
-    //                           selected: true 
-    //                         }
-    //                     }
-    //                 ]
-    //             },
-    //         ]
-    //     }
-    // });
-
-
+    
 
     $('.regular-checkbox').on('click', function(e){
         $(this).prev().trigger('click');
@@ -365,41 +293,7 @@ $(document).ready(function(){
 
         $("#filter").submit();
     });
-
-    // $('.regular-checkbox').each(function(){
-    //     if($(this).prop('checked') && $('li', $(this).next().next()).length != 0){
-            
-    //         if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
-    //             $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
-    //         if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(0).prop('checked'))
-    //             $('.regular-checkbox', $(this).parent().parent().parent()).eq(0).addClass('minus-checkbox');
-    //     }
-    //     if($(this).prop('checked') && $(this).parent().hasClass('nobranch') ){
-            
-    //         if($('.indicator', $(this).parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
-    //             $('.indicator', $(this).parent().parent().parent()).eq(0).trigger('click');
-    //         if($('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).hasClass('glyphicon-triangle-right'))
-    //             $('.indicator', $(this).parent().parent().parent().parent().parent().parent()).eq(0).trigger('click');
-    //         if(!$('.regular-checkbox', $(this).parent().parent().parent()).eq(1).prop('checked'))
-    //             $('.regular-checkbox', $(this).parent().parent().parent()).eq(1).addClass('minus-checkbox');
-    //         if(!$('.regular-checkbox', $(this).parent().parent().parent().parent().parent().parent()).eq(1).prop('checked'))
-    //             $('.regular-checkbox', $(this).parent().parent().parent().parent().parent().parent()).eq(0).addClass('minus-checkbox');
-    //     }
-    // });
-    // $('.branch').each(function(){
-    //         if($('ul li', $(this)).length == 0)
-    //             $(this).hide();
-    //     }); 
-    // if($('input[checked]', $('#projectcategory')).length > 0){
-    //     $('#projectcategory').prev().trigger('click');
-    // }
-    // $('.indicator').click(function(){
-    //     $('.branch').each(function(){
-    //         if($('ul li', $(this)).length == 0)
-    //             $(this).hide();
-    //     });    
-    // });
-
+  
     function matchCustom(params, data) {
     // If there are no search terms, return all of the data
         if ($.trim(params.term) === '') {
