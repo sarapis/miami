@@ -207,14 +207,35 @@ ul#ui-id-1 {
                                 @endphp
                                 @if($service->taxonomy->sortBy('taxonomy_name') != null)
                                     @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                        @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                            @if($taxonomy->taxonomy_grandparent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                @endphp
+                                            @endif
+                                        @endif
+                                        @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                            @if($taxonomy->taxonomy_parent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}} panel-link target-population-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                @elseif($taxonomy->taxonomy_grandparent_name)
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                @endif
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_parent_name;
+                                                @endphp
+                                            @endif
+                                        @endif
                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                             @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
                                                 @php
                                                 $names[] = $taxonomy->taxonomy_name;
                                                 @endphp
                                             @endif
                                         @endif                                                    
+                                       
                                     @endforeach
                                 @endif
                             @endif
@@ -339,6 +360,7 @@ $(document).ready(function(){
           zoom: zoom
         });
 
+
         
           $.each( locations, function(index, value ){
               mymap.addMarker({
@@ -361,10 +383,8 @@ $(document).ready(function(){
             return;
         var id = $(this).attr('at');
         console.log(id);
-        // $("#category_" +  id).prop( "checked", true );
-        // $("#checked_" +  id).prop( "checked", true );
-        selected_taxonomy_ids = id.toString();
-        $("#selected_taxonomies").val(selected_taxonomy_ids);
+        $("#category_" +  id).prop( "checked", true );
+        $("#checked_" +  id).prop( "checked", true );
         $("#filter").submit();
     });
     
