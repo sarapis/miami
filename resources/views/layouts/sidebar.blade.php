@@ -327,7 +327,7 @@ $(document).ready(function(){
         });
     });
 
-    $('#sidebar_tree').on("select_node.jstree", function (e, data) {
+    $('#sidebar_tree').on("select_node.jstree deselect_node.jstree", function (e, data) {
         var all_selected_ids = $('#sidebar_tree').jstree("get_checked");
         var selected_taxonomy_ids = all_selected_ids.filter(function(id) {
             return id.indexOf('_child_') > -1;
@@ -336,7 +336,7 @@ $(document).ready(function(){
         $("#selected_taxonomies").val(selected_taxonomy_ids);
         $("#filter").submit();
     });
-    
+
 });
 </script>
 <style>
