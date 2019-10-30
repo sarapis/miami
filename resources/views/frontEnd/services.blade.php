@@ -268,7 +268,7 @@ ul#ui-id-1 {
                                                         @endif
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
                                                                 @php
                                                                 $names[] = $taxonomy->taxonomy_name;
                                                                 @endphp
@@ -385,8 +385,8 @@ ul#ui-id-1 {
                 return;
             var id = $(this).attr('at');
             console.log(id);
-            $("#category_" +  id).prop( "checked", true );
-            $("#checked_" +  id).prop( "checked", true );
+            selected_taxonomy_ids = id.toString();
+            $("#selected_taxonomies").val(selected_taxonomy_ids);
             $("#filter").submit();
         });
         

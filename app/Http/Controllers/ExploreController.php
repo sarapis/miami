@@ -267,24 +267,25 @@ class ExploreController extends Controller
             $sort_by_distance_clickable = true;
         }   
         
-      
         if($chip_service != null && isset($serviceids))
         {
             $service_ids = Service::whereIn('service_recordid', $serviceids)->orWhereIn('service_recordid', $organization_serviceids)->orWhereIn('service_recordid', $taxonomy_serviceids)->pluck('service_recordid');
 
-            //$services = Service::whereIn('service_recordid', $serviceids)->whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
+            $services = Service::whereIn('service_recordid', $serviceids)->whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
 
             $locations = Location::with('services','organization')->whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
         }
-        else{
-            //$services = Service::WhereIn('service_recordid', $location_serviceids)->orderBy('service_name');
+        else {
+            if (isset($services))
+                $services = $services->whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
+            else 
+                $services = Service::whereIn('service_recordid', $location_serviceids)->orderBy('service_name');
             $locations = Location::with('services','organization')->whereIn('location_recordid', $service_locationids)->whereIn('location_recordid', $location_locationids);
         }
         if($chip_service == null && $chip_address == null){
-            //$services = Service::orderBy('service_name');
+            $services = Service::orderBy('service_name');
             $locations = Location::with('services','organization');
         }
-
 
         // var_dump($sort);
         // exit();
@@ -330,13 +331,18 @@ class ExploreController extends Controller
         $selected_taxonomies = [];
         if ($checked_taxonomies != NULL) {
             $assert_selected_taxonomies = explode(',', $checked_taxonomies);        
-            for ($i=0; $i < count($assert_selected_taxonomies); $i++) { 
-                array_push($selected_taxonomies, explode('_child_', $assert_selected_taxonomies[$i])[1]);
+            for ($i=0; $i < count($assert_selected_taxonomies); $i++) {
+                $assert_selected_taxonomy = explode('_child_', $assert_selected_taxonomies[$i]);
+                if (count($assert_selected_taxonomy) > 1)
+                    array_push($selected_taxonomies, $assert_selected_taxonomy[1]);
+                else {
+                    array_push($selected_taxonomies, $assert_selected_taxonomy[0]);
+                }
             }
         }
 
         $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $selected_taxonomies)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
-
+        
         $child_location_ids = Servicelocation::whereIn('service_recordid', $child_service_ids)->groupBy('location_recordid')->pluck('location_recordid')->toArray();
         $target_service_ids = [];
         $target_location_ids = [];
@@ -368,11 +374,15 @@ class ExploreController extends Controller
 
         $total_service_ids = array_merge($child_service_ids, $target_service_ids);
         $total_location_ids = array_merge($child_location_ids, $target_location_ids);
+        // var_dump($total_service_ids);
+        
         if($total_service_ids){
-            $services = $services->whereIn('service_recordid',$total_service_ids);
+            // var_dump($services->count());
+            $services = $services->whereIn('service_recordid', $total_service_ids);
+            // var_dump($services->count());
             $locations = $locations->whereIn('location_recordid', $total_location_ids)->with('services','organization');
         }
-
+        // exit;
         // $services = $services->paginate(10);
 
         // $locations = $locations->get();
