@@ -53,8 +53,8 @@ body{
   touch-action: none;
 }
 #sidebar {
-    min-width: 270px;
-    max-width: 270px;
+    min-width: 450px;
+    max-width: 450px;
     background: #f3f3f3;
     color: #424242;
     z-index: 2;
