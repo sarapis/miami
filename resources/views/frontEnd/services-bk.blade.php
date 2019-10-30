@@ -246,7 +246,26 @@ ul#ui-id-1 {
                                                         $names = [];
                                                     @endphp
                                                     @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                                        
+                                                        @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                                            @if($taxonomy->taxonomy_grandparent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif
+                                                        @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                                            @if($taxonomy->taxonomy_parent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                                @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                                                                <a class="{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}} panel-link target-population-link">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @elseif($taxonomy->taxonomy_grandparent_name)
+                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                                @endif
+                                                                @php
+                                                                $names[] = $taxonomy->taxonomy_parent_name;
+                                                                @endphp
+                                                            @endif
+                                                        @endif
                                                         @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
                                                                 <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
