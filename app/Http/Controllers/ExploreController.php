@@ -228,13 +228,15 @@ class ExploreController extends Controller
 
         if($source_data->active == 1){
             
-            $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
-                    $q->where('organization_name', 'like', '%'.$chip_service.'%');
-                })->orwhereHas('taxonomy', function ($q)  use($chip_service){
-                    $q->where('taxonomy_name', 'like', '%'.$chip_service.'%');
-                })->orwhereHas('details', function ($q)  use($chip_service){
-                    $q->where('detail_value', 'like', '%'.$chip_service.'%');
-                })->select('services.*');            
+            // $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->orwhereHas('organizations', function ($q)  use($chip_service){
+            //         $q->where('organization_name', 'like', '%'.$chip_service.'%');
+            //     })->orwhereHas('taxonomy', function ($q)  use($chip_service){
+            //         $q->where('taxonomy_name', 'like', '%'.$chip_service.'%');
+            //     })->orwhereHas('details', function ($q)  use($chip_service){
+            //         $q->where('detail_value', 'like', '%'.$chip_service.'%');
+            //     })->select('services.*');  
+
+            $services= Service::with(['organizations', 'taxonomy', 'details'])->where('service_name', 'like', '%'.$chip_service.'%')->orwhere('service_description', 'like', '%'.$chip_service.'%')->orwhere('service_airs_taxonomy_x', 'like', '%'.$chip_service.'%')->select('services.*');          
         }
         else{
             
