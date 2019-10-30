@@ -82,20 +82,16 @@ ul#ui-id-1 {
                             </h4>
                             @endif
                         @endif
+                        
+                        <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4>
 
-                        @if(isset($service->phone()->first()->phone_extension)) 
-                        <h4 style="line-height: inherit;">
-                            <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
-                            @foreach($service->phone as $phone) {!! $phone->phone_extension !!} @endforeach 
-                            </span> 
-                        </h4>
-                        @endif 
                         <h4 style="line-height: inherit;">
                             <span>  
                             <i class="icon md-globe font-size-24 vertical-align-top  mr-5 pr-10"></i>
                                  @if($service->service_url!=NULL)<a href="{!! $service->service_url !!}">{!! $service->service_url !!}</a> @endif
                             </span>        
                         </h4>
+
 
                         @if($service->service_email!=NULL) 
                         <h4 style="line-height: inherit;">
