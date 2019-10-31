@@ -143,15 +143,15 @@ Home
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
                                                         <ul class="tree1">
-                                                            @foreach($grandparent_taxonomy['parent_taxonomies'] as $parent_taxonomy)
+                                                            @foreach($grandparent_taxonomy['parent_taxonomies'] as $key3 => $parent_taxonomy)
                                                                 @if ($parent_taxonomy['child_taxonomies'] != "")
                                                                 <li>
                                                                     <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
                                                                     
                                                                         <ul>
-                                                                            @foreach($parent_taxonomy['child_taxonomies'] as $child_taxonomy)
+                                                                            @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
                                                                                 <li>
-                                                                                    <a class="child_node" href="javascript:void(0);"  value="{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_id}}">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -159,7 +159,7 @@ Home
                                                                 </li>
                                                                 @else
                                                                 <li>
-                                                                    <a class="child_node" href="javascript:void(0);" value="{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
                                                                 </li>
                                                                 @endif
                                                             @endforeach
