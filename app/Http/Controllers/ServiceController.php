@@ -397,7 +397,8 @@ class ServiceController extends Controller
 
     public function services()
     {
-        $services = Service::with('locations')->orderBy('service_name');  
+        $services = Service::with('locations')->orderBy('service_name'); 
+
 
         $locations = Location::with('services','organization');
         $sort_by_distance_clickable = false;
@@ -445,9 +446,16 @@ class ServiceController extends Controller
 
                 }
             }
-            // $services = $services->whereIn('service_recordid', $taxonomy_serviceids);
-            $services = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids);
-          
+
+            // $services = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids);
+
+            if ($address_serviceids) {
+                $services = $services->whereIn('service_recordid', $address_serviceids);
+            }
+            if ($taxonomy_serviceids) {
+                $services = $services->whereIn('service_recordid', $taxonomy_serviceids);
+            }
+
             $services_ids = $services->pluck('service_recordid')->toArray();
             $locations_ids = Servicelocation::whereIn('service_recordid', $services_ids)->pluck('location_recordid')->toArray();
             $locations = $locations->whereIn('location_recordid', $locations_ids);
