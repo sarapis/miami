@@ -63,8 +63,16 @@ body{
 
 }
 
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+    }
+}
+
 #sidebar.active {
-    margin-left: -270px;
+    margin-left: -450px;
 }
 
 #sidebar .sidebar-header {
