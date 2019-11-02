@@ -104,10 +104,15 @@ class AltTaxonomyController extends Controller
     }
 
     public function get_all_terms() {
-        $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name', 'category_id')->get();
+        // $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name', 'category_id')->get();
+        $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name')->whereNotNull('taxonomy_parent_name')->get();
         $result = [];
+        $term_info = [];
         foreach ($all_terms as $term) {
-            array_push($result, collect($term)->flatten()->all());
+            $term_info[0] = $term->taxonomy_recordid;
+            $term_info[1] = $term->taxonomy_name;
+            $term_info[2] = $term->parent['taxonomy_name'];
+            array_push($result, $term_info);
         }
         return response()->json(array('data'=>$result));
     }
@@ -116,11 +121,12 @@ class AltTaxonomyController extends Controller
         $checked_terms_list = $request->input("checked_terms");
         $checked_terms_list = explode(',', $checked_terms_list);
         $checked_taxonomy_id_list = [];
+
         foreach ($checked_terms_list as $key => $value) {
             $taxonomy = Taxonomy::where('taxonomy_recordid', '=', intval($value))->first();
-            array_push($checked_taxonomy_id_list, $taxonomy->category_id);
+            array_push($checked_taxonomy_id_list, $taxonomy->taxonomy_id);
         }
-
+        
         $id = $request->input("alt_taxonomy_id");
 
         $alt_taxonomy = Alt_taxonomy::find($id);

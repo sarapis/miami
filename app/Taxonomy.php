@@ -27,7 +27,7 @@ class Taxonomy extends Model
 
     public function parent()
     {
-        return $this->belongsTo('App\Taxonomy', 'taxonomy_parent_name', 'taxonomy_name');
+        return $this->belongsTo('App\Taxonomy', 'taxonomy_parent_name', 'taxonomy_recordid');
     }
 
     public function service()

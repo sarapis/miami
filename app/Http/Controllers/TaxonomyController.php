@@ -45,6 +45,7 @@ class TaxonomyController extends Controller
                 $strtointclass = new Stringtoint();
 
                 $taxonomy->taxonomy_recordid = $strtointclass->string_to_int($record[ 'id' ]);
+                $taxonomy->taxonomy_id = $record[ 'id' ];
                  // $taxonomy->taxonomy_recordid = $record[ 'id' ];
                 $taxonomy->taxonomy_name = isset($record['fields']['name'])?$record['fields']['name']:null;
                 $taxonomy->taxonomy_parent_name = isset($record['fields']['parent_name'])? implode(",", $record['fields']['parent_name']):null;
