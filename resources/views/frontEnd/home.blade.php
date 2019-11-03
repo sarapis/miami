@@ -112,7 +112,7 @@ Home
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
                                                                                 <li>
-                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_id}}">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -120,7 +120,7 @@ Home
                                                                 </li>
                                                                 @else
                                                                 <li>
-                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_recordid}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
                                                                 </li>
                                                                 @endif
                                                             @endforeach
@@ -151,7 +151,7 @@ Home
                                                                         <ul>
                                                                             @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
                                                                                 <li>
-                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_id}}">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         </ul>
@@ -159,7 +159,7 @@ Home
                                                                 </li>
                                                                 @else
                                                                 <li>
-                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_id}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_recordid}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
                                                                 </li>
                                                                 @endif
                                                             @endforeach
