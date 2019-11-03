@@ -105,7 +105,7 @@ class AltTaxonomyController extends Controller
 
     public function get_all_terms() {
         // $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name', 'category_id')->get();
-        $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name')->whereNotNull('taxonomy_parent_name')->get();
+        $all_terms =  Taxonomy::select('taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name')->whereNull('taxonomy_parent_name')->whereNotNull('taxonomy_services')->get();
         $result = [];
         $term_info = [];
         foreach ($all_terms as $term) {
@@ -126,7 +126,7 @@ class AltTaxonomyController extends Controller
             $taxonomy = Taxonomy::where('taxonomy_recordid', '=', intval($value))->first();
             array_push($checked_taxonomy_id_list, $taxonomy->taxonomy_id);
         }
-        
+
         $id = $request->input("alt_taxonomy_id");
 
         $alt_taxonomy = Alt_taxonomy::find($id);

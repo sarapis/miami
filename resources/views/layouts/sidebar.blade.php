@@ -219,7 +219,7 @@ $(document).ready(function(){
                 }
                 else {
                     parent_data.text = parent_tree.parent_taxonomy.taxonomy_name;
-                    parent_data.id = alt_data.id + '_child_' + parent_tree.parent_taxonomy.taxonomy_id;
+                    parent_data.id = alt_data.id + '_child_' + parent_tree.parent_taxonomy.taxonomy_recordid;
                     parent_data.state = {};
                     if (selected_taxonomies.indexOf(parent_data.id) > -1) {
                         parent_data.state.selected = true;
@@ -236,7 +236,7 @@ $(document).ready(function(){
                     if (child_tree != undefined) {
                         child_data.text = child_tree.taxonomy_name;
                         child_data.state = {};
-                        child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_id;
+                        child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_recordid;
 
                         if (selected_taxonomies.indexOf(child_data.id) > -1) {
                             child_data.state.selected = true;
