@@ -99,7 +99,7 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}}  ({{$grand_parentscount}})</a>
+                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}} </a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
@@ -138,7 +138,7 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}}  ({{$grand_parentscount}})</a>
+                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}} </a>
                                                 </div>
                                                 <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
                                                     <div class="card-body">
