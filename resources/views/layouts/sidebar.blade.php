@@ -199,7 +199,7 @@ $(document).ready(function(){
     for (alt_key = 0; alt_key < taxonomy_tree.length; alt_key++) {
         var alt_data = {};
         var alt_tree = taxonomy_tree[alt_key];
-        alt_data.text = alt_tree.alt_taxonomy_name + ' (' + alt_tree.service_count + ')';
+        alt_data.text = alt_tree.alt_taxonomy_name;
         alt_data.state = {};
         alt_data.id = 'alt_' + alt_key;
         var alt_tree_parent_taxonomies = [];
