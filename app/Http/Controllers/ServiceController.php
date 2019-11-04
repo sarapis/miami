@@ -401,6 +401,7 @@ class ServiceController extends Controller
 
 
         $locations = Location::with('services','organization');
+        
         $sort_by_distance_clickable = false;
         $map = Map::find(1);
         $parent_taxonomy = [];
