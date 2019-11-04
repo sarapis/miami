@@ -246,7 +246,7 @@ ul#ui-id-1 {
                                                         $names = [];
                                                     @endphp
                                                     @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                                            {{$taxonomy->taxonomy_name}}
+                                                            
                                                             @if(!in_array($taxonomy->taxonomy_name, $names))
                                                             @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
                                                                 <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
