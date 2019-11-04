@@ -172,49 +172,26 @@ ul#ui-id-1 {
                             @endforeach  
                         </h4>
                         @endif
-                        <h4 class="py-10" style="line-height: inherit;"><span class="pl-0 category_badge"><b>Types of People:</b>
-                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                @php 
-                                    $names = [];
-                                @endphp
-
-                                @if($service->taxonomy->sortBy('taxonomy_name') != null)
-                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                        
-                                        @if($taxonomy->taxonomy_parent_name == 'Target Populations')
+                        <h4 class="py-10" style="line-height: inherit;">
+                            <span class="pl-0 category_badge"><b>Types of Services:</b>
+                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                    @php 
+                                        $names = [];
+                                    @endphp
+                                    @if($service->taxonomy->sortBy('taxonomy_name') != null)
+                                        @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
                                             @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                @if($taxonomy->taxonomy_name)
-                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
                                                     @php
                                                     $names[] = $taxonomy->taxonomy_name;
                                                     @endphp
                                                 @endif
                                             @endif                                                    
-                                        @endif
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 @endif
-                            @endif
-                        </span> 
-                        <br>
-                        <span class="pl-0 category_badge"><b>Types of Services:</b>
-                            @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                @php 
-                                    $names = [];
-                                @endphp
-                                @if($service->taxonomy->sortBy('taxonomy_name') != null)
-                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                        @if(!in_array($taxonomy->taxonomy_name, $names))
-                                            @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
-                                                @php
-                                                $names[] = $taxonomy->taxonomy_name;
-                                                @endphp
-                                            @endif
-                                        @endif                                                    
-                                    @endforeach
-                                @endif
-                            @endif
-                        </span> 
+                            </span> 
                         </h4>
                     </div>
                 </div>
