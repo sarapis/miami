@@ -20,6 +20,7 @@ use App\Airtables;
 use App\CSV_Source;
 use App\Source_data;
 use App\Taxonomy;
+use App\Detail;
 use App\Map;
 use App\Layout;
 use App\Metafilter;
@@ -544,6 +545,21 @@ class ServiceController extends Controller
             array_push($service_taxonomy_info_list, $service_taxonomy_info);
         }
 
+        $service_details_recordid_list = explode(',', $service->service_details);
+        $service_details_info_list = [];
+        foreach ($service_details_recordid_list as $key => $service_details_recordid) {
+            $service_details_info = (object)[];
+            $service_details_info->detail_recordid = $service_details_recordid;
+            
+            $detail = Detail::where('detail_recordid', '=', (int)($service_details_recordid))->first();
+            if(isset($detail)){
+                $service_detail_value = $detail->detail_value;
+                $service_details_info->detail_value = $service_detail_value;    
+            }
+            
+            array_push($service_details_info_list, $service_details_info);
+        }        
+
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
 
         $map = Map::find(1);
@@ -600,7 +616,7 @@ class ServiceController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'service_details_info_list'));
     }
 
     public function taxonomy($id)

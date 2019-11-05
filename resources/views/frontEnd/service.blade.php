@@ -174,26 +174,10 @@ ul#ui-id-1 {
                         @endif
                         <h4 class="py-10" style="line-height: inherit;">
                             <span class="pl-0 category_badge"><b>Types of People:</b>
-                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                    @php 
-                                        $names = [];
-                                    @endphp
-
-                                    @if($service->taxonomy->sortBy('taxonomy_name') != null)
-                                        @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                            
-                                            @if($taxonomy->taxonomy_parent_name == 'Target Populations')
-                                                @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                    @if($taxonomy->taxonomy_name)
-                                                        <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
-                                                        @php
-                                                        $names[] = $taxonomy->taxonomy_name;
-                                                        @endphp
-                                                    @endif
-                                                @endif                                                    
-                                            @endif
-                                        @endforeach
-                                    @endif
+                                @if($service->service_details != null)
+                                    @foreach($service_details_info_list as $key => $service_details_info)
+                                        <a class="panel-link {{str_replace(' ', '_', $service_details_info->detail_value)}}" at="{{$service_details_info->detail_recordid}}">{{$service_details_info->detail_value}}</a>
+                                    @endforeach
                                 @endif
                             </span> 
                             <br>
