@@ -240,22 +240,15 @@ ul#ui-id-1 {
                                             </span> 
                                             <br>
                                             <span class="pl-0 category_badge"><b>Types of Services:</b>
-
-                                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                                    @php 
-                                                        $names = [];
+                                                @if($service->service_taxonomy != null)
+                                                    @php $service_taxonomy_recordid_list = explode(',', $service->service_taxonomy);
                                                     @endphp
-                                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                                            
-                                                            @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                            @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
-                                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
-                                                                @php
-                                                                $names[] = $taxonomy->taxonomy_name;
-                                                                @endphp
-                                                            @endif
-                                                        @endif                                                    
-                                                       
+                                                    @foreach($service_taxonomy_recordid_list as $key => $service_taxonomy_recordid)
+                                                        @php $taxonomy_name = $service_taxonomy_info_list[$service_taxonomy_recordid]; 
+                                                        @endphp
+                                                        @if($taxonomy_name)
+                                                            <a class="panel-link {{str_replace(' ', '_', $taxonomy_name)}}" at="{{$service_taxonomy_recordid}}">{{$taxonomy_name}}</a>
+                                                        @endif
                                                     @endforeach
                                                 @endif
                                             </span> 

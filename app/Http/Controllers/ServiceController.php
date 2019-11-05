@@ -399,6 +399,7 @@ class ServiceController extends Controller
     {
         $services = Service::with('locations')->orderBy('service_name'); 
 
+
         $locations = Location::with('services','organization');
         
         $sort_by_distance_clickable = false;
@@ -462,7 +463,21 @@ class ServiceController extends Controller
 
         }
 
-        $services = $services->paginate(10);         
+        $services = $services->paginate(10);   
+        $service_taxonomy_info_list = []; 
+        foreach ($services as $key => $service) {
+            $service_taxonomy_recordid_list = explode(',', $service->service_taxonomy);
+            
+            foreach ($service_taxonomy_recordid_list as $key => $service_taxonomy_recordid) {
+                
+                $taxonomy = Taxonomy::where('taxonomy_recordid', '=', (int)($service_taxonomy_recordid))->first();
+                if(isset($taxonomy)){
+                    $service_taxonomy_name = $taxonomy->taxonomy_name;
+                    $service_taxonomy_info_list[$service_taxonomy_recordid] = $service_taxonomy_name;    
+                }
+            }
+        } 
+
         $locations = $locations->get();
 
         //======================updated alt taxonomy tree======================
@@ -507,12 +522,13 @@ class ServiceController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }
 
-        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies', 'sort_by_distance_clickable'))->with('taxonomy_tree', $taxonomy_tree);  
+        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies', 'sort_by_distance_clickable', 'service_taxonomy_info_list'))->with('taxonomy_tree', $taxonomy_tree);  
     }
 
     public function service($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first();
+
         $service_taxonomy_recordid_list = explode(',', $service->service_taxonomy);
         $service_taxonomy_info_list = [];
         foreach ($service_taxonomy_recordid_list as $key => $service_taxonomy_recordid) {
