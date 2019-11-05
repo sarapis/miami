@@ -399,7 +399,6 @@ class ServiceController extends Controller
     {
         $services = Service::with('locations')->orderBy('service_name'); 
 
-
         $locations = Location::with('services','organization');
         
         $sort_by_distance_clickable = false;
@@ -513,7 +512,22 @@ class ServiceController extends Controller
 
     public function service($id)
     {
-        $service = Service::where('service_recordid', '=', $id)->first();         
+        $service = Service::where('service_recordid', '=', $id)->first();
+        $service_taxonomy_recordid_list = explode(',', $service->service_taxonomy);
+        $service_taxonomy_info_list = [];
+        foreach ($service_taxonomy_recordid_list as $key => $service_taxonomy_recordid) {
+            $service_taxonomy_info = (object)[];
+            $service_taxonomy_info->taxonomy_recordid = $service_taxonomy_recordid;
+            
+            $taxonomy = Taxonomy::where('taxonomy_recordid', '=', (int)($service_taxonomy_recordid))->first();
+            if(isset($taxonomy)){
+                $service_taxonomy_name = $taxonomy->taxonomy_name;
+                $service_taxonomy_info->taxonomy_name = $service_taxonomy_name;    
+            }
+            
+            array_push($service_taxonomy_info_list, $service_taxonomy_info);
+        }
+
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
 
         $map = Map::find(1);
@@ -570,7 +584,7 @@ class ServiceController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list'));
     }
 
     public function taxonomy($id)
