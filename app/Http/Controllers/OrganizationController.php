@@ -12,6 +12,7 @@ use App\Alt_taxonomy;
 use App\Servicetaxonomy;
 use App\Service;
 use App\Location;
+use App\Airtablekeyinfo;
 use App\Layout;
 use App\Map;
 use App\Airtables;
@@ -26,6 +27,14 @@ class OrganizationController extends Controller
 
     public function airtable($api_key, $base_url)
     {
+
+        $airtable_key_info = Airtablekeyinfo::find(1);
+        if (!$airtable_key_info){
+            $airtable_key_info = new Airtablekeyinfo;
+        }
+        $airtable_key_info->api_key = $api_key;
+        $airtable_key_info->base_url = $base_url;
+        $airtable_key_info->save();
 
         Organization::truncate();
         Organizationdetail::truncate();

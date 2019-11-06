@@ -11,6 +11,7 @@ use App\Airtables;
 use App\CSV_Source;
 use App\Layout;
 use App\Taxonomy;
+use App\Airtablekeyinfo;
 use App\Address;
 use App\Area;
 use App\Metafilter;
@@ -152,12 +153,13 @@ class PagesController extends Controller
 
     public function import()
     {
+        $airtable_key_info = Airtablekeyinfo::find(1);
         $airtables = Airtables::all();
         $csvs = CSV_Source::all();
         $source_data = Source_data::find(1);
         $autosync = AutoSyncAirtable::find(1);
 
-        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data', 'autosync'));
+        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data', 'autosync', 'airtable_key_info'));
     }
 
     public function export()
