@@ -173,14 +173,6 @@ ul#ui-id-1 {
                         </h4>
                         @endif
                         <h4 class="py-10" style="line-height: inherit;">
-                            <span class="pl-0 category_badge"><b>Types of People:</b>
-                                @if($service->service_details != null)
-                                    @foreach($service_details_info_list as $key => $service_details_info)
-                                        <a class="panel-link {{str_replace(' ', '_', $service_details_info->detail_value)}}" at="{{$service_details_info->detail_recordid}}">{{$service_details_info->detail_value}}</a>
-                                    @endforeach
-                                @endif
-                            </span> 
-                            <br>
                             <span class="pl-0 category_badge"><b>Types of Services:</b>
                                 @if($service->service_taxonomy != null)
                                     @foreach($service_taxonomy_info_list as $key => $service_taxonomy_info)
@@ -188,6 +180,14 @@ ul#ui-id-1 {
                                     @endforeach
                                 @endif
                             </span> 
+                            <br>
+                            <span class="pl-0 category_badge"><b>Types of Detail:</b>
+                                @if($service->service_details != null)
+                                    @foreach($service_details_info_list as $key => $service_details_info)
+                                        <a class="panel-link {{str_replace(' ', '_', $service_details_info->detail_type)}}" at="{{$service_details_info->detail_recordid}}">{{$service_details_info->detail_type}}</a>
+                                    @endforeach
+                                @endif
+                            </span>
                         </h4>
                     </div>
                 </div>

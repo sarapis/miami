@@ -484,8 +484,8 @@ class ServiceController extends Controller
             foreach ($service_details_recordid_list as $key => $service_details_recordid) {
                 $detail = Detail::where('detail_recordid', '=', (int)($service_details_recordid))->first();
                 if(isset($detail)){
-                    $service_detail_value = $detail->detail_value;
-                    $service_details_info_list[$service_details_recordid] = $service_detail_value;    
+                    $service_detail_type = $detail->detail_type;
+                    $service_details_info_list[$service_details_recordid] = $service_detail_type;    
                 }
             }
         } 
@@ -564,8 +564,8 @@ class ServiceController extends Controller
             
             $detail = Detail::where('detail_recordid', '=', (int)($service_details_recordid))->first();
             if(isset($detail)){
-                $service_detail_value = $detail->detail_value;
-                $service_details_info->detail_value = $service_detail_value;    
+                $service_detail_type = $detail->detail_type;
+                $service_details_info->detail_type = $service_detail_type;    
             }
             
             array_push($service_details_info_list, $service_details_info);
