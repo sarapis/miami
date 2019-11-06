@@ -645,6 +645,18 @@ class ExploreController extends Controller
             }
         }
 
+        $service_details_info_list = []; 
+        foreach ($services as $key => $service) {
+            $service_details_recordid_list = explode(',', $service->service_details);
+            foreach ($service_details_recordid_list as $key => $service_details_recordid) {
+                $detail = Detail::where('detail_recordid', '=', (int)($service_details_recordid))->first();
+                if(isset($detail)){
+                    $service_detail_type = $detail->detail_type;
+                    $service_details_info_list[$service_details_recordid] = $service_detail_type;    
+                }
+            }
+        } 
+
         $locations = $locations->get();
 
         $analytic = Analytic::where('search_term', '=', $chip_service)->orWhere('search_term', '=', $chip_address)->first();
@@ -713,7 +725,7 @@ class ExploreController extends Controller
         // var_dump('============$childs============');
         // var_dump($childs);    
 
-        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents', 'grandparent_taxonomies', 'parents', 'grandparents', 'childs', 'sort_by_distance_clickable', 'service_taxonomy_info_list'))->with('taxonomy_tree', $taxonomy_tree);
+        return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results', 'pagination', 'sort', 'meta_status', 'parent_taxonomy_names', 'grandparent_taxonomy_names', 'target_populations', 'checked_grandparents', 'grandparent_taxonomies', 'parents', 'grandparents', 'childs', 'sort_by_distance_clickable', 'service_taxonomy_info_list', 'service_details_info_list'))->with('taxonomy_tree', $taxonomy_tree);
 
     }
     /**
