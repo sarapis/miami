@@ -219,21 +219,17 @@ ul#ui-id-1 {
                                         </h4>
                                         <h4>
                                             <span class="pl-0 category_badge"><b>Types of People:</b>
-                                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                                @if($service->service_details != null)
                                                     @php 
-                                                        $names = [];
+                                                        $service_details_recordid_list = explode(',', $service->service_details);
                                                     @endphp
-                                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                                        
-                                                        @if($taxonomy->taxonomy_parent_name == 'Target Populations')
-                                                            @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                                @if($taxonomy->taxonomy_name)
-                                                                    <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_id}}">{{$taxonomy->taxonomy_name}}</a>
-                                                                    @php
-                                                                    $names[] = $taxonomy->taxonomy_name;
-                                                                    @endphp
-                                                                @endif
-                                                            @endif                                                    
+                                                    @foreach($service_details_recordid_list as $key => $service_details_recordid)
+                                                        @if (isset($service_details_info_list[$service_details_recordid]))
+                                                            @php $detail_value = $service_details_info_list[$service_details_recordid]; 
+                                                            @endphp
+                                                            @if($detail_value)
+                                                                <a class="panel-link {{str_replace(' ', '_', $detail_value)}}" at="{{$service_details_recordid}}">{{$detail_value}}</a>
+                                                            @endif
                                                         @endif
                                                     @endforeach
                                                 @endif
