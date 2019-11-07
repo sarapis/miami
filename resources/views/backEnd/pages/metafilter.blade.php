@@ -135,6 +135,7 @@ Meta Filter
                                         <option value="Taxonomy">Taxonomy</option>
                                         <option value="Postal_code">Postal code</option>
                                         <option value="Service_area">Service area</option>
+                                        <option value="Service_status">Service status</option>
                                       </select>
                                     </div>
                                   </div>
