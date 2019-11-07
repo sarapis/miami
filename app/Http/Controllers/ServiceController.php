@@ -455,6 +455,14 @@ class ServiceController extends Controller
                     $taxonomy_serviceids = array_merge($serviceids, $taxonomy_serviceids);
 
                 }
+                if($meta->facet == 'Service_status'){
+
+                    if($meta->operations == 'Include')
+                        $serviceids = Service::whereIn('service_recordid', $values)->pluck('service_recordid')->toArray();
+                    if($meta->operations == 'Exclude')
+                        $serviceids = Service::whereNotIn('service_recordid', $values)->pluck('service_recordid')->toArray();
+                    $taxonomy_serviceids = array_merge($serviceids, $taxonomy_serviceids);
+                }
             }
 
             // $services = $services->whereIn('service_recordid', $address_serviceids)->whereIn('service_recordid', $taxonomy_serviceids);
