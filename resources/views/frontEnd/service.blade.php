@@ -116,28 +116,6 @@ ul#ui-id-1 {
                             @endif
                             </span>
                         </h4>
-                        @if($service->service_details!=NULL)
-                            @php
-                                $show_details = [];
-                            @endphp
-                            @foreach($service->details->sortBy('detail_type') as $detail)
-                            @php
-                                for($i = 0; $i < count($show_details); $i ++){
-                                    if($show_details[$i]['detail_type'] == $detail->detail_type)
-                                        break;
-                                }
-                                if($i == count($show_details)){
-                                    $show_details[$i] = array('detail_type'=> $detail->detail_type, 'detail_value'=> $detail->detail_value);
-                                }
-                                else{
-                                    $show_details[$i]['detail_value'] = $show_details[$i]['detail_value'].', '.$detail->detail_value;
-                                }
-                            @endphp                                
-                            @endforeach
-                            @foreach($show_details as $detail)
-                            <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
-                            @endforeach
-                        @endif
                                 
                         @if($service->service_application_process)
                         <h4 class="py-10" style="line-height: inherit;"><span class="mb-10"><b>Application</b></span><br/>  {!! $service->service_application_process !!}
@@ -179,16 +157,30 @@ ul#ui-id-1 {
                                         <a class="panel-link {{str_replace(' ', '_', $service_taxonomy_info->taxonomy_name)}}" at="{{$service_taxonomy_info->taxonomy_recordid}}">{{$service_taxonomy_info->taxonomy_name}}</a>
                                     @endforeach
                                 @endif
-                            </span> 
-                            <br>
-                            <span class="pl-0 category_badge"><b>Types of Detail:</b>
-                                @if($service->service_details != null)
-                                    @foreach($service_details_info_list as $key => $service_details_info)
-                                        <a class="panel-link {{str_replace(' ', '_', $service_details_info->detail_type)}}" at="{{$service_details_info->detail_recordid}}">{{$service_details_info->detail_type}}</a>
-                                    @endforeach
-                                @endif
-                            </span>
+                            </span>                            
                         </h4>
+                        @if($service->service_details!=NULL)
+                            @php
+                                $show_details = [];
+                            @endphp
+                            @foreach($service->details->sortBy('detail_type') as $detail)
+                            @php
+                                for($i = 0; $i < count($show_details); $i ++){
+                                    if($show_details[$i]['detail_type'] == $detail->detail_type)
+                                        break;
+                                }
+                                if($i == count($show_details)){
+                                    $show_details[$i] = array('detail_type'=> $detail->detail_type, 'detail_value'=> $detail->detail_value);
+                                }
+                                else{
+                                    $show_details[$i]['detail_value'] = $show_details[$i]['detail_value'].', '.$detail->detail_value;
+                                }
+                            @endphp                                
+                            @endforeach
+                            @foreach($show_details as $detail)
+                            <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

@@ -494,18 +494,6 @@ class ServiceController extends Controller
             }
         }
 
-        $service_details_info_list = []; 
-        foreach ($services as $key => $service) {
-            $service_details_recordid_list = explode(',', $service->service_details);
-            foreach ($service_details_recordid_list as $key => $service_details_recordid) {
-                $detail = Detail::where('detail_recordid', '=', (int)($service_details_recordid))->first();
-                if(isset($detail)){
-                    $service_detail_type = $detail->detail_type;
-                    $service_details_info_list[$service_details_recordid] = $service_detail_type;    
-                }
-            }
-        } 
-
         $locations = $locations->get();
 
         //======================updated alt taxonomy tree======================
@@ -550,7 +538,7 @@ class ServiceController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }
 
-        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies', 'sort_by_distance_clickable', 'service_taxonomy_info_list', 'service_details_info_list'))->with('taxonomy_tree', $taxonomy_tree);  
+        return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies', 'sort_by_distance_clickable', 'service_taxonomy_info_list'))->with('taxonomy_tree', $taxonomy_tree);  
     }
 
     public function service($id)
@@ -572,20 +560,7 @@ class ServiceController extends Controller
             array_push($service_taxonomy_info_list, $service_taxonomy_info);
         }
 
-        $service_details_recordid_list = explode(',', $service->service_details);
-        $service_details_info_list = [];
-        foreach ($service_details_recordid_list as $key => $service_details_recordid) {
-            $service_details_info = (object)[];
-            $service_details_info->detail_recordid = $service_details_recordid;
             
-            $detail = Detail::where('detail_recordid', '=', (int)($service_details_recordid))->first();
-            if(isset($detail)){
-                $service_detail_type = $detail->detail_type;
-                $service_details_info->detail_type = $service_detail_type;    
-            }
-            
-            array_push($service_details_info_list, $service_details_info);
-        }        
 
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
 
@@ -643,7 +618,7 @@ class ServiceController extends Controller
             array_push($taxonomy_tree, $taxonomy_data);
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'service_details_info_list'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list'));
     }
 
     public function taxonomy($id)

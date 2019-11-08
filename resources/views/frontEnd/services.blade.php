@@ -231,23 +231,6 @@ ul#ui-id-1 {
                                                     @endforeach
                                                 @endif
                                             </span>
-                                            <br>
-                                            <span class="pl-0 category_badge"><b>Types of Detail:</b>
-                                                @if($service->service_details != null)
-                                                    @php 
-                                                        $service_details_recordid_list = explode(',', $service->service_details);
-                                                    @endphp
-                                                    @foreach($service_details_recordid_list as $key => $service_details_recordid)
-                                                        @if (isset($service_details_info_list[$service_details_recordid]))
-                                                            @php $detail_type = $service_details_info_list[$service_details_recordid]; 
-                                                            @endphp
-                                                            @if($detail_type)
-                                                                <a class="panel-link {{str_replace(' ', '_', $detail_type)}}" at="{{$service_details_recordid}}">{{$detail_type}}</a>
-                                                            @endif
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            </span>
                                         </h4>
                                     </div>
                                 </div>
