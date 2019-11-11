@@ -160,6 +160,7 @@ Route::post('/range', 'ExploreController@filterValues1');
 
         Route::post('/taxonomy_filter', 'PagesController@taxonomy_filter');
         Route::post('/postal_code_filter', 'PagesController@postal_filter');
+        Route::post('/service_status_filter', 'PagesController@service_status_filter');
 
         Route::post('/meta_filter', 'PagesController@operation');
 

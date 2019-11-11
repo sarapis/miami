@@ -214,31 +214,28 @@ class PagesController extends Controller
 
     public function metafilter_edit($id, Request $request)
     {   
+
         $source_data = Source_data::find(1);
         $metafilter = Metafilter::find($id);
-        if($metafilter->facet = 'Taxonomy'){
+        
 
+        if($metafilter->facet == 'Taxonomy'){
             $taxonomies = Taxonomy::all();
             $checked_taxonomies = explode(",",$metafilter->values);
-
             return view('backEnd.pages.metafilter_taxonomy', compact('taxonomies', 'source_data', 'checked_taxonomies'))->render();
         }
-        else if($metafilter->facet = 'Service_area'){
-
+        else if($metafilter->facet == 'Service_area'){
             $addresses = Address::orderBy('id')->get();
             $checked_addresses = explode(",",$metafilter->values);
-
             return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
         }
-        else if($metafilter->facet = 'Service_status'){
-
-           
+        else if($metafilter->facet == 'Service_status'){
+            $status_option_list = ['Not Vetted', 'Vetting in Progress', 'Vetted', 'Active', 'Inactive', 'Verified', 'Verification in Progress'];
+            return view('backEnd.pages.metafilter_status', compact('source_data', 'status_option_list'))->render();
         }
         else{
-
             $addresses = Address::orderBy('id')->get();
             $checked_addresses = explode(",",$metafilter->values);
-
             return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
         }
     }
@@ -252,6 +249,13 @@ class PagesController extends Controller
         return view('backEnd.pages.metafilter_address', compact('addresses', 'source_data', 'checked_addresses'))->render();
     }
 
+    public function service_status_filter()
+    {
+        $source_data = Source_data::find(1);
+        $status_option_list = ['Not Vetted', 'Vetting in Progress', 'Vetted', 'Active', 'Inactive', 'Verified', 'Verification in Progress'];
+        return view('backEnd.pages.metafilter_status', compact('source_data', 'status_option_list'))->render();
+    }
+
     public function operation(Request $request){
         $id = $request->input('status');
         if($id == 0)
@@ -261,7 +265,9 @@ class PagesController extends Controller
             $metafilter->facet = $request->input('facet');
             $metafilter->method = $request->input('method');
 
-            $id_list ='';
+
+
+            $id_list = '';
 
             if($request->input('facet') == 'Service_status') {
                 $id = Service::where('service_status', '=', 'Verified')->pluck('service_recordid')->toArray();
@@ -312,7 +318,7 @@ class PagesController extends Controller
                     }           
                 }
 
-                if($metafilter->method =='Checklist'){    
+                if($metafilter->method =='Checklist'){  
                     if ($request->file('csv_import_2')) {
                         $path = $request->file('csv_import_3')->getRealPath();
                         $data = Excel::load($path)->get();
