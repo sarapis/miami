@@ -112,7 +112,7 @@
     </ul>
 
        <ul class="list-unstyled components pt-0"> 
-
+            @if (Request::path() == 'services')
             <li class="option-side">
                 <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
                 <ul class="collapse list-unstyled option-ul" id="target_populations">
@@ -134,6 +134,7 @@
                     </div>
                 </ul>
             </li>
+            @endif
             
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
@@ -154,6 +155,7 @@
                     </li>   
                 </ul>
             </li>
+            @if (Request::path() == 'services')
             <li class="option-side mobile-btn">
                 <a href="#sort" class="text-side" data-toggle="collapse" aria-expanded="false">Sort</a>
                 <ul class="collapse list-unstyled option-ul">
@@ -164,6 +166,7 @@
                     </li>   
                 </ul>
             </li>
+            @endif
             <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
             <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
 
