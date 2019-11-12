@@ -178,7 +178,7 @@ ul#ui-id-1 {
                             @endphp                                
                             @endforeach
                             @foreach($show_details as $detail)
-                            <h6><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h6>  
+                            <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
                             @endforeach
                         @endif
                     </div>
