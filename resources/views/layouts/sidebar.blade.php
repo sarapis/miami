@@ -94,6 +94,10 @@
 
     .jstree-themeicon {
         display: none !important;
+    } 
+
+    #mCSB_1_container {
+        overflow: scroll !important;
     }
 
 </style>
@@ -130,7 +134,6 @@
                 <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     <div id="sidebar_tree">
-                        
                     </div>
                 </ul>
             </li>
