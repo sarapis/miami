@@ -126,7 +126,7 @@
                 </ul>
             </li>
             <li class="option-side">
-                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="true">Types of Services</a>
+                <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="false">Types of Services</a>
                 <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     <div id="sidebar_tree">
@@ -134,13 +134,11 @@
                     </div>
                 </ul>
             </li>
-            @endif
-            
             <li class="option-side mobile-btn">
                 <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
                 <ul class="collapse list-unstyled option-ul" id="export">
                     <li class="nobranch">
-                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Expert CSV</a>
+                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Export CSV</a>
                         <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Print PDF action</a>
                     </li>   
                 </ul>
@@ -155,7 +153,6 @@
                     </li>   
                 </ul>
             </li>
-            @if (Request::path() == 'services')
             <li class="option-side mobile-btn">
                 <a href="#sort" class="text-side" data-toggle="collapse" aria-expanded="false">Sort</a>
                 <ul class="collapse list-unstyled option-ul">
