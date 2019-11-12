@@ -181,6 +181,7 @@ Home
     <!-- end browse_category div -->
 
     <!-- start below after serching div -->
+    @if ($home->bottom_section_active == '1')
     <div class="after_serach">
         <div class="container">
             <div class="row">
@@ -193,6 +194,7 @@ Home
             </div>
         </div>
     </div>
+    @endif
         <!-- end below after serching div -->
     {{-- <div id="content" class="container m-0" style="width: 100%;">
         <div class=" pt-20 pl-15" style="margin-right: 0">
