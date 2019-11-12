@@ -115,8 +115,9 @@
         </li>
     </ul>
 
-       <ul class="list-unstyled components pt-0"> 
-            @if (Request::path() == 'services')
+       <ul class="list-unstyled components pt-0">
+            
+            @if ((Request::path() == 'services') || Request::segment(1) == 'search'))
             <li class="option-side">
                 <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
                 <ul class="collapse list-unstyled option-ul" id="target_populations">
