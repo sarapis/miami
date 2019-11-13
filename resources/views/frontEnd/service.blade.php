@@ -320,7 +320,7 @@ $(document).ready(function(){
         
     }, 2000);
 
-    var description = "{{ $service->service_description }}";
+    var description = "";
     replaced_description = description.replace(/\n/g, "<br />");    
     $('.service-description').html(replaced_description);
 
