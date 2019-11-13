@@ -199,9 +199,11 @@ ul#ui-id-1 {
                             @if(isset($service->locations))
                                 @if($service->locations != null)
                                     @foreach($service->locations as $location)
+                                        @if($location->location_name)
                                         <h4>
                                             <span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>{{$location->location_name}}</span> 
                                         </h4>
+                                        @endif
                                         <h4>
                                             <span><i class="icon md-pin font-size-24 vertical-align-top "></i>
                                                 @if(isset($location->address))
@@ -213,29 +215,29 @@ ul#ui-id-1 {
                                                 @endif
                                             </span>
                                         </h4>
-                                        
+                                        @if($location->location_hours)
                                         <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
+                                        @endif
+                                        @if($location->location_transportation)
                                         <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
-                                        <h4><span><i class="icon md-phone font-size-24 vertical-align-top "></i>
-
-                                            @if(isset($location->phones))
-
-                                                @if($location->phones != null)
-                                                    
-                                                    @if(count($location->phones) > 0)
-
-                                                        @foreach($location->phones as $phone)
-                                                        @php 
-                                                        $phones ='';
-                                                        $phones = $phones.$phone->phone_number.','; @endphp
-                                                        @endforeach
-                                                        {{ rtrim($phones, ',') }}
-                                                    @endif
-                                                @endif 
+                                        @endif
+                                        @if(isset($location->phones))
+                                            @if($location->phones != null)
+                                                @if(count($location->phones) > 0)
+                                                    <h4>
+                                                        <span>
+                                                            <i class="icon md-phone font-size-24 vertical-align-top "></i>
+                                                    @foreach($location->phones as $phone)
+                                                    @php 
+                                                    $phones ='';
+                                                    $phones = $phones.$phone->phone_number.','; @endphp
+                                                    @endforeach
+                                                    {{ rtrim($phones, ',') }}
+                                                        </span>
+                                                    </h4>  
+                                                @endif
                                             @endif 
-                                            </span>
-                                        </h4>  
-                                        <!-- <h4 style="line-height:inherit">{{$location->location_description}}</h4> -->
+                                        @endif 
                                         @if(isset($location->accessibilities()->first()->accessibility)) 
                                         <h4><span><b>Accessibility for disabilities:</b></span> <br/>
                                             {{$location->accessibilities()->first()->accessibility}}
