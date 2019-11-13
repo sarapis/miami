@@ -256,6 +256,7 @@ ul#ui-id-1 {
                                             @endif                     
                                         </h4>
                                         @endif
+                                        <hr/>
                                     @endforeach
                                 @endif
                             @endif
