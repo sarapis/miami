@@ -96,6 +96,10 @@
         display: none !important;
     }
 
+    #mCSB_1_container {
+        overflow: scroll !important;
+    }
+
 </style>
 
 <nav id="sidebar">
@@ -112,7 +116,7 @@
     </ul>
 
        <ul class="list-unstyled components pt-0"> 
-
+            @if ((Request::path() == 'services') || (Request::segment(1) == 'search') || (Request::segment(1) == 'service') || (Request::segment(1) == 'organization') || (Request::segment(1) == 'organizations'))
             <li class="option-side">
                 <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
                 <ul class="collapse list-unstyled option-ul" id="target_populations">
@@ -164,6 +168,7 @@
                     </li>   
                 </ul>
             </li>
+            @endif
             <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
             <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
 
