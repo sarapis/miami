@@ -193,6 +193,7 @@ class ExploreController extends Controller
     public function filter(Request $request)
     {   
         $checked_taxonomies = $request->input('selected_taxonomies');
+        $service_state_filter = 'Verified';
 
         $sort_by_distance_clickable = false;
 
@@ -608,6 +609,7 @@ class ExploreController extends Controller
 
         }
 
+        $services = $services->where('service_status', '=', $service_state_filter);
         $search_results = $services->count();
 
         if($sort == 'Service Name'){
@@ -631,6 +633,7 @@ class ExploreController extends Controller
             
         }
 
+        
         $services = $services->paginate($pagination);
 
         $service_taxonomy_info_list = []; 

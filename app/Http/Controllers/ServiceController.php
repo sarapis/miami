@@ -406,7 +406,8 @@ class ServiceController extends Controller
 
     public function services()
     {
-        $services = Service::with('locations')->orderBy('service_name')->where('service_status', '=', 'Verified'); 
+        $service_state_filter = 'Verified';
+        $services = Service::with('locations')->orderBy('service_name')->where('service_status', '=', $service_state_filter); 
 
         $locations = Location::with('services','organization');
         
