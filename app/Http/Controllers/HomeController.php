@@ -63,13 +63,13 @@ class HomeController extends Controller
         }
         else {
             $parent_taxonomies = Taxonomy::whereNull('taxonomy_parent_name')->whereNotNull('taxonomy_services')->get();
-            $parent_taxonomy_data = [];
-            foreach($parent_taxonomies as $parent_taxonomy) {
-                $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
-                $child_data['child_taxonomies'] = $parent_taxonomy->childs;
-                array_push($parent_taxonomy_data, $child_data);
-            }
-            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomy_data;
+            // $parent_taxonomy_data = [];
+            // foreach($parent_taxonomies as $parent_taxonomy) {
+            //     $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
+            //     $child_data['child_taxonomies'] = $parent_taxonomy->childs;
+            //     array_push($parent_taxonomy_data, $child_data);
+            // }
+            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
         
 

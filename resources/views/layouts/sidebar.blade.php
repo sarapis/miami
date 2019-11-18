@@ -132,7 +132,7 @@
             </li>
             <li class="option-side">
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="false">Types of Services</a>
-                <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
+                
                 <ul class="collapse list-unstyled option-ul show" id="projectcategory">
                     <div id="sidebar_tree">
                     </div>
@@ -176,7 +176,7 @@
             <input type="hidden" name="pdf" id="pdf">
 
             <input type="hidden" name="csv" id="csv">
-
+            <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
           
     </ul>
 
@@ -263,31 +263,31 @@ $(document).ready(function(){
 
         for (parent_key = 0; parent_key < taxonomy_tree.parent_taxonomies.length; parent_key ++) {
             var parent_data = {};
-            parent_data.id = 'parent_'+parent_key;
-            parent_data.text = taxonomy_tree.parent_taxonomies[parent_key].parent_taxonomy;
+            parent_data.id = 'child_' + taxonomy_tree.parent_taxonomies[parent_key].taxonomy_recordid;
+            parent_data.text = taxonomy_tree.parent_taxonomies[parent_key].taxonomy_name;
             parent_data.state = {};
             if (selected_taxonomies.indexOf(parent_data.id) > -1) {
                 parent_data.state.selected = true;
             }
-            var parent_tree_child_taxonomies = taxonomy_tree.parent_taxonomies[parent_key].child_taxonomies;
-            var child_data_list = [];
-            for (child_key = 0; child_key < parent_tree_child_taxonomies.length; child_key++) {
-                var child_tree = parent_tree_child_taxonomies[child_key];
-                var child_data = {};
-                if (child_tree != undefined) {
-                    child_data.text = child_tree.taxonomy_name;
-                    child_data.state = {};
-                    child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_recordid;
+            // var parent_tree_child_taxonomies = taxonomy_tree.parent_taxonomies[parent_key].child_taxonomies;
+            // var child_data_list = [];
+            // for (child_key = 0; child_key < parent_tree_child_taxonomies.length; child_key++) {
+            //     var child_tree = parent_tree_child_taxonomies[child_key];
+            //     var child_data = {};
+            //     if (child_tree != undefined) {
+            //         child_data.text = child_tree.taxonomy_name;
+            //         child_data.state = {};
+            //         child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_recordid;
 
-                    if (selected_taxonomies.indexOf(child_data.id) > -1) {
-                        child_data.state.selected = true;
-                    }
-                    child_data_list.push(child_data);
-                }
-            }
-            if (child_data_list.length != 0) {
-                parent_data.children = child_data_list;
-            }
+            //         if (selected_taxonomies.indexOf(child_data.id) > -1) {
+            //             child_data.state.selected = true;
+            //         }
+            //         child_data_list.push(child_data);
+            //     }
+            // }
+            // if (child_data_list.length != 0) {
+            //     parent_data.children = child_data_list;
+            // }
             tree_data_list[parent_key] = parent_data;
         }
     }
@@ -367,8 +367,9 @@ $(document).ready(function(){
     $('#sidebar_tree').on("select_node.jstree deselect_node.jstree", function (e, data) {
         var all_selected_ids = $('#sidebar_tree').jstree("get_checked");
         var selected_taxonomy_ids = all_selected_ids.filter(function(id) {
-            return id.indexOf('_child_') > -1;
+            return id.indexOf('child_') > -1;
         });
+        console.log(selected_taxonomy_ids);
         selected_taxonomy_ids = selected_taxonomy_ids.toString();
         $("#selected_taxonomies").val(selected_taxonomy_ids);
         $("#filter").submit();

@@ -86,7 +86,7 @@ Home
                     <div class="col-lg-2 col-md-2"></div>
                     <div class="col-lg-8 col-md-8 col-sm-12 col-12">
                         <div id="accordion">
-                            <input type="hidden" id="selected_taxonomies" name="selected_taxonomies">
+                            
                             <div class="row">
                             @php
                                 $c = 0;
@@ -177,18 +177,7 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
-                                                </div>
-                                                <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <ul class="tree1">
-                                                            @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
-                                                                <li>
-                                                                    <a class="child_node" href="javascript:void(0);"  value="parent_{{$key2}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                                    <a class="child_node card-link taxonomy-link" href="javascript:void(0);" value="child_{{$parent_taxonomy->taxonomy_recordid}}">{{$parent_taxonomy->taxonomy_name}}</a>
                                                 </div>
                                             </div>
                                         @endif
@@ -200,18 +189,7 @@ Home
                                             <div class="card">
                                                 <div class="card-header">
                                                     <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
-                                                </div>
-                                                <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <ul class="tree1">
-                                                            @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
-                                                                <li>
-                                                                    <a class="child_node" href="javascript:void(0);"  value="parent_{{$key2}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                                    <a class="child_node card-link taxonomy-link" href="javascript:void(0);" value="child_{{$parent_taxonomy->taxonomy_recordid}}">{{$parent_taxonomy->taxonomy_name}}</a>
                                                 </div>
                                             </div>
                                         @endif
@@ -331,7 +309,8 @@ $(document).ready(function(){
     });
     $('.child_node').on('click', function(e){
         selected_taxonomy_ids = $(this).attr('value');
-        $('#selected_taxonomies').val(selected_taxonomy_ids);       
+        console.log(selected_taxonomy_ids);
+        $('#selected_taxonomies').val(selected_taxonomy_ids);    
         $("#filter").submit();
     });
     // $('.card-link.taxonomy-link').on('click', function(e){

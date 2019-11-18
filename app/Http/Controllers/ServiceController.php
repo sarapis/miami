@@ -536,13 +536,13 @@ class ServiceController extends Controller
         }
         else {
             $parent_taxonomies = Taxonomy::whereNull('taxonomy_parent_name')->whereNotNull('taxonomy_services')->get();
-            $parent_taxonomy_data = [];
-            foreach($parent_taxonomies as $parent_taxonomy) {
-                $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
-                $child_data['child_taxonomies'] = $parent_taxonomy->childs;
-                array_push($parent_taxonomy_data, $child_data);
-            }
-            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomy_data;
+            // $parent_taxonomy_data = [];
+            // foreach($parent_taxonomies as $parent_taxonomy) {
+            //     $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
+            //     $child_data['child_taxonomies'] = $parent_taxonomy->childs;
+            //     array_push($parent_taxonomy_data, $child_data);
+            // }
+            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
         return view('frontEnd.services', compact('services', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'meta_status', 'grandparent_taxonomies', 'sort_by_distance_clickable', 'service_taxonomy_info_list'))->with('taxonomy_tree', $taxonomy_tree);  
@@ -624,13 +624,13 @@ class ServiceController extends Controller
         }
         else {
             $parent_taxonomies = Taxonomy::whereNull('taxonomy_parent_name')->whereNotNull('taxonomy_services')->get();
-            $parent_taxonomy_data = [];
-            foreach($parent_taxonomies as $parent_taxonomy) {
-                $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
-                $child_data['child_taxonomies'] = $parent_taxonomy->childs;
-                array_push($parent_taxonomy_data, $child_data);
-            }
-            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomy_data;
+            // $parent_taxonomy_data = [];
+            // foreach($parent_taxonomies as $parent_taxonomy) {
+            //     $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
+            //     $child_data['child_taxonomies'] = $parent_taxonomy->childs;
+            //     array_push($parent_taxonomy_data, $child_data);
+            // }
+            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
         return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list'));

@@ -337,7 +337,7 @@ class ExploreController extends Controller
         if ($checked_taxonomies != NULL) {
             $assert_selected_taxonomies = explode(',', $checked_taxonomies);        
             for ($i=0; $i < count($assert_selected_taxonomies); $i++) {
-                $assert_selected_taxonomy = explode('_child_', $assert_selected_taxonomies[$i]);
+                $assert_selected_taxonomy = explode('child_', $assert_selected_taxonomies[$i]);
                 if (count($assert_selected_taxonomy) > 1)
                     array_push($selected_taxonomies, $assert_selected_taxonomy[1]);
                 else {
@@ -345,15 +345,17 @@ class ExploreController extends Controller
                 }
             }
         }
-
+        // var_dump($selected_taxonomies);
         // $child_service_ids = Servicetaxonomy::whereIn('taxonomy_id', $selected_taxonomies)->groupBy('service_recordid')->pluck('service_recordid')->toArray();
         $child_service_ids = [];
         
         for ($i = 0; $i < count($selected_taxonomies); $i ++) {
-            $service_ids = Service::where('service_taxonomy', 'like', '%'.$selected_taxonomies[$i].'%')->groupBy('service_recordid')->pluck('service_recordid')->toArray();        
+            $service_ids = Service::where('service_taxonomy', 'like', '%'.$selected_taxonomies[$i].'%')->groupBy('service_recordid')->pluck('service_recordid')->toArray();
+            // var_dump($service_ids);
+          
             $child_service_ids = array_merge($child_service_ids, $service_ids);
         }
-
+        // exit;
         $child_service_ids = array_unique($child_service_ids);
 
         
@@ -717,13 +719,13 @@ class ExploreController extends Controller
         }
         else {
             $parent_taxonomies = Taxonomy::whereNull('taxonomy_parent_name')->whereNotNull('taxonomy_services')->get();
-            $parent_taxonomy_data = [];
-            foreach($parent_taxonomies as $parent_taxonomy) {
-                $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
-                $child_data['child_taxonomies'] = $parent_taxonomy->childs;
-                array_push($parent_taxonomy_data, $child_data);
-            }
-            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomy_data;
+            // $parent_taxonomy_data = [];
+            // foreach($parent_taxonomies as $parent_taxonomy) {
+            //     $child_data['parent_taxonomy'] = $parent_taxonomy->taxonomy_name;
+            //     $child_data['child_taxonomies'] = $parent_taxonomy->childs;
+            //     array_push($parent_taxonomy_data, $child_data);
+            // }
+            $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }      
 
         // var_dump('============parents============');
