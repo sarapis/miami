@@ -22,7 +22,7 @@ class Taxonomy extends Model
      * @return string
     */
     public function childs() {
-        return $this->hasMany('App\Taxonomy','taxonomy_parent_name','taxonomy_name') ;
+        return $this->hasMany('App\Taxonomy','taxonomy_parent_name','taxonomy_recordid') ;
     }
 
     public function parent()

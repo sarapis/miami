@@ -198,67 +198,100 @@ $(document).ready(function(){
         selected_taxonomies = urlParams.get('selected_taxonomies').split(',');
     }
 
-    console.log(selected_taxonomies);
-
-    for (alt_key = 0; alt_key < taxonomy_tree.length; alt_key++) {
-        var alt_data = {};
-        var alt_tree = taxonomy_tree[alt_key];
-        alt_data.text = alt_tree.alt_taxonomy_name;
-        alt_data.state = {};
-        alt_data.id = 'alt_' + alt_key;
-        var alt_tree_parent_taxonomies = [];
-        if (alt_tree.parent_taxonomies != undefined) {
-            alt_tree_parent_taxonomies = alt_tree.parent_taxonomies;
-        }
-
-        var parent_data_list = [];
-        for (parent_key = 0; parent_key < alt_tree_parent_taxonomies.length; parent_key++) {
-            var parent_tree = alt_tree_parent_taxonomies[parent_key];
-            var parent_data = {};
-            
-            if (parent_tree.parent_taxonomy != undefined) {
-                if (typeof(parent_tree.parent_taxonomy) == "string") {
-                    parent_data.text = parent_tree.parent_taxonomy;
-                    parent_data.id = alt_data.id + '_parent_' + parent_key;
-                }
-                else {
-                    parent_data.text = parent_tree.parent_taxonomy.taxonomy_name;
-                    parent_data.id = alt_data.id + '_child_' + parent_tree.parent_taxonomy.taxonomy_recordid;
-                    parent_data.state = {};
-                    if (selected_taxonomies.indexOf(parent_data.id) > -1) {
-                        parent_data.state.selected = true;
-                    }
-                }
-                var parent_tree_child_taxonomies = [];
-                if (parent_tree.child_taxonomies != undefined) {
-                    parent_tree_child_taxonomies = parent_tree.child_taxonomies;
-                }
-                var child_data_list = [];
-                for (child_key = 0; child_key < parent_tree_child_taxonomies.length; child_key++) {
-                    var child_tree = parent_tree_child_taxonomies[child_key];
-                    var child_data = {};
-                    if (child_tree != undefined) {
-                        child_data.text = child_tree.taxonomy_name;
-                        child_data.state = {};
-                        child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_recordid;
-
-                        if (selected_taxonomies.indexOf(child_data.id) > -1) {
-                            child_data.state.selected = true;
-                        }
-                        child_data_list.push(child_data);
-                    }
-                }
-                if (child_data_list.length != 0) {
-                    parent_data.children = child_data_list;
-                }
-                parent_data_list.push(parent_data);
+    
+    if (typeof taxonomy_tree == 'array') {
+        for (alt_key = 0; alt_key < taxonomy_tree.length; alt_key++) {
+            var alt_data = {};
+            var alt_tree = taxonomy_tree[alt_key];
+            alt_data.text = alt_tree.alt_taxonomy_name;
+            alt_data.state = {};
+            alt_data.id = 'alt_' + alt_key;
+            var alt_tree_parent_taxonomies = [];
+            if (alt_tree.parent_taxonomies != undefined) {
+                alt_tree_parent_taxonomies = alt_tree.parent_taxonomies;
             }
-        }   
-        if (parent_data_list.length != 0) {
-            alt_data.children = parent_data_list;
+
+            var parent_data_list = [];
+            for (parent_key = 0; parent_key < alt_tree_parent_taxonomies.length; parent_key++) {
+                var parent_tree = alt_tree_parent_taxonomies[parent_key];
+                var parent_data = {};
+                
+                if (parent_tree.parent_taxonomy != undefined) {
+                    if (typeof(parent_tree.parent_taxonomy) == "string") {
+                        parent_data.text = parent_tree.parent_taxonomy;
+                        parent_data.id = alt_data.id + '_parent_' + parent_key;
+                    }
+                    else {
+                        parent_data.text = parent_tree.parent_taxonomy.taxonomy_name;
+                        parent_data.id = alt_data.id + '_child_' + parent_tree.parent_taxonomy.taxonomy_recordid;
+                        parent_data.state = {};
+                        if (selected_taxonomies.indexOf(parent_data.id) > -1) {
+                            parent_data.state.selected = true;
+                        }
+                    }
+                    var parent_tree_child_taxonomies = [];
+                    if (parent_tree.child_taxonomies != undefined) {
+                        parent_tree_child_taxonomies = parent_tree.child_taxonomies;
+                    }
+                    var child_data_list = [];
+                    for (child_key = 0; child_key < parent_tree_child_taxonomies.length; child_key++) {
+                        var child_tree = parent_tree_child_taxonomies[child_key];
+                        var child_data = {};
+                        if (child_tree != undefined) {
+                            child_data.text = child_tree.taxonomy_name;
+                            child_data.state = {};
+                            child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_recordid;
+
+                            if (selected_taxonomies.indexOf(child_data.id) > -1) {
+                                child_data.state.selected = true;
+                            }
+                            child_data_list.push(child_data);
+                        }
+                    }
+                    if (child_data_list.length != 0) {
+                        parent_data.children = child_data_list;
+                    }
+                    parent_data_list.push(parent_data);
+                }
+            }   
+            if (parent_data_list.length != 0) {
+                alt_data.children = parent_data_list;
+            }
+            tree_data_list[alt_key] = alt_data;
         }
-        tree_data_list[alt_key] = alt_data;
+    } else {
+
+        for (parent_key = 0; parent_key < taxonomy_tree.parent_taxonomies.length; parent_key ++) {
+            var parent_data = {};
+            parent_data.id = 'parent_'+parent_key;
+            parent_data.text = taxonomy_tree.parent_taxonomies[parent_key].parent_taxonomy;
+            parent_data.state = {};
+            if (selected_taxonomies.indexOf(parent_data.id) > -1) {
+                parent_data.state.selected = true;
+            }
+            var parent_tree_child_taxonomies = taxonomy_tree.parent_taxonomies[parent_key].child_taxonomies;
+            var child_data_list = [];
+            for (child_key = 0; child_key < parent_tree_child_taxonomies.length; child_key++) {
+                var child_tree = parent_tree_child_taxonomies[child_key];
+                var child_data = {};
+                if (child_tree != undefined) {
+                    child_data.text = child_tree.taxonomy_name;
+                    child_data.state = {};
+                    child_data.id = parent_data.id + '_child_' + child_tree.taxonomy_recordid;
+
+                    if (selected_taxonomies.indexOf(child_data.id) > -1) {
+                        child_data.state.selected = true;
+                    }
+                    child_data_list.push(child_data);
+                }
+            }
+            if (child_data_list.length != 0) {
+                parent_data.children = child_data_list;
+            }
+            tree_data_list[parent_key] = parent_data;
+        }
     }
+    
 
      $('#sidebar_tree').jstree({
         'plugins': ["checkbox", "wholerow"],
