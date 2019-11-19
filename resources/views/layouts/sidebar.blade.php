@@ -139,11 +139,11 @@
                 </ul>
             </li>
             <li class="option-side mobile-btn">
-                <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Print/Export</a>
+                <a href="#export" class="text-side" data-toggle="collapse" aria-expanded="false">Download CSV/PDF</a>
                 <ul class="collapse list-unstyled option-ul" id="export">
                     <li class="nobranch">
-                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Export CSV</a>
-                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem">Print PDF action</a>
+                        <a class="dropdown-item download_csv" href="javascript:void(0)" role="menuitem">Export CSV</a>
+                        <a class="dropdown-item download_pdf" href="javascript:void(0)" role="menuitem">Download PDF</a>
                     </li>   
                 </ul>
             </li>
@@ -316,12 +316,12 @@ $(document).ready(function(){
         $("#sort").val($(this).text());
         $("#filter").submit();
     });
-    $('#download_csv').on('click', function(){
+    $('.download_csv').on('click', function(){
         $("#csv").val('csv');
         $("#filter").submit();
         $("#csv").val('');
     });
-    $('#download_pdf').on('click', function(){
+    $('.download_pdf').on('click', function(){
         $("#pdf").val('pdf');
         $("#filter").submit();
         $("#pdf").val('');

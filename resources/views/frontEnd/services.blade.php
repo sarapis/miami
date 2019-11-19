@@ -53,8 +53,8 @@ ul#ui-id-1 {
                     Download
                 </button>
                 <div class="dropdown-menu bullet" aria-labelledby="exampleBulletDropdown1" role="menu">
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="download_csv">Download CSV</a>
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem" id="download_pdf">Download PDF</a>
+                    <a class="dropdown-item download_csv" href="javascript:void(0)" role="menuitem">Download CSV</a>
+                    <a class="dropdown-item download_pdf" href="javascript:void(0)" role="menuitem">Download PDF</a>
                 </div>
             </div>
             <div class="btn-group dropdown btn-feature">
