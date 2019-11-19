@@ -92,6 +92,15 @@
         }
     }
 
+    @media (max-width: 375px) {
+        .navbar-brand-text{
+            display: block;
+        }
+        .navbar-header{
+            height: 90px;
+        }
+    }
+
     .jstree-themeicon {
         display: none !important;
     } 
