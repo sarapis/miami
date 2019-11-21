@@ -172,7 +172,7 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Scan database for geocodable locations
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <a class="btn btn-primary open-td" href="/scan_geocode/" id="scan-btn" style="color: white;">Scan</a>                    
+                    <a class="btn btn-primary open-td" href="/scan_ungeocoded_location/" id="scan-btn" style="color: white;">Scan</a>                    
                   </div>
                 </div> 
               </div>
@@ -182,7 +182,9 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Output number of records with addresses but without latitude/longitude:
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5>150</h5>                    
+                    <h5 id="ungeocoded_location_numbers" style="color: blue; font-style: italic;">
+                      {{$ungeocoded_location_numbers}} records has not been geocoded.
+                    </h5>                    
                   </div>
                 </div> 
               </div>
@@ -202,7 +204,9 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Status of Geocoding
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5>Working...</h5>                   
+                    <h5 style="color: blue; font-style: italic;">
+                      {{$geocoding_status}}
+                    </h5>                   
                   </div>
                 </div> 
               </div>
@@ -218,6 +222,10 @@ Map Settings
 <script src="https://maps.googleapis.com/maps/api/js?key={{$map->api_key}}&callback=initMap"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.9/gmaps.min.js"></script>
 <script>
+$('#scan-btn').on('click', function(e){
+  e.preventDefault();
+  $("#ungeocoded_location_numbers").css('color', 'forestgreen');
+});
 $(document).ready(function() {
     $('.js-switch').change(function(){
       var on = $('.js-switch').prop('checked');

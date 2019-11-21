@@ -42,6 +42,8 @@ Route::get('/services_near_me', 'ExploreController@geolocation');
 Route::post('/filter', 'ExploreController@filter');
 Route::get('/filter', 'ExploreController@filter');
 
+
+
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');
 Route::get('/explore/status_{id}', 'ExploreController@status');
@@ -152,6 +154,8 @@ Route::post('/range', 'ExploreController@filterValues1');
         // Route::resource('meta_filter', 'MetafilterController');
 
         Route::resource('map', 'MapController');
+        Route::get('/scan_ungeocoded_location', 'MapController@scan_ungeocoded_location');
+        Route::get('/apply_geocode', 'MapController@apply_geocode');
         
         Route::get('/import', ['uses' => 'PagesController@import']);
         Route::get('/export', ['uses' => 'PagesController@export']);

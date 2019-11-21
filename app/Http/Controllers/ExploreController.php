@@ -84,6 +84,10 @@ class ExploreController extends Controller
         return view('frontEnd.services', compact('services','locations', 'chip_title', 'chip_name', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results'));
     }
 
+    public function scan_ungeocoded_location(Request $request) {
+        $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+    }
+
     public function geocode(Request $request)
     {
         $chip_service = $request->input('find');

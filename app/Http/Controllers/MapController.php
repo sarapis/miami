@@ -6,6 +6,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Map;
+use Geolocation;
+use Geocode;
+use App\Location;
 use Image;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -37,8 +40,10 @@ class MapController extends Controller
     public function index()
     {
         $map = Map::find(1);
+        $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        $geocoding_status = 'Not Started';
 
-        return view('backEnd.pages.map', compact('map'));
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status'));
     }
 
     /**
@@ -167,5 +172,12 @@ class MapController extends Controller
         $file->move($destination, $fileName);
 
         echo url('/uploads/'. $fileName);
+    }
+
+    public function scan_ungeocoded_location(Request $request) {
+        $map = Map::find(1);
+        $geocoding_status = 'Not Started';
+        $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status'));
     }
 }
