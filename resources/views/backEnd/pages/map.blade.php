@@ -192,7 +192,7 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Geocode these locations
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <a class="btn btn-primary open-td" href="/apply_geocode/" id="scan-btn" style="color: white;">Geocode</a>                    
+                    <a class="btn btn-danger open-td" href="/apply_geocode/" id="scan-btn" style="color: white;">Geocode</a>                    
                   </div>
                 </div> 
               </div>
