@@ -166,16 +166,47 @@ Map Settings
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <div class="row">
+            <div class="row">              
               <div class="col-md-8"> 
                 <div class="item form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Scan database for geocodable locations
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Scan database for geocodable locations
                   </label>
-                  <div class="col-md-8 col-sm-8 col-xs-12">
-                    <button id="scan-btn" type="submit" class="btn btn-success">Scan</button>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <a class="btn btn-primary open-td" href="/scan_geocode/" id="scan-btn" style="color: white;">Scan</a>                    
                   </div>
                 </div> 
               </div>
+
+              <div class="col-md-8"> 
+                <div class="item form-group">
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Output number of records with addresses but without latitude/longitude:
+                  </label>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <h5>150</h5>                    
+                  </div>
+                </div> 
+              </div>
+
+              <div class="col-md-8"> 
+                <div class="item form-group">
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Geocode these locations
+                  </label>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <a class="btn btn-primary open-td" href="/apply_geocode/" id="scan-btn" style="color: white;">Geocode</a>                    
+                  </div>
+                </div> 
+              </div>
+
+              <div class="col-md-8"> 
+                <div class="item form-group">
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Status of Geocoding
+                  </label>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <h5>Working...</h5>                   
+                  </div>
+                </div> 
+              </div>
+
             </div>
           </div>
         </div>
