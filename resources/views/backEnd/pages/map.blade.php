@@ -183,7 +183,7 @@ Map Settings
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
                     <h5 id="ungeocoded_location_numbers" style="color: blue; font-style: italic;">
-                      {{$ungeocoded_location_numbers}} records has not been geocoded.
+                      {{$ungeocoded_location_numbers}}
                     </h5>                    
                   </div>
                 </div> 
