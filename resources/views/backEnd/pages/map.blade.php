@@ -236,10 +236,10 @@ $('#scan-btn').on('click', function(e){
   $("#ungeocoded_location_numbers").css('color', 'forestgreen');
   $("#invalid_location_numbers").css('color', 'forestgreen');
 });
-$('#apply-btn').on('click', function(e){
-  e.preventDefault();
-  $("#recent_geocoded_number").css('color', 'forestgreen');
-});
+// $('#apply-btn').on('click', function(e){
+//   e.preventDefault();
+//   $("#recent_geocoded_number").css('color', 'forestgreen');
+// });
 $(document).ready(function() {
     $('.js-switch').change(function(){
       var on = $('.js-switch').prop('checked');
