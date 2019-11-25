@@ -182,12 +182,18 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Output number of records with addresses but without latitude/longitude:
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5 id="ungeocoded_location_numbers" style="color: blue; font-style: italic;">
-                      {{$ungeocoded_location_numbers}} locations have not been geocoded.
-                    </h5>
                     <h5 id="invalid_location_numbers" style="color: blue; font-style: italic;">
                       {{$invalid_location_info_count}} locations are invalid.
-                    </h5>                    
+                    </h5>
+                    @if ($invalid_location_info_count == $ungeocoded_location_numbers)
+                    <h5 id="ungeocoded_location_numbers" style="color: blue; font-style: italic;">
+                      All valid locations have already been geocoded.
+                    </h5>
+                    @else
+                    <h6 id="ungeocoded_location_numbers" style="color: blue; font-style: italic;">
+                      {{$ungeocoded_location_numbers}} locations have not been geocoded.
+                    </h6>
+                    @endif
                   </div>
                 </div> 
               </div>
