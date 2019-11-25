@@ -43,9 +43,9 @@ class MapController extends Controller
         $map = Map::find(1);
         $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
         $invalid_location_info_count = Location::whereNull('location_name')->count();
-        $geocoding_status = 'Not Started';
+        $recently_geocoded_numbers = 0;
 
-        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status', 'invalid_location_info_count'));
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'invalid_location_info_count', 'recently_geocoded_numbers'));
     }
 
     /**
@@ -185,7 +185,6 @@ class MapController extends Controller
 
     public function apply_geocode(Request $request) {
         $map = Map::find(1);
-        $geocoding_status = 'Completed';
         
         $ungeocoded_location_info_list = Location::whereNull('location_latitude')->get();
         $invalid_location_info_count = Location::whereNull('location_name')->count();
@@ -205,11 +204,12 @@ class MapController extends Controller
                 $location_info->location_latitude = $latitude;
                 $location_info->location_longitude = $longitude;
                 $location_info->save();
+                $recently_geocoded_numbers = $recently_geocoded_numbers + 1;
             }
         }
 
         $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
         $recently_geocoded_numbers = $ungeocoded_location_numbers - $invalid_location_info_count;
-        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status', 'invalid_location_info_count', 'recently_geocoded_numbers'));
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'invalid_location_info_count', 'recently_geocoded_numbers'));
     }
 }

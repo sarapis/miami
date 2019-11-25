@@ -207,15 +207,9 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Status of Geocoding
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    @if ($geocoding_status == 'Completed')
                     <h5 id="recent_geocoded_number" style="color: blue; font-style: italic;">
                       {{$recently_geocoded_numbers}} locations have just been geocoded.
                     </h5> 
-                    @else
-                    <h5 id="recent_geocoded_number" style="color: blue; font-style: italic;">
-                      {{$geocoding_status}}
-                    </h5>  
-                    @endif               
                   </div>
                 </div> 
               </div>
