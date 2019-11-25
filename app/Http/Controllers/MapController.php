@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Map;
 use Geolocation;
 use Geocode;
+use Spatie\Geocoder\Geocoder;
 use App\Location;
 use Image;
 use Illuminate\Http\Request;
@@ -178,6 +179,30 @@ class MapController extends Controller
         $map = Map::find(1);
         $geocoding_status = 'Not Started';
         $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status'));
+    }
+
+    public function apply_geocode(Request $request) {
+        $map = Map::find(1);
+        $geocoding_status = 'Completed';
+        $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        $ungeocoded_location_info_list = Location::whereNull('location_latitude')->get();
+
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        
+        $geocode_api_key = env('GEOCODE_GOOGLE_APIKEY');
+        $geocoder->setApiKey($geocode_api_key);
+
+        foreach ($ungeocoded_location_info_list as $key => $ungeocoded_location_info) {
+            $location_name = $ungeocoded_location_info->location_name;
+            $response = $geocoder->getCoordinatesForAddress($location_name);
+            $longitude = $response['lng'];
+            $latitude = $response['lat'];
+            var_dump($longitude);
+            var_dump($latitude);
+            exit;
+        }
         return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status'));
     }
 }

@@ -21,6 +21,7 @@
         "laravelcollective/html": "^5.4",
         "maatwebsite/excel": "~2.1.0",
         "roland/crud": "dev-master",
+        "spatie/geocoder": "^3.4",
         "stevebauman/location": "^3.0",
         "usmanhalalit/laracsv": "^2.0"
     },
