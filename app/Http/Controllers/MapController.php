@@ -42,9 +42,10 @@ class MapController extends Controller
     {
         $map = Map::find(1);
         $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        $invalid_location_info_count = Location::whereNull('location_name')->count();
         $geocoding_status = 'Not Started';
 
-        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status'));
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status', 'invalid_location_info_count'));
     }
 
     /**
@@ -185,8 +186,9 @@ class MapController extends Controller
     public function apply_geocode(Request $request) {
         $map = Map::find(1);
         $geocoding_status = 'Completed';
-        $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        
         $ungeocoded_location_info_list = Location::whereNull('location_latitude')->get();
+        $invalid_location_info_count = Location::whereNull('location_name')->count();
 
         $client = new \GuzzleHttp\Client();
         $geocoder = new Geocoder($client);
@@ -194,15 +196,20 @@ class MapController extends Controller
         $geocode_api_key = env('GEOCODE_GOOGLE_APIKEY');
         $geocoder->setApiKey($geocode_api_key);
 
-        foreach ($ungeocoded_location_info_list as $key => $ungeocoded_location_info) {
-            $location_name = $ungeocoded_location_info->location_name;
-            $response = $geocoder->getCoordinatesForAddress($location_name);
-            $longitude = $response['lng'];
-            $latitude = $response['lat'];
-            var_dump($longitude);
-            var_dump($latitude);
-            exit;
+        foreach ($ungeocoded_location_info_list as $key => $location_info) {
+            $location_name = $location_info->location_name;
+            if (!is_null($location_name)) {
+                $response = $geocoder->getCoordinatesForAddress($location_name);
+                $latitude = $response['lat'];
+                $longitude = $response['lng'];
+                $location_info->location_latitude = $latitude;
+                $location_info->location_longitude = $longitude;
+                $location_info->save();
+            }
         }
-        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status'));
+
+        $ungeocoded_location_numbers = Location::whereNull('location_latitude')->count();
+        $recently_geocoded_numbers = $ungeocoded_location_numbers - $invalid_location_info_count;
+        return view('backEnd.pages.map', compact('map', 'ungeocoded_location_numbers', 'geocoding_status', 'invalid_location_info_count', 'recently_geocoded_numbers'));
     }
 }

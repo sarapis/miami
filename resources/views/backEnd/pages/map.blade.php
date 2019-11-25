@@ -183,7 +183,10 @@ Map Settings
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
                     <h5 id="ungeocoded_location_numbers" style="color: blue; font-style: italic;">
-                      {{$ungeocoded_location_numbers}}
+                      {{$ungeocoded_location_numbers}} locations have not been geocoded.
+                    </h5>
+                    <h5 id="invalid_location_numbers" style="color: blue; font-style: italic;">
+                      {{$invalid_location_info_count}} locations are invalid.
                     </h5>                    
                   </div>
                 </div> 
@@ -194,7 +197,7 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Geocode these locations
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <a class="btn btn-danger open-td" href="/apply_geocode/" id="scan-btn" style="color: white;">Geocode</a>                    
+                    <a class="btn btn-danger open-td" href="/apply_geocode/" id="apply-btn" style="color: white;">Geocode</a>                    
                   </div>
                 </div> 
               </div>
@@ -204,9 +207,15 @@ Map Settings
                   <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Status of Geocoding
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5 style="color: blue; font-style: italic;">
+                    @if ($geocoding_status == 'Completed')
+                    <h5 id="recent_geocoded_number" style="color: blue; font-style: italic;">
+                      {{$recently_geocoded_numbers}} locations have just been geocoded.
+                    </h5> 
+                    @else
+                    <h5 id="recent_geocoded_number" style="color: blue; font-style: italic;">
                       {{$geocoding_status}}
-                    </h5>                   
+                    </h5>  
+                    @endif               
                   </div>
                 </div> 
               </div>
@@ -225,6 +234,11 @@ Map Settings
 $('#scan-btn').on('click', function(e){
   e.preventDefault();
   $("#ungeocoded_location_numbers").css('color', 'forestgreen');
+  $("#invalid_location_numbers").css('color', 'forestgreen');
+});
+$('#apply-btn').on('click', function(e){
+  e.preventDefault();
+  $("#recent_geocoded_number").css('color', 'forestgreen');
 });
 $(document).ready(function() {
     $('.js-switch').change(function(){
