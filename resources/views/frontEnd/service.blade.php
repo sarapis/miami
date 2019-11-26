@@ -283,7 +283,7 @@ $(document).ready(function(){
         if(maplocation.active == 1){
             avglat = maplocation.lat;
             avglng = maplocation.long;
-            zoom = maplocation.zoom;
+            zoom = maplocation.zoom_profile;
         }
         else
         {

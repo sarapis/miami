@@ -128,7 +128,7 @@ Map Settings
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="zoom">Profile Zoom
                 </label>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="text" name="profile_zoom" class="form-control col-md-7 col-xs-12" value="" @if($map->active==0) disabled="disabled" @endif>
+                  <input type="text" name="profile_zoom" class="form-control col-md-7 col-xs-12" value="{{$map->zoom_profile}}" @if($map->active==0) disabled="disabled" @endif>
                 </div>
               </div>
 
@@ -200,7 +200,7 @@ Map Settings
 
               <div class="col-md-8"> 
                 <div class="item form-group">
-                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Geocode these locations
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Geocode
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
                     <a class="btn btn-danger open-td" href="/apply_geocode/" id="apply-btn" style="color: white;">Geocode</a>                    
@@ -210,7 +210,7 @@ Map Settings
 
               <div class="col-md-8"> 
                 <div class="item form-group">
-                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Status of Geocoding
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Output Status of Geocoding
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
                     @if ($recently_geocoded_numbers != 0)

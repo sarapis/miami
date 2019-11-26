@@ -131,6 +131,7 @@ class MapController extends Controller
             $map->lat=$request->input('lat');
             $map->long=$request->input('long');
             $map->zoom=$request->input('zoom');
+            $map->zoom_profile=$request->input('profile_zoom');
         }
         else {
             $map->active = 0;
