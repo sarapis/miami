@@ -90,15 +90,15 @@ class ServiceController extends Controller
 
             foreach ( $airtable_response['records'] as $record ) {
 
-
                 $service = new Service();
                 $strtointclass = new Stringtoint();
                 $service->service_recordid= $strtointclass->string_to_int($record[ 'id' ]);
-                $service->service_name = isset($record['fields']['Name'])?$record['fields']['Name']:null;
+                
+                $service->service_name = isset($record['fields']['name'])?$record['fields']['name']:null;
 
-                if(isset($record['fields']['Organization'])){
+                if(isset($record['fields']['organization'])){
                     $i = 0;
-                    foreach ($record['fields']['Organization']  as  $value) {
+                    foreach ($record['fields']['organization']  as  $value) {
                         $service_organization = new Serviceorganization();
                         $service_organization->service_recordid=$service->service_recordid;
                         $service_organization->organization_recordid=$strtointclass->string_to_int($value);
@@ -114,7 +114,7 @@ class ServiceController extends Controller
                 }
 
                 $service->service_alternate_name = isset($record['fields']['Alternate Name'])?$record['fields']['Alternate Name']:null;
-                $service->service_description = isset($record['fields']['Description'])?$record['fields']['Description']:null;
+                $service->service_description = isset($record['fields']['description'])?$record['fields']['description']:null;
 
                 if(isset($record['fields']['locations'])){
                     $i = 0;
@@ -406,9 +406,9 @@ class ServiceController extends Controller
 
     public function services()
     {
-        $service_state_filter = 'Verified';
-        $services = Service::with('locations')->orderBy('service_name')->where('service_status', '=', $service_state_filter); 
-
+        // $service_state_filter = 'Verified';
+        // $services = Service::with('locations')->orderBy('service_name')->where('service_status', '=', $service_state_filter); 
+        $services = Service::with('locations')->orderBy('service_name');
         $locations = Location::with('services','organization');
         
         $sort_by_distance_clickable = false;
