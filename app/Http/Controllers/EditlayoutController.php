@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Layout;
+use App\Page;
 use Image;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
