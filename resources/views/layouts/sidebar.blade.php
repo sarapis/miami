@@ -127,7 +127,7 @@
        <ul class="list-unstyled components pt-0">
             
             @if ((Request::path() == 'services') || (Request::segment(1) == 'search') || (Request::segment(1) == 'service') || (Request::segment(1) == 'organization') || (Request::segment(1) == 'organizations'))
-            <li class="option-side">
+            <!-- <li class="option-side">
                 <a href="#target_populations" class="text-side" data-toggle="collapse" aria-expanded="false">Types of People</a>
                 <ul class="collapse list-unstyled option-ul" id="target_populations">
                     <li>
@@ -138,7 +138,7 @@
                         </select>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             <li class="option-side">
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="false">Types of Services</a>
                 
