@@ -568,8 +568,6 @@ class ServiceController extends Controller
             array_push($service_taxonomy_info_list, $service_taxonomy_info);
         }
 
-            
-
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
 
         $map = Map::find(1);

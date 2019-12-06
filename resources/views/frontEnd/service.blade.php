@@ -292,8 +292,13 @@ $(document).ready(function(){
             zoom = 10
         }
 
-        latitude = locations[0].location_latitude;
-        longitude = locations[0].location_longitude;
+        latitude = null;
+        longitude = null;
+
+        if (locations[0]) {
+            latitude = locations[0].location_latitude;
+            longitude = locations[0].location_longitude;
+        }
 
         if(latitude == null){
             latitude = avglat;
@@ -308,15 +313,13 @@ $(document).ready(function(){
         });
 
         
-          $.each( locations, function(index, value ){
-              mymap.addMarker({
-                  lat: value.location_latitude,
-                  lng: value.location_longitude,
-                  title: value.location_name
-                         
-                  
-              });
-         });
+        $.each( locations, function(index, value ){
+            mymap.addMarker({
+                lat: value.location_latitude,
+                lng: value.location_longitude,
+                title: value.location_name
+            });
+        });
         
     }, 2000);
 
