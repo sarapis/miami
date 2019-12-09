@@ -36,13 +36,9 @@ class ExploreController extends Controller
     public function geolocation(Request $request)
     {
         $ip= \Request::ip();
-        var_dump($ip);
-        var_dump($ip);
 
         $data = \Geolocation::get($ip);
-        
-        var_dump($_SERVER['REMOTE_ADDR']);
-        exit;
+
 
         $chip_title = "";
         $chip_name = "Search Near Me";
