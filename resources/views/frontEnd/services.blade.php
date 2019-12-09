@@ -283,7 +283,7 @@ ul#ui-id-1 {
             var sumlat = 0.0;
             var sumlng = 0.0;
             var length = 0;
-            // console.log(locations.length);   
+            console.log(locations);   
 
             if(maplocation.active == 1){
                 avglat = maplocation.lat;
