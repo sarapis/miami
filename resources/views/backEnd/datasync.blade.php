@@ -57,6 +57,9 @@ Import
             @else     
             <div class="col-md-2">
                 <div class="clearfix text-right">
+                    <button class="btn btn-danger" id="get_zip_from_api"><label for="get_zip_from_api">Import via API</label></button>
+                </div>
+                <div class="clearfix text-right">
                     <input type="file" name="file_zip" id="file_zip" class="inputfile-zip" />
                         <button class="btn btn-primary"><label for="file_zip" class="choose-csv">Upload HSDS ZIP File</label></button>
                 </div>
@@ -162,18 +165,13 @@ Import
                 </h5>
             </div>
             <div class="form-group">
-                <label for="import_csv_url_path_input">URL Path</label>
-                <input class="form-control" type="text" name="import_csv_url_path_input" id="import_csv_url_path_input" required />                
+                <label for="import_csv_url_path_input">API URL</label>
+                <input class="form-control" type="text" name="import_csv_api_url" id="import_csv_api_url" required />                
             </div>
             <div class="form-group">
-                <label for="import_csv_username_input">Username</label>
-                <input class="form-control" type="text" name="import_csv_username_input" id="import_csv_username_input" required />
+                <label for="import_csv_username_input">Header</label>
+                <input class="form-control" type="text" name="import_csv_api_header" id="import_csv_api_header" required />
             </div>
-            <div class="form-group">
-                <label for="import_csv_key_input">Key</label>
-                <input class="form-control" type="text" name="import_csv_key_input" id="import_csv_key_input" required />
-            </div>
-
             <table class="table table-striped jambo_table bulk_action" id="tbcsv">
                 <thead>
                     <tr>
@@ -263,6 +261,26 @@ Import
                 }
             });
         }
+
+        $('#get_zip_from_api').click(function(){
+            api_url = 'http://52.188.77.23:3000/datapackages';
+            api_header_authorization = 'Bearer cwpr9HS5o8nZNBly6l2A0A';
+            $.ajax({
+                type: "POST",                
+                headers: {
+                    'Authorization': api_header_authorization                
+                },
+                url: api_url,
+                success: function(result) {
+                    console.log('success!!!!!');
+                    console.log(result);
+                },
+                error: function(e){
+                    console.log(e);
+                }
+            });
+
+        });
 
 
         $('.sync_now').click(function(){
