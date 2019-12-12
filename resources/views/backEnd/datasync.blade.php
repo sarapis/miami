@@ -263,12 +263,12 @@ Import
         }
 
         $('#get_zip_from_api').click(function(){
-            api_url = 'http://52.188.77.23:3000/datapackages';
+            api_url = 'https://cors-anywhere.herokuapp.com/http://52.188.77.23:3000/datapackages';
             api_header_authorization = 'Bearer cwpr9HS5o8nZNBly6l2A0A';
             $.ajax({
-                type: "POST",                
+                type: "POST",   
                 headers: {
-                    'Authorization': api_header_authorization                
+                    'Authorization': api_header_authorization,
                 },
                 url: api_url,
                 success: function(result) {
