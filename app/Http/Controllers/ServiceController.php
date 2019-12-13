@@ -571,8 +571,11 @@ class ServiceController extends Controller
         }
 
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();
-        $contact_info = Contact::where('contact_services', '=', $id)->first(); 
-        $contact_phone = Phone::where('phone_recordid', '=', $contact_info->contact_phones)->first(); 
+        $contact_info = Contact::where('contact_services', '=', $id)->first();
+        $contact_phone = NULL;
+        if ($contact_info) {
+            $contact_phone = Phone::where('phone_recordid', '=', $contact_info->contact_phones)->first(); 
+        }
 
         $map = Map::find(1);
         $parent_taxonomy = [];
