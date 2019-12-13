@@ -183,8 +183,29 @@ ul#ui-id-1 {
                         @endif
                     </div>
                 </div>
+                @if($contact_info)
+                <div class="card page-project">
+                    <div class="card-block">
+                        @if($contact_info->contact_name)
+                        <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
+                        @endif
+                        @if($contact_info->contact_title)
+                        <h4><span><b>Title:</b></span> {{$contact_info->contact_title}}</h4>
+                        @endif
+                        @if($contact_info->contact_department)
+                        <h4><span><b>Department:</b></span> {{$contact_info->contact_department}}</h4>
+                        @endif
+                        @if($contact_info->contact_email)
+                        <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
+                        @endif
+                        @if($contact_phone)
+                        <h4><span><b>Phone:</b></span> {{$contact_phone->phone_number}}</h4>
+                        @endif
+                    </div>
+                </div>
+                @endif
             </div>
-            
+
             <div class="col-md-4 property">
                 <div class="pt-10 pb-10 pl-0 btn-download">
                     <a href="/download_service/{{$service->service_recordid}}" class="btn btn-primary btn-button">Download PDF</a>

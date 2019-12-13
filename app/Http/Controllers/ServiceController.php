@@ -16,6 +16,8 @@ use App\Servicetaxonomy;
 use App\Alt_taxonomy;
 use App\Serviceschedule;
 use App\Location;
+use App\Contact;
+use App\Phone;
 use App\Airtables;
 use App\CSV_Source;
 use App\Source_data;
@@ -568,7 +570,9 @@ class ServiceController extends Controller
             array_push($service_taxonomy_info_list, $service_taxonomy_info);
         }
 
-        $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();         
+        $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();
+        $contact_info = Contact::where('contact_services', '=', $id)->first(); 
+        $contact_phone = Phone::where('phone_recordid', '=', $contact_info->contact_phones)->first(); 
 
         $map = Map::find(1);
         $parent_taxonomy = [];
@@ -632,7 +636,7 @@ class ServiceController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info', 'contact_phone'));
     }
 
     public function taxonomy($id)
