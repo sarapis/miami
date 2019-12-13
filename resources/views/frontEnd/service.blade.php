@@ -159,7 +159,7 @@ ul#ui-id-1 {
                                 @endif
                             </span>                            
                         </h4>
-                        @if($service->service_details!=NULL)
+                        <!-- @if($service->service_details!=NULL)
                             @php
                                 $show_details = [];
                             @endphp
@@ -180,7 +180,7 @@ ul#ui-id-1 {
                             @foreach($show_details as $detail)
                             <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
                             @endforeach
-                        @endif
+                        @endif -->
                     </div>
                 </div>
                 @if($contact_info)
