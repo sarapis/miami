@@ -283,10 +283,22 @@ Import
                         success: function (data) {
                             var date_time = data.data.attributes.created_at;
                             var file_name = data.data.attributes.name;
-                            var file_url = 'http://52.188.77.23:3000' + data.data.attributes.url;
-                            console.log(file_url);
-                            console.log(file_name);
-                            console.log(date_time);
+                            var download_request_url = 'http://52.188.77.23:3000' + data.data.attributes.url;
+                            console.log(download_request_url);
+                            $.ajax({
+                                type: "GET",
+                                url: download_request_url,
+                                headers: {
+                                    'Authorization': api_header_authorization                                    
+                                },
+                                success: function(data) {
+                                    console.log('The latest ZIP file of datapackages has just been downloaded.');
+                                    console.log(data);
+                                },
+                                error: function(e) {
+                                    console.log(e);
+                                }
+                            });
                         },
                         error: function(e){
                             console.log(e);
