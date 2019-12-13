@@ -263,8 +263,8 @@ Import
         }
 
         $('#get_zip_from_api').click(function(){
-            api_url = 'https://cors-anywhere.herokuapp.com/http://52.188.77.23:3000/datapackages';
-            api_header_authorization = 'Bearer cwpr9HS5o8nZNBly6l2A0A';
+            var api_url = 'https://cors-anywhere.herokuapp.com/http://52.188.77.23:3000/datapackages';
+            var api_header_authorization = 'Bearer cwpr9HS5o8nZNBly6l2A0A';
             $.ajax({
                 type: "POST",   
                 headers: {
@@ -272,8 +272,26 @@ Import
                 },
                 url: api_url,
                 success: function(result) {
-                    console.log('success!!!!!');
-                    console.log(result);
+                    var id = result.data[0].id;
+                    var request_url = 'https://cors-anywhere.herokuapp.com/http://52.188.77.23:3000/datapackages/' + id;                   
+                    $.ajax({
+                        type: "GET",
+                        url: request_url,
+                        headers: {
+                            'Authorization': api_header_authorization
+                        },
+                        success: function (data) {
+                            var date_time = data.data.attributes.created_at;
+                            var file_name = data.data.attributes.name;
+                            var file_url = 'http://52.188.77.23:3000' + data.data.attributes.url;
+                            console.log(file_url);
+                            console.log(file_name);
+                            console.log(date_time);
+                        },
+                        error: function(e){
+                            console.log(e);
+                        }
+                    });
                 },
                 error: function(e){
                     console.log(e);
