@@ -58,6 +58,9 @@ Import
             <div class="col-md-2">
                 <div class="clearfix text-right">
                     <button class="btn btn-danger" id="get_zip_from_api"><label for="get_zip_from_api">Import via API</label></button>
+                    <p id="zipping" style="font-style: italic;  color: blue;"> downloading zip file ... </p>
+                    <p id="zipped" style="color: blue;"> downloaded. </p>
+                    <p id="zip-fail" style="color: red;"> download failed. </p>
                 </div>
                 <div class="clearfix text-right">
                     <input type="file" name="file_zip" id="file_zip" class="inputfile-zip" />
@@ -222,6 +225,10 @@ Import
             sync_all_now(this, 0);
         });
 
+        $('#zipping').hide();
+        $('#zipped').hide();
+        $('#zip-fail').hide();
+
         function sync_all_now(parent, c){
 
             current = $('.sync_now').eq(c);
@@ -265,6 +272,7 @@ Import
         $('#get_zip_from_api').click(function(){
             var api_url = 'https://cors-anywhere.herokuapp.com/http://52.188.77.23:3000/datapackages';
             var api_header_authorization = 'Bearer cwpr9HS5o8nZNBly6l2A0A';
+            $('#zipping').show();
             $.ajax({
                 type: "POST",   
                 headers: {
@@ -286,14 +294,20 @@ Import
                             var download_request_url = 'http://52.188.77.23:3000' + data.data.attributes.url;
                             window.location.href = download_request_url;
                             console.log(download_request_url);
+                            $('#zipped').show();
+                            $('#zipping').hide();
                         },
                         error: function(e){
                             console.log('data packages download error!');
+                            $('#zip-fail').show();
+                            $('#zipping').hide();
                         }
                     });
                 },
                 error: function(e){
                     console.log('data packages download error!');
+                    $('#zip-fail').show();
+                    $('#zipping').hide();
                 }
             });
 
