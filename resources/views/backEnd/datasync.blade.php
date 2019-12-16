@@ -291,9 +291,15 @@ Import
                         success: function (data) {
                             var date_time = data.data.attributes.created_at;
                             var file_name = data.data.attributes.name;
+                            var downloaded_date = date_time.split("T")[0];
+                            var downloaded_time = date_time.split("T")[1];
+                            var downloaded_file_name = 'datapackage' + '_' + downloaded_date + '_' + downloaded_time.replace(/:/g, '_').split(".")[0] + '.zip';
+                            console.log(downloaded_file_name);
+
                             var download_request_url = 'http://52.188.77.23:3000' + data.data.attributes.url;
-                            window.location.href = download_request_url;
                             console.log(download_request_url);
+                            window.location.href = download_request_url;                            
+
                             $('#zipped').show();
                             $('#zipping').hide();
                         },

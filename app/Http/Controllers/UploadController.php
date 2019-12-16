@@ -48,9 +48,9 @@ class UploadController extends Controller
 
     public function zip(Request $request)
     {
-        
 
         $extension = $request->file('file_zip')->getClientOriginalExtension();
+
 
         if ($extension != 'zip') {
             $response = array(
@@ -60,11 +60,16 @@ class UploadController extends Controller
             return $response;
         }
 
-        $path = $request->file('file_zip')->getRealPath();
-        \Zipper::make($path)->extractTo('HSDS');
-
+        
         $filename =  $request->file('file_zip')->getClientOriginalName();
         $request->file('file_zip')->move(public_path('/zip/'), $filename);
+        
+        $path = public_path('/zip/').$filename;
+        var_dump($path);
+
+        \Zipper::make($path)->extractTo('HSDS');
+
+        
 
         $path = public_path('/HSDS/data/services.csv');
 
