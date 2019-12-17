@@ -198,7 +198,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
         Chumper\Zipper\ZipperServiceProvider::class,
-        Matthewbdaly\LaravelAzureStorage\AzureStorageServiceProvider::class,
+        // Matthewbdaly\LaravelAzureStorage\AzureStorageServiceProvider::class,
 
 
     ],
