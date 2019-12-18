@@ -11,7 +11,7 @@
 |
 */
 Route::auth();
-Route::get('/', ['uses' => 'HomeController@home']);
+
 Route::get('/home', function () {
     //return view('welcome');
     return redirect('/');
@@ -21,45 +21,46 @@ Route::get('/admin', function () {
     return redirect('/login');
 });
 
+Route::group(['middleware' => ['web', 'auth' ] ], function () {
+    Route::get('/', ['uses' => 'HomeController@home']);
+    Route::match(['get', 'post'], '/search', [
+        'uses'          => 'ExploreController@filter'
+    ]);
 
-Route::match(['get', 'post'], '/search', [
-    'uses'          => 'ExploreController@filter'
-]);
+    Route::get('/about', ['uses' => 'HomeController@about']);
+    Route::get('/feedback', ['uses' => 'HomeController@feedback']);
 
-Route::get('/about', ['uses' => 'HomeController@about']);
-Route::get('/feedback', ['uses' => 'HomeController@feedback']);
+    Route::get('/services', 'ServiceController@services');
+    Route::get('/service/{id}', 'ServiceController@service');
 
-Route::get('/services', 'ServiceController@services');
-Route::get('/service/{id}', 'ServiceController@service');
+    Route::get('/organizations', 'OrganizationController@organizations');
+    Route::get('/organization/{id}', 'OrganizationController@organization');
 
-Route::get('/organizations', 'OrganizationController@organizations');
-Route::get('/organization/{id}', 'OrganizationController@organization');
+    Route::get('/category/{id}', 'ServiceController@taxonomy');
 
-Route::get('/category/{id}', 'ServiceController@taxonomy');
+    Route::get('/services_near_me', 'ExploreController@geolocation');
 
-Route::get('/services_near_me', 'ExploreController@geolocation');
-
-Route::post('/filter', 'ExploreController@filter');
-Route::get('/filter', 'ExploreController@filter');
-
-
-
-// Route::post('/explore', 'ExploreController@index');
-Route::get('/profile/{id}', 'ExploreController@profile');
-Route::get('/explore/status_{id}', 'ExploreController@status');
-Route::get('/explore/district_{id}', 'ExploreController@district');
-Route::get('/explore/category_{id}', 'ExploreController@category');
-Route::get('/explore/cityagency_{id}', 'ExploreController@cityagency');
+    Route::post('/filter', 'ExploreController@filter');
+    Route::get('/filter', 'ExploreController@filter');
 
 
-//download pdf
-Route::get('/download_service/{id}', 'ServiceController@download');
-Route::get('/download_organization/{id}', 'OrganizationController@download');
 
-Route::get('tb_alt_taxonomy/all_terms', 'AltTaxonomyController@get_all_terms');
+    // Route::post('/explore', 'ExploreController@index');
+    Route::get('/profile/{id}', 'ExploreController@profile');
+    Route::get('/explore/status_{id}', 'ExploreController@status');
+    Route::get('/explore/district_{id}', 'ExploreController@district');
+    Route::get('/explore/category_{id}', 'ExploreController@category');
+    Route::get('/explore/cityagency_{id}', 'ExploreController@cityagency');
 
-Route::post('/range', 'ExploreController@filterValues1');
 
+    //download pdf
+    Route::get('/download_service/{id}', 'ServiceController@download');
+    Route::get('/download_organization/{id}', 'OrganizationController@download');
+
+    Route::get('tb_alt_taxonomy/all_terms', 'AltTaxonomyController@get_all_terms');
+
+    Route::post('/range', 'ExploreController@filterValues1');
+});
 
  Route::group(['middleware' => ['web', 'auth', 'permission'] ], function () {
         Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'home.dashboard']);
