@@ -108,6 +108,7 @@ Route::post('/range', 'ExploreController@filterValues1');
         Route::post('/csv_service_areas', ['uses' => 'AreaController@csv']);
 
         Route::post('/csv_zip', ['uses' => 'UploadController@zip']);
+        // Route::post('/csv_zip', ['uses' => 'UploadController@zip_cron']);
 
         //Route::get('/tb_projects', ['uses' => 'ProjectController@index']);
         Route::resource('tb_services', 'ServiceController');
