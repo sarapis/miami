@@ -16,10 +16,10 @@ Route::get('/home', function () {
     //return view('welcome');
     return redirect('/');
 });
-Route::get('/admin', function () {
-    //return view('welcome');
-    return redirect('/login');
-});
+// Route::get('/admin', function () {
+//     //return view('welcome');
+//     return redirect('/login');
+// });
 
 Route::group(['middleware' => ['web', 'auth' ] ], function () {
     Route::get('/', ['uses' => 'HomeController@home']);
