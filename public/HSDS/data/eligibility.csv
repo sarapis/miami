@@ -327,11 +327,11 @@ id,service_id,eligibility
 ,,Call for information
 ,,Physician referral is required. Call for restrictions and eligibility.
 ,,"* Meicaid or PAC Waiver eligible. \n* Be diagnosed with AIDS.\n* Be determined disabled according to Social Security standards.\n* Need and receive case management and one other service and have an enrolled PAC waiver case manager.\n* Have an GÇ£at risk of hospitalizationGÇ¥ or an GÇ£at risk of institutionalizationGÇ¥ nursing facility level of care determination.\n* Be able to remain safely in the home and community.\n* Have a completed PAC Waiver Enrollment Application, Level of Care from The Department of Elder Affairs (DOEA), Comprehensive Assessment and Review of Long Term Care Services (CARES)."
-,,Seniors 60 years or older
 ,,"Open to those who meet the application requirements, eligibility will be determined after initial interview"
 ,,"Open to those who meet the requirements during the application process, eligibility will be determined after initial interview"
 ,,"Low-income, frail, isolated elderly persons and refugees"
 ,,"Socially isolated, economically disadvantaged and disabled seniors 60 years old and up"
+,,Seniors 60 years or older
 ,,Individuals 18 years old and up.
 ,,Nurses practicing in Florida
 ,,Parents of children 3-18 years old
@@ -358,7 +358,7 @@ id,service_id,eligibility
 ,,Incarcerated men or women with income below 125% of poverty level.
 ,,Anyone with an inquiry or complaint
 ,,18 years old or younger
-,,*18 years old or older\n*Proof of income/ employed\n* 1 child in care\n* No pending DCF case
+,,18 years old or older\nProof of income/ employed\n1 child in care\nNo pending DCF case\nNo Service Dogs\nNo Domestic Violence incident ( Determined case by case basis)\nNo Issue of Chronic Homelessness
 ,,Homeless or disabled
 ,,Open to anyone with a mental health diagnoses
 ,,* Over age 18 with a major mental illness or a co-occurring disorder.\n* Resident of Miami-Dade County.\n* Minimum IQ of 70.\n* Compliant with physician's prescribed source of treatment.\n* Be cooperative and willing to admit him/herself voluntarily into the program.
@@ -1214,7 +1214,7 @@ id,service_id,eligibility
 ,,"Persons with Parkinson Disease, their care partners/givers, individuals with a neurological issue (MS, PSP, etc.)"
 ,,"Children are selected by their guidance counselor, school nurse, teacher, principal, staff member or Executive Director of a non-for profit organization serving the child.\n\nWe ask that the child write a thank you note or draw a picture of their new shoes and send their thank you to Laces of Love."
 ,,"Open to individuals, their families, caregivers, teachers, other providers of all ages and circumstances."
-,,"Must be:\n\n* A Collier County adult resident between 19-64 years old. \n* Able to provide proof of Collier County residency for at least 6 months prior to making application.\n* Must not have health insurance of any kind, are not eligible for Medicare, or Medicaid; and have an immediate medical need.\n* Individual and family income must be below 200% of Federal Poverty Guidelines.\n* U.S. citizenship is not needed."
+,,"Must be:\n\nA Collier County adult resident between 19-64 years old. \nAble to provide proof of Collier County residency for at least 6 months prior to making application.\nMust not have health insurance of any kind, are not eligible for Medicare, or Medicaid; and have an immediate medical need.\nIndividual and family income must be below 200% of Federal Poverty Guidelines.\nU.S. citizenship is not needed."
 ,,For children with disabilities between birth - 26 years old
 ,,"18-64 years old, who have epilepsy and who do not have insurance."
 ,,Financial screening to determine eligibility according to the Federal Poverty Guidelines
@@ -1537,8 +1537,8 @@ id,service_id,eligibility
 ,,"People in in the service, entertainment and sales industries who live year-round in the 33040 zip code."
 ,,Any person seeking information and/or support for Alzheimer's Disease and other dementias .
 ,,Individuals 0-21 years old
-,,"K-12 children may qualify for the INCOME-BASED FLORIDA TAX CREDIT SCHOLARSHIP if a family's household income qualifies for the free or reduced-price school lunch program (185% of the federal poverty guidelines), or if the family receives SNAP (food stamps), TANF, or FDPIR. Children entering kindergarten must be 5 years old on or before Sept. 1st and children entering first grade must be 6 years old on or before Sept. 1st.\n\nThe Gardiner Scholarship helps families customize education plans for their children with certain special needs and is available for qualified Florida students 3-22 years old. The scholarship covers over 15 diagnoses, including autism spectrum disorder, Down syndrome, intellectual disability, spina bifida and traumatic brain injury. Parents can direct scholarship money toward a combination of approved programs and providers that best meet their childrenGÇÖs unique learning needs. These include approved private schools, therapists, specialists, curriculum and technology-even a college savings account. Children must be 3 or 4 years old on or before Sept. 1st. Children entering kindergarten must be 5 years old on or before September 1 and children entering first grade must be 6 years old on or before Sept. 1st.\n\nThe Hope Scholarship: To qualify, the incident must have taken place at a public K-12 educational institution, any school-related or school-sponsored program or activity, or while riding on the school bus or waiting at the bus stop.\n\nThe Reading Scholarship Accounts offers parents access to educational savings accounts, worth $500 each, to pay for tuition and fees related to part-time tutoring, summer and after-school literacy programs, instructional materials and more. Students who are classified as English Language Learners (ELL) and who are enrolled in a program or receiving services that are specifically designed to meet the instructional needs of English Language Learner students are also eligible and will receive priority. \n\nChildren who are in foster care, in out-of-home care or who are homeless also may be eligible for either of these FOUR scholarships. Visit www.StepUpForStudents.org/211 to learn more."
 ,,The uninsured/under-insured.\nThose unable to afford private practice healthcare.\nThe homeless or working poor.
+,,"K-12 children may qualify for the INCOME-BASED FLORIDA TAX CREDIT SCHOLARSHIP if a family's household income qualifies for the free or reduced-price school lunch program (185% of the federal poverty guidelines), or if the family receives SNAP (food stamps), TANF, or FDPIR. Children entering kindergarten must be 5 years old on or before Sept. 1st and children entering first grade must be 6 years old on or before Sept. 1st.\n\nThe Gardiner Scholarship helps families customize education plans for their children with certain special needs and is available for qualified Florida students 3-22 years old. The scholarship covers over 15 diagnoses, including autism spectrum disorder, Down syndrome, intellectual disability, spina bifida and traumatic brain injury. Parents can direct scholarship money toward a combination of approved programs and providers that best meet their childrenGÇÖs unique learning needs. These include approved private schools, therapists, specialists, curriculum and technology-even a college savings account. Children must be 3 or 4 years old on or before Sept. 1st. Children entering kindergarten must be 5 years old on or before September 1 and children entering first grade must be 6 years old on or before Sept. 1st.\n\nThe Hope Scholarship: To qualify, the incident must have taken place at a public K-12 educational institution, any school-related or school-sponsored program or activity, or while riding on the school bus or waiting at the bus stop.\n\nThe Reading Scholarship Accounts offers parents access to educational savings accounts, worth $500 each, to pay for tuition and fees related to part-time tutoring, summer and after-school literacy programs, instructional materials and more. Students who are classified as English Language Learners (ELL) and who are enrolled in a program or receiving services that are specifically designed to meet the instructional needs of English Language Learner students are also eligible and will receive priority. \n\nChildren who are in foster care, in out-of-home care or who are homeless also may be eligible for either of these FOUR scholarships. Visit www.StepUpForStudents.org/211 to learn more."
 ,,"Adult clients within Monroe County who have developmental disabilities that include, cerebral palsy, spina bifida, Prader-Willi Syndrome, and traumatic brain injury sustained prior to age 18."
 ,,"Open to anyone in need, seniors, home bound"
 ,,Residents of Key West
@@ -1601,7 +1601,6 @@ id,service_id,eligibility
 ,,* Children 0-8 years old.\n* Some eligibility restrictions for specific programs.
 ,,* Lawyers interested in becoming members\n* Individuals looking for lawyer representation
 ,,"Children 10 years old into adulthood, couples and families"
-,,Must be a current client seeking information about Diabetes management.
 ,,Local residents or workers
 ,,Children 9-14 years old
 ,,"* Children and adults of all levels of intellectual functioning who have autism spectrum disorder.\n* Please see other important information at the ""Who we Serve"" tab at: http://card-usf.fmhi.usf.edu/about/card.html"
@@ -1643,7 +1642,6 @@ id,service_id,eligibility
 ,,Anyone in need of affordable healthcare
 ,,Participants must attend Redland Middle School.
 ,,Participants must attend Jorge Mas Canosa Middle School.
-,,Participants must attend Homestead Middle School.
 ,,"* 18-24 years old. \n* High school graduate or GED recipient.\n* Of low to moderate income.\n* A U.S. Citizen, permanent resident, or have an employment authorization card.\n* Available 5 days a week (Monday-Friday) for the full year of the program.\n* Highly motivated to learn new technical and professional skills.\n* Willing to work in a corporate environment in area of Business or Information Technology."
 ,,Children 0-5 years old living in Miami Dade County
 ,,Children ages 0-12 years old living in Miami Dade County
@@ -1680,7 +1678,7 @@ id,service_id,eligibility
 ,,Open to the public based on the following:\n\nIndividuals who: are having trouble paying their monthly bills; need help budgeting; need to file bankruptcy need credit counseling first; are seeking a reverse mortgage and some first time home buyers
 ,,Pregnant and parenting women that would like to receive education support and counseling
 ,,"Children, adolescents, adults, and families beginning at 6 years old. \n Appropriate for a private setting with the ability to pay service fees per insurance and/or self-pay."
-,,Children who are 4 years old on or before September 1st
+,,Children who are 4 years old
 ,,Kindergarten - 5th grade students
 ,,Children and youth 9-18 years old\nChildren and youth with disabilities accepted on a case by case basis. A meeting can be setup for more information.
 ,,Students must be 4 or 5 years old by September 1st
@@ -1756,7 +1754,7 @@ id,service_id,eligibility
 ,,Women of any age in an unplanned pregnancy
 ,,Any person(s) 18 years of age or older or any individual(s) doing business as a company may file a Small Claims case. \nA parent or guardian may file on behalf of a minor child (under age 18).
 ,,Decided upon a case by case basis
-,,Children in K - 3rd grade with or without disabilities
+,,Children in K-3rd grade
 ,,Open to residents in district 1.
 ,,Open to residents in district 2.
 ,,Open to residents in district 3.
@@ -1831,14 +1829,14 @@ id,service_id,eligibility
 ,,"Students attending specific MDCPS elementary, middle, and high schools"
 ,,Must attend Poinciana Park Elementary and fill out consent packet.
 ,,"Must attend Dr. Henry W. Mack/West Little River Elementary School in grades K-5th, children with or without disabilities"
+,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending Charles R. Hadley Elementary.\n\nChildren in 2nd grade depending on site needs."
+,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending E.W.F. Stirrup Elementary.\n\nChildren in 3rd-5th grades depending on site needs."
 ,,"* The child must attend Dr. Carlos J. Finlay Elementary School.\n* The child must be in 1st to 5th grade.\n* The child must be experiencing difficulties in one of these domains: behavior, academics, social skills.\n\nThings to keep in mind for parents:\n\n* The child must be able to be outside for sports and recreation period.\n* The child must be able to work in a group setting."
 ,,Female youth of different ages
 ,,Open to nonprofits and businesses
 ,,Rising K only with or without disabilities
 ,,"* Single men, single women, or mothers with children (girls - no age limit) and (boys - cannot be over 12 years old).\n\n* Must have a part time job or some form of supplemental income if will be staying all 90 days, for those who just need it for a day or two the shelter can work with them.\n\n* No sex-offenders"
 ,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending Coral Park Elementary.\n\nChildren in 3rd-5th grades depending on site needs."
-,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending Charles R. Hadley Elementary.\n\nChildren in 2nd grade depending on site needs."
-,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending E.W.F. Stirrup Elementary.\n\nChildren in 3rd-5th grades depending on site needs."
 ,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending Kendale Elementary.\n\nChildren in 3rd-5th grades, depending on site needs."
 ,,"Struggling Readers: Students who are reading below grade level in reading, have a learning disability and/or ESOL. \n\nPriority is given to children attending Sweetwater Elementary.\n\nChildren in 2nd-3rd grades, depending on site needs."
 ,,"Client must present social security card, a photo Identification Card, and W-2. If self employed, business financial records or receipts, for itemization."
@@ -1987,7 +1985,7 @@ id,service_id,eligibility
 ,,* Children 13-17 years old. \n* An initial clinical assessment is required to ensure PHP is the appropriate level of care.\n* A parent/caregiver must attend the family therapy sessions with their adolescent.\n* Most insurance is accepted. Preauthorization is required.
 ,,"Children, adolescents, and young adults 11-21 years old"
 ,,Children 16 years old and up into adulthood
-,,"Students Pre-K - 12th grade.\nNo specific eligibility requirements, but students will be assessed and evaluated for proper placement."
+,,"Students Pre-K - 12th grade.\nNo specific eligibility requirements, but students will be assessed and evaluated for proper placement.\n\nRe-entry Program: Veterans, Ex- felons, Homeless in transition."
 ,,"Children, with or without disabilities, must be on free/reduced lunch, must have completed Kindergarten and be actively enrolled at:\n\n* Sweetwater Elementary (held at Millers Pond)\n* South Miami Heights Elementary (held within school)\n* West Homestead K-8 Center (tbd)"
 ,,Grandparents raising grandchildren and relative caregivers 55 years old or older
 ,,Girls 5-13 years old with or without disabilities
@@ -2304,6 +2302,7 @@ id,service_id,eligibility
 ,,Children attending West Miami Middle School.
 ,,Families with children 0-17 years old
 ,,At least one person in your household participates in the Supplemental Nutrition Assistance Program (SNAP)\n\nYou live in one of the 21 states where AT&T provides wireline home Internet service.\n\nAt least one of the Access from AT&T Internet speed tiers is available at the address where you live.\n\nOther requirements also apply. Check service availability at your address and submit an application to see whether your household qualifies.
+,,"Service members, Veterans, Veteran families"
 ,,Anyone with an immigration related case
 ,,"Adults 18 years old and older, who suffer from alcoholism, addiction and co-occurring mental illness such as anxiety or depression."
 ,,Students 4-17 years old living in Sweetwater
@@ -2312,3 +2311,7 @@ id,service_id,eligibility
 ,,"The children must have some special need or disability. \n\nThey must be at least 8 years old and while we donGÇÖt have a fixed maximum age, we try to keep them to under 18 years old. \n\nThe children must be able to communicate their needs to the staff and counselors, go to the bathroom unassisted, eat unassisted, and not have any behavior issues. \n\nThe campers complete the same application as the school year participants, and they must be evaluated by the Program Director before they can be approved for camp. The application is under the Programs tab on our website."
 ,,6-14 years old with or without disabilities.
 ,,Adult residents of Coral Gables 21 years and above with disabilities
+,,"Seniors 62 years old and up who reside in the City of Miami.\n\nReside in an eligible subsidized property for low-income residents.\n\nHave a signed lease and be current on rent.\n\nReceive annual income that does not exceed 40% of the areaGÇÖs median income. (For a household of one, someone with an annual income of $23,750 or less would be eligible, and for a household of two, the maximum would be $27,120)\n\nSpend at least half of the householdGÇÖs income on rent."
+,,Anyone who wants to donate
+,,Jewish persons under 55 years old
+,,6-12 years old
