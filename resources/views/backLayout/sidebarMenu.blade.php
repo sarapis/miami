@@ -6,18 +6,6 @@
 
   <div class="clearfix"></div>
 
-  <!-- menu profile quick info -->
-<!--   <div class="profile">
-    <div class="profile_pic">
-      <a href="{{url('dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>NYC Services</span></a>
-    </div>
-    <div class="profile_info">
-      <span>Welcome,</span>
-      <h2>{{Sentinel::getUser()->first_name.' ' .Sentinel::getUser()->last_name }}</h2>
-    </div>
-  </div> -->
-  <!-- /menu profile quick info -->
-
   <br />
 
   <!-- sidebar menu -->

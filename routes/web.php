@@ -62,6 +62,8 @@ Route::group(['middleware' => ['web', 'auth' ] ], function () {
     Route::post('/range', 'ExploreController@filterValues1');
 });
 
+Route::resource('login_register_edit', 'EditLoginRegisterController');
+
  Route::group(['middleware' => ['web', 'auth', 'permission'] ], function () {
         Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'home.dashboard']);
 
