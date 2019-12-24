@@ -16,6 +16,7 @@ use App\Area;
 use App\Service;
 use App\Location;
 use App\Organization;
+use App\Contact;
 use App\Metafilter;
 use App\AutoSyncAirtable;
 use Illuminate\Http\Request;
@@ -210,6 +211,18 @@ class PagesController extends Controller
             unlink($path_csv_export.'organizations.csv');
         }
         rename($public_path.'organizations.csv', $path_csv_export.'organizations.csv');
+
+        $table_contact = Contact::all();        
+        $file_contact = fopen('contacts.csv', 'w');
+        fputcsv($file_contact, array('id', 'contact_recordid', 'contact_name', 'contact_organizations', 'contact_services', 'contact_title', 'contact_department', 'contact_email', 'contact_phones', 'contact_phone_areacode', 'contact_phone_extension', 'flag'));
+        foreach ($table_contact as $row) {
+            fputcsv($file_contact, $row->toArray());
+        }
+        fclose($file_contact);
+        if (file_exists($path_csv_export.'contacts.csv')) {
+            unlink($path_csv_export.'contacts.csv');
+        }
+        rename($public_path.'contacts.csv', $path_csv_export.'contacts.csv');
 
         return redirect('export');
     }
