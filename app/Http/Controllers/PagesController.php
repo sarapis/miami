@@ -15,6 +15,7 @@ use App\Address;
 use App\Area;
 use App\Service;
 use App\Location;
+use App\Organization;
 use App\Metafilter;
 use App\AutoSyncAirtable;
 use Illuminate\Http\Request;
@@ -180,7 +181,6 @@ class PagesController extends Controller
             fputcsv($file_service, $row->toArray());
         }
         fclose($file_service);
-
         if (file_exists($path_csv_export.'services.csv')) {
             unlink($path_csv_export.'services.csv');
         }
@@ -189,16 +189,27 @@ class PagesController extends Controller
 
         $table_location = Location::all();        
         $file_location = fopen('locations.csv', 'w');
-        fputcsv($file_location, array('id', 'slocation_recordid', 'location_name', 'location_organization', 'location_alternate_name', 'location_transportation', 'location_latitude', 'location_longitude', 'location_description', 'location_services', 'location_phones', 'location_details', 'location_schedule', 'location_address', 'flag'));
+        fputcsv($file_location, array('id', 'location_recordid', 'location_name', 'location_organization', 'location_alternate_name', 'location_transportation', 'location_latitude', 'location_longitude', 'location_description', 'location_services', 'location_phones', 'location_details', 'location_schedule', 'location_address', 'flag'));
         foreach ($table_location as $row) {
             fputcsv($file_location, $row->toArray());
         }
         fclose($file_location);
-
         if (file_exists($path_csv_export.'locations.csv')) {
             unlink($path_csv_export.'locations.csv');
         }
         rename($public_path.'locations.csv', $path_csv_export.'locations.csv');
+
+        $table_organization = Organization::all();        
+        $file_organization = fopen('organizations.csv', 'w');
+        fputcsv($file_organization, array('id', 'organization_recordid', 'organization_name', 'organization_alternate_name', 'organization_logo_x', 'organization_x_uid', 'organization_description', 'organization_email', 'organization_forms_x_filename', 'organization_forms_x_url', 'organization_url', 'organization_status_x', 'organization_status_sort', 'organization_legal_status', 'organization_tax_status', 'organization_tax_id', 'organization_year_incorporated', 'organization_services', 'organization_phones', 'organization_locations', 'organization_contact', 'organization_details', 'organization_airs_taxonomy_x', 'flag'));
+        foreach ($table_organization as $row) {
+            fputcsv($file_organization, $row->toArray());
+        }
+        fclose($file_organization);
+        if (file_exists($path_csv_export.'organizations.csv')) {
+            unlink($path_csv_export.'organizations.csv');
+        }
+        rename($public_path.'organizations.csv', $path_csv_export.'organizations.csv');
 
         return redirect('export');
     }
