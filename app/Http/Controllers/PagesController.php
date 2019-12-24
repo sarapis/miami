@@ -14,6 +14,7 @@ use App\Taxonomy;
 use App\Address;
 use App\Area;
 use App\Service;
+use App\Location;
 use App\Metafilter;
 use App\AutoSyncAirtable;
 use Illuminate\Http\Request;
@@ -180,10 +181,24 @@ class PagesController extends Controller
         }
         fclose($file_service);
 
-        if ($path_csv_export.'services.csv') {
+        if (file_exists($path_csv_export.'services.csv')) {
             unlink($path_csv_export.'services.csv');
         }
         rename($public_path.'services.csv', $path_csv_export.'services.csv');
+
+
+        $table_location = Location::all();        
+        $file_location = fopen('locations.csv', 'w');
+        fputcsv($file_location, array('id', 'slocation_recordid', 'location_name', 'location_organization', 'location_alternate_name', 'location_transportation', 'location_latitude', 'location_longitude', 'location_description', 'location_services', 'location_phones', 'location_details', 'location_schedule', 'location_address', 'flag'));
+        foreach ($table_location as $row) {
+            fputcsv($file_location, $row->toArray());
+        }
+        fclose($file_location);
+
+        if (file_exists($path_csv_export.'locations.csv')) {
+            unlink($path_csv_export.'locations.csv');
+        }
+        rename($public_path.'locations.csv', $path_csv_export.'locations.csv');
 
         return redirect('export');
     }
