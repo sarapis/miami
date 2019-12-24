@@ -13,6 +13,7 @@ use App\Layout;
 use App\Taxonomy;
 use App\Address;
 use App\Area;
+use App\Service;
 use App\Metafilter;
 use App\AutoSyncAirtable;
 use Illuminate\Http\Request;
@@ -163,6 +164,28 @@ class PagesController extends Controller
     public function export()
     {
         return view('backEnd.pages.export');
+    }
+
+    public function export_hsds_zip_file()
+    {
+
+        $path_csv_export = public_path('/csv_export/');
+        $public_path = public_path('/');
+
+        $table_service = Service::all();        
+        $file_service = fopen('services.csv', 'w');
+        fputcsv($file_service, array('id', 'service_recordid', 'service_name', 'service_alternate_name', 'service_organization', 'service_description', 'service_locations', 'service_url', 'service_program', 'service_email', 'service_status', 'service_taxonomy', 'service_application_process', 'service_wait_time', 'service_fees', 'service_accreditations', 'service_licenses', 'service_phones'));
+        foreach ($table_service as $row) {
+            fputcsv($file_service, $row->toArray());
+        }
+        fclose($file_service);
+
+        if ($path_csv_export.'services.csv') {
+            unlink($path_csv_export.'services.csv');
+        }
+        rename($public_path.'services.csv', $path_csv_export.'services.csv');
+
+        return redirect('export');
     }
 
     public function metafilter()

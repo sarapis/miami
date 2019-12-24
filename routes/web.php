@@ -156,6 +156,8 @@ Route::post('/range', 'ExploreController@filterValues1');
         
         Route::get('/import', ['uses' => 'PagesController@import']);
         Route::get('/export', ['uses' => 'PagesController@export']);
+        Route::get('/export_hsds_zip_file', ['uses' => 'PagesController@export_hsds_zip_file']);
+
         Route::get('/meta_filter', ['uses' => 'PagesController@metafilter']);
         Route::post('/meta/{id}', 'PagesController@metafilter_save');
 

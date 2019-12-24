@@ -101,7 +101,7 @@ class UploadController extends Controller
             
             $service = new Service();
 
-            $service->service_recordid= $row['id'];
+            $service->service_recordid = $row['id'];
             $service->service_name = $row['name']!='NULL'?$row['name']:null;
 
             if($row['organization_id']){
@@ -277,7 +277,7 @@ class UploadController extends Controller
 
             $contact = new Contact();
 
-            $contact->contact_recordid= $row['id'];
+            $contact->contact_recordid = $row['id'];
             $contact->contact_services = $row['service_id']!='NULL'?$row['service_id']:null;
 
             if($row['service_id']){
@@ -668,8 +668,6 @@ class UploadController extends Controller
             $accessibility->accessibility_details =$row['details']!='NULL'?$row['details']:null;
             ;       
             $accessibility->save();
-
-           
         }
 
         $date = date("Y/m/d H:i:s");

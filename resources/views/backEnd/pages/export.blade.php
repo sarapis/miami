@@ -25,7 +25,8 @@ Export
           <div class="x_content">
             <div class="form-horizontal form-label-left">
               <div class="item form-group">
-                <button class="btn btn-primary"><a href="/zip/datapackage.zip" style="color: white;" download>Download HSDS Zip File</a></button>
+                <button class="btn btn-primary"><a href="/export_hsds_zip_file" style="color: white;">Download HSDS Zip File</a></button>
+               <!--  <button class="btn btn-primary"><a href="/zip/datapackage.zip" style="color: white;" download>Download HSDS Zip File</a></button> -->
               </div>
             </div>
 
