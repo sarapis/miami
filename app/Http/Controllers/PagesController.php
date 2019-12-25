@@ -177,7 +177,7 @@ class PagesController extends Controller
     public function export_hsds_zip_file()
     {
 
-        $path_csv_export = public_path('/csv_export/');
+        $path_csv_export = public_path('/csv_export/datapackage/');
         $public_path = public_path('/');
 
         $table_service = Service::all();        
@@ -301,8 +301,23 @@ class PagesController extends Controller
         }
         rename($public_path.'accessibility_for_disabilities.csv', $path_csv_export.'accessibility_for_disabilities.csv');
 
-        
-        return redirect('export');
+        $zip_file = 'datapackage.zip';
+        $zip = new \ZipArchive();
+        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        $path = $path_csv_export;
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        foreach ($files as $name => $file)
+        {
+            // We're skipping all subfolders
+            if (!$file->isDir()) {
+                $filePath     = $file->getRealPath();
+                $relativePath = 'datapackage/' . substr($filePath, strlen($path));
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+        $zip->close();
+        return response()->download($zip_file);
     }
 
     public function metafilter()
