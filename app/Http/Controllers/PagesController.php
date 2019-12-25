@@ -12,6 +12,8 @@ use App\CSV_Source;
 use App\Layout;
 use App\Taxonomy;
 use App\Servicetaxonomy;
+use App\Servicelocation;
+use App\Accessibility;
 use App\Address;
 use App\Area;
 use App\Service;
@@ -287,6 +289,19 @@ class PagesController extends Controller
         }
         rename($public_path.'services_taxonomy.csv', $path_csv_export.'services_taxonomy.csv');
 
+        $table_accessibility = Accessibility::all();        
+        $file_accessibility = fopen('accessibility_for_disabilities.csv', 'w');
+        fputcsv($file_accessibility, array('id', 'accessibility_recordid', 'accessibility', 'accessibility_details'));
+        foreach ($table_accessibility as $row) {
+            fputcsv($file_accessibility, $row->toArray());
+        }
+        fclose($file_accessibility);
+        if (file_exists($path_csv_export.'accessibility_for_disabilities.csv')) {
+            unlink($path_csv_export.'accessibility_for_disabilities.csv');
+        }
+        rename($public_path.'accessibility_for_disabilities.csv', $path_csv_export.'accessibility_for_disabilities.csv');
+
+        
         return redirect('export');
     }
 
