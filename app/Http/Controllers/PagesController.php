@@ -11,12 +11,15 @@ use App\Airtables;
 use App\CSV_Source;
 use App\Layout;
 use App\Taxonomy;
+use App\Servicetaxonomy;
 use App\Address;
 use App\Area;
 use App\Service;
 use App\Location;
+use App\Language;
 use App\Organization;
 use App\Contact;
+use App\Phone;
 use App\Metafilter;
 use App\AutoSyncAirtable;
 use Illuminate\Http\Request;
@@ -223,6 +226,66 @@ class PagesController extends Controller
             unlink($path_csv_export.'contacts.csv');
         }
         rename($public_path.'contacts.csv', $path_csv_export.'contacts.csv');
+
+        $table_phone = Phone::all();        
+        $file_phone = fopen('phones.csv', 'w');
+        fputcsv($file_phone, array('id', 'phone_recordid', 'phone_number', 'phone_locations', 'phone_services', 'phone_organizations', 'phone_contacts', 'phone_extension', 'phone_type', 'phone_language', 'phone_description', 'phone_schedule', 'flag'));
+        foreach ($table_phone as $row) {
+            fputcsv($file_phone, $row->toArray());
+        }
+        fclose($file_phone);
+        if (file_exists($path_csv_export.'phones.csv')) {
+            unlink($path_csv_export.'phones.csv');
+        }
+        rename($public_path.'phones.csv', $path_csv_export.'phones.csv');
+
+        $table_address = Address::all();        
+        $file_address = fopen('physical_addresses.csv', 'w');
+        fputcsv($file_address, array('id', 'address_recordid', 'address_1', 'address_2', 'address_city', 'address_state_province', 'address_postal_code', 'address_region', 'address_country', 'address_attention', 'address_type', 'address_locations', 'address_services', 'address_organization', 'flag'));
+        foreach ($table_address as $row) {
+            fputcsv($file_address, $row->toArray());
+        }
+        fclose($file_address);
+        if (file_exists($path_csv_export.'physical_addresses.csv')) {
+            unlink($path_csv_export.'physical_addresses.csv');
+        }
+        rename($public_path.'physical_addresses.csv', $path_csv_export.'physical_addresses.csv');
+
+        $table_language = Language::all();        
+        $file_language = fopen('languages.csv', 'w');
+        fputcsv($file_language, array('id', 'language_recordid', 'language_location', 'language_service', 'language', 'flag'));
+        foreach ($table_language as $row) {
+            fputcsv($file_language, $row->toArray());
+        }
+        fclose($file_language);
+        if (file_exists($path_csv_export.'languages.csv')) {
+            unlink($path_csv_export.'languages.csv');
+        }
+        rename($public_path.'languages.csv', $path_csv_export.'languages.csv');
+
+        $table_taxonomy = Taxonomy::all();        
+        $file_taxonomy = fopen('taxonomy.csv', 'w');
+        fputcsv($file_taxonomy, array('id', 'taxonomy_recordid', 'taxonomy_name', 'taxonomy_parent_name', 'taxonomy_grandparent_name', 'taxonomy_vocabulary', 'taxonomy_x_description', 'taxonomy_x_notes', 'taxonomy_services', 'taxonomy_parent_recordid', 'taxonomy_facet', 'category_id', 'taxonomy_id', 'flag'));
+        foreach ($table_taxonomy as $row) {
+            fputcsv($file_taxonomy, $row->toArray());
+        }
+        fclose($file_taxonomy);
+        if (file_exists($path_csv_export.'taxonomy.csv')) {
+            unlink($path_csv_export.'taxonomy.csv');
+        }
+        rename($public_path.'taxonomy.csv', $path_csv_export.'taxonomy.csv');
+
+        $table_servicetaxonomy = Servicetaxonomy::all();        
+        $file_servicetaxonomy = fopen('services_taxonomy.csv', 'w');
+        fputcsv($file_servicetaxonomy, array('id', 'service_recordid', 'taxonomy_recordid', 'taxonomy_id', 'taxonomy_detail'));
+        foreach ($table_servicetaxonomy as $row) {
+            fputcsv($file_servicetaxonomy, $row->toArray());
+        }
+        fclose($file_servicetaxonomy);
+        if (file_exists($path_csv_export.'services_taxonomy.csv')) {
+            unlink($path_csv_export.'services_taxonomy.csv');
+        }
+        rename($public_path.'services_taxonomy.csv', $path_csv_export.'services_taxonomy.csv');
 
         return redirect('export');
     }
