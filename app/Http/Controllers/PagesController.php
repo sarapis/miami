@@ -303,7 +303,7 @@ class PagesController extends Controller
 
         $table_accessibility = Accessibility::all();        
         $file_accessibility = fopen('accessibility_for_disabilities.csv', 'w');
-        fputcsv($file_accessibility, array('ID', 'id', 'accessibility_location', 'accessibility', 'details'));
+        fputcsv($file_accessibility, array('ID', 'id', 'location_id', 'accessibility', 'details'));
         foreach ($table_accessibility as $row) {
             fputcsv($file_accessibility, $row->toArray());
         }
