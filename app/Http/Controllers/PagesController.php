@@ -289,6 +289,18 @@ class PagesController extends Controller
         }
         rename($public_path.'services_taxonomy.csv', $path_csv_export.'services_taxonomy.csv');
 
+        $table_servicelocation = Servicelocation::all();        
+        $file_servicelocation = fopen('services_at_location.csv', 'w');
+        fputcsv($file_servicelocation, array('ID', 'location_id', 'service_id'));
+        foreach ($table_servicelocation as $row) {
+            fputcsv($file_servicelocation, $row->toArray());
+        }
+        fclose($file_servicelocation);
+        if (file_exists($path_csv_export.'services_at_location.csv')) {
+            unlink($path_csv_export.'services_at_location.csv');
+        }
+        rename($public_path.'services_at_location.csv', $path_csv_export.'services_at_location.csv');
+
         $table_accessibility = Accessibility::all();        
         $file_accessibility = fopen('accessibility_for_disabilities.csv', 'w');
         fputcsv($file_accessibility, array('ID', 'id', 'accessibility_location', 'accessibility', 'details'));
