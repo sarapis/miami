@@ -66,7 +66,8 @@ class UploadController extends Controller
         $filename =  $request->file('file_zip')->getClientOriginalName();
         $request->file('file_zip')->move(public_path('/zip/'), $filename);
 
-        $path = public_path('/HSDS/data/services.csv');
+        // $path = public_path('/HSDS/data/services.csv');
+        $path = public_path('/HSDS/datapackage/services.csv');
 
         if (!file_exists($path)) 
         {
@@ -89,7 +90,6 @@ class UploadController extends Controller
 
         Service::truncate();
         Serviceorganization::truncate();
-
     
         foreach ($csv_data as $row) {
             
@@ -136,7 +136,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //locations.csv
-        $path = public_path('/HSDS/data/locations.csv');
+        $path = public_path('/HSDS/datapackage/locations.csv');
 
         if (!file_exists($path)) 
         {
@@ -188,7 +188,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //organizations.csv
-        $path = public_path('/HSDS/data/organizations.csv');
+        $path = public_path('/HSDS/datapackage/organizations.csv');
 
         if (!file_exists($path)) 
         {
@@ -242,7 +242,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //contacts.csv
-        $path = public_path('/HSDS/data/contacts.csv');
+        $path = public_path('/HSDS/datapackage/contacts.csv');
 
         if (!file_exists($path)) 
         {
@@ -305,7 +305,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //phones.csv
-        $path = public_path('/HSDS/data/phones.csv');
+        $path = public_path('/HSDS/datapackage/phones.csv');
 
         if (!file_exists($path)) 
         {
@@ -374,7 +374,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //physical_addresses.csv
-        $path = public_path('/HSDS/data/physical_addresses.csv');
+        $path = public_path('/HSDS/datapackage/physical_addresses.csv');
 
         if (!file_exists($path)) 
         {
@@ -444,7 +444,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //languages.csv
-        $path = public_path('/HSDS/data/languages.csv');
+        $path = public_path('/HSDS/datapackage/languages.csv');
 
         if (!file_exists($path)) 
         {
@@ -490,7 +490,7 @@ class UploadController extends Controller
 
 
         //taxonomy.csv
-        $path = public_path('/HSDS/data/taxonomy.csv');
+        $path = public_path('/HSDS/datapackage/taxonomy.csv');
 
         if (!file_exists($path)) 
         {
@@ -541,7 +541,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //services_taxonomy.csv
-        $path = public_path('/HSDS/data/services_taxonomy.csv');
+        $path = public_path('/HSDS/datapackage/services_taxonomy.csv');
 
         if (!file_exists($path)) 
         {
@@ -586,7 +586,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //services_at_location.csv
-        $path = public_path('/HSDS/data/services_at_location.csv');
+        $path = public_path('/HSDS/datapackage/services_at_location.csv');
 
         if (!file_exists($path)) 
         {
@@ -628,7 +628,7 @@ class UploadController extends Controller
         $csv_source->save();
 
         //accessibility_for_disabilities.csv
-        $path = public_path('/HSDS/data/accessibility_for_disabilities.csv');
+        $path = public_path('/HSDS/datapackage/accessibility_for_disabilities.csv');
 
         if (!file_exists($path)) 
         {
