@@ -1,4 +1,4 @@
-id,address_recordid,address_1,address_2,address_city,address_state_province,address_postal_code,address_region,address_country,address_attention,address_type,address_locations,address_services,address_organization,flag
+ID,id,address_1,address_2,city,state_province,postal_code,region,country,attention,address_type,location_id,address_services,organization_id,flag
 1,0,"11711 W 79th Street",,Lenexa,"KS ",66214,,"US ",,,0,,,
 2,1,"735 NE 125th Street",,"North Miami","FL ",33161,,"   ",,,1,,,
 3,17,"12975 W Okeechobee Road","Unit 4","Hialeah Gardens","FL ",33018,,"   ",,,17,,,

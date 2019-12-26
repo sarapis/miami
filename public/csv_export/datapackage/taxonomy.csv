@@ -1,4 +1,4 @@
-id,taxonomy_recordid,taxonomy_name,taxonomy_parent_name,taxonomy_grandparent_name,taxonomy_vocabulary,taxonomy_x_description,taxonomy_x_notes,taxonomy_services,taxonomy_parent_recordid,taxonomy_facet,category_id,taxonomy_id,flag
+ID,id,name,parent_name,taxonomy_grandparent_name,vocabulary,taxonomy_x_description,taxonomy_x_notes,taxonomy_services,parent_id,taxonomy_facet,category_id,taxonomy_id,flag
 1,1,"Gay/Lesbian/Bisexual/Transgender Support Groups","Individual and Family Life","LGBTQ Services","Open211 Miami - AIRS",,,,P,"Organization/Facility Type",PN-8100.4500-240,PN-8100.4500-240,modified
 2,2,"Food Stamps/SNAP Applications","Income Support and Employment","After School Programs","Open211 Miami - AIRS",,,,N,"Named Programs",NL-6000.2000-220,NL-6000.2000-220,modified
 3,3,"Training and Employment Programs","Income Support and Employment",,"Open211 Miami - AIRS",,,,N,Service,ND-6500,ND-6500,

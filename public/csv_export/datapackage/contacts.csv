@@ -1,4 +1,4 @@
-id,contact_recordid,contact_name,contact_organizations,contact_services,contact_title,contact_department,contact_email,contact_phones,contact_phone_areacode,contact_phone_extension,flag
+ID,id,name,organization_id,service_id,title,department,email,phone_number,phone_areacode,phone_extension,flag
 1,0,"Janet Winston",,,"Senior Support Specialist",,,"318-213-8780 x310",318,310,
 2,1,"Fred Stock",,1,CEO,,fstock@jcsfl.org,305-899-1587,305,,
 3,17,"Yeny Lara",,17,Administrator,,info@xclusiveseniorcenter.com,305-820-0805,305,,
