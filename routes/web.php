@@ -39,10 +39,10 @@ Route::get('/category/{id}', 'ServiceController@taxonomy');
 
 Route::get('/services_near_me', 'ExploreController@geolocation');
 
-Route::post('/filter', 'ExploreController@filter');
+Route::post('/filter', 'ExploreControtller@filter');
 Route::get('/filter', 'ExploreController@filter');
 
-Route::post('/datapackages', 'PagesController@datapackages');
+Route::get('/datapackages', 'PagesController@datapackages');
 
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');
