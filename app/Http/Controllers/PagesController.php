@@ -18,6 +18,7 @@ use App\Address;
 use App\Area;
 use App\Service;
 use App\Location;
+use App\Hsdsapikey;
 use App\Language;
 use App\Organization;
 use App\Contact;
@@ -171,7 +172,18 @@ class PagesController extends Controller
 
     public function export()
     {
-        return view('backEnd.pages.export');
+        $hsds_api_key = Hsdsapikey::find(1);
+        $url_path = 'http://23.96.85.224/datapackages?auth_key='.$hsds_api_key->hsds_api_key;
+        return view('backEnd.pages.export', compact('hsds_api_key', 'url_path'));
+    }
+
+    public function update_hsds_api_key(Request $request)
+    {
+        $hsds_api_key = Hsdsapikey::find(1);
+        $new_hsds_api_key = $request->input('import_hsds_api_key');
+        $hsds_api_key->hsds_api_key = $new_hsds_api_key;
+        $hsds_api_key->save();
+        return redirect('export');
     }
 
     public function export_hsds_zip_file()
@@ -334,9 +346,9 @@ class PagesController extends Controller
 
     public function datapackages(Request $request)
     {
-
-        
-        if ($request->input('auth_key') == 'aksflak601KKKSS1050A0A')
+        $hsds_api_key = Hsdsapikey::find(1);
+        $auth_key = $hsds_api_key->hsds_api_key;
+        if ($request->input('auth_key') == $auth_key)
         {
             $path_csv_export = public_path('/csv_export/datapackage/');
             $public_path = public_path('/');

@@ -162,6 +162,7 @@ Route::post('/range', 'ExploreController@filterValues1');
 
         Route::get('/meta_filter', ['uses' => 'PagesController@metafilter']);
         Route::post('/meta/{id}', 'PagesController@metafilter_save');
+        Route::post('/update_hsds_api_key', 'PagesController@update_hsds_api_key');
 
         Route::post('/taxonomy_filter', 'PagesController@taxonomy_filter');
         Route::post('/postal_code_filter', 'PagesController@postal_filter');
