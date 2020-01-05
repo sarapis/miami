@@ -49,13 +49,16 @@ Export
             <div class="form-horizontal form-label-left">
               <div class="item form-group">
                 <h6>
+                  Request Method: GET
+                </h6>
+                <h6>
                   URL Path:  <a href="http://23.96.85.224/datapackages?auth_key=aksflak601KKKSS1050A0A" style="color: #027bff;"> http://23.96.85.224/datapackages?auth_key=aksflak601KKKSS1050A0A</a>
                 </h6>
                 <h6>
-                  Request Method: GET
+                  Username: NA - leave this field blank
                 </h6>  
                 <h6>
-                  Authorization Key: aksflak601KKKSS1050A0A
+                  Key: aksflak601KKKSS1050A0A
                 </h6>      
               </div>
             </div>
