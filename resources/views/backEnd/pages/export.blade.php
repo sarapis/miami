@@ -32,15 +32,31 @@ Export
 
             <div class="form-horizontal form-label-left">
               <div class="item form-group">
-                <h5>
+                <h6>
                   The downloaded HSDS Zip file will be available to use as a import file for other project with API format like below:
-                </h5>
+                </h6>
                 <p for="datapackages_url_example" style="font-style: italic; color: grey;"> 
                   <a href="http://23.96.85.224/datapackages?auth_key=aksflak601KKKSS1050A0A" style="color: #027bff;"> http://23.96.85.224/datapackages?auth_key=aksflak601KKKSS1050A0A</a>
                   </p>
-                <h5>
-                  The request method is "GET".
-                </h5>        
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_content">
+            <div class="form-horizontal form-label-left">
+              <div class="item form-group">
+                <h6>
+                  URL Path:  <a href="http://23.96.85.224/datapackages?auth_key=aksflak601KKKSS1050A0A" style="color: #027bff;"> http://23.96.85.224/datapackages?auth_key=aksflak601KKKSS1050A0A</a>
+                </h6>
+                <h6>
+                  Request Method: GET
+                </h6>  
+                <h6>
+                  Authorization Key: aksflak601KKKSS1050A0A
+                </h6>      
               </div>
             </div>
           </div>
