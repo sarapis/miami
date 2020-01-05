@@ -17,6 +17,7 @@ use App\Accessibility;
 use App\Address;
 use App\Area;
 use App\Service;
+use App\Schedule;
 use App\Location;
 use App\Hsdsapikey;
 use App\Language;
@@ -325,6 +326,18 @@ class PagesController extends Controller
         }
         rename($public_path.'accessibility_for_disabilities.csv', $path_csv_export.'accessibility_for_disabilities.csv');
 
+        $table_schedule = Schedule::all();        
+        $file_schedule = fopen('regular_schedules.csv', 'w');
+        fputcsv($file_schedule, array('ID', 'schedule_recordid', 'schedule_id', 'service_id', 'location_id', 'schedule_x_phones', 'weekday', 'opens_at', 'closes_at', 'holiday', 'start_date', 'end_date', 'original_text', 'Schedule_closed', 'flag'));
+        foreach ($table_schedule as $row) {
+            fputcsv($file_schedule, $row->toArray());
+        }
+        fclose($file_schedule);
+        if (file_exists($path_csv_export.'regular_schedules.csv')) {
+            unlink($path_csv_export.'regular_schedules.csv');
+        }
+        rename($public_path.'regular_schedules.csv', $path_csv_export.'regular_schedules.csv');
+
         $zip_file = 'datapackage.zip';
         $zip = new \ZipArchive();
         $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
@@ -485,6 +498,18 @@ class PagesController extends Controller
                 unlink($path_csv_export.'accessibility_for_disabilities.csv');
             }
             rename($public_path.'accessibility_for_disabilities.csv', $path_csv_export.'accessibility_for_disabilities.csv');
+
+            $table_schedule = Schedule::all();        
+            $file_schedule = fopen('regular_schedules.csv', 'w');
+            fputcsv($file_schedule, array('ID', 'schedule_recordid', 'schedule_id', 'service_id', 'location_id', 'schedule_x_phones', 'weekday', 'opens_at', 'closes_at', 'holiday', 'start_date', 'end_date', 'original_text', 'Schedule_closed', 'flag'));
+            foreach ($table_schedule as $row) {
+                fputcsv($file_schedule, $row->toArray());
+            }
+            fclose($file_schedule);
+            if (file_exists($path_csv_export.'regular_schedules.csv')) {
+                unlink($path_csv_export.'regular_schedules.csv');
+            }
+            rename($public_path.'regular_schedules.csv', $path_csv_export.'regular_schedules.csv');
 
             $zip_file = 'datapackage.zip';
             $zip = new \ZipArchive();
