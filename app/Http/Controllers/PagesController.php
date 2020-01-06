@@ -174,7 +174,7 @@ class PagesController extends Controller
     public function export()
     {
         $hsds_api_key = Hsdsapikey::find(1);
-        $url_path = 'http://54.188.13.222/datapackages?auth_key='.$hsds_api_key->hsds_api_key;
+        $url_path = 'http://34.222.120.131/datapackages?auth_key='.$hsds_api_key->hsds_api_key;
         return view('backEnd.pages.export', compact('hsds_api_key', 'url_path'));
     }
 
