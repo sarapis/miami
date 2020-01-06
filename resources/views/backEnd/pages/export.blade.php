@@ -25,16 +25,19 @@ Export
           <div class="x_content">
             <div class="form-horizontal form-label-left">
               <div class="item form-group">
+                <h4><b>HSDS Zip File</b></h4>
+                <h6><b>Download all your directory service data into the Open Referral Human Services Datsa Standard by clicking the button below.</b></h6>
                 <a class="btn btn-primary" href="/export_hsds_zip_file">Download HSDS Zip File</a>
               </div>
             </div>
 
-            <div class="form-horizontal form-label-left">
+            <div class="form-horizontal form-label-left">              
               <form class="edit-hsds-api-key" action="/update_hsds_api_key" method="POST">
                 {{ csrf_field() }}
                 <div class="item form-group">
+                  <h4><b>HSDS Zip API</b></h4>
+                  <h6><b>Access the HSDS Zip file via API using the authentication key below</b></h6>
                   <label for="import_hsds_api_key_input">Authorization Key</label>
-                  <p for="import_hsds_api_key_example" style="font-style: italic; color: grey;">   Example: aksflak601KKKSS1050A0A</p>
                   <input class="form-control" type="text" name="import_hsds_api_key" id="import_csv_api_key" value="{{$hsds_api_key->hsds_api_key}}" />
                   <p id="validation-hsds-api-key" style="font-style: italic; color: red;">Authorization Key is required.</p>
                 </div>
@@ -43,33 +46,35 @@ Export
               </form>
               <div class="item form-group">
                 <h6>
-                  The downloaded HSDS Zip file will be available to use as a import file for other project with API format like below:
+                  <b>
+                    You can use a GET request and the following endpoint to access the data: 
+                  </b>
                 </h6>
                 <p for="datapackages_url_example" style="font-style: italic; color: grey;"> 
                   <a href="{{$url_path}}" style="color: #027bff;"> {{$url_path}}</a>
                   </p>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-          <div class="x_content">
+
             <div class="form-horizontal form-label-left">
               <div class="item form-group">
-                <h6>
-                  Request Method: GET
-                </h6>
-                <h6>
-                  URL Path:  <a href="{{$url_path}}" style="color: #027bff;"> {{$url_path}}</a>
-                </h6>
-                <h6>
-                  Username: NA - leave this field blank
-                </h6>  
-                <h6>
-                  Key: aksflak601KKKSS1050A0A
-                </h6>      
+                <h6><b>Download all your directory service data into the Open Referral Human Services Datsa Standard by clicking the button below.</b></h6>
+                <div class="form-horizontal form-label-left">
+                  <div class="item form-group">
+                    <h6>
+                      <b>Request Method:</b> GET
+                    </h6>
+                    <h6>
+                      <b>URL Path:</b>  <a href="{{$url_path}}" style="color: #027bff;"> {{$url_path}}</a>
+                    </h6>
+                    <h6>
+                      <b>Username:</b> NA - leave this field blank
+                    </h6>  
+                    <h6>
+                      <b>Key:</b> aksflak601KKKSS1050A0A
+                    </h6>      
+                  </div>
+                </div>
               </div>
             </div>
           </div>
