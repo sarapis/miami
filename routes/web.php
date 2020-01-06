@@ -43,7 +43,7 @@ Route::group(['middleware' => ['web', 'auth' ] ], function () {
     Route::post('/filter', 'ExploreController@filter');
     Route::get('/filter', 'ExploreController@filter');
 
-
+    Route::get('/datapackages', 'PagesController@datapackages');
 
     // Route::post('/explore', 'ExploreController@index');
     Route::get('/profile/{id}', 'ExploreController@profile');
