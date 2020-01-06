@@ -58,7 +58,7 @@ Export
 
             <div class="form-horizontal form-label-left">
               <div class="item form-group">
-                <h6><b>Download all your directory service data into the Open Referral Human Services Datsa Standard by clicking the button below.</b></h6>
+                <h6><b>If you’re using ORServices’ built in API import feature, input the following into the import page’s fields:</b></h6>
                 <div class="form-horizontal form-label-left">
                   <div class="item form-group">
                     <h6>
