@@ -37,7 +37,6 @@
             <li><a href="/meta_filter">Meta Filter</a></li>
             <li><a href="/campaigns">Campaigns</a></li>
             <li><a href="/analytics">Analytics</a></li>
-           <!--  <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li> -->
           </ul>
         </li>
         <li><a><i class="fa fa-line-chart"></i> Taxonomies <span class="fa fa-chevron-down"></span></a>
@@ -54,7 +53,6 @@
         <li><a><i class="fa fa-database"></i> Datasync <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="/import">Import</a></li>
-            <!-- <li><a href="/home_edit">Home</a></li> -->
             <li><a href="/export">Export</a></li>
           </ul>
         </li>
