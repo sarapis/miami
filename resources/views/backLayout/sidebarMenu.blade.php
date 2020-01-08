@@ -28,16 +28,19 @@
         <li><a><i class="fa fa-table"></i> Settings <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="/layout_edit">Appearance</a></li>        
-            <li><a href="/map">Map</a></li> 
+            <li><a href="/map">Map</a></li>
+            <li><a href="/sections">Sections</a></li> 
           </ul>
         </li>
         <li><a><i class="fa fa-gears"></i> Tools <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="/meta_filter">Meta Filter</a></li>
-            <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li>
+            <li><a href="/campaigns">Campaigns</a></li>
+            <li><a href="/analytics">Analytics</a></li>
+           <!--  <li><a href="/tb_alt_taxonomy">Alt Taxonomy</a></li> -->
           </ul>
         </li>
-        <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>      
+        <!-- <li><a href="/analytics"><i class="fa fa-line-chart"></i> Analytics</a>       -->
         <li><a><i class="fa fa-database"></i> Datasync <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="/import">Import</a></li>
