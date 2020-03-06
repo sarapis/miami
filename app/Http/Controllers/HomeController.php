@@ -70,10 +70,10 @@ class HomeController extends Controller
             //     array_push($parent_taxonomy_data, $child_data);
             // }
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
-        }
+        } 
         
 
-        return view('frontEnd.home', compact('home', 'map', 'grandparent_taxonomies', 'taxonomy_name_list'))->with('taxonomy_tree', $taxonomy_tree);
+        return view('frontEnd.home', compact('home', 'map', 'grandparent_taxonomies'))->with('taxonomy_tree', $taxonomy_tree);
     }
 
     public function about($value ='')

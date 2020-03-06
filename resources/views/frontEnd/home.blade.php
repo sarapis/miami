@@ -94,80 +94,84 @@ Home
                             @if(!isset($taxonomy_tree['parent_taxonomies']))
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                     @foreach($taxonomy_tree as $key2 => $grandparent_taxonomy)
-                                        @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
-                                        @if ($key2 % 2 == 0)
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}} </a>
-                                                </div>
-                                                <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <ul class="tree1">
-                                                            @foreach($grandparent_taxonomy['parent_taxonomies'] as $key3 => $parent_taxonomy)
-                                                                @if ($parent_taxonomy['child_taxonomies'] != "")
-                                                                <li>
-                                                                    <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
-                                                                    
-                                                                        <ul>
-                                                                            @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
-                                                                                <li>
-                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
-                                                                                </li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    
-                                                                </li>
-                                                                @else
-                                                                <li>
-                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_recordid}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
-                                                                </li>
-                                                                @endif
-                                                            @endforeach
-                                                        </ul>
+                                        @if (isset($grandparent_taxonomy['service_count']))
+                                            @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
+                                            @if ($key2 % 2 == 0)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
+                                                        <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}} </a>
+                                                    </div>
+                                                    <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <ul class="tree1">
+                                                                @foreach($grandparent_taxonomy['parent_taxonomies'] as $key3 => $parent_taxonomy)
+                                                                    @if ($parent_taxonomy['child_taxonomies'] != "")
+                                                                    <li>
+                                                                        <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
+                                                                        
+                                                                            <ul>
+                                                                                @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
+                                                                                    <li>
+                                                                                        <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    </li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        
+                                                                    </li>
+                                                                    @else
+                                                                    <li>
+                                                                        <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_recordid}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    </li>
+                                                                    @endif
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         @endif
                                     @endforeach
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                     @foreach($taxonomy_tree as $key2 => $grandparent_taxonomy)
-                                        @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
-                                        @if ($key2 % 2 == 1)
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
-                                                    <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}} </a>
-                                                </div>
-                                                <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <ul class="tree1">
-                                                            @foreach($grandparent_taxonomy['parent_taxonomies'] as $key3 => $parent_taxonomy)
-                                                                @if ($parent_taxonomy['child_taxonomies'] != "")
-                                                                <li>
-                                                                    <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
-                                                                    
-                                                                        <ul>
-                                                                            @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
-                                                                                <li>
-                                                                                    <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
-                                                                                </li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    
-                                                                </li>
-                                                                @else
-                                                                <li>
-                                                                    <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_recordid}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
-                                                                </li>
-                                                                @endif
-                                                            @endforeach
-                                                        </ul>
+                                        @if (isset($grandparent_taxonomy['service_count']))
+                                            @php $grand_parentscount = $grandparent_taxonomy['service_count']; @endphp
+                                            @if ($key2 % 2 == 1)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <a class="card-link @if($c != 0) collapsed @endif " data-toggle="collapse" href="#collapse{{$c}}"></a>
+                                                        <a class="grand_taxonomy card-link taxonomy-link" href="javascript:void(0);">{{$grandparent_taxonomy['alt_taxonomy_name']}} </a>
+                                                    </div>
+                                                    <div id="collapse{{$c}}" class="collapse @if($c++ == 0) show @endif" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <ul class="tree1">
+                                                                @foreach($grandparent_taxonomy['parent_taxonomies'] as $key3 => $parent_taxonomy)
+                                                                    @if ($parent_taxonomy['child_taxonomies'] != "")
+                                                                    <li>
+                                                                        <a class="parent_taxonomy" href="javascript:void(0);">{{$parent_taxonomy['parent_taxonomy']}}</a>
+                                                                        
+                                                                            <ul>
+                                                                                @foreach($parent_taxonomy['child_taxonomies'] as $key4 => $child_taxonomy)
+                                                                                    <li>
+                                                                                        <a class="child_node" href="javascript:void(0);"  value="alt_{{$key2}}_parent_{{$key3}}_child_{{$child_taxonomy->taxonomy_recordid}}">{{$child_taxonomy->taxonomy_name}}</a>
+                                                                                    </li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        
+                                                                    </li>
+                                                                    @else
+                                                                    <li>
+                                                                        <a class="child_node" href="javascript:void(0);" value="alt_{{$key2}}_child_{{$parent_taxonomy['parent_taxonomy']->taxonomy_recordid}}">{{$parent_taxonomy['parent_taxonomy']->taxonomy_name}}</a>
+                                                                    </li>
+                                                                    @endif
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endif
+                                            @endif 
+                                        @endif 
                                     @endforeach
                                 </div>
                             @else
