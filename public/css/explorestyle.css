@@ -246,7 +246,7 @@ li.status-side:hover {
 ----------------------------------------------------- */
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -270px;
+        margin-left: -455px;
     }
     #sidebar.active {
         margin-left: 0;
