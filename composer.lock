@@ -2827,16 +2827,16 @@
         },
         {
             "name": "sabberworm/php-css-parser",
-            "version": "6.0.1",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-                "reference": "9ea4b00c569b19f731d0c2e0e802055877ff40c2"
+                "reference": "7df1f66498655db5a1cf6003f55309d394487d5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/9ea4b00c569b19f731d0c2e0e802055877ff40c2",
-                "reference": "9ea4b00c569b19f731d0c2e0e802055877ff40c2",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/7df1f66498655db5a1cf6003f55309d394487d5f",
+                "reference": "7df1f66498655db5a1cf6003f55309d394487d5f",
                 "shasum": ""
             },
             "require": {
@@ -2864,7 +2864,11 @@
                 "parser",
                 "stylesheet"
             ],
-            "time": "2015-08-24T08:48:52+00:00"
+            "support": {
+                "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
+                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/6.0.2"
+            },
+            "time": "2020-06-01T09:07:27+00:00"
         },
         {
             "name": "stevebauman/location",
@@ -4397,191 +4401,6 @@
             "time": "2015-05-11T14:41:42+00:00"
         },
         {
-            "name": "league/flysystem-azure-blob-storage",
-            "version": "0.1.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/flysystem-azure-blob-storage.git",
-                "reference": "97215345f3c42679299ba556a4d16d4847ee7f6d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-azure-blob-storage/zipball/97215345f3c42679299ba556a4d16d4847ee7f6d",
-                "reference": "97215345f3c42679299ba556a4d16d4847ee7f6d",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/psr7": "^1.5",
-                "league/flysystem": "^1.0",
-                "microsoft/azure-storage-blob": "^1.1",
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "League\\Flysystem\\AzureBlobStorage\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Frank de Jonge",
-                    "email": "info@frenky.net"
-                }
-            ],
-            "time": "2019-06-07T20:42:16+00:00"
-        },
-        {
-            "name": "matthewbdaly/laravel-azure-storage",
-            "version": "1.3.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matthewbdaly/laravel-azure-storage.git",
-                "reference": "5d20c4e0d2d775b819eb1286c67e102d15de65ae"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matthewbdaly/laravel-azure-storage/zipball/5d20c4e0d2d775b819eb1286c67e102d15de65ae",
-                "reference": "5d20c4e0d2d775b819eb1286c67e102d15de65ae",
-                "shasum": ""
-            },
-            "require": {
-                "league/flysystem-azure-blob-storage": "^0.1.6"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^4.0",
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^8.0",
-                "psy/psysh": "^0.9.9",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Matthewbdaly\\LaravelAzureStorage\\AzureStorageServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Matthewbdaly\\LaravelAzureStorage\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matthew Daly",
-                    "email": "matthewbdaly@gmail.com"
-                }
-            ],
-            "description": "Microsoft Azure Blob Storage integration for Laravel's Storage API",
-            "keywords": [
-                "azure",
-                "laravel",
-                "storage"
-            ],
-            "time": "2019-09-17T20:30:59+00:00"
-        },
-        {
-            "name": "microsoft/azure-storage-blob",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Azure/azure-storage-blob-php.git",
-                "reference": "8310c2ecab488fa325db3dcf2f8723bbcfe58941"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-blob-php/zipball/8310c2ecab488fa325db3dcf2f8723bbcfe58941",
-                "reference": "8310c2ecab488fa325db3dcf2f8723bbcfe58941",
-                "shasum": ""
-            },
-            "require": {
-                "microsoft/azure-storage-common": "~1.4",
-                "php": ">=5.6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MicrosoftAzure\\Storage\\Blob\\": "src/Blob"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Azure Storage PHP Client Library",
-                    "email": "dmsh@microsoft.com"
-                }
-            ],
-            "description": "This project provides a set of PHP client libraries that make it easy to access Microsoft Azure Storage Blob APIs.",
-            "keywords": [
-                "azure",
-                "blob",
-                "php",
-                "sdk",
-                "storage"
-            ],
-            "time": "2019-04-26T15:06:52+00:00"
-        },
-        {
-            "name": "microsoft/azure-storage-common",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Azure/azure-storage-common-php.git",
-                "reference": "435adf4d09f0b34375f899b5627d2926bfe317e6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Azure/azure-storage-common-php/zipball/435adf4d09f0b34375f899b5627d2926bfe317e6",
-                "reference": "435adf4d09f0b34375f899b5627d2926bfe317e6",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "php": ">=5.6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MicrosoftAzure\\Storage\\Common\\": "src/Common"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Azure Storage PHP Client Library",
-                    "email": "dmsh@microsoft.com"
-                }
-            ],
-            "description": "This project provides a set of common code shared by Azure Storage Blob, Table, Queue and File PHP client libraries.",
-            "keywords": [
-                "azure",
-                "common",
-                "php",
-                "sdk",
-                "storage"
-            ],
-            "time": "2019-04-26T15:02:17+00:00"
-        },
-        {
             "name": "mockery/mockery",
             "version": "0.9.11",
             "source": {
@@ -5923,10 +5742,10 @@
     ],
     "aliases": [
         {
-            "alias": "0.6.2",
-            "alias_normalized": "0.6.2.0",
+            "package": "dompdf/dompdf",
             "version": "0.8.0.0",
-            "package": "dompdf/dompdf"
+            "alias": "0.6.2",
+            "alias_normalized": "0.6.2.0"
         }
     ],
     "minimum-stability": "stable",
@@ -5938,5 +5757,6 @@
     "platform": {
         "php": ">=5.6.4"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
 }
